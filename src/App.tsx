@@ -1,10 +1,6 @@
 function App() {
-  const test = "abc";
-  return (
-    <>
-      <div>메인</div>
-    </>
-  );
+  const test = 'abc';
+  return <div>{test}</div>;
 }
 
 export default App;
