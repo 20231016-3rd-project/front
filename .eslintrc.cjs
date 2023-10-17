@@ -2,15 +2,15 @@ module.exports = {
   root: true,
   env: { browser: true, es2020: true },
   extends: [
+    "airbnb",
+    "airbnb-typescript",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
-    "airbnb",
-    "airbnb-typescript",
   ],
   ignorePatterns: ["dist", ".eslintrc.cjs"],
   parser: "@typescript-eslint/parser",
-  parserOption: {
+  parserOptions: {
     project: "./tsconfig.json",
   },
   plugins: ["react-refresh"],
