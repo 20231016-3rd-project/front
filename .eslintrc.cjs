@@ -4,7 +4,6 @@ module.exports = {
   extends: [
     'airbnb',
     'airbnb-typescript',
-    'eslint:recommended',
     'plugin:react-hooks/recommended',
     'prettier',
   ],
@@ -21,5 +20,12 @@ module.exports = {
     ],
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
+    'react/function-component-definition': [
+      'on',
+      {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function',
+      },
+    ],
   },
 };
