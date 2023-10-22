@@ -1,6 +1,7 @@
+import router from '../src/router/Router';
+
 function App() {
-  const test = 'abc';
-  return <div>{test}</div>;
+  return router;
 }
 
 export default App;
