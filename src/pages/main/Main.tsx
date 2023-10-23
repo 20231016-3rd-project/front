@@ -19,7 +19,7 @@ const Main = () => {
     dots: true,
     arrows: false,
     autoplay: false,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
@@ -55,8 +55,8 @@ const Main = () => {
         <p>추천 맛집</p>
         <button className="select-btn">지역선택</button>
       </div>
-      <div className='carousel'>
-        <ProductImg>  
+      <div className="carousel">
+        <ProductImg>
           <Slider {...settings} ref={slickRef}>
             {data.map(renderImgs)}
           </Slider>
@@ -92,7 +92,7 @@ const ProductImg = styled.div`
 
   .slick-slide img {
     width: 100%;
-    height: 100 %;
+    height: 100%;
   }
 
   .slick-dots {
