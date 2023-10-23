@@ -1,22 +1,22 @@
 .footer {
-  width: 100%;
   height: 8rem;
   padding: 2rem 3rem;
+  /* margin: 2rem 3rem; */
   font-size: 14px;
-}
-.footer span {
-  margin-right: 1.5rem;
 }
 .first {
   margin-bottom: 2rem;
 }
+.first span {
+  margin-right: 1.5rem;
+}
 .middle {
   margin-bottom: 1rem;
+}
+.middle span {
+  margin-right: 1.5rem;
 }
 .last {
   display: flex;
   justify-content: space-between;
-}
-.last span {
-  margin-right: 6rem;
 }
