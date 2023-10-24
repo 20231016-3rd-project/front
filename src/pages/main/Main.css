@@ -28,11 +28,17 @@
   position: relative;
   display: flex !important;
   justify-content: center;
+
+}
+.contents{
+  width: 95%;
+  cursor: pointer;
 }
 .imgdiv {
   width: 100%;
   height: 18.75rem;
-  margin: 0 1rem;
+  /* margin: 0 1rem; */
+
 }
 .data-img {
   object-fit: cover;
@@ -49,7 +55,16 @@
   text-shadow: 6px 6px 16px rgba(0, 0, 0, 0.9);
   z-index: 10;
 }
-
+.section {
+  padding: 40px 0;
+}
+.section-title{
+  color: #ff792a;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 100px;
+  padding: 0 0 40px 0;
+}
 .carousel {
   display: flex;
   justify-content: center;
@@ -79,4 +94,55 @@
 .arrow-right {
   height: 43px;
   cursor: pointer;
+}
+
+
+.subpage {
+  padding: 80px 15% 20px;
+  
+}
+
+.sub-list{
+  display: flex;
+  border-bottom: 1px solid black;
+  padding: 2rem 0;
+  margin: 0 2rem;
+}
+.list-img-div{
+  width: 30%;
+  height: 260px;
+  cursor: pointer;
+}
+.list-img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.list-text{
+  padding: 2rem 0 2rem 3rem;
+  width: 70%;
+  line-height: 25px;
+  position: relative;
+}
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  height: auto;
+}
+.addr{
+  font-size: 20px;
+  font-weight: 500;
+}
+.more {
+  font-size: 20px;
+  font-weight: 500;
+  width: auto;
+  text-align: end;
+  position: absolute;
+  bottom: 2rem;
+  right: 0;
+  cursor: pointer;
+}
+.see-more-arrow{
+  height: 1rem;
 }

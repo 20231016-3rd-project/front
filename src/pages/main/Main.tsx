@@ -40,10 +40,12 @@ const Main = () => {
   const renderImgs = (data) => {
     return (
       <li className="data-list" key={Math.random()}>
-        <div className="imgdiv">
-          <img className="data-img" src={data.img} alt="" />
+        <div className='contents'>
+          <div className="imgdiv">
+            <img className="data-img" src={data.img} alt="" />
+          </div>
+          <p className="data-text">{data.text}</p>
         </div>
-        <p className="data-text">{data.text}</p>
       </li>
     );
   };
@@ -55,21 +57,61 @@ const Main = () => {
         <p>추천 맛집</p>
         <button className="select-btn">지역선택</button>
       </div>
-      <div className="carousel">
-        <ProductImg>
-          <Slider {...settings} ref={slickRef}>
-            {data.map(renderImgs)}
-          </Slider>
-        </ProductImg>
-        <div className="arrow-div">
-          <div className="prev" onClick={previous}>
-            <img className="arrow-left" src={arrowLeft} alt={'pre-arrow'} />
-          </div>
-          <div className="next" onClick={next}>
-            <img className="arrow-right" src={arrowRight} alt={'next-arrow'} />
+      <section className="section">
+        <div className="section-title">믿고 보는 맛집 리스트</div>
+        <div className="carousel">
+          <ProductImg>
+            <Slider {...settings} ref={slickRef}>
+              {data.map(renderImgs)}
+            </Slider>
+          </ProductImg>
+          <div className="arrow-div">
+            <div className="prev" onClick={previous}>
+              <img className="arrow-left" src={arrowLeft} alt={'pre-arrow'} />
+            </div>
+            <div className="next" onClick={next}>
+              <img
+                className="arrow-right"
+                src={arrowRight}
+                alt={'next-arrow'}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      <section className='subpage'>
+        <ul>
+          <li className='sub-list'>
+            <div className='list-img-div'>
+            <img className='list-img' src={noodle} alt="" />
+            </div>
+            <div className='list-text'>
+              <p className='title'>너무너무 맛있는 햄토리네 견과류</p>
+              <p className='title'>홍대! 견과류, 동결건조 과일</p>
+              <br />
+              <p className='addr'>주소: 서울특별시 마포구 햄토리네마을</p>
+              <p className='addr'>인스타그램: https://www.instagram.com</p>
+              <br />
+              <p className='more'>너무너무 맛있는 햄토리네 견과류 더보기 <img className='see-more-arrow' src={arrowRight} alt="" /></p>
+            </div>
+          </li>
+          <li className='sub-list'>
+            <div className='list-img-div'>
+            <img className='list-img' src={ramen} alt="" />
+            </div>
+            <div className='list-text'>
+              <p className='title'>너무너무 맛있는 햄토리네 견과류</p>
+              <p className='title'>홍대! 견과류, 동결건조 과일</p>
+              <br />
+              <p className='addr'>주소: 서울특별시 마포구 햄토리네마을</p>
+              <p className='addr'>인스타그램: https://www.instagram.com</p>
+              <br />
+              <p className='more'>너무너무 맛있는 햄토리네 견과류 더보기 <img className='see-more-arrow' src={arrowRight} alt="" /></p>
+            </div>
+          </li>
+        </ul>
+      </section>
     </main>
   );
 };
