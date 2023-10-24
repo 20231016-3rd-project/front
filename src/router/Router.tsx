@@ -47,11 +47,11 @@ const router = createBrowserRouter([
             path: 'adminchat',
             element:<AdminChatPage/>,
           },
-          {
-            path: ''
-          }
-        ]
-      }
+        ],
+      },
+        {
+          path: ''
+        },
     ],
   },
 ]);
