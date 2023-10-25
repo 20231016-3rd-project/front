@@ -7,7 +7,7 @@ const Header: React.FC = () => {
     <div className="head">
       <div className="header-left">
         <img className="logo" src={logo} alt="" />
-        <div>
+        <div className='logo-text'>
           <p>해바라기</p>
           <p>플레이트</p>
         </div>
