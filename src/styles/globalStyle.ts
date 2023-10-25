@@ -35,6 +35,10 @@ const GlobalStyle = createGlobalStyle`
         font-weight: 700;
         src: url('${QuicksandBold}') format('woff2') 
     }
+    
+    body {
+        box-sizing: border-box;
+    }
     `;
 
 export default GlobalStyle;
