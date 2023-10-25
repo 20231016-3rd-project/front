@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Main.css';
 import korean from '/src/assets/images/korean.jpg';
 import noodle from '/src/assets/images/noodle.jpg';
@@ -15,9 +15,21 @@ import Slide from '../../components/Slide/Slide';
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 
 import { Best, Restaurant } from '../../model/best';
+import RegionSelect from '../../components/Modal/RegionSelect';
 
 
 const Main = () => {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModalHandler = () => {
+    
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+      setIsOpen(false);
+    };
+
   const datas: Best = [
     { id: 1, text: '얼큰한 칼국수 맛집 베스트 20곳', img: noodle },
     { id: 2, text: '일본 라멘 맛집 베스트 70곳', img: ramen },
@@ -48,10 +60,13 @@ const Main = () => {
 
   return (
     <main>
+      {isOpen && (
+        <RegionSelect closeModal = {closeModal}/>
+      )}
       <div className="select-region">
         <p>당신을 위한 지역별</p>
         <p>추천 맛집</p>
-        <button className="select-btn">지역선택</button>
+        <button className="select-btn" onClick={openModalHandler}>지역선택</button>
       </div>
       <section className="section">
         <div className="section-title">믿고 보는 맛집 리스트</div>
