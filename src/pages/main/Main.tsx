@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import './Main.css';
 import korean from '/src/assets/images/korean.jpg';
@@ -16,8 +17,7 @@ import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 
 import { Best, Restaurant } from '../../model/best';
 import RegionSelect from '../../components/Modal/RegionSelect';
-
-
+        
 const Main = () => {
 
   const [isOpen, setIsOpen] = useState(false);
