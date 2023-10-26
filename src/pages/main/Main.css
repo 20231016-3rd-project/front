@@ -1,3 +1,4 @@
+
 .select-region {
   background-color: #fcd19c;
   color: white;
@@ -73,3 +74,32 @@
 .see-more-arrow{
   height: 1rem;
 }
+
+.order{
+  margin: 0 2rem;
+}
+.order-btn-selected{
+border: 1px solid #574204;
+color: #574204;
+border-radius: 6px;
+background-color: transparent;
+font-size: 14px;
+font-weight: 600;
+letter-spacing: -0.7px;
+padding: 0.5rem 1rem;
+margin-right: 1rem;
+cursor: pointer;
+}
+.order-btn{
+  border: 1px solid #bab0a7;
+  color: #bab0a7;
+  border-radius: 6px;
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.7px;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  }
+  
