@@ -7,6 +7,7 @@ import QuicksandSemiBold from '../assets/fonts/QuicksandSemiBold.woff';
 import QuicksandBold from '../assets/fonts/QuicksandBold.woff';
 
 const GlobalStyle = createGlobalStyle`
+    //https://meyerweb.com/eric/tools/css/reset/
     ${reset}
     @font-face {
         font-family: 'Quicksand';
