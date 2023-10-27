@@ -5,18 +5,12 @@ import styled from 'styled-components';
 
 const Layout = () => {
   return (
-    <Container>
+    <>
       <Header />
       <Outlet />
       <Footer />
-    </Container>
+    </>
   );
 };
 
 export default Layout;
-
-const Container = styled.div`
-  * {
-    font-family: 'Quicksand';
-  }
-`;
