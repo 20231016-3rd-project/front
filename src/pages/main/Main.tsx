@@ -55,6 +55,11 @@ const Main = () => {
     },
   ];
 
+  const [orderBy, setOrderBy] = useState('rate');
+  const handleOrder = (e) => {
+    setOrderBy(e.target.value);
+  };
+
   return (
     <main>
       {isOpen && <RegionSelect closeModal={closeModal} />}
@@ -72,8 +77,29 @@ const Main = () => {
 
       <section className="subpage">
         <div className="order">
-          <button className="order-btn-selected">평점순</button>
-          <button className="order-btn">리뷰많은순</button>
+          <button
+            className={orderBy === 'rate' ? 'order-btn-selected' : 'order-btn'}
+            value="rate"
+            onClick={handleOrder}
+          >
+            평점순
+          </button>
+          <button
+            className={
+              orderBy === 'review' ? 'order-btn-selected' : 'order-btn'
+            }
+            value="review"
+            onClick={handleOrder}
+          >
+            리뷰많은순
+          </button>
+          <button
+            className={orderBy === 'like' ? 'order-btn-selected' : 'order-btn'}
+            value="like"
+            onClick={handleOrder}
+          >
+            좋아요많은순
+          </button>
         </div>
         <ul>
           <RestaurantCard datas={retaurantData} />
