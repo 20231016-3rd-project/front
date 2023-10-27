@@ -9,13 +9,15 @@ interface OwnProps {
 const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
   const renderCard = (data) => {
     return (
-      <li className="sub-list">
+      <li className="sub-list" key={data.id}>
         <div className="list-img-div">
           <img className="list-img" src={data.img} alt="" />
         </div>
         <div className="list-text">
           <p className="title">{data.name}</p>
-          <p className="title">{data.text1}</p>
+          <div>
+            <span>별점</span> <span>(리뷰개수)</span> <span>좋아요개수</span>
+          </div>
           <br />
           <p className="addr">{data.text2}</p>
           <p className="addr">{data.text3}</p>
