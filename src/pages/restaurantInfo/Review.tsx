@@ -17,8 +17,10 @@ const Review = () => {
           </div>
         </div>
         <div className="review__buttons">
-          <button></button>
-          <button></button>
+          <button>수정</button>
+          <button>공감</button>
+          <button>신고</button>
+          <button>삭제</button>
         </div>
       </div>
       <div className="review__content">
