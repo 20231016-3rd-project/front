@@ -1,33 +1,33 @@
 import React from 'react';
 import arrowRight from '/src/assets/images/arrowRight.svg';
-import { Restaurant } from '../../model/best';
+import { Restaurants, Restaurant } from '../../model/best';
+import styled from 'styled-components';
 
 interface OwnProps {
-  datas: Restaurant;
+  datas: Restaurants;
 }
 
 const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
-  const renderCard = (data) => {
+  const renderCard = (data: Restaurant) => {
     return (
-      <li className="sub-list" key={data.id}>
-        <div className="list-img-div">
-          <img className="list-img" src={data.img} alt="" />
-        </div>
-        <div className="list-text">
-          <p className="title">{data.name}</p>
+      <RestaurantList key={data.id}>
+        <ListImgDiv>
+          <ListImg src={data.img} alt="" />
+        </ListImgDiv>
+        <RestaurantInfo>
+          <InfoTitle>{data.name}</InfoTitle>
           <div>
             <span>별점</span> <span>(리뷰개수)</span> <span>좋아요개수</span>
           </div>
           <br />
-          <p className="addr">{data.text2}</p>
-          <p className="addr">{data.text3}</p>
+          <InfoAddr>{data.text2}</InfoAddr>
+          <InfoAddr>{data.text3}</InfoAddr>
           <br />
-          <p className="more">
-            {data.name} 더보기{' '}
-            <img className="see-more-arrow" src={arrowRight} alt="" />
-          </p>
-        </div>
-      </li>
+          <InfoMore>
+            {data.name} 더보기 <ArrowImg src={arrowRight} alt="" />
+          </InfoMore>
+        </RestaurantInfo>
+      </RestaurantList>
     );
   };
 
@@ -35,3 +35,48 @@ const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
 };
 
 export default RestaurantCard;
+
+const RestaurantList = styled.li`
+  display: flex;
+  border-bottom: 1px solid black;
+  padding: 2rem 0;
+  margin: 0 2rem;
+`;
+const ListImgDiv = styled.div`
+  width: 30%;
+  height: 260px;
+  cursor: pointer;
+`;
+const ListImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+const RestaurantInfo = styled.div`
+  padding: 2rem 0 2rem 3rem;
+  width: 70%;
+  line-height: 25px;
+  position: relative;
+`;
+const InfoTitle = styled.p`
+  font-size: 20px;
+  font-weight: 700;
+  height: auto;
+`;
+const InfoAddr = styled.p`
+  font-size: 20px;
+  font-weight: 500;
+`;
+const InfoMore = styled.p`
+  font-size: 20px;
+  font-weight: 500;
+  width: auto;
+  text-align: end;
+  position: absolute;
+  bottom: 2rem;
+  right: 0;
+  cursor: pointer;
+`;
+const ArrowImg = styled.img`
+  height: 1rem;
+`;
