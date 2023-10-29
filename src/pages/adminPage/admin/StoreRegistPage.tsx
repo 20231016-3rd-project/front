@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { StMain } from '../../../components/Stmain';
+import DaumPost from '../../../components/Admin/DaumPost';
 
 
 const StoreRegistPage = () => {
@@ -46,13 +47,10 @@ const StoreRegistPage = () => {
         />
       </BusinessNameSection>
 
-
-      <AdressSection>
-        <label>도로명 주소</label>
-        <div>여기에 주소 입력 필드가 들어갈 예정입니다.</div>
-      </AdressSection>
-
-
+      
+     
+      <DaumPost/>
+      
       <InstagramSection>
         <label>인스타그램</label>
         <input 
