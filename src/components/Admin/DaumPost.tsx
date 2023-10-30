@@ -21,7 +21,7 @@ const AddressSearchMap = () => {
     setMap(map); // 지도 객체를 상태에 저장
   }, []);
 
-  const handleComplete = (data) => {
+    const handleComplete = (data) => {
     const fullAddress = data.address; // 전체 주소
     let extraAddress = ''; // 추가 주소 정보
 
@@ -76,10 +76,7 @@ const AddressSearchMap = () => {
 
   return (
     <AddressSearchMapContainer>
-      <button type="button" onClick={handleOpenModal}>
-        주소 찾기
-      </button>
-
+      <label>주소</label>
       {isModalOpen && (
         <ModalContainer>
           <DaumPostcode
@@ -93,12 +90,31 @@ const AddressSearchMap = () => {
         </ModalContainer>
       )}
 
-      <div>지역 주소: {areaAddress}</div>
-      <div>상세 주소: {detailAddress}</div>
+      <AddressSection>
+        
+        
+      <AddressInput>
+        <input
+         type="text"
+         placeholder='지역 주소'
+         value={areaAddress}
+         // onChange={}
+        />
+        
+        <input
+         type="text"
+         placeholder='상세 주소'
+         value={detailAddress}
+         // onChange={}
+        />
+      </AddressInput>
+        <button type="button" onClick={handleOpenModal}>주소 찾기</button>
+      </AddressSection>  
 
       <MapContainer>
-        <KakaoMap id="map" style={{ width: '100%', height: '400px' }}/>
+        <KakaoMap id="map"/>
       </MapContainer>
+
     </AddressSearchMapContainer>
   );
 };
@@ -106,9 +122,9 @@ const AddressSearchMap = () => {
 const AddressSearchMapContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
   width: 95%;
+  margin-bottom: 15px;
+  border: 1px solid red;
 `;
 
 const ModalContainer = styled.div`
@@ -124,10 +140,32 @@ const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  button {
-    margin-top: 10px;
-  }
 `;
+
+const AddressSection = styled.div`
+    display: flex;
+    width: 100%;
+    border: 1px solid red;
+
+    & > button{
+        width: 10%;
+    }
+    
+`;
+
+const AddressInput = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+
+    & > input {
+        padding: 3px;
+        width: 100%;
+    }
+`;
+
+
+
 
 const MapContainer = styled.div`
   width: 100%;
@@ -138,6 +176,6 @@ const MapContainer = styled.div`
 const KakaoMap = styled.div `
   width: 100%;
   height: 100%;
-`
+`;
 
 export default AddressSearchMap;
