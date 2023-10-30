@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, {useState } from 'react';
 import logo from '/src/assets/images/sunflower.png';
 import './Header.css';
 import styled from 'styled-components';
 import DropDown from './../../DropDown/DropDown';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [auth, setAuth] = useState(false);
@@ -11,39 +11,56 @@ const Header: React.FC = () => {
     setAuth(true);
   };
 
-  return (
-    <Section>
-      <HeaderLeft to="/">
-        <Logo src={logo} alt="" />
-        <LogoText>
-          <P>해바라기</P>
-          <P>플레이트</P>
-        </LogoText>
-      </HeaderLeft>
-      <HeaderMiddle>
-        <SearchBox>
-          <SearchInput
-            type="text"
-            placeholder="지역, 식당 또는 음식"
-            name=""
-            id=""
-          />
-          <SearchButton>Search</SearchButton>
-        </SearchBox>
-      </HeaderMiddle>
-      {/* 로그인 회원가입 페이지 일 경우 로고만 
-      //카드 리스트에 별점, 리뷰개수, 좋아요 개수 */}
-      <HeaderRight>
-        {!auth && (
-          <>
-            <LoginButton onClick={login}>로그인</LoginButton>
-            <SignUpButton>회원가입</SignUpButton>
-          </>
-        )}
-        {auth && <DropDown setAuth={setAuth} />}
-      </HeaderRight>
-    </Section>
-  );
+  const location = useLocation();
+
+  let headerContents;
+  if (location.pathname === '/signup' || location.pathname === '/login') {
+    headerContents = (
+      <SectionCenter>
+        <HeaderLeft to="/">
+          <Logo src={logo} alt="" />
+          <LogoText>
+            <P>해바라기</P>
+            <P>플레이트</P>
+          </LogoText>
+        </HeaderLeft>
+      </SectionCenter>
+    );
+  } else {
+    headerContents = (
+      <Section>
+        <HeaderLeft to="/">
+          <Logo src={logo} alt="" />
+          <LogoText>
+            <P>해바라기</P>
+            <P>플레이트</P>
+          </LogoText>
+        </HeaderLeft>
+        <HeaderMiddle>
+          <SearchBox>
+            <SearchInput
+              type="text"
+              placeholder="지역, 식당 또는 음식"
+              name=""
+              id=""
+            />
+            <SearchButton>Search</SearchButton>
+          </SearchBox>
+        </HeaderMiddle>
+        <HeaderRight>
+          {!auth && (
+            <>
+              <LoginButton onClick={login}>로그인</LoginButton>
+              <SignUpButton to="/signup">회원가입</SignUpButton>
+            </>
+          )}
+          {auth && <DropDown setAuth={setAuth} />}
+        </HeaderRight>
+      </Section>
+    );
+  }
+
+  return <>{headerContents}</>;
 };
 
 export default Header;
@@ -52,6 +69,12 @@ const Section = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  height: 85px;
+`;
+const SectionCenter = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
   height: 85px;
 `;
 const HeaderLeft = styled(Link)`
@@ -128,7 +151,7 @@ const LoginButton = styled.button`
   cursor: pointer;
   margin-right: 3rem;
 `;
-const SignUpButton = styled.button`
+const SignUpButton = styled(Link)`
   border: none;
   min-width: 92px;
   background-color: white;
@@ -136,4 +159,10 @@ const SignUpButton = styled.button`
   font-weight: 500;
   cursor: pointer;
   margin-right: 2rem;
+
+  &:visited,
+  &:link {
+    text-decoration: none;
+    color: black;
+  }
 `;

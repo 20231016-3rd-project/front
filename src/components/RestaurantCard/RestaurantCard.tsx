@@ -1,5 +1,8 @@
 import React from 'react';
 import arrowRight from '/src/assets/images/arrowRight.svg';
+import heart from '/src/assets/images/heart.png';
+import heartFill from '/src/assets/images/heartfill.png';
+import star from '/src/assets/images/star.png';
 import { Restaurants, Restaurant } from '../../model/best';
 import styled from 'styled-components';
 
@@ -16,9 +19,16 @@ const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
         </ListImgDiv>
         <RestaurantInfo>
           <InfoTitle>{data.name}</InfoTitle>
-          <div>
-            <span>별점</span> <span>(리뷰개수)</span> <span>좋아요개수</span>
-          </div>
+          <RateInfo>
+            <Rate>
+              <RateInfoImg src={star} alt="" /> {data.star} ({data.reviewCount})
+            </Rate>
+            <Bar />
+            <LikeButton>
+              <RateInfoImg src={heart} alt="" />
+              {data.likeCount}
+            </LikeButton>
+          </RateInfo>
           <br />
           <InfoAddr>{data.text2}</InfoAddr>
           <InfoAddr>{data.text3}</InfoAddr>
@@ -79,4 +89,30 @@ const InfoMore = styled.p`
 `;
 const ArrowImg = styled.img`
   height: 1rem;
+`;
+
+const RateInfo = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const Rate = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const RateInfoImg = styled.img`
+  width: 1rem;
+  margin-right: 0.2rem;
+`;
+const Bar = styled.div`
+  border-right: 1px solid #666666;
+  margin-left: 0.5rem;
+  height: 0.8rem;
+`;
+const LikeButton = styled.button`
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

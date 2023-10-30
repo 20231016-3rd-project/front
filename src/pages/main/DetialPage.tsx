@@ -12,18 +12,22 @@ const DetialPage = () => {
     {
       id: 1,
       name: '너무너무 맛있는 햄토리네 견과류',
-      text1: '홍대! 견과류, 동결건조 과일',
       text2: '서울특별시 마포구 햄토리네마을',
       text3: 'https://www.instagram.com',
       img: noodle,
+      star: 4.2,
+      reviewCount: 4,
+      likeCount: 3,
     },
     {
       id: 2,
       name: '햄토리네 해바라기',
-      text1: '햄햄',
       text2: '마포구 햄토리네마을',
       text3: 'https://www.instagram.com',
       img: ramen,
+      star: 4.9,
+      reviewCount: 5,
+      likeCount: 7,
     },
   ];
 

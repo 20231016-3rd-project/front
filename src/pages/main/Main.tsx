@@ -38,7 +38,7 @@ const Main = () => {
     { id: 6, text: '비빔밥 맛집 베스트 45곳', img: bibimbap },
   ];
 
-  //첫 화면 overlay 관리
+  //첫 화면 cover 관리
   const [clicked, setClicked] = useState(false);
   const coverRef = useRef(null);
   const handleOverlay = () => {

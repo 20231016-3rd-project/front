@@ -237,7 +237,7 @@ const DistrictList = styled.ul`
 
   min-height: 225px;
 `;
-const DistrictListLast = styled.div`
+const DistrictListLast = styled.ul`
   width: 192px;
   display: flex;
   flex-direction: column;
