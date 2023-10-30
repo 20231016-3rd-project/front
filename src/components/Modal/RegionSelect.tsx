@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom';
-import './Modal.css';
 import React, { useState } from 'react';
 import close from '/src/assets/images/close.svg';
 import DistrictSelectButton from '../Buttons/DistrictSelectButton';

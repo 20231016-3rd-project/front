@@ -1,6 +1,5 @@
 import React, {useState } from 'react';
 import logo from '/src/assets/images/sunflower.png';
-import './Header.css';
 import styled from 'styled-components';
 import DropDown from './../../DropDown/DropDown';
 import { Link, useLocation } from 'react-router-dom';
@@ -99,7 +98,7 @@ const Logo = styled.img`
   width: 45px;
   cursor: pointer;
 `;
-const LogoText = styled.p`
+const LogoText = styled.div`
   cursor: pointer;
 `;
 const HeaderMiddle = styled.div`

@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react';
-import './Main.css';
+import React, { useState } from 'react';
 import logo from '/src/assets/images/sunflower.png';
 import arrowDown from '/src/assets/images/arrowDown.svg';
 
@@ -12,12 +11,16 @@ import tart from '/src/assets/images/tart.jpg';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import Slide from '../../components/Slide/Slide';
 
 import { Bests } from '../../model/best';
 import RegionSelect from '../../components/Modal/RegionSelect';
+
+interface IsClicked {
+  $clicked: boolean; // prefix 로 "$" 를 사용하게 되면, props 가 실제 DOM 요소에 전달되는 것을 막는다.
+}
 
 const Main = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,26 +43,22 @@ const Main = () => {
 
   //첫 화면 cover 관리
   const [clicked, setClicked] = useState(false);
-  const coverRef = useRef(null);
-  const handleOverlay = () => {
-    if (coverRef.current) {
-      coverRef.current.className = 'cover fadeOutUp';
-    }
+  const handleCover = () => {
     setClicked(true);
   };
 
   return (
     <main>
-      <div className="cover" ref={coverRef}>
+      <Cover $clicked={clicked}>
         <CoverTitle>
           <img src={logo} alt="" />
           <Text1>지금바로 떠나는 맛집 탐방!</Text1>
           <Text2>해바라기 플레이트</Text2>
         </CoverTitle>
-        <ArrowDown onClick={handleOverlay}>
+        <ArrowDown onClick={handleCover}>
           <ArrowDownImg src={arrowDown} alt="" />
         </ArrowDown>
-      </div>
+      </Cover>
 
       {isOpen && <RegionSelect closeModal={closeModal} />}
 
@@ -84,23 +83,43 @@ const Main = () => {
 
 export default Main;
 
-// const Cover = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   position: absolute;
-//   width: 100%;
-//   height: 93.5vh;
-//   background-image: url('src/assets/images/background.jpg');
-//   background-repeat: no-repeat;
-//   background-position: center;
-//   background-size: cover;
-//   z-index: 999;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   animation-duration: 1s;
-//   animation-fill-mode: forwards;
-// `;
+const fadeOutUp = keyframes`
+0% {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+100% {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-93.5vh);
+}
+`;
+
+const Cover = styled.div<IsClicked>`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 100%;
+  height: 93.5vh;
+  background-image: url('src/assets/images/background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+
+  animation-name: ${(props) =>
+    props.$clicked
+      ? css`
+          ${fadeOutUp}
+        `
+      : ''};
+`;
 const CoverTitle = styled.div`
   color: white;
   font-weight: 700;

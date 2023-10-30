@@ -72,6 +72,7 @@ const InfoTitle = styled.p`
   font-size: 20px;
   font-weight: 700;
   height: auto;
+  cursor: pointer;
 `;
 const InfoAddr = styled.p`
   font-size: 20px;

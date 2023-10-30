@@ -5,29 +5,28 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface OwnProps {
-
-    setAuth : React.Dispatch<React.SetStateAction<boolean>>;
+  setAuth: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface IsOpenProps {
-  isOpen: boolean;
+  $isopen: boolean; // prefix 로 "$" 를 사용하게 되면, props 가 실제 DOM 요소에 전달되는 것을 막는다.
 }
 
-const DropDown:React.FC<OwnProps> = ({setAuth}) => {
+const DropDown: React.FC<OwnProps> = ({ setAuth }) => {
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
 
   const logout = () => {
     setIsOpen(!isOpen);
     setAuth(false);
-  }
+  };
   return (
     <DropDownBox>
       <UserButton onClick={() => setIsOpen(!isOpen)}>
         햄토리 회원님 <ArrowDown src={chevronDown} alt="" />
       </UserButton>
 
-      <Menu isOpen={isOpen} ref={dropDownRef}>
+      <Menu $isopen={isOpen} ref={dropDownRef}> 
         <MenuList>
           <StyledLink to="/mypage" onClick={() => setIsOpen(!isOpen)}>
             마이페이지
@@ -60,14 +59,14 @@ const Menu = styled.ul<IsOpenProps>`
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
   padding: 10px;
 
-  opacity: ${(props) => (props.isOpen ? 1 : 0)};
-  visibility: ${(props) => (props.isOpen ? `visible` : `hidden`)};
+  opacity: ${(props) => (props.$isopen ? 1 : 0)};
+  visibility: ${(props) => (props.$isopen ? `visible` : `hidden`)};
   transform: ${(props) =>
-    props.isOpen ? `translateY(0)` : `translateY(-20px)`};
+    props.$isopen ? `translateY(0)` : `translateY(-20px)`};
   }
 `;
 const MenuList = styled.li`
-margin : 1rem 0;
+  margin: 1rem 0;
 `;
 
 const UserButton = styled.button`
@@ -89,12 +88,12 @@ const ArrowDown = styled.img`
 `;
 
 const StyledLink = styled(Link)`
-&:visited,
+  &:visited,
   &:link {
     text-decoration: none;
     color: black;
   }
-`
+`;
 const Logout = styled.div`
-cursor: pointer;
-`
+  cursor: pointer;
+`;
