@@ -1,66 +1,81 @@
 import infoImg from './info-image.jpg';
 import styled from 'styled-components';
+import { useState } from 'react';
 import Map from './Map';
 import Review from './Review';
 import StarRating from './StarRating';
+import WriteReviewModal from './WriteReviewModal';
 import { Button } from './Button';
 const RestaurantInfo = () => {
+  const [isWriteReviewOpen, setIsWriteReviewOpen] = useState(false);
+
+  const openWriteReviewModal = () => {
+    setIsWriteReviewOpen(true);
+  };
+  const closeWriteReviewModal = () => {
+    setIsWriteReviewOpen(false);
+  };
   return (
-    <RestaurantInfoLayout className="restaurant-info">
-      <div className="info__images">
-        <div className="images__column">
-          <img src={infoImg} alt="" className="images__main" />
-        </div>
-        <div className="images__column">
-          <img src={infoImg} alt="" />
-          <img src={infoImg} alt="" />
-        </div>
-        <div className="images__column">
-          <img src={infoImg} alt="" />
-          <img src={infoImg} alt="" />
-        </div>
-      </div>
-      <div className="info__container">
-        <div className="info__title">견과류가 맛있는 햄토리네</div>
-        <div className="info__tags">홍대 | 견과류, 동결건조, 과일</div>
-        <div className="info__button-container">
-          <Button>좋아요</Button>
-          <Button>공유</Button>
-        </div>
-        <div className="info__address">
-          <div className="info__local-address">
-            주소: 서울특별시 마포구 햄토리네 마을
+    <>
+      {isWriteReviewOpen && (
+        <WriteReviewModal closeModal={closeWriteReviewModal} />
+      )}
+      <RestaurantInfoLayout className="restaurant-info">
+        <div className="info__images">
+          <div className="images__column">
+            <img src={infoImg} alt="" className="images__main" />
           </div>
-          <div className="info__online-address">
-            인스타그램: https://instagram.com
+          <div className="images__column">
+            <img src={infoImg} alt="" />
+            <img src={infoImg} alt="" />
+          </div>
+          <div className="images__column">
+            <img src={infoImg} alt="" />
+            <img src={infoImg} alt="" />
           </div>
         </div>
-        <div className="info__business-hours">
-          운영시간
-          <br />
-          평일: 10:00 ~ 21: 00
-          <br />
-          주말: 10:00 ~ 20:00
-          <br />
-          브레이크타임: 16:00 ~ 17:00
+        <div className="info__container">
+          <div className="info__title">견과류가 맛있는 햄토리네</div>
+          <div className="info__tags">홍대 | 견과류, 동결건조, 과일</div>
+          <div className="info__button-container">
+            <Button>좋아요</Button>
+            <Button>공유</Button>
+          </div>
+          <div className="info__address">
+            <div className="info__local-address">
+              주소: 서울특별시 마포구 햄토리네 마을
+            </div>
+            <div className="info__online-address">
+              인스타그램: https://instagram.com
+            </div>
+          </div>
+          <div className="info__business-hours">
+            운영시간
+            <br />
+            평일: 10:00 ~ 21: 00
+            <br />
+            주말: 10:00 ~ 20:00
+            <br />
+            브레이크타임: 16:00 ~ 17:00
+          </div>
+          <div className="info__menu">메인 메뉴</div>
+          <Map />
         </div>
-        <div className="info__menu">메인 메뉴</div>
-        <Map />
-      </div>
-      <div className="info__reviews">
-        <div className="reviews__header">
-          <div>방문자 리뷰</div>
-          <div>
-            <Button>리뷰작성</Button>
+        <div className="info__reviews">
+          <div className="reviews__header">
+            <div>방문자 리뷰</div>
+            <div>
+              <Button onClick={openWriteReviewModal}>리뷰작성</Button>
+            </div>
+          </div>
+          <div className="reviews__list">
+            <Review />
+            <Review />
           </div>
         </div>
-        <div className="reviews__list">
-          <Review />
-          <Review />
-        </div>
-      </div>
-      <StarRating />
-    </RestaurantInfoLayout>
+        <StarRating />
+      </RestaurantInfoLayout>
+    </>
   );
 };
 
