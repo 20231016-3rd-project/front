@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from '../../components/Modal/Modal';
+import Modal from '../Modal/Modal';
 import styled from 'styled-components';
 
 const ReportReviewModal = ({ closeModal }) => {

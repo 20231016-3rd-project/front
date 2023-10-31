@@ -1,9 +1,9 @@
 import React from 'react';
-import Modal from '../../components/Modal/Modal';
+import Modal from '../Modal/Modal';
 import styled from 'styled-components';
-import infoImg from './info-image.jpg';
-import StarRating from './StarRating';
-import ImageInput from './ImageInput';
+import infoImg from '../../pages/restaurantInfo/info-image.jpg';
+import StarRating from '../Star/StarRating';
+import ImageInput from '../../pages/restaurantInfo/ImageInput';
 
 const WriteReviewModal = ({ closeModal }) => {
   return (

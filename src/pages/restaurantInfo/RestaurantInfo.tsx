@@ -2,9 +2,9 @@ import infoImg from './info-image.jpg';
 import styled from 'styled-components';
 import { useState } from 'react';
 import Map from './Map';
-import Review from './Review';
-import StarRating from './StarRating';
-import WriteReviewModal from './WriteReviewModal';
+import Review from '../../components/Review/Review';
+import StarRating from '../../components/Star/StarRating';
+import WriteReviewModal from '../../components/Review/WriteReviewModal';
 import { Button } from './Button';
 const RestaurantInfo = () => {
   const [isWriteReviewOpen, setIsWriteReviewOpen] = useState(false);

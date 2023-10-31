@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import infoImg from './info-image.jpg';
-import Star from './Star';
+import infoImg from '../../pages/restaurantInfo/info-image.jpg';
+import Star from '../Star/Star';
 import { useState } from 'react';
 import ReportReviewModal from './ReportReviewModal';
 import ViewReviewModal from './ViewReviewModal';
