@@ -1,10 +1,42 @@
 import styled from 'styled-components';
 import { StMain } from '../../../components/Stmain';
 import DaumPost from '../../../components/Admin/DaumPost';
+import { useState } from 'react';
 
 
 const StoreRegistPage = () => {
+
+  const [menus, setMenus] = useState([{ name: "", price: "" }]);// 메뉴명 
+  const [files, setFiles] = useState(Array(5).fill(null)); //이미지파일
+  const [businessName, setBusinessName] = useState("");//상호명
+  const [instagram, setInstagram] = useState("");//인스타그램
+  const [businessHours, setBusinessHours] = useState(""); //영업시간 
+
+  const handleFileChange = (e, index) => {
+    const newFiles = [...files]; 
+    newFiles[index] = e.target.files[0]; 
+    setFiles(newFiles); 
+  };
+
+  const handleFileButtonClick = (index) => {
+    document.getElementById(`fileInput-${index}`).click();
+  };
   
+
+
+  
+  const addMenu = () => {
+    setMenus([...menus, { name: "", price: "" }]);
+  };
+
+  
+  const handleMenuChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...menus];
+    list[index][name] = value;
+    setMenus(list);
+  };
+
 
 
   return (
@@ -15,35 +47,31 @@ const StoreRegistPage = () => {
       </MainTextBox>
 
       <ImageRegistSection>
-          <h1>이미지등록</h1>
-          <div>
-            <input 
-              type="file" 
-              // onChange={}
-              // value={}
-            />
-            <label htmlFor="fileInput"></label>
-            <button type="button">찾아보기</button>
-          </div>
-
-          <div>
-            <input 
-              type="file" 
-              // onChange={}
-              // value={}
-            />
-            <label htmlFor="fileInput"></label>
-            <button type="button">찾아보기</button>
-          </div>
-
-      </ImageRegistSection>
+  <h1>이미지등록</h1>
+  {files.map((file, index) => ( // 여기서 file 변수를 추가했습니다.
+    <div key={index}>
+      <input 
+        type="file"
+        id={`fileInput-${index}`}
+        style={{ display: 'none' }} // input을 숨깁니다.
+        onChange={(e) => handleFileChange(e, index)} // 파일이 변경될 때의 이벤트 핸들러
+      />
+      <input
+        type="text"
+        readOnly
+        value={file ? file.name : ''} // 선택된 파일의 이름을 표시합니다.
+      />
+      <button type="button" onClick={() => handleFileButtonClick(index)}>찾아보기</button>
+    </div>
+  ))}
+</ImageRegistSection>
 
       <BusinessNameSection>
         <label>상호명</label>
         <input 
           type="text" 
-          // value={}
-          // onChange={}
+          value={businessName}
+          onChange={(e) => setBusinessName(e.target.value)}
         />
       </BusinessNameSection>
 
@@ -56,39 +84,44 @@ const StoreRegistPage = () => {
         <input 
           type="text" 
           id="fileInput" 
-          // value={}
-          // onChange={}
+          value={instagram}
+          onChange={(e) => setInstagram(e.target.value)}
         />
       </InstagramSection>
 
       <HoursSection>
         <label>영업시간</label>
         <textarea 
-          // value={}
-          // onChange={}
-          // style={{ overflowY: 'auto' }} // 내부 스크롤
+          value={businessHours}
+          onChange={(e) => setBusinessHours(e.target.value)}
         />
       </HoursSection>
 
 
       <MenuSection>
-        <label>대표메뉴</label>
-          <div>
+      <label>대표메뉴</label>
+      <MenuScrollBox>
+        {menus.map((menu, index) => (
+          <div key={index}>
             <input 
               type="text" 
+              name="name"
               placeholder="메뉴명"
-              // value={}
-              // onChange={}
+              value={menu.name}
+              onChange={e => handleMenuChange(e, index)}
             />
             <input 
               type="text" 
+              name="price"
               placeholder="가격"
-              // value={}
-              // onChange={}
-              />
+              value={menu.price}
+              onChange={e => handleMenuChange(e, index)}
+            />
           </div>
-        <button type="button">+</button>
-      </MenuSection>
+        ))}
+        </MenuScrollBox>
+        <button type="button" onClick={addMenu}>+</button>
+        </MenuSection>
 
       <SubmitButton type="submit">최종완료</SubmitButton>
     </RegistContainer>
@@ -128,7 +161,10 @@ const ImageRegistSection = styled.div`
 
   & > div {  
     display: flex;
-    
+
+      input{
+        width: 100%;
+      }
       input[type="file"] {
         display: none;
         gap: 10px;
@@ -147,8 +183,10 @@ const ImageRegistSection = styled.div`
       
       button {
         width: 10%;
+        height: 100%;
         border: 1px solid red;
         margin-bottom: 10px;
+        cursor: pointer;
       }
     
 }
@@ -198,6 +236,7 @@ margin-bottom: 15px;
 
 textarea{
   height: 100%;
+  overflow-y: auto;
 }
   
 `;
@@ -215,6 +254,14 @@ button{
   width: 100%;
   cursor: pointer;
 }
+`;
+
+const MenuScrollBox = styled.div`
+  margin-top: 5px;
+  border: 1px solid green;
+  height: 100px; /* 원하는 높이로 조정 */
+  overflow-y: auto; /* 세로 스크롤 */
+
 `;
 
 const SubmitButton = styled.button`
