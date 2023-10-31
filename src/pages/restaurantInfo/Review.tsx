@@ -1,44 +1,70 @@
 import styled from 'styled-components';
 import infoImg from './info-image.jpg';
 import Star from './Star';
+import { useState } from 'react';
+import ReportReviewModal from './ReportReviewModal';
+import ViewReviewModal from './ViewReviewModal';
 const Review = () => {
+  const [isReportReviewOpen, setIsReportReviewOpen] = useState(false);
+  const [isViewReviewOpen, setIsViewReviewOpen] = useState(false);
+
+  const openReportReviewModal = () => {
+    setIsReportReviewOpen(true);
+  };
+  const closeReportReviewModal = () => {
+    setIsReportReviewOpen(false);
+  };
+  const openViewReviewModal = () => {
+    setIsViewReviewOpen(true);
+  };
+  const closeViewReviewModal = () => {
+    setIsViewReviewOpen(false);
+  };
   return (
-    <ReviewLayout>
-      <div className="review__header">
-        <div className="review__profile">
-          <div className="profile__image">
-            <img src={infoImg} alt="" />
-          </div>
-          <div className="profile__info">
-            <div className="profile__name">nicknick</div>
-            <div className="review__stars">
-              <Star score={4} />
+    <>
+      {isReportReviewOpen && (
+        <ReportReviewModal closeModal={closeReportReviewModal} />
+      )}
+      {isViewReviewOpen && (
+        <ViewReviewModal closeModal={closeViewReviewModal} />
+      )}
+      <ReviewLayout>
+        <div className="review__header">
+          <div className="review__profile">
+            <div className="profile__image">
+              <img src={infoImg} alt="" />
+            </div>
+            <div className="profile__info">
+              <div className="profile__name">nicknick</div>
+              <div className="review__stars">
+                <Star score={4} />
+              </div>
             </div>
           </div>
+          <div className="review__buttons">
+            <button>수정</button>
+            <button>공감</button>
+            <button onClick={openReportReviewModal}>신고</button>
+            <button>삭제</button>
+          </div>
         </div>
-        <div className="review__buttons">
-          <button>수정</button>
-          <button>공감</button>
-          <button>신고</button>
-          <button>삭제</button>
+        <div className="review__content">
+          <div className="review__text">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
+            ratione, quo, provident assumenda culpa aspernatur, esse aliquam
+            excepturi qui ipsum corporis dolorum vero commodi repudiandae quos
+            in dolores ab obcaecati adipisci eveniet porro nostrum. Beatae,
+            ipsam harum quos nobis sit molestias dolor, modi, aliquam corrupti
+            consequuntur sed! Error, odio amet.
+          </div>
+          <div className="review__images">
+            <img onClick={openViewReviewModal} src={infoImg} alt="" />
+            <img src={infoImg} alt="" />
+            <img src={infoImg} alt="" />
+          </div>
         </div>
-      </div>
-      <div className="review__content">
-        <div className="review__text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-          ratione, quo, provident assumenda culpa aspernatur, esse aliquam
-          excepturi qui ipsum corporis dolorum vero commodi repudiandae quos in
-          dolores ab obcaecati adipisci eveniet porro nostrum. Beatae, ipsam
-          harum quos nobis sit molestias dolor, modi, aliquam corrupti
-          consequuntur sed! Error, odio amet.
-        </div>
-        <div className="review__images">
-          <img src={infoImg} alt="" />
-          <img src={infoImg} alt="" />
-          <img src={infoImg} alt="" />
-        </div>
-      </div>
-    </ReviewLayout>
+      </ReviewLayout>
+    </>
   );
 };
 
