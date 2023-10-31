@@ -102,7 +102,7 @@ const Cover = styled.div<IsClicked>`
   position: absolute;
   width: 100%;
   height: 93.5vh;
-  background-image: url('src/assets/images/background.jpg');
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('src/assets/images/background.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -143,7 +143,10 @@ const ArrowDownImg = styled.img`
     brightness(103%) contrast(101%);
 `;
 const SelectRegion = styled.div`
-  background-color: #fcd19c;
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('src/assets/images/background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   color: white;
   display: flex;
   flex-direction: column;
