@@ -48,7 +48,8 @@ const StarRating: React.FC = () => {
             <FaStar
               className="rating__star"
               size={star.size}
-              color={star.setStarColor(hover, rating, currentRating)}
+              // color={star.setStarColor(hover, rating, currentRating)}
+              color={currentRating <= (hover || rating) ? '#ffc107' : '#e4e5e9'}
               onMouseEnter={() => setHover(currentRating)}
               onMouseLeave={() => setHover(null)}
             />
