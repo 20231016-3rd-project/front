@@ -1,5 +1,4 @@
 import React, { useCallback, useRef } from 'react';
-import './Slide.css';
 import arrowLeft from '/src/assets/images/arrowLeft.svg';
 import arrowRight from '/src/assets/images/arrowRight.svg';
 
@@ -8,13 +7,14 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styled from 'styled-components';
 
-import {Best} from "../../model/best"
+import { Best, Bests } from '../../model/best';
+import { Link } from 'react-router-dom';
 
 interface OwnProps {
-  datas:Best
+  datas: Bests;
 }
 
-const Slide:React.FC<OwnProps> = ({datas}) => {
+const Slide: React.FC<OwnProps> = ({ datas }) => {
   const settings = {
     dots: true,
     arrows: false,
@@ -31,34 +31,34 @@ const Slide:React.FC<OwnProps> = ({datas}) => {
 
   const data = datas;
 
-  const renderData = (data) => {
+  const renderData = (data: Best) => {
     return (
-      <li className="data-list" key={Math.random()}>
-        <div className="contents">
-          <div className="imgdiv">
-            <img className="data-img" src={data.img} alt="" />
-          </div>
-          <p className="data-text">{data.text}</p>
-        </div>
-      </li>
+      <DataList key={Math.random()}>
+        <Contents to="/detailpage">
+          <ImgDiv>
+            <DataImg src={data.img} alt="" />
+          </ImgDiv>
+          <DataText>{data.text}</DataText>
+        </Contents>
+      </DataList>
     );
   };
   return (
-    <div className="carousel">
+    <Carousel>
       <Product>
         <Slider {...settings} ref={slickRef}>
           {data.map(renderData)}
         </Slider>
       </Product>
-      <div className="arrow-div">
-        <div className="prev" onClick={previous}>
-          <img className="arrow-left" src={arrowLeft} alt={'pre-arrow'} />
-        </div>
-        <div className="next" onClick={next}>
-          <img className="arrow-right" src={arrowRight} alt={'next-arrow'} />
-        </div>
-      </div>
-    </div>
+      <ArrowDiv>
+        <Prev onClick={previous}>
+          <ArrowImg src={arrowLeft} alt={'pre-arrow'} />
+        </Prev>
+        <Next onClick={next}>
+          <ArrowImg src={arrowRight} alt={'next-arrow'} />
+        </Next>
+      </ArrowDiv>
+    </Carousel>
   );
 };
 
@@ -112,4 +112,59 @@ const Product = styled.div`
     color: #f9b916;
     opacity: 0.95;
   }
+`;
+const DataList = styled.li`
+  position: relative;
+  display: flex !important;
+  justify-content: center;
+`;
+const Contents = styled(Link)`
+  width: 90%;
+  cursor: pointer;
+`;
+const ImgDiv = styled.div`
+  width: 100%;
+  height: 18.75rem;
+`;
+const DataImg = styled.img`
+  object-fit: cover;
+`;
+const DataText = styled.p`
+  width: 90%;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.8rem;
+  color: white;
+  text-shadow: 6px 6px 16px rgba(0, 0, 0, 0.9);
+  z-index: 10;
+`;
+const Carousel = styled.div`
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 300px;
+  margin-bottom: 3rem;
+`;
+const ArrowDiv = styled.div`
+  display: flex;
+`;
+const Prev = styled.div`
+  height: 43px;
+  position: absolute;
+  top: 50%;
+  left: 1%;
+`;
+const Next = styled.div`
+  height: 43px;
+  position: absolute;
+  top: 50%;
+  right: 1%;
+`;
+const ArrowImg = styled.img`
+  height: 43px;
+  cursor: pointer;
 `;

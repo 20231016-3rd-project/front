@@ -5,7 +5,7 @@ import Main from '../pages/main/Main';
 import SignIn from '../pages/signIn/SignIn';
 import SignUp from '../pages/signUp/SignUp';
 
-import AdminPage from '../pages/adminPage/AdminPage';
+import AdminPage from '../pages/adminPage/adminPage';
 import AdminChatPage from '../pages/adminPage/admin/AdminChatPage';
 import AdminSettingPage from '../pages/adminPage/admin/AdminSettingPage';
 import ReportPage from '../pages/adminPage/admin/ReportPage';
@@ -13,6 +13,8 @@ import ClosurePage from '../pages/adminPage/admin/ClosurePage';
 import StoreRegistPage from '../pages/adminPage/admin/StoreRegistPage';
 import RegistListPage from '../pages/adminPage/admin/RegistListPage';
 import RestaurantInfo from '../pages/restaurantInfo/RestaurantInfo';
+import MyPage from '../pages/myPage/MyPage';
+import DetialPage from '../pages/main/DetialPage';
 
 
 const router = createBrowserRouter([
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
       {
         path: '/restinfo',
         element: <RestaurantInfo />,
+      },
+      {
+        path: '/mypage',
+        element: <MyPage />,
+      },
+      {
+        path: '/detailpage',
+        element: <DetialPage />,
       },
       {
         path:'admin',
