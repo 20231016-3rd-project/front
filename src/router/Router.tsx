@@ -9,7 +9,9 @@ import AdminPage from '../pages/adminPage/AdminPage';
 import AdminChatPage from '../pages/adminPage/admin/AdminChatPage';
 import AdminSettingPage from '../pages/adminPage/admin/AdminSettingPage';
 import ReportPage from '../pages/adminPage/admin/ReportPage';
+import ClosurePage from '../pages/adminPage/admin/ClosurePage';
 import StoreRegistPage from '../pages/adminPage/admin/StoreRegistPage';
+import RegistListPage from '../pages/adminPage/admin/RegistListPage';
 import RestaurantInfo from '../pages/restaurantInfo/RestaurantInfo';
 
 
@@ -30,7 +32,7 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <SignUp />,
       },
-         {
+      {
         path: '/restinfo',
         element: <RestaurantInfo />,
       },
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
           {
             path: 'regist',
             element: <StoreRegistPage/>,
+          },
+          {
+            path: 'closure',
+            element: <ClosurePage/>,
+          },
+          {
+            path: 'registli',
+            element: <RegistListPage/>,
           },
           {
             path: 'report',
