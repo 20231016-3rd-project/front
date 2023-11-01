@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
+
 const { kakao } = window;
 console.log(kakao);
 console.dir(kakao);
@@ -14,6 +15,16 @@ const Map = () => {
     };
 
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+    // 마커가 표시될 위치입니다
+    const markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+
+    // 마커를 생성합니다
+    const marker = new kakao.maps.Marker({
+      position: markerPosition,
+    });
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
   }, []);
   return <MapBox id="map">Map</MapBox>;
 };
