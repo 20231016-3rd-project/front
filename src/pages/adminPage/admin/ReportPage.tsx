@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { StMain } from '../../../components/Stmain';
-import reportsData from './reports.json';
+import reportsData from '../admin/json/reports.json'
 
 const ReportPage = () => {
   const [reportData, setReportData] = useState(reportsData);
