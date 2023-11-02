@@ -6,36 +6,60 @@ import styled from 'styled-components';
 
 interface OwnProps {
   setAuth: React.Dispatch<React.SetStateAction<boolean>>;
+  admin?: boolean;
+  setAdmin?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface IsOpenProps {
   $isopen: boolean; // prefix 로 "$" 를 사용하게 되면, props 가 실제 DOM 요소에 전달되는 것을 막는다.
 }
 
-const DropDown: React.FC<OwnProps> = ({ setAuth }) => {
+const DropDown: React.FC<OwnProps> = ({ setAuth, admin, setAdmin }) => {
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
 
   const logout = () => {
     setIsOpen(!isOpen);
     setAuth(false);
+    if (setAdmin) setAdmin(false);
   };
   return (
     <DropDownBox>
-      <UserButton onClick={() => setIsOpen(!isOpen)}>
-        햄토리 회원님 <ArrowDown src={chevronDown} alt="" />
-      </UserButton>
+      {admin && (
+        <>
+          <UserButton onClick={() => setIsOpen(!isOpen)}>
+            햄토리 관리자님 <ArrowDown src={chevronDown} alt="" />
+          </UserButton>
 
-      <Menu $isopen={isOpen} ref={dropDownRef}> 
-        <MenuList>
-          <StyledLink to="/mypage" onClick={() => setIsOpen(!isOpen)}>
-            마이페이지
-          </StyledLink>
-        </MenuList>
-        <MenuList>
-          <Logout onClick={logout}>로그아웃</Logout>
-        </MenuList>
-      </Menu>
+          <Menu $isopen={isOpen} ref={dropDownRef}>
+            <MenuList>
+              <StyledLink to="/mypage" onClick={() => setIsOpen(!isOpen)}>
+                관리자페이지
+              </StyledLink>
+            </MenuList>
+            <MenuList>
+              <Logout onClick={logout}>로그아웃</Logout>
+            </MenuList>
+          </Menu>
+        </>
+      )}
+      {!admin && (
+        <>
+          <UserButton onClick={() => setIsOpen(!isOpen)}>
+            햄토리 회원님 <ArrowDown src={chevronDown} alt="" />
+          </UserButton>
+          <Menu $isopen={isOpen} ref={dropDownRef}>
+            <MenuList>
+              <StyledLink to="/mypage" onClick={() => setIsOpen(!isOpen)}>
+                마이페이지
+              </StyledLink>
+            </MenuList>
+            <MenuList>
+              <Logout onClick={logout}>로그아웃</Logout>
+            </MenuList>
+          </Menu>
+        </>
+      )}
     </DropDownBox>
   );
 };

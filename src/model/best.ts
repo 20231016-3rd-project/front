@@ -10,23 +10,23 @@ export type Bests = {
 }[];
 
 export type Restaurant = {
-  id:number;
-  name: string;
-  text2: string;
-  text3: string;
-  img: string;
-  star: number;
+  restaurantId:number;
+  restaurantName: string;
+  restaurantAddress: string;
+  restaurantWebSite: string;
+  resizedImageUrl: string;
+  avgStarRate: number;
   reviewCount: number;
   likeCount: number;
 }
 
 export type Restaurants = {
-  id:number;
-  name: string;
-  text2: string;
-  text3: string;
-  img: string;
-  star: number;
+  restaurantId:number;
+  restaurantName: string;
+  restaurantAddress: string;
+  restaurantWebSite: string;
+  resizedImageUrl: string;
+  avgStarRate: number;
   reviewCount: number;
   likeCount: number;
 }[]

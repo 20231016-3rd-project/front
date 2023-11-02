@@ -11,17 +11,18 @@ interface OwnProps {
 }
 
 const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
+  
   const renderCard = (data: Restaurant) => {
     return (
-      <RestaurantList key={data.id}>
+      <RestaurantList key={data.restaurantId}>
         <ListImgDiv>
-          <ListImg src={data.img} alt="" />
+          <ListImg src={data.resizedImageUrl} alt="" />
         </ListImgDiv>
         <RestaurantInfo>
-          <InfoTitle>{data.name}</InfoTitle>
+          <InfoTitle>{data.restaurantName}</InfoTitle>
           <RateInfo>
             <Rate>
-              <RateInfoImg src={star} alt="" /> {data.star} ({data.reviewCount})
+              <RateInfoImg src={star} alt="" /> {data.avgStarRate} ({data.reviewCount})
             </Rate>
             <Bar />
             <LikeButton>
@@ -30,11 +31,11 @@ const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
             </LikeButton>
           </RateInfo>
           <br />
-          <InfoAddr>{data.text2}</InfoAddr>
-          <InfoAddr>{data.text3}</InfoAddr>
+          <InfoAddr>{data.restaurantAddress}</InfoAddr>
+          <InfoAddr>{data.restaurantWebSite}</InfoAddr>
           <br />
           <InfoMore>
-            {data.name} 더보기 <ArrowImg src={arrowRight} alt="" />
+            {data.restaurantName} 더보기 <ArrowImg src={arrowRight} alt="" />
           </InfoMore>
         </RestaurantInfo>
       </RestaurantList>

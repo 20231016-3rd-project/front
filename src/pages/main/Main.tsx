@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import logo from '/src/assets/images/sunflower.png';
 import arrowDown from '/src/assets/images/arrowDown.svg';
 
@@ -17,6 +17,7 @@ import Slide from '../../components/Slide/Slide';
 
 import { Bests } from '../../model/best';
 import RegionSelect from '../../components/Modal/RegionSelect';
+import DetialPage from './DetialPage';
 
 interface IsClicked {
   $clicked: boolean; // prefix 로 "$" 를 사용하게 되면, props 가 실제 DOM 요소에 전달되는 것을 막는다.
@@ -75,6 +76,8 @@ const Main = () => {
             <SectionTitle>믿고 보는 맛집 리스트</SectionTitle>
             <Slide datas={datas} />
           </Section>
+          <SectionTitle2>서울 종로구 맛집</SectionTitle2>
+          <DetialPage/>
         </>
       )}
     </main>
@@ -102,7 +105,7 @@ const Cover = styled.div<IsClicked>`
   position: absolute;
   width: 100%;
   height: 93.5vh;
-  background-image: url('src/assets/images/background.jpg');
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('src/assets/images/background.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -143,7 +146,10 @@ const ArrowDownImg = styled.img`
     brightness(103%) contrast(101%);
 `;
 const SelectRegion = styled.div`
-  background-color: #fcd19c;
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('src/assets/images/background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   color: white;
   display: flex;
   flex-direction: column;
@@ -181,3 +187,10 @@ const SectionTitle = styled.div`
   margin: 0 100px;
   padding: 0 0 40px 0;
 `;
+const SectionTitle2 = styled.div`
+  color: #ff792a;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 15%;
+`;
+
