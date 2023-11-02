@@ -31,8 +31,8 @@ const DetialPage = () => {
       likeCount: 7,
     },
   ];
-  const [datas, setDatas] = useState<Restaurants>([])
-  const data:Restaurants = []
+  const [datas, setDatas] = useState<Restaurants>([]);
+  const data: Restaurants = [];
   useEffect(() => {
     const getData = async () => {
       try {
@@ -57,7 +57,7 @@ const DetialPage = () => {
       }
     };
     getData();
-  }, [datas]);
+  }, []);
 
   //리스트 정렬
   const [orderBy, setOrderBy] = useState('rate');
