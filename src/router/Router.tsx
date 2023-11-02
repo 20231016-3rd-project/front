@@ -16,7 +16,6 @@ import RestaurantInfo from '../pages/restaurantInfo/RestaurantInfo';
 import MyPage from '../pages/myPage/MyPage';
 import DetialPage from '../pages/main/DetialPage';
 
-
 const router = createBrowserRouter([
   {
     path: '/',
@@ -47,16 +46,16 @@ const router = createBrowserRouter([
         element: <DetialPage />,
       },
       {
-        path:'admin',
-        element: <AdminPage/>,
+        path: 'admin',
+        element: <AdminPage />,
         children: [
           {
             index: true,
-            element: <AdminSettingPage/>,
+            element: <AdminSettingPage />,
           },
           {
             path: 'regist',
-            element: <StoreRegistPage/>,
+            element: <StoreRegistPage />,
           },
           {
             path: 'closure',
@@ -68,11 +67,11 @@ const router = createBrowserRouter([
           },
           {
             path: 'report',
-            element: <ReportPage/>,
+            element: <ReportPage />,
           },
           {
             path: 'adminchat',
-            element:<AdminChatPage/>,
+            element: <AdminChatPage />,
           },
         ],
       },
