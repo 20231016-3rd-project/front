@@ -14,6 +14,10 @@ import StoreRegistPage from '../pages/adminPage/admin/StoreRegistPage';
 import RegistListPage from '../pages/adminPage/admin/RegistListPage';
 import RestaurantInfo from '../pages/restaurantInfo/RestaurantInfo';
 import MyPage from '../pages/myPage/MyPage';
+import MySettingPage from '../pages/myPage/my/MySettingPage';
+import MyWishListPage from '../pages/myPage/my/MyWishListPage';
+import MyReviewsPage from '../pages/myPage/my/MyReviewsPage';
+import UserInfoPage from '../pages/myPage/my/UserInfoPage';
 import DetialPage from '../pages/main/DetialPage';
 
 const router = createBrowserRouter([
@@ -38,8 +42,26 @@ const router = createBrowserRouter([
         element: <RestaurantInfo />,
       },
       {
-        path: '/mypage',
+        path: '/my',
         element: <MyPage />,
+        children: [
+          {
+            index: true,
+            element: < MySettingPage />,
+          },
+          {
+            path: 'userinfo',
+            element: <UserInfoPage />,
+          },
+          {
+            path: 'Wishlist',
+            element: <MyWishListPage/>,
+          },
+          {
+            path: 'Reviews',
+            element: <MyReviewsPage/>,
+          },
+        ],
       },
       {
         path: '/detailpage',
