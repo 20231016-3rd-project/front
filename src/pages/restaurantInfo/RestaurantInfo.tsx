@@ -43,17 +43,6 @@ const RestaurantInfo = () => {
       });
   }, []);
 
-  axios
-    .get(info.restaurantImageDtoList[0]?.restaurantOriginUrl, {
-      responseType: 'arraybuffer',
-    })
-    .then((r) => {
-      const arrayBufferView = new Uint8Array(r.data);
-      const blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
-      const imageUrl = URL.createObjectURL(blob);
-      setImages(imageUrl);
-      setIsLoading(false);
-    });
   return (
     <>
       {isWriteReviewOpen && (
@@ -63,7 +52,11 @@ const RestaurantInfo = () => {
         <RestaurantInfoLayout className="restaurant-info">
           <div className="info__images">
             <div className="images__column">
-              <img src={image} alt="" className="images__main" />
+              <img
+                src={info.restaurantImageDtoList[0]?.restaurantOriginUrl}
+                alt=""
+                className="images__main"
+              />
             </div>
             <div className="images__column">
               <img src={infoImg} alt="" />
@@ -153,17 +146,16 @@ const RestaurantInfoLayout = styled.div`
     display: flex;
     flex: 2 1 1;
     gap: 10px;
-    width: 1200px;
+    width: 1080px;
     max-width: 100%;
-    height: 850px;
   }
 
   img {
     display: block;
-    width: 280px;
+    width: 270px;
     max-width: 100%;
-    height: 380px;
     margin-bottom: 10px;
+    aspect-ratio: 10 / 12;
   }
 
   .images__column {
@@ -171,8 +163,8 @@ const RestaurantInfoLayout = styled.div`
     padding: auto;
   }
   .images__main {
-    width: 560px;
-    height: 760px;
+    width: 540px;
+    aspect-ratio: 10 / 12;
   }
 
   .info__container {
