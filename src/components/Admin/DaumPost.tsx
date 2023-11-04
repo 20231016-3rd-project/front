@@ -1,27 +1,47 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import DaumPostcode from 'react-daum-postcode';
+import DaumPostcode, { Address } from 'react-daum-postcode';
 
-const AddressSearchMap = () => {
+interface CustomAddress {
+  restaurantAdministrativeDistrict: {
+    cityName: string;
+    districtsName: string;
+    dongName: string;
+  };
+  // coords: {
+  //   lat: number;
+  //   lng: number;
+  // };
+}
+
+interface DaumPostProps {
+  onAddressSelect: (address: CustomAddress) => void;
+}
+
+declare global {
+  interface Window { kakao: any; }
+}
+
+const DaumPost: React.FC<DaumPostProps> = ({ onAddressSelect }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [areaAddress, setAreaAddress] = useState(''); // 지역 주소 (시, 도 등)
   const [detailAddress, setDetailAddress] = useState(''); // 상세 주소 (도로명, 건물명 등)
-  const [map, setMap] = useState(null); // 지도 객체 상태
-  const [marker, setMarker] = useState(null); // 마커 객체 상태
+  const [map, setMap] = useState<any>(null); // 지도 객체 상태
+  const [marker, setMarker] = useState<any>(null); // 마커 객체 상태
 
   useEffect(() => {
-    const container = document.getElementById('map'); // 지도를 담을 영역의 DOM 레퍼런스
-    const options = {
-      // 지도를 생성할 때 필요한 기본 옵션
-      center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표.
-      level: 3, // 지도의 레벨(확대, 축소 정도)
-    };
-
-    const map = new kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
-    setMap(map); // 지도 객체를 상태에 저장
+    if (window.kakao && window.kakao.maps) {
+      const container = document.getElementById('map');
+      const options = {
+        center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3,
+      };
+      const map = new window.kakao.maps.Map(container, options);
+      setMap(map);
+    }
   }, []);
 
-    const handleComplete = (data) => {
+    const handleComplete = (data: Address) => {
     const fullAddress = data.address; // 전체 주소
     let extraAddress = ''; // 추가 주소 정보
 
@@ -38,6 +58,7 @@ const AddressSearchMap = () => {
     // 지역 주소와 상세 주소 분리
     const areaAddress = `${data.sido} ${data.sigungu}`.trim(); // '시, 도' + '시, 군, 구'
     const detailAddress = fullAddress.replace(areaAddress, '').trim(); // 지역 주소를 제외한 나머지 주소
+    
 
     setAreaAddress(areaAddress);
     setDetailAddress(detailAddress + (extraAddress !== '' ? ` (${extraAddress})` : ''));
@@ -60,10 +81,24 @@ const AddressSearchMap = () => {
 
         setMarker(newMarker);
         map.setCenter(coords);
+
+        
+
+        onAddressSelect({
+          restaurantAdministrativeDistrict: {
+            cityName: data.sido, 
+            districtsName: data.sigungu, 
+            dongName: data.bname || '' 
+          },
+          // coords: { 
+          //   lat: parseFloat(result[0].y), // 문자열을 숫자로 변환
+          //   lng: parseFloat(result[0].x)  
+          // }
+        });
       }
     });
 
-    setIsModalOpen(false); // 주소가 선택되면 모달을 닫습니다.
+    setIsModalOpen(false); 
   };
 
   const handleOpenModal = () => {
@@ -98,14 +133,14 @@ const AddressSearchMap = () => {
          type="text"
          placeholder='지역 주소'
          value={areaAddress}
-         // onChange={}
+         onChange={(e) => setAreaAddress(e.target.value)} 
         />
         
         <input
          type="text"
          placeholder='상세 주소'
          value={detailAddress}
-         // onChange={}
+         onChange={(e) => setDetailAddress(e.target.value)} 
         />
       </AddressInput>
         <button type="button" onClick={handleOpenModal}>주소 찾기</button>
@@ -178,4 +213,4 @@ const KakaoMap = styled.div `
   height: 100%;
 `;
 
-export default AddressSearchMap;
+export default DaumPost;
