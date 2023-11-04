@@ -3,11 +3,13 @@ import logo from '/src/assets/images/sunflower.png';
 import styled from 'styled-components';
 import DropDown from './../../DropDown/DropDown';
 import { Link, useLocation } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 const Header: React.FC = () => {
   const [auth, setAuth] = useState(false);
   const [admin, setAdmin] = useState(false);
+  const navigate = useNavigate();
   const login = () => {
+    navigate('/signin');
     setAuth(true);
 
     setAdmin(true);
