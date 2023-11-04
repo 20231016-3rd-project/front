@@ -10,16 +10,23 @@ const SignIn = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('/sunflowerPlate/user/login', {
-        email,
-        password,
-      });
-
-      const { AccessToken, refreshToken } = response.data;
+      const response = await axios
+        .post(
+          `${import.meta.env.VITE_APP_SERVER_API}/sunflowerPlate/user/login`,
+          {
+            email,
+            password,
+          }
+        )
+        .then((r) => {
+          console.log(r);
+          const { accessToken } = r.data;
+          localStorage.setItem('accessToken', accessToken);
+        });
 
       // Here you would usually store the tokens in some kind of storage (like localStorage)
-      localStorage.setItem('accessToken', AccessToken);
-      localStorage.setItem('refreshToken', refreshToken);
+      // localStorage.setItem('accessToken', AccessToken);
+      // localStorage.setItem('refreshToken', refreshToken);
 
       navigate('/'); // Redirect to home page after successful login
     } catch (err) {
