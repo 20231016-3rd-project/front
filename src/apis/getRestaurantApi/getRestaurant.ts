@@ -6,6 +6,6 @@ export const searchRestaurant = async () => {
 };
 
 export const getRestaurantDetail = async (id: number) => {
-  const response = await axiosInstance.get(`/sunflowerPlate/restaurant/${id}`);
+  const response = await axiosInstance.get(`sunflowerPlate/restaurant/${id}`);
   return response.data;
 };
