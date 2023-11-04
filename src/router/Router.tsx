@@ -38,7 +38,7 @@ const router = createBrowserRouter([
         element: <SignUp />,
       },
       {
-        path: '/restinfo',
+        path: '/restaurant/:restaurantId',
         element: <RestaurantInfo />,
       },
       {
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: < MySettingPage />,
+            element: <MySettingPage />,
           },
           {
             path: 'userinfo',
@@ -55,11 +55,11 @@ const router = createBrowserRouter([
           },
           {
             path: 'Wishlist',
-            element: <MyWishListPage/>,
+            element: <MyWishListPage />,
           },
           {
             path: 'Reviews',
-            element: <MyReviewsPage/>,
+            element: <MyReviewsPage />,
           },
         ],
       },
@@ -81,11 +81,11 @@ const router = createBrowserRouter([
           },
           {
             path: 'closure',
-            element: <ClosurePage/>,
+            element: <ClosurePage />,
           },
           {
             path: 'registli',
-            element: <RegistListPage/>,
+            element: <RegistListPage />,
           },
           {
             path: 'report',

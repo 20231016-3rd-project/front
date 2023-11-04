@@ -8,7 +8,11 @@ import WriteReviewModal from '../../components/Review/WriteReviewModal';
 import { Button } from './Button';
 import { getRestaurantDetail } from '../../apis/getRestaurantApi/getRestaurant';
 import axios from 'axios';
+import { getMyReviews } from '../../apis/reviewApi';
+import { useParams } from 'react-router';
 const RestaurantInfo = () => {
+  const { restaurantId } = useParams();
+  console.log(typeof restaurantId);
   const [isWriteReviewOpen, setIsWriteReviewOpen] = useState(false);
   const [info, setInfo] = useState({
     restaurantName: '',
@@ -36,11 +40,10 @@ const RestaurantInfo = () => {
   };
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_APP_SERVER_API}/sunflowerPlate/restaurant/1`)
-      .then((r) => {
-        setInfo(r.data);
-      });
+    getRestaurantDetail(restaurantId).then((data) => {
+      setInfo(data);
+    });
+    getMyReviews().then((data) => console.log(data));
   }, []);
 
   return (
@@ -95,9 +98,9 @@ const RestaurantInfo = () => {
             <div className="info__menu">
               메인 메뉴
               <div>
-                {info.restaurantMenuDtoList.map((menu) => {
+                {info.restaurantMenuDtoList.map((menu, index) => {
                   return (
-                    <div>
+                    <div key={index}>
                       {menu.restaurantMenuName} {menu.restaurantMenuPrice}
                     </div>
                   );
