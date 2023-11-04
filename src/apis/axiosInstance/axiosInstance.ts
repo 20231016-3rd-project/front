@@ -3,7 +3,7 @@ import { getCookie, setCookie } from '../../utils/cookie';
 
 const createInstance = (contentType) => {
   const config = {
-    baseURL: import.meta.env.VITE_SERVER_API,
+    baseURL: import.meta.env.VITE_APP_SERVER_API,
     timeout: 3000,
     headers: {
       'Content-Type': contentType,

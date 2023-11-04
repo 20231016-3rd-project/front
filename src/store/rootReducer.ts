@@ -1,8 +1,10 @@
-import { combineReducers } from "@reduxjs/toolkit";
+import { combineReducers } from '@reduxjs/toolkit';
 import restaurantReducer from './slices/restaurantSlice';
+import regionReducer from './slices/regionSlice';
 
 const reducer = combineReducers({
-    restaurantReducer
+  restaurantReducer,
+  regionReducer,
 });
 
 export type ReducerType = ReturnType<typeof reducer>;

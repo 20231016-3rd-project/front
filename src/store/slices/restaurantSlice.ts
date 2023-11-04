@@ -1,16 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
-
 export const restaurantSlice = createSlice({
   name: 'restaurant',
-  initialState : {restInfo:[]},
+  initialState: { restInfo: [] },
   reducers: {
     getAllRestaurants(state, action) {
-      state.restInfo = action.payload.data;
+      state.restInfo = action.payload;
     },
     getSearchRestaurants(state, action) {
-      state.restInfo = action.payload.data;
+      state.restInfo = action.payload;
     },
   },
 });

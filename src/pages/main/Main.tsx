@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import logo from '/src/assets/images/sunflower.png';
 import arrowDown from '/src/assets/images/arrowDown.svg';
 
@@ -18,10 +18,9 @@ import Slide from '../../components/Slide/Slide';
 import { Bests } from '../../model/best';
 import RegionSelect from '../../components/Modal/RegionSelect';
 import DetialPage from './DetialPage';
-
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../store/rootReducer';
-import { getAllRestaurants, getSearchRestaurants } from "../../store/slices/restaurantSlice"
+
 interface IsClicked {
   $clicked: boolean; // prefix 로 "$" 를 사용하게 되면, props 가 실제 DOM 요소에 전달되는 것을 막는다.
 }
@@ -29,8 +28,7 @@ interface IsClicked {
 const Main = () => {
   const dispatch = useDispatch();
 
-  const restaurants = useSelector((state:ReducerType) => console.log(state.restaurant.restInfo));
-  console.log(restaurants);
+  const region = useSelector((state: ReducerType) => state.region.regionInfo);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -56,9 +54,26 @@ const Main = () => {
     setClicked(true);
   };
 
+  let city = '서울';
+  let district;
+  let dong;
+
+  if (region.city === '서울특별시') {
+    city = '서울';
+  }
+  if (region.district === '전체') {
+    district = '';
+  } else {
+    district = region.district;
+  }
+  if (region.dong === '전체') {
+    dong = '';
+  } else {
+    dong = region.dong;
+  }
+
   return (
     <main>
-      <button onClick={()=>{dispatch(getAllRestaurants({day:1}))}}>클릭</button>
       <Cover $clicked={clicked}>
         <CoverTitle>
           <img src={logo} alt="" />
@@ -85,7 +100,9 @@ const Main = () => {
             <SectionTitle>믿고 보는 맛집 리스트</SectionTitle>
             <Slide datas={datas} />
           </Section>
-          <SectionTitle2>서울 종로구 맛집</SectionTitle2>
+          <SectionTitle2>
+            {city} {district} {dong} 맛집
+          </SectionTitle2>
           <DetialPage />
         </>
       )}
