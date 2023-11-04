@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './SignIn.styles';
 
 const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('user1@naver.com');
+  const [password, setPassword] = useState('user1234');
+  const [emailAdmin, setEmailAdmin] = useState('admin@test.com');
+  const [passwordAdmin, setPasswordAdmin] = useState('administrator');
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (email: string, password: string) => {
     try {
       const response = await axios
         .post(
@@ -37,6 +39,7 @@ const SignIn = () => {
 
   return (
     <S.Container>
+      유저 로그인입니다.
       <S.Input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -49,7 +52,23 @@ const SignIn = () => {
         placeholder="Password"
         type="password"
       />
-      <S.Button onClick={handleLogin}>Login</S.Button>
+      <S.Button onClick={() => handleLogin(email, password)}>Login</S.Button>
+      관리자 로그인입니다.
+      <S.Input
+        value={emailAdmin}
+        onChange={(e) => setEmailAdmin(e.target.value)}
+        placeholder="Email"
+        type="email"
+      />
+      <S.Input
+        value={passwordAdmin}
+        onChange={(e) => setPasswordAdmin(e.target.value)}
+        placeholder="Password"
+        type="password"
+      />
+      <S.Button onClick={() => handleLogin(emailAdmin, passwordAdmin)}>
+        Login
+      </S.Button>
     </S.Container>
   );
 };

@@ -1,47 +1,70 @@
+import axios from 'axios';
+
 import styled from 'styled-components';
 import { StMain } from '../../../components/Stmain';
 import DaumPost from '../../../components/Admin/DaumPost';
-import { useState } from 'react';
+import { useState,ChangeEvent, FormEvent } from 'react';
+import { IMenu, IAddressData} from '../admin/types/storeregist'
 
 
 const StoreRegistPage = () => {
+  const [businessName, setBusinessName] = useState<string>(""); // 식당이름
+  const [tell, setTell] = useState<string>(""); //식당전화번호
+  const [menus, setMenus] = useState<IMenu[]>([{ name: "", price: 0 }]); //식당메뉴
+  const [files, setFiles] = useState<(File | null)[]>(Array(5).fill(null)); //이미지파일
+  const [instagram, setInstagram] = useState<string>(""); // 웹사이트주소
+  const [businessHours, setBusinessHours] = useState<string>(""); //영업시간
+  const [addressData, setAddressData] = useState<IAddressData | null>(null); // 주소 
 
-  const [menus, setMenus] = useState([{ name: "", price: "" }]);// 메뉴명 
-  const [files, setFiles] = useState(Array(5).fill(null)); //이미지파일
-  const [businessName, setBusinessName] = useState("");//상호명
-  const [instagram, setInstagram] = useState("");//인스타그램
-  const [businessHours, setBusinessHours] = useState(""); //영업시간 
+  const handleAddressSelect = (data: IAddressData) => {
+    setAddressData(data);
+  };
 
-  const handleFileChange = (e, index) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>,  index: number) => {
     const newFiles = [...files]; 
-    newFiles[index] = e.target.files[0]; 
+    const file = e.target.files ? e.target.files[0] : null;
+    newFiles[index] = file;
     setFiles(newFiles); 
   };
 
-  const handleFileButtonClick = (index) => {
-    document.getElementById(`fileInput-${index}`).click();
+  const handleFileButtonClick = (index: number) => {
+    const fileInput = document.getElementById(`fileInput-${index}`) as HTMLInputElement;
+  fileInput?.click();
   };
-  
-
-
   
   const addMenu = () => {
-    setMenus([...menus, { name: "", price: "" }]);
+    setMenus([...menus, { name: "", price: 0 }]);
   };
+
+  const handleMenuChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
+  const { name, value } = e.target;
+  const list = [...menus];
+
+  if (name === 'price') {
+    list[index].price = Number(value);
+  } else {
+    list[index][name as 'name'] = value;
+  }
+  
+  setMenus(list);
+};
 
   
-  const handleMenuChange = (e, index) => {
-    const { name, value } = e.target;
-    const list = [...menus];
-    list[index][name] = value;
-    setMenus(list);
+const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); 
+  
+    console.log('Menus:', menus);
+    console.log('Files:', files);
+    console.log('Business Name:', businessName);
+    console.log('Instagram:', instagram);
+    console.log('Business Hours:', businessHours);
+    console.log('Address Data:', addressData);
+  
   };
-
-
 
   return (
     <StMain>
-    <RegistContainer>
+    <RegistContainer onSubmit={handleSubmit}>
       <MainTextBox>
         <h1>영업점등록</h1>ㅣ<span>당신의 식당을 등록하세요!</span>
       </MainTextBox>
@@ -54,12 +77,12 @@ const StoreRegistPage = () => {
         type="file"
         id={`fileInput-${index}`}
         style={{ display: 'none' }} // input을 숨깁니다.
-        onChange={(e) => handleFileChange(e, index)} // 파일이 변경될 때의 이벤트 핸들러
+        onChange={(e) => handleFileChange(e, index)} 
       />
       <input
         type="text"
         readOnly
-        value={file ? file.name : ''} // 선택된 파일의 이름을 표시합니다.
+        value={file ? file.name : ''} 
       />
       <button type="button" onClick={() => handleFileButtonClick(index)}>찾아보기</button>
     </div>
@@ -75,15 +98,23 @@ const StoreRegistPage = () => {
         />
       </BusinessNameSection>
 
+      <TellSection>
+        <label>전화번호</label>
+        <input 
+          type="text" 
+          value={tell}
+          onChange={(e) => setTell(e.target.value)}
+        />
+      </TellSection>
+
       
      
-      <DaumPost/>
+      <DaumPost onAddressSelect={handleAddressSelect}/>
       
       <InstagramSection>
         <label>인스타그램</label>
         <input 
           type="text" 
-          id="fileInput" 
           value={instagram}
           onChange={(e) => setInstagram(e.target.value)}
         />
@@ -192,6 +223,15 @@ const ImageRegistSection = styled.div`
 }
 `;
 
+const TellSection = styled.div`
+  border: 1px solid red;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  gap: 10px;
+`;
+
 const BusinessNameSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -199,18 +239,6 @@ const BusinessNameSection = styled.div`
   border: 1px solid red;
   width: 95%;
   margin-bottom: 15px;
-  
-`;
-
-const AdressSection = styled.div `
-  border: 1px solid red;
-  width: 95%;
-  margin-bottom: 15px;
-   & > div { 
-      margin-top: 10px;
-      height: 100px;
-      border: 1px solid blue;
-    }
   
 `;
 

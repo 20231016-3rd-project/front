@@ -21,6 +21,7 @@ const DropDown: React.FC<OwnProps> = ({ setAuth, admin, setAdmin }) => {
   const logout = () => {
     setIsOpen(!isOpen);
     setAuth(false);
+    localStorage.clear();
     if (setAdmin) setAdmin(false);
   };
   return (
