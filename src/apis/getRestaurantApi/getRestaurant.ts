@@ -10,29 +10,7 @@ export const getProductDetail = async (id: number) => {
   return response.data;
 };
 
-// export const searchRestaurantCity = async (
-//   keyword?: string,
-//   page?: number,
-//   city?: string,
-//   sort?: string
-// ) => {
-//   const response = await axiosInstance.get(
-//     `sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}`
-//   );
-//   return response.data.content;
-// };
-// export const searchRestaurantDistrict = async (
-//   keyword?: string,
-//   page?: number,
-//   city?: string,
-//   district?: string,
-//   sort?: string
-// ) => {
-//   const response = await axiosInstance.get(
-//     `sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}&district=${district}`
-//   );
-//   return response.data.content;
-// };
+
 export const searchRestaurant = async (
   keyword: string,
   page: number,
@@ -73,9 +51,11 @@ export const searchRestaurant = async (
       );
     }
   }
-  // const response = await axiosInstance.get(
-  //   `sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}&district=${district}&dong=${dong}`
-  // );
-  // console.log('response', response.data);
+    return response.data;
+};
+
+
+export const getRestaurantDetail = async (id: string) => {
+  const response = await axiosInstance.get(`sunflowerPlate/restaurant/${id}`);
   return response.data;
 };

@@ -1,5 +1,6 @@
 import styled, {css} from 'styled-components';
 import heart from '../../../assets/images/heart.svg';
+import { Link } from 'react-router-dom';
 
 const AdminSettingPage: React.FC = () => { 
   return (
@@ -16,27 +17,43 @@ const AdminSettingPage: React.FC = () => {
     <SecondDiv>
       
       <LinkSection>
+      <Link to="/admin/regist">
       <LinkIcon src={heart} alt=""/>
         <SetText2>
-          <h1>닉네임</h1>
+          <h1>가게등록</h1>
           <h1>몰라몰라몰라</h1>
         </SetText2>
+        </Link>
       </LinkSection>
 
       <LinkSection>
+      <Link to="/admin/report">
         <SetText2>
         <LinkIcon src={heart} alt=""/>
-          <h1>닉네임</h1>
+          <h1>신고내역</h1>
           <h1>몰라몰라몰라</h1>
         </SetText2>
+        </Link>
       </LinkSection>
       
       <LinkSection>
+      <Link to="/admin/adminchat">
         <SetText2>
         <LinkIcon src={heart} alt=""/>
-          <h1>닉네임</h1>
+          <h1>가게등록내역</h1>
           <h1>몰라몰라몰라</h1>
         </SetText2>
+        </Link>
+      </LinkSection>
+
+      <LinkSection>
+      <Link to="/admin/adminchat">
+        <SetText2>
+        <LinkIcon src={heart} alt=""/>
+          <h1>채팅상담</h1>
+          <h1>몰라몰라몰라</h1>
+        </SetText2>
+        </Link>
       </LinkSection>
     </SecondDiv>
 
@@ -59,7 +76,6 @@ const SetPosition = css`
 
 const VerticalContainer = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   justify-content: space-between; 
