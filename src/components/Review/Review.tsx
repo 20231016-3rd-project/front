@@ -4,7 +4,7 @@ import Star from '../Star/Star';
 import { useState } from 'react';
 import ReportReviewModal from './ReportReviewModal';
 import ViewReviewModal from './ViewReviewModal';
-const Review = () => {
+const Review = ({ review }) => {
   const [isReportReviewOpen, setIsReportReviewOpen] = useState(false);
   const [isViewReviewOpen, setIsViewReviewOpen] = useState(false);
 
@@ -37,7 +37,7 @@ const Review = () => {
             <div className="profile__info">
               <div className="profile__name">nicknick</div>
               <div className="review__stars">
-                <Star score={4} />
+                <Star score={review.reviewStarRating} />
               </div>
             </div>
           </div>
@@ -49,18 +49,17 @@ const Review = () => {
           </div>
         </div>
         <div className="review__content">
-          <div className="review__text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-            ratione, quo, provident assumenda culpa aspernatur, esse aliquam
-            excepturi qui ipsum corporis dolorum vero commodi repudiandae quos
-            in dolores ab obcaecati adipisci eveniet porro nostrum. Beatae,
-            ipsam harum quos nobis sit molestias dolor, modi, aliquam corrupti
-            consequuntur sed! Error, odio amet.
-          </div>
+          <div className="review__text">{review.reviewContent}</div>
           <div className="review__images">
-            <img onClick={openViewReviewModal} src={infoImg} alt="" />
-            <img src={infoImg} alt="" />
-            <img src={infoImg} alt="" />
+            {review.reviewImageDto?.map((image) => {
+              return (
+                <img
+                  onClick={openViewReviewModal}
+                  src={image.reviewResizeUrl}
+                  alt=""
+                />
+              );
+            })}
           </div>
         </div>
       </ReviewLayout>

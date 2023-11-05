@@ -38,12 +38,12 @@ const RestaurantInfo = () => {
   const closeWriteReviewModal = () => {
     setIsWriteReviewOpen(false);
   };
-
+  const [reviewArray, setReviewArray] = useState([]);
   useEffect(() => {
     getRestaurantDetail(restaurantId).then((data) => {
       setInfo(data);
     });
-    getMyReviews().then((data) => console.log(data));
+    getMyReviews().then((data) => setReviewArray(data));
   }, []);
 
   return (
@@ -117,8 +117,9 @@ const RestaurantInfo = () => {
               </div>
             </div>
             <div className="reviews__list">
-              <Review />
-              <Review />
+              {/* {(reviewArray.length > 0) && reviewArray.map{() => {
+                return <Review key={index}/>
+              }}} */}
             </div>
           </div>
           <StarRating />
