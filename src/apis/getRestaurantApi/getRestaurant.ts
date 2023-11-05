@@ -5,34 +5,11 @@ export const allRestaurant = async () => {
   return response.data.content;
 };
 
-export const getProductDetail = async (id: number) => {
+export const getRestaurantDetail = async (id: string) => {
   const response = await axiosInstance.get(`sunflowerPlate/restaurant/${id}`);
   return response.data;
 };
 
-// export const searchRestaurantCity = async (
-//   keyword?: string,
-//   page?: number,
-//   city?: string,
-//   sort?: string
-// ) => {
-//   const response = await axiosInstance.get(
-//     `sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}`
-//   );
-//   return response.data.content;
-// };
-// export const searchRestaurantDistrict = async (
-//   keyword?: string,
-//   page?: number,
-//   city?: string,
-//   district?: string,
-//   sort?: string
-// ) => {
-//   const response = await axiosInstance.get(
-//     `sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}&district=${district}`
-//   );
-//   return response.data.content;
-// };
 export const searchRestaurant = async (
   keyword: string,
   page: number,

@@ -23,30 +23,30 @@ const createInstance = (contentType) => {
     }
   );
 
-  instance.interceptors.response.use(
-    (response) => {
-      const { accessToken, refreshToken, accessTokenExpireDate } =
-        response.data;
+  // instance.interceptors.response.use(
+  //   (response) => {
+  //     const { accessToken, refreshToken, accessTokenExpireDate } =
+  //       response.data;
 
-      if (accessToken && accessTokenExpireDate) {
-        const date = new Date(accessTokenExpireDate);
-        const expires = date.toUTCString();
-        setCookie('accessToken', accessToken, expires);
-      }
+  //     if (accessToken && accessTokenExpireDate) {
+  //       const date = new Date(accessTokenExpireDate);
+  //       const expires = date.toUTCString();
+  //       setCookie('accessToken', accessToken, expires);
+  //     }
 
-      const expires = new Date();
-      expires.setDate(expires.getDate() + 7);
-      const expiresStr = expires.toUTCString();
+  //     const expires = new Date();
+  //     expires.setDate(expires.getDate() + 7);
+  //     const expiresStr = expires.toUTCString();
 
-      if (refreshToken && expiresStr) {
-        setCookie('refreshToken', refreshToken, expiresStr);
-      }
-      return response;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
+  //     if (refreshToken && expiresStr) {
+  //       setCookie('refreshToken', refreshToken, expiresStr);
+  //     }
+  //     return response;
+  //   },
+  //   (error) => {
+  //     return Promise.reject(error);
+  //   }
+  // );
   return instance;
 };
 export const axiosInstance = createInstance('application/json');
