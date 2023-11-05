@@ -13,7 +13,7 @@ const createInstance = (contentType) => {
 
   instance.interceptors.request.use(
     (config) => {
-      const token = getCookie('accessToken');
+      const token = localStorage.getItem('accessToken');
 
       if (token) config.headers['X-AUTH-TOKEN'] = `${token}`;
       return config;

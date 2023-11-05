@@ -12,7 +12,7 @@ export default ({ mode }) => {
         minify: true,
         inject: {
           data: {
-            kakaoappkey: env.VITE_APP_KAKAOMAP_API_KEY,
+            kakaoAppKey: env.VITE_APP_KAKAOMAP_API_KEY,
           },
         },
       }),

@@ -10,6 +10,8 @@ export const getRestaurantDetail = async (id: string) => {
   return response.data;
 };
 
+
+
 export const searchRestaurant = async (
   keyword: string,
   page: number,
@@ -50,9 +52,5 @@ export const searchRestaurant = async (
       );
     }
   }
-  // const response = await axiosInstance.get(
-  //   `sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}&district=${district}&dong=${dong}`
-  // );
-  // console.log('response', response.data);
-  return response.data;
+    return response.data;
 };
