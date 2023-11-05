@@ -5,23 +5,27 @@ interface OwnProps {
   column: string;
   region: string;
   onClick?: (e) => void;
+  name: string;
 }
 interface StyledProps {
   $column: string;
   $region: string;
+  $name: string;
 }
 
 const DistrictSelectButton: React.FC<OwnProps> = ({
   column,
   region,
   onClick,
+  name,
 }) => {
   return (
     <DistrictButton
       $column={column}
       $region={region}
-      value={region}
+      $name={name}
       onClick={onClick}
+      value={name}
     >
       {region}
     </DistrictButton>
@@ -46,7 +50,7 @@ const DistrictButton = styled.button<StyledProps>`
   border: transparent;
 
   ${(props) =>
-    props.$column === props.$region
+    props.$column === props.$name
       ? `color: rgb(255, 255, 255);
 background-color: #da9d00;
 font-weight: 500;`

@@ -3,15 +3,22 @@ import React, { useState } from 'react';
 import close from '/src/assets/images/close.svg';
 import DistrictSelectButton from '../Buttons/DistrictSelectButton';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReducerType } from '../../store/rootReducer';
+import { getRegion } from '../../store/slices/regionSlice';
 
 interface OwnProps {
   closeModal?: () => void;
 }
 
 const RegionSelect: React.FC<OwnProps> = ({ closeModal }) => {
-  const [first, setFirst] = useState<string>('서울');
+  const dispatch = useDispatch();
+  const region = useSelector((state: ReducerType) => state.region.regionInfo);
+
+  const [first, setFirst] = useState<string>('서울특별시');
   const [second, setSecond] = useState<string>('전체');
   const [third, setThird] = useState<string>('전체');
+
   const handleFirst = (e) => {
     setFirst(e.target.value);
     setSecond('전체');
@@ -23,6 +30,11 @@ const RegionSelect: React.FC<OwnProps> = ({ closeModal }) => {
   };
   const handleThird = (e) => {
     setThird(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    dispatch(getRegion({ city: first, district: second, dong: third }));
+    closeModal && closeModal();
   };
 
   return (
@@ -47,13 +59,7 @@ const RegionSelect: React.FC<OwnProps> = ({ closeModal }) => {
                   column={first}
                   region="서울"
                   onClick={handleFirst}
-                />
-              </li>
-              <li>
-                <DistrictSelectButton
-                  column={first}
-                  region="경기"
-                  onClick={handleFirst}
+                  name="서울특별시"
                 />
               </li>
             </DistrictList>
@@ -64,15 +70,17 @@ const RegionSelect: React.FC<OwnProps> = ({ closeModal }) => {
                   column={second}
                   region="전체"
                   onClick={handleSecond}
+                  name="전체"
                 />
               </li>
-              {first === '서울' && (
+              {first === '서울특별시' && (
                 <>
                   <li>
                     <DistrictSelectButton
                       column={second}
                       region="종로구"
                       onClick={handleSecond}
+                      name="종로구"
                     />
                   </li>
                   <li>
@@ -80,6 +88,7 @@ const RegionSelect: React.FC<OwnProps> = ({ closeModal }) => {
                       column={second}
                       region="마포구"
                       onClick={handleSecond}
+                      name="마포구"
                     />
                   </li>
                   <li>
@@ -87,17 +96,7 @@ const RegionSelect: React.FC<OwnProps> = ({ closeModal }) => {
                       column={second}
                       region="중구"
                       onClick={handleSecond}
-                    />
-                  </li>
-                </>
-              )}
-              {first === '경기' && (
-                <>
-                  <li>
-                    <DistrictSelectButton
-                      column={second}
-                      region="수원"
-                      onClick={handleSecond}
+                      name="중구"
                     />
                   </li>
                 </>
@@ -111,6 +110,7 @@ const RegionSelect: React.FC<OwnProps> = ({ closeModal }) => {
                       column={third}
                       region="전체"
                       onClick={handleThird}
+                      name="전체"
                     />
                   </li>
                   <li>
@@ -118,6 +118,7 @@ const RegionSelect: React.FC<OwnProps> = ({ closeModal }) => {
                       column={third}
                       region="1번동"
                       onClick={handleThird}
+                      name="1번동"
                     />
                   </li>
                   <li>
@@ -125,6 +126,7 @@ const RegionSelect: React.FC<OwnProps> = ({ closeModal }) => {
                       column={third}
                       region="2번동"
                       onClick={handleThird}
+                      name="2번동"
                     />
                   </li>
                   <li>
@@ -132,6 +134,7 @@ const RegionSelect: React.FC<OwnProps> = ({ closeModal }) => {
                       column={third}
                       region="3번동"
                       onClick={handleThird}
+                      name="3번동"
                     />
                   </li>
                   <li>
@@ -139,6 +142,7 @@ const RegionSelect: React.FC<OwnProps> = ({ closeModal }) => {
                       column={third}
                       region="4번동"
                       onClick={handleThird}
+                      name="4번동"
                     />
                   </li>
                 </>
@@ -147,7 +151,7 @@ const RegionSelect: React.FC<OwnProps> = ({ closeModal }) => {
           </DistrictListBox>
           <ButtonBox>
             <CancelButton onClick={closeModal}>취소</CancelButton>
-            <SubmitButton>선택 완료</SubmitButton>
+            <SubmitButton onClick={handleSubmit}>선택 완료</SubmitButton>
           </ButtonBox>
 
           <CloseButton onClick={closeModal}>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import logo from '/src/assets/images/sunflower.png';
 import arrowDown from '/src/assets/images/arrowDown.svg';
 
@@ -18,12 +18,18 @@ import Slide from '../../components/Slide/Slide';
 import { Bests } from '../../model/best';
 import RegionSelect from '../../components/Modal/RegionSelect';
 import DetialPage from './DetialPage';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReducerType } from '../../store/rootReducer';
 
 interface IsClicked {
   $clicked: boolean; // prefix 로 "$" 를 사용하게 되면, props 가 실제 DOM 요소에 전달되는 것을 막는다.
 }
 
 const Main = () => {
+  const dispatch = useDispatch();
+
+  const region = useSelector((state: ReducerType) => state.region.regionInfo);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const openModalHandler = () => {
@@ -47,6 +53,24 @@ const Main = () => {
   const handleCover = () => {
     setClicked(true);
   };
+
+  let city = '서울';
+  let district;
+  let dong;
+
+  if (region.city === '서울특별시') {
+    city = '서울';
+  }
+  if (region.district === '전체') {
+    district = '';
+  } else {
+    district = region.district;
+  }
+  if (region.dong === '전체') {
+    dong = '';
+  } else {
+    dong = region.dong;
+  }
 
   return (
     <main>
@@ -76,8 +100,10 @@ const Main = () => {
             <SectionTitle>믿고 보는 맛집 리스트</SectionTitle>
             <Slide datas={datas} />
           </Section>
-          <SectionTitle2>서울 종로구 맛집</SectionTitle2>
-          <DetialPage/>
+          <SectionTitle2>
+            {city} {district} {dong} 맛집
+          </SectionTitle2>
+          <DetialPage />
         </>
       )}
     </main>
@@ -105,7 +131,8 @@ const Cover = styled.div<IsClicked>`
   position: absolute;
   width: 100%;
   height: 93.5vh;
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('src/assets/images/background.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('src/assets/images/background.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -146,7 +173,8 @@ const ArrowDownImg = styled.img`
     brightness(103%) contrast(101%);
 `;
 const SelectRegion = styled.div`
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('src/assets/images/background.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('src/assets/images/background.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -193,4 +221,3 @@ const SectionTitle2 = styled.div`
   font-weight: 600;
   margin: 0 15%;
 `;
-
