@@ -18,7 +18,7 @@ const OrderByButton: React.FC<OwnProps> = ({
 }) => {
   let text = '';
   switch (standard) {
-    case 'rate':
+    case 'rateDesc':
       text = '평점순';
       break;
     case 'review':

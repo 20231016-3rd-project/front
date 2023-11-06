@@ -8,10 +8,8 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <>
-    <Provider store={store}>
-      <GlobalStyle />
-      <RouterProvider router={router} />
-    </Provider>
-  </>
+  <Provider store={store}>
+    <GlobalStyle />
+    <RouterProvider router={router} />
+  </Provider>
 );
