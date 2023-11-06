@@ -1,52 +1,28 @@
-import axios from 'axios';
+// AuthService.ts
 
-const API_URL = 'http://3.38.32.91:80';
+import { axiosInstance } from '../apis/axiosInstance/axiosInstance';
 
-export const signUp = async (
-  email: string,
-  password: string,
-  nickname: string,
-  phone: string
-) => {
-  const response = await axios.post(`${API_URL}/sunflowerPlate/user/signup`, {
-    email,
-    password,
-    nickname,
-    phone,
-  });
+export interface SignupRequest {
+  email: string;
+  password: string;
+  nickname: string;
+  phone: string;
+}
+
+// 회원가입 요청 함수
+export const signup = async (data: SignupRequest): Promise<any> => {
+  const response = await axiosInstance.post('/signup', data);
   return response.data;
 };
 
-export const checkEmailDuplication = async (email: string) => {
-  const response = await axios.post(
-    `${API_URL}/sunflowerPlate/user/emailcheck`,
-    {
-      email,
-    }
-  );
+// 이메일 중복 확인 함수
+export const checkEmailDuplication = async (email: string): Promise<any> => {
+  const response = await axiosInstance.post('/emailcheck', { email });
   return response.data;
 };
 
-export const checkNicknameDuplication = async (nickname: string) => {
-  const response = await axios.post(
-    `${API_URL}/sunflowerPlate/user/nickcheck`,
-    {
-      nickname,
-    }
-  );
-  return response.data;
-};
-
-export const refreshAccessToken = async () => {
-  const refreshToken = localStorage.getItem('refreshToken');
-  const response = await axios.post(
-    `${API_URL}/sunflowerPlate/user/reissue`,
-    {},
-    {
-      headers: {
-        Cookie: `refreshToken=${refreshToken}`,
-      },
-    }
-  );
+// 닉네임 중복 확인 함수
+export const checkNicknameDuplication = async (nickname: string): Promise<any> => {
+  const response = await axiosInstance.post('/nickcheck', { nickname });
   return response.data;
 };
