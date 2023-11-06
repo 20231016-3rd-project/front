@@ -4,11 +4,11 @@ import GlobalStyle from './styles/globalStyle';
 import router from './router/Router';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import {store} from './app/store'; // store 파일 경로를 정확하게 지정해야 합니다.
+import {store} from './app/store'; 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Provider store={store}> {/* Redux Store를 제공 */}
+    <Provider store={store}>
       <GlobalStyle />
       <RouterProvider router={router} />
     </Provider>
