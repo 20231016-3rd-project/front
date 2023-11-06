@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 import infoImg from '../../pages/restaurantInfo/info-image.jpg';
 import Star from '../Star/Star';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReportReviewModal from './ReportReviewModal';
 import ViewReviewModal from './ViewReviewModal';
+import { getMyProfile } from '../../apis/profileApi';
 const Review = ({ review }) => {
   const [isReportReviewOpen, setIsReportReviewOpen] = useState(false);
   const [isViewReviewOpen, setIsViewReviewOpen] = useState(false);
-
+  const [profile, setProfile] = useState({});
   const openReportReviewModal = () => {
     setIsReportReviewOpen(true);
   };
@@ -20,10 +21,18 @@ const Review = ({ review }) => {
   const closeViewReviewModal = () => {
     setIsViewReviewOpen(false);
   };
+  console.log(review);
+
+  useEffect(() => {
+    getMyProfile().then((r) => setProfile(r));
+  }, []);
   return (
     <>
       {isReportReviewOpen && (
-        <ReportReviewModal closeModal={closeReportReviewModal} />
+        <ReportReviewModal
+          closeModal={closeReportReviewModal}
+          reviewId={review.reviewId}
+        />
       )}
       {isViewReviewOpen && (
         <ViewReviewModal closeModal={closeViewReviewModal} />
@@ -32,10 +41,12 @@ const Review = ({ review }) => {
         <div className="review__header">
           <div className="review__profile">
             <div className="profile__image">
-              <img src={infoImg} alt="" />
+              <img src={profile.memberProfilePicture} alt="" />
             </div>
             <div className="profile__info">
-              <div className="profile__name">nicknick</div>
+              <div className="profile__name">
+                {review.memberId || profile.nickName}
+              </div>
               <div className="review__stars">
                 <Star score={review.reviewStarRating} />
               </div>

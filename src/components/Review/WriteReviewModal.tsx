@@ -4,8 +4,21 @@ import styled from 'styled-components';
 import infoImg from '../../pages/restaurantInfo/info-image.jpg';
 import StarRating from '../Star/StarRating';
 import ImageInput from '../../pages/restaurantInfo/ImageInput';
-
+import { useState } from 'react';
+import { postReview } from '../../apis/reviewApi';
+import { useParams } from 'react-router';
 const WriteReviewModal = ({ closeModal }) => {
+  const [rating, setRating] = useState<number | null>(null);
+  const [content, setContent] = useState('');
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const { restaurantId } = useParams();
+
+  const contentChangeHandler = (e) => {
+    setContent(e.target.value);
+  };
+
+  const formData = new FormData();
+
   return (
     <Modal closeModal={closeModal}>
       <WriteReviewStyle>
@@ -17,7 +30,7 @@ const WriteReviewModal = ({ closeModal }) => {
             <div className="profile__info">
               <div className="profile__name">nicknick</div>
               <div className="review__stars">
-                <StarRating />
+                <StarRating rating={rating} setRating={setRating} />
               </div>
             </div>
           </div>
@@ -33,17 +46,39 @@ const WriteReviewModal = ({ closeModal }) => {
               id=""
               cols="100"
               rows="10"
+              value={content}
+              onChange={contentChangeHandler}
             ></textarea>
           </div>
         </div>
         <div className="modal__footer">
           <div>
-            <ImageInput />
+            <ImageInput
+              selectedFiles={selectedFiles}
+              setSelectedFiles={setSelectedFiles}
+            />
           </div>
           <button
             onClick={() => {
               //별점 유효성 검사
               //post
+              selectedFiles.forEach((file) => {
+                if (file) {
+                  formData.append('imageFile', file);
+                }
+              });
+              const reviewSaveDto = {
+                reviewContent: content,
+                reviewStarRating: rating,
+              };
+              const json = JSON.stringify(reviewSaveDto);
+              const dataBlob = new Blob([json], {
+                type: 'application/json',
+              });
+              formData.append('reviewSaveDto', dataBlob);
+              postReview(restaurantId, formData).then((r) => console.log(r));
+              console.log('form', formData.get('imageFile'));
+              console.log('form', formData.get('reviewSaveDTO'));
               closeModal();
             }}
           >

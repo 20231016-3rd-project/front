@@ -29,6 +29,7 @@ const RestaurantInfo = () => {
     },
     restaurantMenuDtoList: [],
     restaurantImageDtoList: [],
+    reviewReturnDtoPage: { content: [] },
   });
   const [image, setImages] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -120,6 +121,9 @@ const RestaurantInfo = () => {
               {/* {(reviewArray.length > 0) && reviewArray.map{() => {
                 return <Review key={index}/>
               }}} */}
+              {info.reviewReturnDtoPage.content.map((review) => {
+                return <Review review={review} />;
+              })}
             </div>
           </div>
           <StarRating />

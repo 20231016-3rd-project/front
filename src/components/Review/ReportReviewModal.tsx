@@ -1,34 +1,71 @@
-import React from 'react';
+import { useState } from 'react';
 import Modal from '../Modal/Modal';
 import styled from 'styled-components';
+import { reportReview } from '../../apis/reviewApi';
+const ReportReviewModal = ({ closeModal, reviewId }) => {
+  const category = [
+    { option1: '관련없는 내용' },
+    { option2: '상업적 홍보' },
+    { option3: '개인정보 유출 위험' },
+    { option4: '저작권 불법 도용(타인이 작성한 글,사진)' },
+    { option5: '욕설 및 비방' },
+    { option6: '기타' },
+  ];
 
-const ReportReviewModal = ({ closeModal }) => {
+  const [reportCategory, setReportCategory] = useState('');
+  const [reportContent, setReportContent] = useState('');
+  const contentChangehandler = (e) => {
+    setReportContent(e.target.value);
+  };
+  const categoryChangehandler = (e) => {
+    setReportCategory(e.target.value);
+    console.log(reportCategory);
+  };
+  console.log({
+    reviewId,
+    reportCategory,
+    reportContent,
+  });
+  const radios = category.map((option) => {
+    return (
+      <label htmlFor="">
+        <input
+          checked={Object.values(option)[0] === reportCategory}
+          onChange={categoryChangehandler}
+          type="radio"
+          value={Object.values(option)[0]}
+          name=""
+          id=""
+        />
+        {Object.values(option)[0]}
+      </label>
+    );
+  });
+
+  const onClickhandler = () => {
+    console.log({
+      reviewId,
+      reportCategory,
+      reportContent,
+    });
+    const response = reportReview({
+      reviewId,
+      reportCategory,
+      reportContent,
+    }).then((r) => console.log(r));
+
+    closeModal();
+  };
   return (
     <Modal closeModal={closeModal}>
       <ReportReviewStyle>
         <div className="modal__header">신고하기</div>
+
         <div className="modal__content">
           신고하시는 사유를 선택해주세요.
-          <label htmlFor="">
-            <input type="radio" name="" id="" />
-            관련없는 내용
-          </label>
-          <label htmlFor="">
-            <input type="radio" name="" id="" />
-            상업적 홍보
-          </label>
-          <label htmlFor="">
-            <input type="radio" name="" id="" />
-            개인정보 유출 위험
-          </label>
-          <label htmlFor="">
-            <input type="radio" name="" id="" />
-            저작권 불법 도용(타인이 작성한 글,사진)
-          </label>
-          <label htmlFor="">
-            <input type="radio" name="" id="" />
-            기타
-          </label>
+          <br />
+          {radios}
+          <br />
           신고하시는 이유를 알려주세요
           <textarea
             name=""
@@ -36,10 +73,12 @@ const ReportReviewModal = ({ closeModal }) => {
             cols="30"
             rows="10"
             placeholder="비방, 욕설, 광고, 잘못된 정보 등 신고 사유를 구체적으로 작성해주세요"
+            onChange={contentChangehandler}
+            value={reportContent}
           ></textarea>
         </div>
         <div className="modal__footer">
-          <button>등록하기</button>
+          <button onClick={onClickhandler}>등록하기</button>
         </div>
       </ReportReviewStyle>
     </Modal>

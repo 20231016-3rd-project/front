@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
-const ImageInput = () => {
-  const [selectedFiles, setSelectedFiles] = useState([]);
-
+const ImageInput = ({ selectedFiles, setSelectedFiles }) => {
   const handleFileChange = (e) => {
     const files = e.target.files;
     let allFilesValid = true;
@@ -36,6 +34,7 @@ const ImageInput = () => {
 
     if (allFilesValid) {
       setSelectedFiles(Array.from(files));
+      console.log('e.target.files:', files);
     } else {
       e.target.value = null; // 파일 선택 취소
     }
