@@ -10,10 +10,12 @@ import { getRestaurantDetail } from '../../apis/getRestaurantApi/getRestaurant';
 import axios from 'axios';
 import { getMyReviews } from '../../apis/reviewApi';
 import { useParams } from 'react-router';
+import EditinfoRequestModal from '../../components/Restaurant/EditInfoRequestModal';
 const RestaurantInfo = () => {
   const { restaurantId } = useParams();
   console.log(typeof restaurantId);
   const [isWriteReviewOpen, setIsWriteReviewOpen] = useState(false);
+  const [isEditInfoOpen, setIsEditInfoOpen] = useState(false);
   const [info, setInfo] = useState({
     restaurantName: '',
     restaurantStarRate: 0,
@@ -29,28 +31,45 @@ const RestaurantInfo = () => {
     },
     restaurantMenuDtoList: [],
     restaurantImageDtoList: [],
-    reviewReturnDtoPage: { content: [] },
   });
+  const [reviewsInfo, setReviewsInfo] = useState({ content: [] });
   const [image, setImages] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+
   const openWriteReviewModal = () => {
     setIsWriteReviewOpen(true);
   };
   const closeWriteReviewModal = () => {
     setIsWriteReviewOpen(false);
   };
-  const [reviewArray, setReviewArray] = useState([]);
+  const openEditInfoModal = () => {
+    setIsEditInfoOpen(true);
+  };
+  const closeEditInfoModal = () => {
+    setIsEditInfoOpen(false);
+  };
   useEffect(() => {
     getRestaurantDetail(restaurantId).then((data) => {
       setInfo(data);
+      setReviewsInfo(data.reviewReturnDtoPage);
+      console.log('reviewsInfo:', reviewsInfo);
     });
-    getMyReviews().then((data) => setReviewArray(data));
+    // getMyReviews().then((data) => setReviewArray(data));
   }, []);
 
   return (
     <>
+      {isEditInfoOpen && (
+        <EditinfoRequestModal
+          closeModal={closeEditInfoModal}
+          restaurantId={restaurantId}
+        />
+      )}
       {isWriteReviewOpen && (
-        <WriteReviewModal closeModal={closeWriteReviewModal} />
+        <WriteReviewModal
+          closeModal={closeWriteReviewModal}
+          setReviewsInfo={setReviewsInfo}
+        />
       )}
       {isLoading && (
         <RestaurantInfoLayout className="restaurant-info">
@@ -77,6 +96,7 @@ const RestaurantInfo = () => {
             <div className="info__button-container">
               <Button>좋아요</Button>
               <Button>공유</Button>
+              <Button onClick={openEditInfoModal}>정보 수정 요청</Button>
             </div>
             <div className="info__address">
               <div className="info__local-address">
@@ -121,7 +141,7 @@ const RestaurantInfo = () => {
               {/* {(reviewArray.length > 0) && reviewArray.map{() => {
                 return <Review key={index}/>
               }}} */}
-              {info.reviewReturnDtoPage.content.map((review) => {
+              {reviewsInfo?.content?.map((review) => {
                 return <Review review={review} />;
               })}
             </div>

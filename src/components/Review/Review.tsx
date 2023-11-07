@@ -5,9 +5,11 @@ import { useEffect, useState } from 'react';
 import ReportReviewModal from './ReportReviewModal';
 import ViewReviewModal from './ViewReviewModal';
 import { getMyProfile } from '../../apis/profileApi';
+import PutReviewModal from './PutReviewModal';
 const Review = ({ review }) => {
   const [isReportReviewOpen, setIsReportReviewOpen] = useState(false);
   const [isViewReviewOpen, setIsViewReviewOpen] = useState(false);
+  const [isPutReviewOpen, setIsPutReviewOpen] = useState(false);
   const [profile, setProfile] = useState({});
   const openReportReviewModal = () => {
     setIsReportReviewOpen(true);
@@ -21,11 +23,21 @@ const Review = ({ review }) => {
   const closeViewReviewModal = () => {
     setIsViewReviewOpen(false);
   };
+  const openPutReviewModal = () => {
+    setIsPutReviewOpen(true);
+  };
+  const closePutReviewModal = () => {
+    setIsPutReviewOpen(false);
+  };
   console.log(review);
 
   useEffect(() => {
     getMyProfile().then((r) => setProfile(r));
   }, []);
+  const [isLiked, setIsLiked] = useState(review.empathReview);
+  const handleLikeClick = () => {
+    setIsLiked((prevIsLiked) => !prevIsLiked);
+  };
   return (
     <>
       {isReportReviewOpen && (
@@ -33,6 +45,9 @@ const Review = ({ review }) => {
           closeModal={closeReportReviewModal}
           reviewId={review.reviewId}
         />
+      )}
+      {isPutReviewOpen && (
+        <PutReviewModal closeModal={closePutReviewModal} review={review} />
       )}
       {isViewReviewOpen && (
         <ViewReviewModal closeModal={closeViewReviewModal} />
@@ -53,8 +68,15 @@ const Review = ({ review }) => {
             </div>
           </div>
           <div className="review__buttons">
-            <button>수정</button>
-            <button>공감</button>
+            <button onClick={openPutReviewModal}>수정</button>
+            <LikeButton
+              className={`like-button ${isLiked ? 'liked' : ''}`}
+              onClick={handleLikeClick}
+            >
+              공감{review.reviewEmpathyCount}
+            </LikeButton>
+            {/* "reviewEmpathyCount": 0,
+                "empathyReview": false */}
             <button onClick={openReportReviewModal}>신고</button>
             <button>삭제</button>
           </div>
@@ -79,6 +101,36 @@ const Review = ({ review }) => {
 };
 
 export default Review;
+const LikeButton = styled.button`
+  $red: #ff3252;
+  display: inline-block;
+  position: relative;
+  font-size: 32px;
+  cursor: pointer;
+  // border: 1px solid black;
+  &::before {
+    font-size: 3em;
+    color: #000;
+    content: '♥';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &::after {
+    font-size: 3em;
+    color: $red;
+    content: '♥';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.2s;
+  }
+  &.liked::after {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+`;
 
 const ReviewLayout = styled.div`
   margin: 16px;

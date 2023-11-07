@@ -7,7 +7,7 @@ import ImageInput from '../../pages/restaurantInfo/ImageInput';
 import { useState } from 'react';
 import { postReview } from '../../apis/reviewApi';
 import { useParams } from 'react-router';
-const WriteReviewModal = ({ closeModal }) => {
+const WriteReviewModal = ({ closeModal, setReviewsInfo }) => {
   const [rating, setRating] = useState<number | null>(null);
   const [content, setContent] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -76,9 +76,15 @@ const WriteReviewModal = ({ closeModal }) => {
                 type: 'application/json',
               });
               formData.append('reviewSaveDto', dataBlob);
-              postReview(restaurantId, formData).then((r) => console.log(r));
-              console.log('form', formData.get('imageFile'));
-              console.log('form', formData.get('reviewSaveDTO'));
+              postReview(restaurantId, formData).then((r) => {
+                console.log('postReview response', r);
+                setReviewsInfo((prevState) => {
+                  return {
+                    ...prevState,
+                    content: [r, ...prevState.content],
+                  };
+                });
+              });
               closeModal();
             }}
           >

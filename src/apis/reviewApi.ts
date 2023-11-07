@@ -38,3 +38,11 @@ export const reportReview = async (body) => {
   );
   return response;
 };
+
+export const putReview = async (reviewId, formdata) => {
+  const response = await axiosImgInstance.put(
+    `/sunflowerPlate/mypage/myreview?reviewId=${reviewId}`,
+    formdata
+  );
+  return response;
+};
