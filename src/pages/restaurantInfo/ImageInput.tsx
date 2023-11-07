@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
 const ImageInput = ({ selectedFiles, setSelectedFiles }) => {
+  console.log(selectedFiles);
   const handleFileChange = (e) => {
     const files = e.target.files;
+    console.log(files);
     let allFilesValid = true;
 
     if (files.length > 3) {
