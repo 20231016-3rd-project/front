@@ -6,11 +6,25 @@ import ReportReviewModal from './ReportReviewModal';
 import ViewReviewModal from './ViewReviewModal';
 import { getMyProfile } from '../../apis/profileApi';
 import PutReviewModal from './PutReviewModal';
-const Review = ({ review }) => {
+import { likeReview } from '../../apis/reviewApi';
+const Review = ({ review, setReviewsInfo }) => {
   const [isReportReviewOpen, setIsReportReviewOpen] = useState(false);
   const [isViewReviewOpen, setIsViewReviewOpen] = useState(false);
   const [isPutReviewOpen, setIsPutReviewOpen] = useState(false);
   const [profile, setProfile] = useState({});
+  const [empathyReview, setEmpathyReview] = useState(
+    review.empathyReview ?? false
+  );
+  const [empathyCount, setEmpathyCount] = useState(review.reviewEmpathyCount);
+  const clickLikeHandler = () => {
+    setEmpathyReview((prev: boolean) => !prev);
+    if (empathyReview) {
+      setEmpathyCount((prev) => prev - 1);
+    } else {
+      setEmpathyCount((prev) => prev + 1);
+    }
+    likeReview(review.reviewId);
+  };
   const openReportReviewModal = () => {
     setIsReportReviewOpen(true);
   };
@@ -35,9 +49,7 @@ const Review = ({ review }) => {
     getMyProfile().then((r) => setProfile(r));
   }, []);
   const [isLiked, setIsLiked] = useState(review.empathReview);
-  const handleLikeClick = () => {
-    setIsLiked((prevIsLiked) => !prevIsLiked);
-  };
+
   return (
     <>
       {isReportReviewOpen && (
@@ -47,7 +59,11 @@ const Review = ({ review }) => {
         />
       )}
       {isPutReviewOpen && (
-        <PutReviewModal closeModal={closePutReviewModal} review={review} />
+        <PutReviewModal
+          closeModal={closePutReviewModal}
+          review={review}
+          setReviewsInfo={setReviewsInfo}
+        />
       )}
       {isViewReviewOpen && (
         <ViewReviewModal closeModal={closeViewReviewModal} />
@@ -70,10 +86,10 @@ const Review = ({ review }) => {
           <div className="review__buttons">
             <button onClick={openPutReviewModal}>수정</button>
             <LikeButton
-              className={`like-button ${isLiked ? 'liked' : ''}`}
-              onClick={handleLikeClick}
+              className={`like-button ${empathyReview ? 'liked' : ''}`}
+              onClick={clickLikeHandler}
             >
-              공감{review.reviewEmpathyCount}
+              공감{empathyCount}
             </LikeButton>
             {/* "reviewEmpathyCount": 0,
                 "empathyReview": false */}
@@ -89,7 +105,7 @@ const Review = ({ review }) => {
                 <img
                   onClick={openViewReviewModal}
                   src={image.reviewResizeUrl}
-                  alt=""
+                  alt="리뷰이미지"
                 />
               );
             })}
@@ -102,7 +118,6 @@ const Review = ({ review }) => {
 
 export default Review;
 const LikeButton = styled.button`
-  $red: #ff3252;
   display: inline-block;
   position: relative;
   font-size: 32px;
@@ -119,7 +134,7 @@ const LikeButton = styled.button`
   }
   &::after {
     font-size: 3em;
-    color: $red;
+    color: #ff3252;
     content: '♥';
     position: absolute;
     left: 50%;

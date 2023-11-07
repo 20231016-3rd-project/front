@@ -50,7 +50,7 @@ import { useParams } from 'react-router';
 //   ]
 // ]
 
-const PutReviewModal = ({ closeModal, review }) => {
+const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
   const [rating, setRating] = useState<number | null>(review.reviewStarRating);
   const [content, setContent] = useState(review.reviewContent);
   const [selectedFiles, setSelectedFiles] = useState([
@@ -113,13 +113,10 @@ const PutReviewModal = ({ closeModal, review }) => {
                   formData.append('imageFile', file);
                 }
               });
+              setSelectedFiles(null);
               const updateReviewDto = {
                 reviewContent: content,
-                imageDtoList: [
-                  {
-                    imageId: '3',
-                  },
-                ],
+                imageDtoList: [],
               };
               const json = JSON.stringify(updateReviewDto);
               const dataBlob = new Blob([json], {
@@ -128,6 +125,12 @@ const PutReviewModal = ({ closeModal, review }) => {
               formData.append('updateReviewDto', dataBlob);
               putReview(review.reviewId, formData).then((r) => {
                 console.log('put Review response', r);
+                setReviewsInfo((prevState) => {
+                  return {
+                    ...prevState,
+                    content: [r, ...prevState.content],
+                  };
+                });
               });
               closeModal();
             }}

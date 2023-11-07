@@ -44,5 +44,21 @@ export const putReview = async (reviewId, formdata) => {
     `/sunflowerPlate/mypage/myreview?reviewId=${reviewId}`,
     formdata
   );
-  return response;
+  return response.data;
+};
+
+export const likeReview = async (reviewId) => {
+  const response = await axiosInstance.post(
+    `/sunflowerPlate/user/${reviewId}/like`
+  );
+  return response.data;
+};
+// response.data
+// {
+//   "좋아요": true,
+//   "좋아요 개수": 1
+// }
+
+export const deleteReview = async (reviewId) => {
+  const response = await axiosInstance.delete();
 };

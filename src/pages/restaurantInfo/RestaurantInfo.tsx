@@ -51,6 +51,7 @@ const RestaurantInfo = () => {
   useEffect(() => {
     getRestaurantDetail(restaurantId).then((data) => {
       setInfo(data);
+      console.log('restaurantInfo:', data);
       setReviewsInfo(data.reviewReturnDtoPage);
       console.log('reviewsInfo:', reviewsInfo);
     });
@@ -147,11 +148,16 @@ const RestaurantInfo = () => {
                 return <Review key={index}/>
               }}} */}
               {reviewsInfo?.content?.map((review) => {
-                return <Review review={review} />;
+                return (
+                  <Review
+                    key={`${review.reviewId}${review.reviewAt}`}
+                    review={review}
+                    setReviewsInfo={setReviewsInfo}
+                  />
+                );
               })}
             </div>
           </div>
-          <StarRating />
         </RestaurantInfoLayout>
       )}
     </>
