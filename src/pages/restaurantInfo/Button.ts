@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Button = styled.button`
+  margin: 1rem;
   align-items: center;
   appearance: none;
   background-color: #fff;

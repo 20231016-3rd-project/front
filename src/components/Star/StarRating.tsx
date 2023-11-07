@@ -2,36 +2,14 @@ import { FaStar } from 'react-icons/fa';
 import { useState } from 'react';
 import styled from 'styled-components';
 
+const star = {
+  size: 30,
+  color: { filled: '#ffc107', empty: '#e4e5e9' },
+};
 const StarRating: React.FC = () => {
   const [hover, setHover] = useState<number | null>(null);
   const [rating, setRating] = useState<number | null>(null);
 
-  //star setting  객체로 모아둘까?
-  const star = {
-    size: 30,
-    color: { filled: '#ffc107', empty: '#e4e5e9' },
-    setStarColor: function (
-      hover: number | null,
-      rating: number | null,
-      currentRating: number
-    ): string {
-      // flag말고 다른 이름 뭐가 있을까.
-      let flag: number | null = hover || rating;
-      if (flag === null) {
-        return this.color.empty;
-      } else {
-        return currentRating <= flag ? this.color.filled : this.color.empty;
-      }
-
-      // if (hover === null && rating === null) {
-      //   return this.color.empty;
-      // } else if (currentRating <= (hover || rating)) {
-      //   return this.color.empty;
-      // }
-      // return this.color.filled;
-    },
-  };
-  console.log(rating);
   return (
     <StarRatingStyle>
       {[...Array(5)].map((element, index) => {
@@ -48,7 +26,11 @@ const StarRating: React.FC = () => {
             <FaStar
               className="rating__star"
               size={star.size}
-              color={star.setStarColor(hover, rating, currentRating)}
+              color={
+                currentRating <= ((hover || rating) ?? 0)
+                  ? star.color.filled
+                  : star.color.empty
+              }
               onMouseEnter={() => setHover(currentRating)}
               onMouseLeave={() => setHover(null)}
             />
