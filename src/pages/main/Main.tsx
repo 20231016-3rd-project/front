@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import logo from '/src/assets/images/sunflower.png';
 import arrowDown from '/src/assets/images/arrowDown.svg';
 
@@ -16,27 +16,27 @@ import styled, { css, keyframes } from 'styled-components';
 import Slide from '../../components/Slide/Slide';
 
 import { Bests } from '../../model/best';
-import RegionSelect from '../../components/Modal/RegionSelect';
 import DetialPage from './DetialPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../store/rootReducer';
+import { setIsOpen } from '../../store/slices/modalSlice';
+import { useLocation } from 'react-router-dom';
+import { setKey, setKeyword } from '../../store/slices/keywordSlice';
 
 interface IsClicked {
   $clicked: boolean; // prefix 로 "$" 를 사용하게 되면, props 가 실제 DOM 요소에 전달되는 것을 막는다.
 }
 
 const Main = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const region = useSelector((state: ReducerType) => state.region.regionInfo);
-
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = useSelector((state: ReducerType) => state.isOpen.isOpen);
+  const keyword = useSelector((state: ReducerType) => state.keyword.keyword);
 
   const openModalHandler = () => {
-    setIsOpen(true);
-  };
-  const closeModal = () => {
-    setIsOpen(false);
+    dispatch(setIsOpen(true));
   };
 
   const datas: Bests = [
@@ -72,6 +72,11 @@ const Main = () => {
     dong = region.dong;
   }
 
+  useEffect(() => {
+    dispatch(setKeyword(''));
+    dispatch(setKey(''));
+  }, []);
+
   return (
     <main>
       <Cover $clicked={clicked}>
@@ -84,8 +89,6 @@ const Main = () => {
           <ArrowDownImg src={arrowDown} alt="" />
         </ArrowDown>
       </Cover>
-
-      {isOpen && <RegionSelect closeModal={closeModal} />}
 
       {clicked && (
         <>
