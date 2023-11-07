@@ -5,7 +5,7 @@ import Main from '../pages/main/Main';
 import SignIn from '../pages/signIn/SignIn';
 import SignUp from '../pages/signUp/SignUp';
 
-import AdminPage from '../pages/adminPage/AdminPage';
+import AdminPage from '../pages/adminPage/adminPage';
 import AdminChatPage from '../pages/adminPage/admin/AdminChatPage';
 import AdminSettingPage from '../pages/adminPage/admin/AdminSettingPage';
 import ReportPage from '../pages/adminPage/admin/ReportPage';
@@ -21,6 +21,7 @@ import UserInfoPage from '../pages/myPage/my/UserInfoPage';
 import DetialPage from '../pages/main/DetialPage';
 
 const router = createBrowserRouter([
+  
   {
     path: '/',
     element: <Layout />,
@@ -64,7 +65,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: '/detailpage',
+        path: 'detailpage',
         element: <DetialPage />,
       },
       {

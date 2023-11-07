@@ -57,6 +57,11 @@ const RestaurantInfo = () => {
     // getMyReviews().then((data) => setReviewArray(data));
   }, []);
 
+  //식당 페이지로 이동 시 스크롤 위로
+  useEffect(() => {
+    document.getElementById('root').scrollIntoView();
+  }, []);
+
   return (
     <>
       {isEditInfoOpen && (
