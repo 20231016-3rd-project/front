@@ -88,12 +88,24 @@ const RestaurantInfo = () => {
               />
             </div>
             <div className="images__column">
-              <img src={infoImg} alt="" />
-              <img src={infoImg} alt="" />
+              <img
+                src={info.restaurantImageDtoList[1]?.restaurantOriginUrl}
+                alt=""
+              />
+              <img
+                src={info.restaurantImageDtoList[2]?.restaurantOriginUrl}
+                alt=""
+              />
             </div>
             <div className="images__column">
-              <img src={infoImg} alt="" />
-              <img src={infoImg} alt="" />
+              <img
+                src={info.restaurantImageDtoList[3]?.restaurantOriginUrl}
+                alt=""
+              />
+              <img
+                src={info.restaurantImageDtoList[4]?.restaurantOriginUrl}
+                alt=""
+              />
             </div>
           </div>
           <div className="info__container">
@@ -116,11 +128,7 @@ const RestaurantInfo = () => {
               </div>
             </div>
             <div className="info__business-hours">
-              운영시간
-              <br />
-              Open: {info.restaurantOpenTime}
-              <br />
-              Break: {info.restaurantBreakTime}
+              운영시간 {info.restaurantOpenTime}
             </div>
             <div className="info__menu">
               메인 메뉴
@@ -144,9 +152,6 @@ const RestaurantInfo = () => {
               </div>
             </div>
             <div className="reviews__list">
-              {/* {(reviewArray.length > 0) && reviewArray.map{() => {
-                return <Review key={index}/>
-              }}} */}
               {reviewsInfo?.content?.map((review) => {
                 return (
                   <Review
@@ -180,6 +185,7 @@ const RestaurantInfoLayout = styled.div`
   align-items: center;
   flex-direction: column;
   margin-bottom: 8rem;
+  font-size: 1.5rem;
 
   .info__images {
     display: flex;
@@ -215,12 +221,14 @@ const RestaurantInfoLayout = styled.div`
 
   .info__title {
     font-size: 40px;
+    font-weight: 800;
   }
   .info_tags {
     font-size: 1rem;
     color: grey;
   }
   .info__address {
+    gap: 1rem;
   }
 
   .info__local-address {
@@ -229,11 +237,10 @@ const RestaurantInfoLayout = styled.div`
   }
   .info__business-hours {
     width: 1200px;
-    height: 300px;
+    height: 100px;
     border: 2px solid black;
     margin-bottom: 10px;
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 1.5rem;
   }
   .info__menu {
     display: block;

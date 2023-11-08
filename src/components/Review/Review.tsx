@@ -46,7 +46,17 @@ const Review = ({ review, setReviewsInfo }) => {
   console.log(review);
 
   const deleteButtonhHandler = () => {
-    deleteReview(review.reviewId);
+    deleteReview(review.reviewId).then((r) => {
+      if (r.status === 200) {
+        alert('삭제되었습니다.');
+        setReviewsInfo((prevState) => {
+          const newContent = prevState.content.filter(
+            (item) => item.reviewId !== review.reviewId
+          );
+          return { ...prevState, content: newContent };
+        });
+      }
+    });
   };
   useEffect(() => {
     getMyProfile().then((r) => setProfile(r));
