@@ -1,50 +1,33 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f5f5f5;
-`;
-
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 300px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #fff;
-`;
-
-export const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-`;
-
-export const Label = styled.label`
-  margin-bottom: 5px;
 `;
 
 export const Input = styled.input`
+  width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 `;
 
 export const Button = styled.button`
+  width: 100%;
   padding: 10px;
-  border: none;
-  border-radius: 5px;
   background-color: #007bff;
-  color: #fff;
+  color: white;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
-
-  &:disabled {
-    background-color: #ccc;
-    cursor: default;
+  &:hover {
+    background-color: #0056b3;
   }
+`;
+
+export const ErrorMsg = styled.span`
+  color: red;
 `;
