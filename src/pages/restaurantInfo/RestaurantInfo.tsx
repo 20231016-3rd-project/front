@@ -134,7 +134,7 @@ const RestaurantInfo = () => {
                 })}
               </div>
             </div>
-            <Map />
+            <Map address={info.restaurantAddress} />
           </div>
           <div className="info__reviews">
             <div className="reviews__header">

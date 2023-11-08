@@ -6,7 +6,7 @@ import ReportReviewModal from './ReportReviewModal';
 import ViewReviewModal from './ViewReviewModal';
 import { getMyProfile } from '../../apis/profileApi';
 import PutReviewModal from './PutReviewModal';
-import { likeReview } from '../../apis/reviewApi';
+import { deleteReview, likeReview } from '../../apis/reviewApi';
 const Review = ({ review, setReviewsInfo }) => {
   const [isReportReviewOpen, setIsReportReviewOpen] = useState(false);
   const [isViewReviewOpen, setIsViewReviewOpen] = useState(false);
@@ -45,6 +45,9 @@ const Review = ({ review, setReviewsInfo }) => {
   };
   console.log(review);
 
+  const deleteButtonhHandler = () => {
+    deleteReview(review.reviewId);
+  };
   useEffect(() => {
     getMyProfile().then((r) => setProfile(r));
   }, []);
@@ -94,7 +97,7 @@ const Review = ({ review, setReviewsInfo }) => {
             {/* "reviewEmpathyCount": 0,
                 "empathyReview": false */}
             <button onClick={openReportReviewModal}>신고</button>
-            <button>삭제</button>
+            <button onClick={deleteButtonhHandler}>삭제</button>
           </div>
         </div>
         <div className="review__content">

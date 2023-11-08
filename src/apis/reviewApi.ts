@@ -60,5 +60,8 @@ export const likeReview = async (reviewId) => {
 // }
 
 export const deleteReview = async (reviewId) => {
-  const response = await axiosInstance.delete();
+  const response = await axiosInstance.delete(
+    `/sunflowerPlate/mypage/myreview?reviewId=${reviewId}`
+  );
+  return response;
 };
