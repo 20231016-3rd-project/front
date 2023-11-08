@@ -10,6 +10,7 @@ import { getRestaurantDetail } from '../../apis/getRestaurantApi/getRestaurant';
 import axios from 'axios';
 import { getMyReviews } from '../../apis/reviewApi';
 import { useParams } from 'react-router';
+
 const RestaurantInfo = () => {
   const { restaurantId } = useParams();
   console.log(typeof restaurantId);
@@ -44,6 +45,11 @@ const RestaurantInfo = () => {
       setInfo(data);
     });
     getMyReviews().then((data) => console.log(data));
+  }, []);
+
+  //식당 페이지로 이동 시 스크롤 위로
+  useEffect(() => {
+    document.getElementById('root').scrollIntoView();
   }, []);
 
   return (

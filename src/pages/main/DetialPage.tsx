@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import OrderByButton from '../../components/Buttons/OrderByButton';
-import { Restaurant, Restaurants } from '../../model/best';
 
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 import styled from 'styled-components';
@@ -17,31 +16,10 @@ import {
 } from '../../store/slices/restaurantSlice';
 import Pagination from './../../components/Pagination/Pagination';
 import { getSort } from '../../store/slices/sortSlice';
+import { setIsOpen } from '../../store/slices/modalSlice';
+import RegionSelect from '../../components/Modal/RegionSelect';
 
 const DetialPage = () => {
-  // const restaurantData: Restaurants = [
-  //   {
-  //     restaurantId: 2,
-  //     restaurantName: '너무너무 맛있는 햄토리네 견과류',
-  //     restaurantAddress: '서울특별시 마포구 햄토리네마을',
-  //     restaurantWebSite: 'https://www.instagram.com',
-  //     resizedImageUrl: noodle,
-  //     avgStarRate: 4.2,
-  //     reviewCount: 4,
-  //     likeCount: 3,
-  //   },
-  //   {
-  //     restaurantId: 3,
-  //     restaurantName: '햄토리네 해바라기',
-  //     restaurantAddress: '마포구 햄토리네마을',
-  //     restaurantWebSite: 'https://www.instagram.com',
-  //     resizedImageUrl: ramen,
-  //     avgStarRate: 4.9,
-  //     reviewCount: 5,
-  //     likeCount: 7,
-  //   },
-  // ];
-
   const dispatch = useDispatch();
 
   const restaurants = useSelector(
@@ -49,28 +27,23 @@ const DetialPage = () => {
   );
   const region = useSelector((state: ReducerType) => state.region.regionInfo);
   const sort = useSelector((state: ReducerType) => state.sort.sortInfo);
+  const isOpen = useSelector((state: ReducerType) => state.isOpen.isOpen);
+  const keyword = useSelector((state: ReducerType) => state.keyword.keyword);
 
   // const [datas, setDatas] = useState<Restaurants>([]);
   // const data: Restaurants = [];
-
-  useEffect(() => {
-    const getData = async () => {
-      dispatch(getAllRestaurants(await allRestaurant()));
-    };
-    getData();
-  }, []);
 
   useEffect(() => {
     const getSearchedDatas = async () => {
       dispatch(
         getSearchRestaurants(
           await searchRestaurant(
-            '',
+            keyword,
             1,
             region.city,
             region.district,
             region.dong,
-            ''
+            sort
           ).then((response) => {
             return response.content;
           })
@@ -78,58 +51,51 @@ const DetialPage = () => {
       );
     };
     getSearchedDatas();
-  }, [region]);
-  console.log(restaurants);
-  console.log(region);
-
-  //리스트 정렬
-  const getSearchedDatas = async (sort: string) => {
-    dispatch(
-      getSearchRestaurants(
-        await searchRestaurant(
-          '',
-          1,
-          region.city,
-          region.district,
-          region.dong,
-          sort
-        ).then((response) => {
-          return response.content;
-        })
-      )
-    );
-  };
+  }, [region, keyword, sort]);
 
   const handleOrder = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(getSort(e.target.value));
-    getSearchedDatas(sort);
   };
-  console.log(sort);
-  return (
-    <Section>
-      <ButtonsDiv>
-        <OrderByButton
-          orderBy={sort}
-          standard="rate"
-          handleOrder={handleOrder}
-        />
-        <OrderByButton
-          orderBy={sort}
-          standard="review"
-          handleOrder={handleOrder}
-        />
-        <OrderByButton
-          orderBy={sort}
-          standard="like"
-          handleOrder={handleOrder}
-        />
-      </ButtonsDiv>
 
-      <ul>
-        <RestaurantCard datas={restaurants} />
-      </ul>
-      <Pagination />
-    </Section>
+  useEffect(() => {
+    document.getElementById('root').scrollIntoView();
+  }, []);
+
+  const openModalHandler = () => {
+    dispatch(setIsOpen(true));
+  };
+
+  return (
+    <>
+      {isOpen && <RegionSelect />}
+      <Section>
+        <ButtonsDiv>
+          <OrderByButton
+            orderBy={sort}
+            standard="rateDesc"
+            handleOrder={handleOrder}
+          />
+          <OrderByButton
+            orderBy={sort}
+            standard="review"
+            handleOrder={handleOrder}
+          />
+          <OrderByButton
+            orderBy={sort}
+            standard="like"
+            handleOrder={handleOrder}
+          />
+          <SelectRegionButton onClick={openModalHandler}>
+            지역선택
+          </SelectRegionButton>
+        </ButtonsDiv>
+
+        <ul>
+          <RestaurantCard datas={restaurants} />
+        </ul>
+        <Pagination />
+      </Section>
+    </>
   );
 };
 
@@ -140,4 +106,16 @@ const Section = styled.div`
 `;
 const ButtonsDiv = styled.div`
   margin: 0 2rem;
+`;
+const SelectRegionButton = styled.button`
+  border-radius: 6px;
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.7px;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  cursor: pointer;
+
+  border: 1px solid black;
 `;

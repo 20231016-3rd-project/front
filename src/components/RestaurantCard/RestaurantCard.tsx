@@ -5,24 +5,30 @@ import heartFill from '/src/assets/images/heartfill.png';
 import star from '/src/assets/images/star.png';
 import { Restaurants, Restaurant } from '../../model/best';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 interface OwnProps {
   datas: Restaurants;
 }
 
 const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
-  
+
+
+
   const renderCard = (data: Restaurant) => {
     return (
       <RestaurantList key={data.restaurantId}>
-        <ListImgDiv>
+        <ListImgDiv to={`/restaurant/${data.restaurantId}`}>
           <ListImg src={data.resizedImageUrl} alt="" />
         </ListImgDiv>
         <RestaurantInfo>
-          <InfoTitle>{data.restaurantName}</InfoTitle>
+          <InfoTitle to={`/restaurant/${data.restaurantId}`}>
+            {data.restaurantName}
+          </InfoTitle>
           <RateInfo>
             <Rate>
-              <RateInfoImg src={star} alt="" /> {data.avgStarRate} ({data.reviewCount})
+              <RateInfoImg src={star} alt="" /> {data.avgStarRate} (
+              {data.reviewCount})
             </Rate>
             <Bar />
             <LikeButton>
@@ -34,7 +40,7 @@ const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
           <InfoAddr>{data.restaurantAddress}</InfoAddr>
           <InfoAddr>{data.restaurantWebSite}</InfoAddr>
           <br />
-          <InfoMore>
+          <InfoMore to={`/restaurant/${data.restaurantId}`}>
             {data.restaurantName} 더보기 <ArrowImg src={arrowRight} alt="" />
           </InfoMore>
         </RestaurantInfo>
@@ -53,7 +59,7 @@ const RestaurantList = styled.li`
   padding: 2rem 0;
   margin: 0 2rem;
 `;
-const ListImgDiv = styled.div`
+const ListImgDiv = styled(Link)`
   width: 30%;
   height: 260px;
   cursor: pointer;
@@ -69,17 +75,23 @@ const RestaurantInfo = styled.div`
   line-height: 25px;
   position: relative;
 `;
-const InfoTitle = styled.p`
+const InfoTitle = styled(Link)`
   font-size: 20px;
   font-weight: 700;
   height: auto;
   cursor: pointer;
+
+  &:visited,
+  &:link {
+    text-decoration: none;
+    color: black;
+  }
 `;
 const InfoAddr = styled.p`
   font-size: 20px;
   font-weight: 500;
 `;
-const InfoMore = styled.p`
+const InfoMore = styled(Link)`
   font-size: 20px;
   font-weight: 500;
   width: auto;
@@ -88,6 +100,12 @@ const InfoMore = styled.p`
   bottom: 2rem;
   right: 0;
   cursor: pointer;
+
+  &:visited,
+  &:link {
+    text-decoration: none;
+    color: black;
+  }
 `;
 const ArrowImg = styled.img`
   height: 1rem;

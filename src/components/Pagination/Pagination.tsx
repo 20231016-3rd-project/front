@@ -11,16 +11,17 @@ import { ReducerType } from '../../store/rootReducer';
 
 const Pagination = () => {
   const [page, setPage] = useState(1);
-  const [maxPage, setMaxPage] = useState(10);
+  const [maxPage, setMaxPage] = useState(1);
 
   const dispatch = useDispatch();
 
   const region = useSelector((state: ReducerType) => state.region.regionInfo);
   const sort = useSelector((state: ReducerType) => state.sort.sortInfo);
+  const keyword = useSelector((state: ReducerType) => state.keyword.keyword);
 
   const getMaxPage = async () => {
     await searchRestaurant(
-      '',
+      keyword,
       1,
       region.city,
       region.district,
@@ -36,7 +37,7 @@ const Pagination = () => {
       dispatch(
         getSearchRestaurants(
           await searchRestaurant(
-            '',
+            keyword,
             page,
             region.city,
             region.district,
