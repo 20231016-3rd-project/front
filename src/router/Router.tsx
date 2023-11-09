@@ -20,9 +20,10 @@ import MyWishListPage from '../pages/myPage/my/MyWishListPage';
 import MyReviewsPage from '../pages/myPage/my/MyReviewsPage';
 import UserInfoPage from '../pages/myPage/my/UserInfoPage';
 import DetialPage from '../pages/main/DetialPage';
+import BestPage from '../pages/main/BestPage';
+import MyWishPage from '../pages/myPage/my/MyWishListPage';
 
 const router = createBrowserRouter([
-  
   {
     path: '/',
     element: <Layout />,
@@ -68,6 +69,14 @@ const router = createBrowserRouter([
       {
         path: 'detailpage',
         element: <DetialPage />,
+      },
+      {
+        path: 'bestpage',
+        element: <BestPage />,
+      },
+      {
+        path: 'mylike',
+        element: <MyWishPage />,
       },
       {
         path: 'admin',

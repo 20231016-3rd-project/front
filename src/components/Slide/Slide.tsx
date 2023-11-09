@@ -34,7 +34,7 @@ const Slide: React.FC<OwnProps> = ({ datas }) => {
   const renderData = (data: Best) => {
     return (
       <DataList key={Math.random()}>
-        <Contents to="/detailpage">
+        <Contents to="/bestpage" state={{key:data.key}}>
           <ImgDiv>
             <DataImg src={data.img} alt="" />
           </ImgDiv>

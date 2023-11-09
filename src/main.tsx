@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import GlobalStyle from './styles/globalStyle';
 import router from './router/Router';
 import { RouterProvider } from 'react-router-dom';
+
 import { QueryClient, QueryClientProvider } from 'react-query';
 import store from './store/store';
 import { Provider } from 'react-redux';
