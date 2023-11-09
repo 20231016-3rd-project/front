@@ -14,7 +14,7 @@ const SignIn = () => {
     try {
       const response = await axios
         .post(
-          `${import.meta.env.VITE_APP_SERVER_API}sunflowerPlate/user/login`,
+          `${import.meta.env.VITE_APP_SERVER_API}/sunflowerPlate/user/login`,
           {
             email,
             password,

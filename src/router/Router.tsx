@@ -12,6 +12,7 @@ import ReportPage from '../pages/adminPage/admin/ReportPage';
 import ClosurePage from '../pages/adminPage/admin/ClosurePage';
 import StoreRegistPage from '../pages/adminPage/admin/StoreRegistPage';
 import RegistListPage from '../pages/adminPage/admin/RegistListPage';
+import StoreEditPage from '../pages/adminPage/admin/StoreEditPage';
 import RestaurantInfo from '../pages/restaurantInfo/RestaurantInfo';
 import MyPage from '../pages/myPage/MyPage';
 import MySettingPage from '../pages/myPage/my/MySettingPage';
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
           {
             path: 'regist',
             element: <StoreRegistPage />,
+          },
+          {
+            path: 'closure/edit/:restaurantId', // 수정을 위한 경로
+            element: <StoreEditPage />,
           },
           {
             path: 'closure',
