@@ -1,17 +1,68 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { StMain } from '../../../components/Stmain';
-import reportsData from '../admin/json/reports.json'
+import axios from 'axios';
 
 const ReportPage = () => {
-  const [reportData, setReportData] = useState(reportsData);
+  const [reportData, setReportData] = useState<any>([]);
 
-  const handleDeleteReport = (reportId) => {
-    const updatedData = reportData.filter((report) => report.reviewId !== reportId);
-    setReportData(updatedData);
+  useEffect(() => {
+    // API 호출을 위한 함수
+    const fetchReports = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken) {
+          throw new Error('Access token not found');
+        }
+
+        // axios를 사용하여 API 엔드포인트로 GET 요청을 보냄
+        const headers = {
+          "X-AUTH-TOKEN": accessToken,
+        };
+
+        const response = await axios.get('http://3.38.32.91/sunflowerPlate/admin/review/', {
+          headers
+        });
+        // 여기서 응답이 배열인지 확인합니다.
+      if (Array.isArray(response.data)) {
+        setReportData(response.data);
+      } else {
+        // 데이터가 배열이 아닌 경우, 오류를 처리하거나 빈 배열을 설정할 수 있습니다.
+        console.error("Received data is not an array:", response.data);
+        setReportData([]);
+      }
+    } catch (error) {
+      console.error("Fetching reports failed: ", error);
+      // 오류 발생 시 빈 배열을 설정하여 .map 함수 오류를 방지합니다.
+      setReportData([]);
+    }
   };
 
-  
+  fetchReports();
+}, []);
+
+const handleDelete = async (reviewId) => {
+  try {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      throw new Error('Access token not found');
+    }
+
+    const headers = {
+      "X-AUTH-TOKEN": accessToken,
+    };
+
+    await axios.delete(`http://3.38.32.91/sunflowerPlate/admin/review/delete?reviewId=${reviewId}`, { headers });
+
+    const filteredReports = reportData.filter(report => report.reviewId !== reviewId);
+    setReportData(filteredReports);
+
+    alert('리뷰가 삭제되었습니다');
+  } catch (error) {
+    console.error("Deleting the report failed: ", error);
+    alert('리뷰 삭제에 실패했습니다');
+  }
+};
 
   return (
     <StMain>
@@ -31,7 +82,7 @@ const ReportPage = () => {
             <div>{report.reportAt}</div>
             <ButtonBox>
               <button>패스</button>
-              <button onClick={() => handleDeleteReport(report.reviewId)}>삭제</button>
+              <button onClick={() => handleDelete(report.reviewId)}>삭제</button>
             </ButtonBox>
           </DateAndActions>
           </ProfileSection>

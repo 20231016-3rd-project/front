@@ -1,19 +1,58 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { StMain } from "../../../components/Stmain";
 import styled from "styled-components";
+import axios from 'axios';
 
 
 const RegistListPage = () => {
   // 예제 데이터
-  const restaurantList = [
-    { name: '식당 A', phone: '010-1234-5678', address: '서울시 강남구', id: '1', registeredDate: '2023-01-01' },
-    { name: '식당 B', phone: '010-2345-6789', address: '서울시 서초구', id: '2', registeredDate: '2023-01-02' },
-    { name: '식당 C', phone: '010-2345-6789', address: '서울시 성동구', id: '3', registeredDate: '2023-01-03' },
-    { name: '식당 D', phone: '010-2345-6789', address: '서울시 중구', id: '4', registeredDate: '2023-01-04' },
-    { name: '식당 E', phone: '010-2345-6789', address: '서울시 관악구', id: '5', registeredDate: '2023-01-05' },
-    { name: '식당 F', phone: '010-2345-6789', address: '서울시 송파구', id: '6', registeredDate: '2023-01-06' },
-    // ... 더 많은 식당 데이터
-  ];
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [restaurantData, setRestaurantData] = useState<any>({
+    content: [],
+    pageable: {},
+    last: false,
+    totalPages: 0,
+    totalElements: 0,
+    number: 0,
+    first: false,
+    sort: {},
+    size: 0,
+    numberOfElements: 0,
+    empty: true,
+  });
+
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+      const accessToken = localStorage.getItem('accessToken');
+      console.log(accessToken); // 'accessToken'은 저장된 토큰의 키 이름입니다.
+      if (!accessToken) {
+        throw new Error('Access token not found');
+      }
+      
+
+        const headers = {
+          "X-AUTH-TOKEN": accessToken,
+        };
+
+        const response = await axios.get('http://3.38.32.91/sunflowerPlate/admin/restaurant', {
+          headers
+        });
+
+        setRestaurantData(response.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRestaurants();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <StMain>
@@ -24,21 +63,27 @@ const RegistListPage = () => {
       <StyledTable>
         <thead>
           <tr>
-            <th>식당 ID</th>
-            <th>식당 이름</th>
-            <th>식당 전화번호</th>
-            <th>식당 주소</th>
-            <th>등록된 날짜</th>
+              <th>ID</th>
+              <th>이름</th>
+              <th>주소</th>
+              <th>웹사이트</th>
+              <th>좋아요 수</th>
+              <th>리뷰 수</th>
+              <th>평균 별점</th>
+              <th>운영 상태</th>
           </tr>
         </thead>
         <tbody>
-          {restaurantList.map((restaurant) => (
-            <tr key={restaurant.id}>
-              <td>{restaurant.id}</td>
-              <td>{restaurant.name}</td>
-              <td>{restaurant.phone}</td>
-              <td>{restaurant.address}</td>
-              <td>{restaurant.registeredDate}</td>
+           {restaurantData.content.map((restaurant) => (
+            <tr key={restaurant.restaurantId}>
+              <td>{restaurant.restaurantId}</td>
+              <td>{restaurant.restaurantName}</td>
+              <td>{restaurant.restaurantAddress}</td>
+              <td><a href={restaurant.restaurantWebSite} target="_blank" rel="noopener noreferrer">웹사이트</a></td>
+              <td>{restaurant.likeCount}</td>
+              <td>{restaurant.reviewCount}</td>
+              <td>{restaurant.avgStarRate}</td>
+              <td>{restaurant.restaurantStatus}</td>
             </tr>
           ))}
         </tbody>

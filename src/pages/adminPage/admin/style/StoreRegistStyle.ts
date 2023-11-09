@@ -61,6 +61,17 @@ export const ImageRegistSection = styled.div`
 }
 `;
 
+export const TellSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid red;
+  width: 95%;
+  margin-bottom: 15px;
+  
+`;
+
+
 export const BusinessNameSection = styled.div`
   display: flex;
   flex-direction: column;
