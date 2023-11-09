@@ -4,16 +4,10 @@ import OrderByButton from '../../components/Buttons/OrderByButton';
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 import styled from 'styled-components';
 
-import {
-  allRestaurant,
-  searchRestaurant,
-} from '../../apis/getRestaurantApi/getRestaurant';
+import { searchRestaurant } from '../../apis/getRestaurantApi/getRestaurant';
 import { useSelector, useDispatch } from 'react-redux';
 import { ReducerType } from '../../store/rootReducer';
-import {
-  getAllRestaurants,
-  getSearchRestaurants,
-} from '../../store/slices/restaurantSlice';
+import { getSearchRestaurants } from '../../store/slices/restaurantSlice';
 import Pagination from './../../components/Pagination/Pagination';
 import { getSort } from '../../store/slices/sortSlice';
 import { setIsOpen } from '../../store/slices/modalSlice';

@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import arrowRight from '/src/assets/images/arrowRight.svg';
-import heart from '/src/assets/images/heart.png';
 import heartFill from '/src/assets/images/heartfill.png';
 import star from '/src/assets/images/star.png';
 import { Restaurants, Restaurant } from '../../model/best';
@@ -12,8 +11,21 @@ interface OwnProps {
 }
 
 const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
+  // let likeInfo;
+  // let userLikeInfo = [];
+  // const [userLike, setUserLike] = useState();
 
+  // const handleLike = async (id: number) => {
+  //   likeInfo = await getLike(id);
+  // };
+  // const idDatas = datas.map((data) => {
+  //   return data.restaurantId;
+  // });
+  // console.log(idDatas);
 
+  // idDatas.map(async (id) => {
+  //   setUserLike(await getUserLike(id));
+  // });
 
   const renderCard = (data: Restaurant) => {
     return (
@@ -32,7 +44,7 @@ const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
             </Rate>
             <Bar />
             <LikeButton>
-              <RateInfoImg src={heart} alt="" />
+              <RateInfoImg src={heartFill} alt="" />
               {data.likeCount}
             </LikeButton>
           </RateInfo>
