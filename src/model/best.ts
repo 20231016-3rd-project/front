@@ -2,15 +2,17 @@ export type Best = {
   id: number;
   text: string;
   img: string;
+  key: string;
 };
 export type Bests = {
   id: number;
   text: string;
   img: string;
+  key: string;
 }[];
 
 export type Restaurant = {
-  restaurantId:number;
+  restaurantId: number;
   restaurantName: string;
   restaurantAddress: string;
   restaurantWebSite: string;
@@ -18,10 +20,10 @@ export type Restaurant = {
   avgStarRate: number;
   reviewCount: number;
   likeCount: number;
-}
+};
 
 export type Restaurants = {
-  restaurantId:number;
+  restaurantId: number;
   restaurantName: string;
   restaurantAddress: string;
   restaurantWebSite: string;
@@ -29,4 +31,4 @@ export type Restaurants = {
   avgStarRate: number;
   reviewCount: number;
   likeCount: number;
-}[]
+}[];

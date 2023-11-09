@@ -4,6 +4,8 @@ import regionReducer from './slices/regionSlice';
 import sortReducer from './slices/sortSlice';
 import modalReducer from './slices/modalSlice';
 import keywordReducer from './slices/keywordSlice';
+import bestReducer from './slices/bestSlice';
+import myLikeReducer from './slices/myLikeSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +14,8 @@ const store = configureStore({
     sort: sortReducer,
     isOpen: modalReducer,
     keyword: keywordReducer,
+    best: bestReducer,
+    mylike: myLikeReducer,
   },
 });
 

@@ -8,6 +8,8 @@ import ramen from '/src/assets/images/ramen.jpg';
 import bibimbap from '/src/assets/images/bibimbap.jpg';
 import pasta from '/src/assets/images/pasta.jpg';
 import tart from '/src/assets/images/tart.jpg';
+import dbk from '/src/assets/images/dbk.jpg';
+import pizza from '/src/assets/images/pizza.jpg';
 import background from '/src/assets/images/background.jpg';
 
 import 'slick-carousel/slick/slick.css';
@@ -41,13 +43,15 @@ const Main = () => {
   };
 
   const datas: Bests = [
-    { id: 1, text: '얼큰한 칼국수 맛집 베스트 20곳', img: noodle },
-    { id: 2, text: '일본 라멘 맛집 베스트 70곳', img: ramen },
-    { id: 3, text: '한식 주점 베스트 30곳', img: korean },
-    { id: 4, text: '타르트 맛집 베스트 35곳', img: tart },
-    { id: 5, text: '파스타 맛집 베스트 10곳', img: pasta },
-    { id: 6, text: '비빔밥 맛집 베스트 45곳', img: bibimbap },
+    { id: 1, text: '떡볶이 맛집 베스트 10', img: dbk, key: '떡볶이' },
+    { id: 2, text: '라멘 맛집 베스트 10', img: ramen, key: '라멘' },
+    { id: 3, text: '피자 맛집 베스트 10', img: pizza, key: '피자' },
+    { id: 4, text: '파스타 맛집 베스트 10', img: pasta, key: '파스타' },
+    { id: 5, text: '홍대연남 맛집 베스트 10', img: tart, key: '홍대연남' },
+    { id: 6, text: '신촌이대 맛집 베스트 10', img: bibimbap, key: '신촌이대' },
   ];
+
+
 
   //첫 화면 cover 관리  
   const [clicked, setClicked] = useState(false); // 커버에 애니메이션 주기
