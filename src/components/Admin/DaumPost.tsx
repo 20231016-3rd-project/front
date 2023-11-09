@@ -116,7 +116,7 @@ const DaumPost: React.FC<DaumPostProps> = ({ onAddressSelect, initialAddress } )
 //             districtsName: data.sigungu,
 //             dongName: data.bname || '',
 
-//           },
+          },
           // coords: {
           //   lat: parseFloat(result[0].y), // 문자열을 숫자로 변환
           //   lng: parseFloat(result[0].x)
