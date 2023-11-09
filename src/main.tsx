@@ -6,6 +6,7 @@ import { RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 
+
 // QueryClient 인스턴스를 생성합니다.
 const queryClient = new QueryClient();
 
