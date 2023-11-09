@@ -47,19 +47,22 @@ const ImageInput = ({ selectedFiles, setSelectedFiles }) => {
     <div>
       <input type="file" multiple onChange={handleFileChange} />
       <ImagePreviewStyle>
-        {selectedFiles.map((file, index) => {
-          return (
-            <div key={index}>
-              <img
-                src={URL.createObjectURL(file)}
-                alt={`이미지 ${index}`}
-                width="100"
-              />
-              <li>{file?.name}</li>
-            </div>
-          );
-          //todo :img미리보기
-        })}
+        {selectedFiles.length > 0 &&
+          selectedFiles.map((file, index) => {
+            return (
+              <div key={index}>
+                <img
+                  src={URL.createObjectURL(
+                    new Blob([file], { type: 'image/*' })
+                  )}
+                  alt={`이미지 ${index}`}
+                  width="100"
+                />
+                <li>{file?.name}</li>
+              </div>
+            );
+            //todo :img미리보기
+          })}
       </ImagePreviewStyle>
     </div>
   );
@@ -72,4 +75,5 @@ const ImagePreviewStyle = styled.ul`
   gap: 1rem;
   margin: 1rem;
   width: 400px;
+  height: 100px;
 `;
