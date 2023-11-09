@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './SignIn.styles';
 import { KAKAO_AUTH_URI } from '../../apis/kakaoAuthApi/kakaoAuthApi';
 import { handleKakaoLogin } from '../../apis/kakaoAuthApi/kakaoAuthApi';
-import { login } from '../../apis/authApi/authApi'; 
 import kakaoLogo from '../../assets/images/kakaoLogo.png';
-
+import axios from 'axios';
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,7 +12,7 @@ const SignIn = () => {
 
   const handleLogin = async (email: string, password: string) => {
     try {
-      await login({ email, password });
+      // await login({ email, password });
       const response = await axios
         .post(
           `${import.meta.env.VITE_APP_SERVER_API}/sunflowerPlate/user/login`,
@@ -43,17 +42,17 @@ const SignIn = () => {
   const handleKakaoRedirect = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
-  
+
     if (code) {
       try {
         await handleKakaoLogin(code);
-        navigate('/'); 
+        navigate('/');
       } catch (err) {
         console.error('Error during Kakao login', err);
       }
     }
   };
-   useEffect(() => {
+  useEffect(() => {
     handleKakaoRedirect();
   }, []);
 
@@ -73,12 +72,9 @@ const SignIn = () => {
         type="password"
       />
       <S.Button onClick={() => handleLogin(email, password)}>Login</S.Button>
-      
-      
       <a href={KAKAO_AUTH_URI}>
         <img src={kakaoLogo} alt="카카오 로그인" />
       </a>
-      
     </S.Container>
   );
 };

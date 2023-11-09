@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { getCookie, setCookie } from '../../utils/cookie';
 
 const createInstance = (contentType) => {
   const config = {
