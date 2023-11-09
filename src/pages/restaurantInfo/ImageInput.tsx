@@ -50,11 +50,11 @@ const ImageInput = ({ selectedFiles, setSelectedFiles }) => {
         {selectedFiles.map((file, index) => {
           return (
             <div key={index}>
-              <img
+              {/* <img
                 src={URL.createObjectURL(file)}
                 alt={`이미지 ${index}`}
                 width="100"
-              />
+              /> */}
               <li>{file?.name}</li>
             </div>
           );
