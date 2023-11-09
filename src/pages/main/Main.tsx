@@ -133,6 +133,15 @@ const CoverTitle = styled.div`
 const Text1 = styled.p`
   letter-spacing: 2px;
 `;
+
+const bounce = keyframes`
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+`;
 const ArrowDown = styled.div`
   background-color: transparent;
   border: none;
@@ -140,10 +149,11 @@ const ArrowDown = styled.div`
   width: 60px;
 `;
 const ArrowDownImg = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(242deg)
     brightness(103%) contrast(101%);
+    animation: ${bounce} 1s infinite; 
 `;
 const SelectRegion = styled.div`
   background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('src/assets/images/background.jpg');
@@ -175,6 +185,7 @@ const SelectRegionButton = styled.button`
 `;
 const Text2 = styled.p`
   letter-spacing: 5px;
+  margin-bottom: 10px;
 `;
 
 const Section = styled.div`

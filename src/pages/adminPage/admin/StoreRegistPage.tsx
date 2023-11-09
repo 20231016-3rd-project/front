@@ -124,8 +124,8 @@ return (
       <RegistContainer onSubmit={handleSubmit}>
        
         <MainTextBox>
-         <h1>신규 식당 등록</h1>
-        ㅣ<span>당신의 식당을 등록하세요!</span>
+         <h1>식당 등록/수정</h1>
+        <span>ㅣ당신의 식당을 등록하세요!</span>
         </MainTextBox>
 
     

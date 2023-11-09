@@ -178,7 +178,9 @@ const AddressSearchMapContainer = styled.div`
   flex-direction: column;
   width: 95%;
   margin-bottom: 15px;
-  border: 1px solid red;
+  & > label{
+    margin-bottom: 5px;
+  }
 `;
 
 const ModalContainer = styled.div`
@@ -199,7 +201,6 @@ const ModalContainer = styled.div`
 const AddressSection = styled.div`
     display: flex;
     width: 100%;
-    border: 1px solid red;
 
     & > button{
         width: 10%;
@@ -224,7 +225,8 @@ const AddressInput = styled.div`
 const MapContainer = styled.div`
   width: 100%;
   height: 400px;
-  border: 1px solid red;
+  margin-top: 10px;
+  border: 1px solid grey;
 `;
 
 const KakaoMap = styled.div `

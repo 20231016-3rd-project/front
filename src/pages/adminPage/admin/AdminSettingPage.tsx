@@ -21,7 +21,6 @@ const AdminSettingPage: React.FC = () => {
       <LinkIcon src={heart} alt=""/>
         <SetText2>
           <h1>가게등록</h1>
-          <h1>몰라몰라몰라</h1>
         </SetText2>
         </Link>
       </LinkSection>
@@ -30,8 +29,7 @@ const AdminSettingPage: React.FC = () => {
       <Link to="/admin/report">
         <SetText2>
         <LinkIcon src={heart} alt=""/>
-          <h1>신고내역</h1>
-          <h1>몰라몰라몰라</h1>
+          <h1>리뷰신고내역</h1>
         </SetText2>
         </Link>
       </LinkSection>
@@ -41,7 +39,6 @@ const AdminSettingPage: React.FC = () => {
         <SetText2>
         <LinkIcon src={heart} alt=""/>
           <h1>가게등록내역</h1>
-          <h1>몰라몰라몰라</h1>
         </SetText2>
         </Link>
       </LinkSection>
@@ -51,7 +48,6 @@ const AdminSettingPage: React.FC = () => {
         <SetText2>
         <LinkIcon src={heart} alt=""/>
           <h1>채팅상담</h1>
-          <h1>몰라몰라몰라</h1>
         </SetText2>
         </Link>
       </LinkSection>
