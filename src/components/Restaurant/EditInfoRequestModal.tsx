@@ -1,30 +1,30 @@
 import { useState } from 'react';
 import Modal from '../Modal/Modal';
 import styled from 'styled-components';
-import { reportReview } from '../../apis/reviewApi';
-const ReportReviewModal = ({ closeModal, reviewId }) => {
+import { postEditInfoRequest } from '../../apis/restaurantApi';
+const EditinfoRequestModal = ({ closeModal, restaurantId }) => {
   const category = [
-    { option1: '관련없는 내용' },
-    { option2: '상업적 홍보' },
-    { option3: '개인정보 유출 위험' },
-    { option4: '저작권 불법 도용(타인이 작성한 글,사진)' },
-    { option5: '욕설 및 비방' },
+    { option1: '매장 이전' },
+    { option2: '메장 폐업' },
+    { option3: '메뉴 변경' },
+    { option4: '운영 시간 변경' },
+    { option5: '휴업' },
     { option6: '기타' },
   ];
 
   const [reportCategory, setReportCategory] = useState('');
-  const [reportContent, setReportContent] = useState('');
+  const [requestContent, setRequestContent] = useState('');
   const contentChangehandler = (e) => {
-    setReportContent(e.target.value);
+    setRequestContent(e.target.value);
   };
   const categoryChangehandler = (e) => {
     setReportCategory(e.target.value);
     console.log(reportCategory);
   };
   console.log({
-    reviewId,
+    restaurantId,
     reportCategory,
-    reportContent,
+    requestContent,
   });
   const radios = category.map((option) => {
     return (
@@ -44,37 +44,37 @@ const ReportReviewModal = ({ closeModal, reviewId }) => {
 
   const onClickhandler = () => {
     console.log({
-      reviewId,
+      restaurantId,
       reportCategory,
-      reportContent,
+      requestContent,
     });
-    const response = reportReview({
-      reviewId,
+    const response = postEditInfoRequest({
       reportCategory,
-      reportContent,
-    }).then((r) => console.log(r));
+      restaurantId,
+      requestContent,
+    }).then((r) => console.log('post edit info request:', r));
 
     closeModal();
   };
   return (
     <Modal closeModal={closeModal}>
       <ReportReviewStyle>
-        <div className="modal__header">신고하기</div>
+        <div className="modal__header">정보 수정 요청</div>
 
         <div className="modal__content">
-          신고하시는 사유를 선택해주세요.
+          정보 수정 카테고리를 골라주세요.
           <br />
           {radios}
           <br />
-          신고하시는 이유를 알려주세요
+          상세 변경 내역을 알려주세요
           <textarea
             name=""
             id=""
             cols="30"
             rows="10"
-            placeholder="비방, 욕설, 광고, 잘못된 정보 등 신고 사유를 구체적으로 작성해주세요"
+            placeholder="폐업, 휴업, 이전, 잘못된 정보 등 수정 사유를 구체적으로 작성해주세요"
             onChange={contentChangehandler}
-            value={reportContent}
+            value={requestContent}
           ></textarea>
         </div>
         <div className="modal__footer">
@@ -85,7 +85,7 @@ const ReportReviewModal = ({ closeModal, reviewId }) => {
   );
 };
 
-export default ReportReviewModal;
+export default EditinfoRequestModal;
 
 const ReportReviewStyle = styled.div`
   background-color: white;
