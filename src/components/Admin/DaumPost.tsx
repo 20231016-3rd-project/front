@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 
 interface CustomAddress {
-  restaurantAdministrativeDistrict: {
-    cityName: string;
-    districtsName: string;
-    dongName: string;
+  fullAd: string; // 전체 주소를 추가합니다.
+  restaurantAdmin: {
+    city: string;
+    district: string;
+    dong: string;
   };
   // coords: {
   //   lat: number;
@@ -16,6 +17,7 @@ interface CustomAddress {
 
 interface DaumPostProps {
   onAddressSelect: (address: CustomAddress) => void;
+  initialAddress: string; // 초기 주소 props를 추가합니다.
 }
 
 declare global {
@@ -24,12 +26,28 @@ declare global {
   }
 }
 
-const DaumPost: React.FC<DaumPostProps> = ({ onAddressSelect }) => {
+const DaumPost: React.FC<DaumPostProps> = ({
+  onAddressSelect,
+  initialAddress,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [areaAddress, setAreaAddress] = useState(''); // 지역 주소 (시, 도 등)
   const [detailAddress, setDetailAddress] = useState(''); // 상세 주소 (도로명, 건물명 등)
   const [map, setMap] = useState<any>(null); // 지도 객체 상태
   const [marker, setMarker] = useState<any>(null); // 마커 객체 상태
+
+  useEffect(() => {
+    if (initialAddress) {
+      const addressParts = initialAddress.split(' '); // 주소를 공백 기준으로 나눕니다.
+      if (addressParts.length > 2) {
+        setAreaAddress(`${addressParts[0]} ${addressParts[1]}`);
+        setDetailAddress(addressParts.slice(2).join(' '));
+      } else {
+        setAreaAddress(initialAddress);
+        setDetailAddress('');
+      }
+    }
+  }, [initialAddress]);
 
   useEffect(() => {
     if (window.kakao && window.kakao.maps) {
@@ -88,16 +106,25 @@ const DaumPost: React.FC<DaumPostProps> = ({ onAddressSelect }) => {
         map.setCenter(coords);
 
         onAddressSelect({
-          restaurantAdministrativeDistrict: {
-            cityName: data.sido,
-            districtsName: data.sigungu,
-            dongName: data.bname || '',
+          restaurantAdmin: {
+            fullAd: fullAddress, // 전체 주소를 추가합니다.
+            city: data.sido,
+            district: data.sigungu,
+            dong: data.bname || '',
           },
-          // coords: {
-          //   lat: parseFloat(result[0].y), // 문자열을 숫자로 변환
-          //   lng: parseFloat(result[0].x)
-          // }
         });
+
+        //           restaurantAdministrativeDistrict: { // 잘몰라서 주석처리 해놨습니다
+        //             cityName: data.sido,
+        //             districtsName: data.sigungu,
+        //             dongName: data.bname || '',
+
+        //           },
+        // coords: {
+        //   lat: parseFloat(result[0].y), // 문자열을 숫자로 변환
+        //   lng: parseFloat(result[0].x)
+        // }
+        // });
       }
     });
 
@@ -119,10 +146,12 @@ const DaumPost: React.FC<DaumPostProps> = ({ onAddressSelect }) => {
         <ModalContainer>
           <DaumPostcode
             onComplete={handleComplete}
-            width={380}
-            height={500}
             autoClose={true}
-            style={{ padding: '10px' }}
+            style={{
+              width: '380px', // px 단위를 문자열로 명시합니다.
+              height: '500px', // px 단위를 문자열로 명시합니다.
+              padding: '10px',
+            }}
           />
           <button onClick={handleCloseModal}>닫기</button>
         </ModalContainer>

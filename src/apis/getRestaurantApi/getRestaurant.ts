@@ -10,8 +10,6 @@ export const getRestaurantDetail = async (id: string) => {
   return response.data;
 };
 
-
-
 export const searchRestaurant = async (
   keyword: string,
   page: number,
@@ -52,7 +50,7 @@ export const searchRestaurant = async (
       );
     }
   }
-    return response.data;
+  return response.data;
 };
 
 export const bestRestaurant = async (menu:string) => {
