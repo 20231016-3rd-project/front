@@ -5,27 +5,33 @@ const { kakao } = window;
 console.log(kakao);
 console.dir(kakao);
 
-const Map = () => {
+const Map = ({ address }) => {
+  const geocoder = new kakao.maps.services.Geocoder();
+  console.log('map안에', address);
   useEffect(() => {
-    const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-    const options = {
-      //지도를 생성할 때 필요한 기본 옵션
-      center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-      level: 3, //지도의 레벨(확대, 축소 정도)
-    };
-
-    const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-    // 마커가 표시될 위치입니다
-    const markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-
-    // 마커를 생성합니다
-    const marker = new kakao.maps.Marker({
-      position: markerPosition,
+    geocoder.addressSearch(address, function (result, status) {
+      console.log('map address', address);
+      console.log('Mapresult:', result);
+      console.log('map satus', status, kakao.maps.services.Status.OK);
+      if (status === kakao.maps.services.Status.OK) {
+        const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        const newMarker = new kakao.maps.Marker({
+          position: coords,
+        });
+        const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+        const options = {
+          center: coords, //지도의 중심좌표.
+          level: 3, //지도의 레벨(확대, 축소 정도)
+        };
+        const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+        newMarker.setMap(map);
+      }
     });
-    // 마커가 지도 위에 표시되도록 설정합니다
-    marker.setMap(map);
-  }, []);
+    //   const marker = new kakao.maps.Marker({
+    //     position: markerPosition,
+    //   });
+    //   // 마커가 지도 위에 표시되도록 설정합니다
+  }, [address]);
   return <MapBox id="map">Map</MapBox>;
 };
 

@@ -5,13 +5,59 @@ import infoImg from '../../pages/restaurantInfo/info-image.jpg';
 import StarRating from '../Star/StarRating';
 import ImageInput from '../../pages/restaurantInfo/ImageInput';
 import { useState } from 'react';
-import { postReview } from '../../apis/reviewApi';
+import { postReview, putReview } from '../../apis/reviewApi';
 import { useParams } from 'react-router';
-const WriteReviewModal = ({ closeModal, setReviewsInfo }) => {
-  const [rating, setRating] = useState<number | null>(null);
-  const [content, setContent] = useState('');
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const { restaurantId } = useParams();
+
+// {
+//   "reviewId": 14,
+//   "memberId": 3,
+//   "memberNickname": "유저1",
+//   "memberProfilePicture": "https://plate-user-img.s3.ap-northeast-2.amazonaws.com/BasicImage.png",
+//   "reviewContent": "심심심",
+//   "reviewStarRating": 1,
+//   "reviewAt": "2023-11-07T10:27:27",
+//   "reviewImageDtoList": [],
+//   "reviewEmpathyCount": 0,
+//   "empathyReview": false
+// }
+
+// [
+//   [
+//       {
+//           "reviewImageId": 9,
+//           "reviewOriginName": "local_image - 복사본 (2).jpg",
+//           "reviewStoredName": "e1d2cfed-ace3-4e9a-b18b-77b93ff2d0eb.jpg",
+//           "reviewResizeStoredName": "resized_e1d2cfed-ace3-4e9a-b18b-77b93ff2d0eb.jpg",
+//           "reviewOriginUrl": "https://plate-review-img.s3.ap-northeast-2.amazonaws.com/e1d2cfed-ace3-4e9a-b18b-77b93ff2d0eb.jpg",
+//           "reviewResizeUrl": "https://plate-review-img.s3.ap-northeast-2.amazonaws.com/resized_e1d2cfed-ace3-4e9a-b18b-77b93ff2d0eb.jpg"
+//       },
+//       {
+//           "reviewImageId": 10,
+//           "reviewOriginName": "local_image - 복사본.jpg",
+//           "reviewStoredName": "677677a8-07ec-4cc7-9761-7bb536ba8683.jpg",
+//           "reviewResizeStoredName": "resized_677677a8-07ec-4cc7-9761-7bb536ba8683.jpg",
+//           "reviewOriginUrl": "https://plate-review-img.s3.ap-northeast-2.amazonaws.com/677677a8-07ec-4cc7-9761-7bb536ba8683.jpg",
+//           "reviewResizeUrl": "https://plate-review-img.s3.ap-northeast-2.amazonaws.com/resized_677677a8-07ec-4cc7-9761-7bb536ba8683.jpg"
+//       },
+//       {
+//           "reviewImageId": 11,
+//           "reviewOriginName": "local_image.jpg",
+//           "reviewStoredName": "e8f58c2c-ada1-4551-b7d3-3f04e9520c9a.jpg",
+//           "reviewResizeStoredName": "resized_e8f58c2c-ada1-4551-b7d3-3f04e9520c9a.jpg",
+//           "reviewOriginUrl": "https://plate-review-img.s3.ap-northeast-2.amazonaws.com/e8f58c2c-ada1-4551-b7d3-3f04e9520c9a.jpg",
+//           "reviewResizeUrl": "https://plate-review-img.s3.ap-northeast-2.amazonaws.com/resized_e8f58c2c-ada1-4551-b7d3-3f04e9520c9a.jpg"
+//       }
+//   ]
+// ]
+
+const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
+  const [rating, setRating] = useState<number | null>(review.reviewStarRating);
+  const [content, setContent] = useState(review.reviewContent);
+  const [selectedFiles, setSelectedFiles] = useState([
+    review.reviewImageDtoList,
+  ]);
+  console.log('put review image:', selectedFiles);
+  // const { restaurantId } = useParams();
 
   const contentChangeHandler = (e) => {
     setContent(e.target.value);
@@ -67,21 +113,23 @@ const WriteReviewModal = ({ closeModal, setReviewsInfo }) => {
                   formData.append('imageFile', file);
                 }
               });
-              const reviewSaveDto = {
+              setSelectedFiles(null);
+              const updateReviewDto = {
                 reviewContent: content,
-                reviewStarRating: rating,
+                imageDtoList: [],
               };
-              const json = JSON.stringify(reviewSaveDto);
+              const json = JSON.stringify(updateReviewDto);
               const dataBlob = new Blob([json], {
                 type: 'application/json',
               });
-              formData.append('reviewSaveDto', dataBlob);
-              postReview(restaurantId, formData).then((r) => {
-                console.log('postReview response', r);
+              formData.append('updateReviewDto', dataBlob);
+              putReview(review.reviewId, formData).then((r) => {
+                console.log('put Review response', r);
                 setReviewsInfo((prevState) => {
+                  const newContent = [r, ...prevState.content];
                   return {
                     ...prevState,
-                    content: [r, ...prevState.content],
+                    content: newContent,
                   };
                 });
               });
@@ -96,7 +144,7 @@ const WriteReviewModal = ({ closeModal, setReviewsInfo }) => {
   );
 };
 
-export default WriteReviewModal;
+export default PutReviewModal;
 
 const WriteReviewStyle = styled.div`
   display: flex;
