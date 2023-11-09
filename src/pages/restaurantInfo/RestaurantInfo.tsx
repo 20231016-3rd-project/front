@@ -29,10 +29,14 @@ const RestaurantInfo = () => {
       restaurantLikeCount: 0,
       likedRestaurant: false,
     },
-    restaurantMenuDtoList: [],
-    restaurantImageDtoList: [],
+    restaurantMenuDtoList: [
+      { restaurantMenuName: '', restaurantMenuPrice: '' },
+    ],
+    restaurantImageDtoList: [{ restaurantOriginUrl: '' }],
   });
-  const [reviewsInfo, setReviewsInfo] = useState({ content: [] });
+  const [reviewsInfo, setReviewsInfo] = useState({
+    content: [{ reviewId: null, reviewAt: '' }],
+  });
   const [image, setImages] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -131,12 +135,12 @@ const RestaurantInfo = () => {
               운영시간 {info.restaurantOpenTime}
             </div>
             <div className="info__menu">
-              메인 메뉴
+              메뉴 정보
               <div>
                 {info.restaurantMenuDtoList.map((menu, index) => {
                   return (
                     <div key={index}>
-                      {menu.restaurantMenuName} {menu.restaurantMenuPrice}
+                      {menu.restaurantMenuName} {menu.restaurantMenuPrice}원
                     </div>
                   );
                 })}
@@ -213,10 +217,12 @@ const RestaurantInfoLayout = styled.div`
   }
 
   .info__container {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 1200px;
     height: auto;
     margin: 1rem;
+    gap: 1rem;
   }
 
   .info__title {
@@ -241,13 +247,19 @@ const RestaurantInfoLayout = styled.div`
     border: 2px solid black;
     margin-bottom: 10px;
     font-size: 1.5rem;
+    box-sizing: border-box;
   }
   .info__menu {
+    box-sizing: border-box;
     display: block;
     width: 1200px;
-    height: 600px;
     border: 2px solid black;
     margin-bottom: 10px;
+    gap: 1rem;
+    padding: 1rem;
+    div {
+      margin-top: 1rem;
+    }
   }
 
   .info__reviews {

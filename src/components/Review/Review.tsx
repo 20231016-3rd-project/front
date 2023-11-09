@@ -7,6 +7,7 @@ import ViewReviewModal from './ViewReviewModal';
 import { getMyProfile } from '../../apis/profileApi';
 import PutReviewModal from './PutReviewModal';
 import { deleteReview, likeReview } from '../../apis/reviewApi';
+import { useLocation } from 'react-router-dom';
 const Review = ({ review, setReviewsInfo }) => {
   const [isReportReviewOpen, setIsReportReviewOpen] = useState(false);
   const [isViewReviewOpen, setIsViewReviewOpen] = useState(false);
@@ -16,6 +17,7 @@ const Review = ({ review, setReviewsInfo }) => {
     review.empathyReview ?? false
   );
   const [empathyCount, setEmpathyCount] = useState(review.reviewEmpathyCount);
+  let location = useLocation();
   const clickLikeHandler = () => {
     setEmpathyReview((prev: boolean) => !prev);
     if (empathyReview) {
@@ -43,7 +45,7 @@ const Review = ({ review, setReviewsInfo }) => {
   const closePutReviewModal = () => {
     setIsPutReviewOpen(false);
   };
-  console.log(review);
+  console.log('Review', review);
 
   const deleteButtonhHandler = () => {
     deleteReview(review.reviewId).then((r) => {
@@ -101,9 +103,8 @@ const Review = ({ review, setReviewsInfo }) => {
             <LikeButton
               className={`like-button ${empathyReview ? 'liked' : ''}`}
               onClick={clickLikeHandler}
-            >
-              공감{empathyCount}
-            </LikeButton>
+            ></LikeButton>
+            {empathyCount}
             {/* "reviewEmpathyCount": 0,
                 "empathyReview": false */}
             <button onClick={openReportReviewModal}>신고</button>
@@ -113,9 +114,11 @@ const Review = ({ review, setReviewsInfo }) => {
         <div className="review__content">
           <div className="review__text">{review.reviewContent}</div>
           <div className="review__images">
-            {review.reviewImageDto?.map((image) => {
+            {review.reviewImageDtoList?.map((image) => {
+              console.log(review);
               return (
                 <img
+                  key={image.reviewImageId}
                   onClick={openViewReviewModal}
                   src={image.reviewResizeUrl}
                   alt="리뷰이미지"
@@ -133,8 +136,13 @@ export default Review;
 const LikeButton = styled.button`
   display: inline-block;
   position: relative;
-  font-size: 32px;
+  font-size: 1rem;
   cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  &::focus {
+    border: None;
+  }
   // border: 1px solid black;
   &::before {
     font-size: 3em;
@@ -189,6 +197,12 @@ const ReviewLayout = styled.div`
   .review__stars {
   }
   .review__buttons {
+    button {
+      width: 60px;
+      height: 30px;
+    }
+    display: flex;
+    gap: 1rem;
   }
 
   .review__content {

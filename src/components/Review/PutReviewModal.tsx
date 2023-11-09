@@ -126,9 +126,10 @@ const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
               putReview(review.reviewId, formData).then((r) => {
                 console.log('put Review response', r);
                 setReviewsInfo((prevState) => {
+                  const newContent = [r, ...prevState.content];
                   return {
                     ...prevState,
-                    content: [r, ...prevState.content],
+                    content: newContent,
                   };
                 });
               });

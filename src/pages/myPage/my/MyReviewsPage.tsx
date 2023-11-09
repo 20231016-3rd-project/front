@@ -1,6 +1,7 @@
 import Review from '../../../components/Review/Review';
 import { useEffect, useState } from 'react';
 import { getMyReviews } from '../../../apis/reviewApi';
+import styled from 'styled-components';
 const MyReviewsPage = () => {
   const [reviewArray, setReviewArray] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -9,7 +10,7 @@ const MyReviewsPage = () => {
     getMyReviews().then((data) => setReviewArray(data));
   }, []);
   return (
-    <div>
+    <MyReviewStyle>
       {reviewArray.map((review, index) => {
         return (
           <div>
@@ -19,8 +20,12 @@ const MyReviewsPage = () => {
           </div>
         );
       })}
-    </div>
+    </MyReviewStyle>
   );
 };
 
 export default MyReviewsPage;
+
+const MyReviewStyle = styled.div`
+  margin: 5rem;
+`;

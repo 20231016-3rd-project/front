@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 
 const ImageInput = ({ selectedFiles, setSelectedFiles }) => {
   console.log(selectedFiles);
@@ -45,14 +46,30 @@ const ImageInput = ({ selectedFiles, setSelectedFiles }) => {
   return (
     <div>
       <input type="file" multiple onChange={handleFileChange} />
-      <ul>
+      <ImagePreviewStyle>
         {selectedFiles.map((file, index) => {
-          return <li key={index}>{file.name}</li>;
+          return (
+            <div key={index}>
+              <img
+                src={URL.createObjectURL(file)}
+                alt={`이미지 ${index}`}
+                width="100"
+              />
+              <li>{file?.name}</li>
+            </div>
+          );
           //todo :img미리보기
         })}
-      </ul>
+      </ImagePreviewStyle>
     </div>
   );
 };
 
 export default ImageInput;
+
+const ImagePreviewStyle = styled.ul`
+  display: flex;
+  gap: 1rem;
+  margin: 1rem;
+  width: 400px;
+`;
