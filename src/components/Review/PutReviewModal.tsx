@@ -7,6 +7,7 @@ import ImageInput from '../../pages/restaurantInfo/ImageInput';
 import { useState } from 'react';
 import { postReview, putReview } from '../../apis/reviewApi';
 import { useParams } from 'react-router';
+import PutImageInput from '../../pages/restaurantInfo/PutImageInput';
 
 // {
 //   "reviewId": 14,
@@ -53,9 +54,7 @@ import { useParams } from 'react-router';
 const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
   const [rating, setRating] = useState<number | null>(review.reviewStarRating);
   const [content, setContent] = useState(review.reviewContent);
-  const [selectedFiles, setSelectedFiles] = useState([
-    review.reviewImageDtoList,
-  ]);
+  const [selectedFiles, setSelectedFiles] = useState(review.reviewImageDtoList);
   console.log('put review image:', selectedFiles);
   // const { restaurantId } = useParams();
 
@@ -99,7 +98,7 @@ const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
         </div>
         <div className="modal__footer">
           <div>
-            <ImageInput
+            <PutImageInput
               selectedFiles={selectedFiles}
               setSelectedFiles={setSelectedFiles}
             />
@@ -108,16 +107,21 @@ const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
             onClick={() => {
               //별점 유효성 검사
               //post
-              selectedFiles.forEach((file) => {
-                if (file) {
-                  formData.append('imageFile', file);
+              selectedFiles.forEach((item) => {
+                if (item.file !== undefined) {
+                  formData.append('imageFile', item.file);
                 }
               });
               setSelectedFiles(null);
               const updateReviewDto = {
                 reviewContent: content,
-                imageDtoList: [],
+                imageDtoList: selectedFiles
+                  .map((item) => {
+                    return { imageId: item.reviewImageId };
+                  })
+                  .filter((item) => item.imageId !== undefined),
               };
+              console.log('updateReviewDto', updateReviewDto);
               const json = JSON.stringify(updateReviewDto);
               const dataBlob = new Blob([json], {
                 type: 'application/json',
@@ -126,7 +130,10 @@ const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
               putReview(review.reviewId, formData).then((r) => {
                 console.log('put Review response', r);
                 setReviewsInfo((prevState) => {
-                  const newContent = [r, ...prevState.content];
+                  const removeOldReview = prevState.content.filter(
+                    (item) => item.reviewId !== review.reviewId
+                  );
+                  const newContent = [r, ...removeOldReview];
                   return {
                     ...prevState,
                     content: newContent,
@@ -143,6 +150,15 @@ const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
     </Modal>
   );
 };
+
+// {
+//   "restaurantId": 1,
+//   "restaurantName": "피자네버슬립스 합정상수점",
+//   "reviewContent": "안녕하세요. 감사해요. 다시 만나요",
+//   "reviewStarRating": 4,
+//   "reviewImageDto": [],
+//   "reviewAt": "2023-11-09T11:11:37"
+// }
 
 export default PutReviewModal;
 

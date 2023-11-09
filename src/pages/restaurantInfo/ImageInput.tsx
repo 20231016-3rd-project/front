@@ -72,4 +72,5 @@ const ImagePreviewStyle = styled.ul`
   gap: 1rem;
   margin: 1rem;
   width: 400px;
+  height: 100px;
 `;
