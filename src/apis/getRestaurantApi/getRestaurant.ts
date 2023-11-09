@@ -1,16 +1,14 @@
 import { axiosInstance } from '../axiosInstance/axiosInstance.js';
 
 export const allRestaurant = async () => {
-  const response = await axiosInstance.get(`sunflowerPlate/restaurant/search`);
+  const response = await axiosInstance.get(`/sunflowerPlate/restaurant/search`);
   return response.data.content;
 };
 
 export const getRestaurantDetail = async (id: string) => {
-  const response = await axiosInstance.get(`sunflowerPlate/restaurant/${id}`);
+  const response = await axiosInstance.get(`/sunflowerPlate/restaurant/${id}`);
   return response.data;
 };
-
-
 
 export const searchRestaurant = async (
   keyword: string,
@@ -24,33 +22,33 @@ export const searchRestaurant = async (
   if (district === '전체') {
     if (sort === '') {
       response = await axiosInstance.get(
-        `sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}`
+        `/sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}`
       );
     } else {
       response = await axiosInstance.get(
-        `sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}&sort=${sort}`
+        `/sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}&sort=${sort}`
       );
     }
   } else if (dong === '전체') {
     if (sort === '') {
       response = await axiosInstance.get(
-        `sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}&district=${district}`
+        `/sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}&district=${district}`
       );
     } else {
       response = await axiosInstance.get(
-        `sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}&district=${district}&sort=${sort}`
+        `/sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}&district=${district}&sort=${sort}`
       );
     }
   } else {
     if (sort === '') {
       response = await axiosInstance.get(
-        `sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}&district=${district}&dong=${dong}`
+        `/sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}&district=${district}&dong=${dong}`
       );
     } else {
       response = await axiosInstance.get(
-        `sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}&district=${district}&dong=${dong}&sort=${sort}`
+        `/sunflowerPlate/restaurant/search?keyword=${keyword}&page=${page}&city=${city}&district=${district}&dong=${dong}&sort=${sort}`
       );
     }
   }
-    return response.data;
+  return response.data;
 };
