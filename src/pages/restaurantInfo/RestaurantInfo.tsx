@@ -14,10 +14,12 @@ import { useParams } from 'react-router';
 import heart from '/src/assets/images/heart.png';
 import heartFill from '/src/assets/images/heartfill.png';
 
+import EditinfoRequestModal from '../../components/Restaurant/EditInfoRequestModal';
 const RestaurantInfo = () => {
   const { restaurantId } = useParams();
   console.log(typeof restaurantId);
   const [isWriteReviewOpen, setIsWriteReviewOpen] = useState(false);
+  const [isEditInfoOpen, setIsEditInfoOpen] = useState(false);
   const [info, setInfo] = useState({
     restaurantName: '',
     restaurantStarRate: 0,
@@ -31,23 +33,37 @@ const RestaurantInfo = () => {
       restaurantLikeCount: 0,
       likedRestaurant: false,
     },
-    restaurantMenuDtoList: [],
-    restaurantImageDtoList: [],
+    restaurantMenuDtoList: [
+      { restaurantMenuName: '', restaurantMenuPrice: '' },
+    ],
+    restaurantImageDtoList: [{ restaurantOriginUrl: '' }],
+  });
+  const [reviewsInfo, setReviewsInfo] = useState({
+    content: [{ reviewId: null, reviewAt: '' }],
   });
   const [image, setImages] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+
   const openWriteReviewModal = () => {
     setIsWriteReviewOpen(true);
   };
   const closeWriteReviewModal = () => {
     setIsWriteReviewOpen(false);
   };
-
+  const openEditInfoModal = () => {
+    setIsEditInfoOpen(true);
+  };
+  const closeEditInfoModal = () => {
+    setIsEditInfoOpen(false);
+  };
   useEffect(() => {
     getRestaurantDetail(restaurantId).then((data) => {
       setInfo(data);
+      console.log('restaurantInfo:', data);
+      setReviewsInfo(data.reviewReturnDtoPage);
+      console.log('reviewsInfo:', reviewsInfo);
     });
-    getMyReviews().then((data) => console.log(data));
+    // getMyReviews().then((data) => setReviewArray(data));
   }, []);
 
   //식당 페이지로 이동 시 스크롤 위로
@@ -75,8 +91,17 @@ const RestaurantInfo = () => {
 
   return (
     <>
+      {isEditInfoOpen && (
+        <EditinfoRequestModal
+          closeModal={closeEditInfoModal}
+          restaurantId={restaurantId}
+        />
+      )}
       {isWriteReviewOpen && (
-        <WriteReviewModal closeModal={closeWriteReviewModal} />
+        <WriteReviewModal
+          closeModal={closeWriteReviewModal}
+          setReviewsInfo={setReviewsInfo}
+        />
       )}
       {isLoading && (
         <RestaurantInfoLayout className="restaurant-info">
@@ -89,12 +114,24 @@ const RestaurantInfo = () => {
               />
             </div>
             <div className="images__column">
-              <img src={infoImg} alt="" />
-              <img src={infoImg} alt="" />
+              <img
+                src={info.restaurantImageDtoList[1]?.restaurantOriginUrl}
+                alt=""
+              />
+              <img
+                src={info.restaurantImageDtoList[2]?.restaurantOriginUrl}
+                alt=""
+              />
             </div>
             <div className="images__column">
-              <img src={infoImg} alt="" />
-              <img src={infoImg} alt="" />
+              <img
+                src={info.restaurantImageDtoList[3]?.restaurantOriginUrl}
+                alt=""
+              />
+              <img
+                src={info.restaurantImageDtoList[4]?.restaurantOriginUrl}
+                alt=""
+              />
             </div>
           </div>
           <div className="info__container">
@@ -111,6 +148,7 @@ const RestaurantInfo = () => {
                 좋아요({info.restaurantLikeCountDto.restaurantLikeCount})
               </Button>
               <Button>공유</Button>
+              <Button onClick={openEditInfoModal}>정보 수정 요청</Button>
             </div>
             <div className="info__address">
               <div className="info__local-address">
@@ -124,25 +162,21 @@ const RestaurantInfo = () => {
               </div>
             </div>
             <div className="info__business-hours">
-              운영시간
-              <br />
-              Open: {info.restaurantOpenTime}
-              <br />
-              Break: {info.restaurantBreakTime}
+              운영시간 {info.restaurantOpenTime}
             </div>
             <div className="info__menu">
-              메인 메뉴
+              메뉴 정보
               <div>
                 {info.restaurantMenuDtoList.map((menu, index) => {
                   return (
                     <div key={index}>
-                      {menu.restaurantMenuName} {menu.restaurantMenuPrice}
+                      {menu.restaurantMenuName} {menu.restaurantMenuPrice}원
                     </div>
                   );
                 })}
               </div>
             </div>
-            <Map />
+            <Map address={info.restaurantAddress} />
           </div>
           <div className="info__reviews">
             <div className="reviews__header">
@@ -152,11 +186,17 @@ const RestaurantInfo = () => {
               </div>
             </div>
             <div className="reviews__list">
-              <Review />
-              <Review />
+              {reviewsInfo?.content?.map((review) => {
+                return (
+                  <Review
+                    key={`${review.reviewId}${review.reviewAt}`}
+                    review={review}
+                    setReviewsInfo={setReviewsInfo}
+                  />
+                );
+              })}
             </div>
           </div>
-          <StarRating />
         </RestaurantInfoLayout>
       )}
     </>
@@ -179,6 +219,7 @@ const RestaurantInfoLayout = styled.div`
   align-items: center;
   flex-direction: column;
   margin-bottom: 8rem;
+  font-size: 1.5rem;
 
   .info__images {
     display: flex;
@@ -206,20 +247,24 @@ const RestaurantInfoLayout = styled.div`
   }
 
   .info__container {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 1200px;
     height: auto;
     margin: 1rem;
+    gap: 1rem;
   }
 
   .info__title {
     font-size: 40px;
+    font-weight: 800;
   }
   .info_tags {
     font-size: 1rem;
     color: grey;
   }
   .info__address {
+    gap: 1rem;
   }
 
   .info__local-address {
@@ -228,18 +273,23 @@ const RestaurantInfoLayout = styled.div`
   }
   .info__business-hours {
     width: 1200px;
-    height: 300px;
+    height: 100px;
     border: 2px solid black;
     margin-bottom: 10px;
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    box-sizing: border-box;
   }
   .info__menu {
+    box-sizing: border-box;
     display: block;
     width: 1200px;
-    height: 600px;
     border: 2px solid black;
     margin-bottom: 10px;
+    gap: 1rem;
+    padding: 1rem;
+    div {
+      margin-top: 1rem;
+    }
   }
 
   .info__reviews {

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 
-const ImageInput = () => {
-  const [selectedFiles, setSelectedFiles] = useState([]);
-
+const ImageInput = ({ selectedFiles, setSelectedFiles }) => {
+  console.log(selectedFiles);
   const handleFileChange = (e) => {
     const files = e.target.files;
+    console.log(files);
     let allFilesValid = true;
 
     if (files.length > 3) {
@@ -36,6 +37,7 @@ const ImageInput = () => {
 
     if (allFilesValid) {
       setSelectedFiles(Array.from(files));
+      console.log('e.target.files:', files);
     } else {
       e.target.value = null; // 파일 선택 취소
     }
@@ -44,14 +46,30 @@ const ImageInput = () => {
   return (
     <div>
       <input type="file" multiple onChange={handleFileChange} />
-      <ul>
+      <ImagePreviewStyle>
         {selectedFiles.map((file, index) => {
-          return <li key={index}>{file.name}</li>;
+          return (
+            <div key={index}>
+              <img
+                src={URL.createObjectURL(file)}
+                alt={`이미지 ${index}`}
+                width="100"
+              />
+              <li>{file?.name}</li>
+            </div>
+          );
           //todo :img미리보기
         })}
-      </ul>
+      </ImagePreviewStyle>
     </div>
   );
 };
 
 export default ImageInput;
+
+const ImagePreviewStyle = styled.ul`
+  display: flex;
+  gap: 1rem;
+  margin: 1rem;
+  width: 400px;
+`;

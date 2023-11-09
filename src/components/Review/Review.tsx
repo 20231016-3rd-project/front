@@ -1,13 +1,32 @@
 import styled from 'styled-components';
 import infoImg from '../../pages/restaurantInfo/info-image.jpg';
 import Star from '../Star/Star';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReportReviewModal from './ReportReviewModal';
 import ViewReviewModal from './ViewReviewModal';
-const Review = () => {
+import { getMyProfile } from '../../apis/profileApi';
+import PutReviewModal from './PutReviewModal';
+import { deleteReview, likeReview } from '../../apis/reviewApi';
+import { useLocation } from 'react-router-dom';
+const Review = ({ review, setReviewsInfo }) => {
   const [isReportReviewOpen, setIsReportReviewOpen] = useState(false);
   const [isViewReviewOpen, setIsViewReviewOpen] = useState(false);
-
+  const [isPutReviewOpen, setIsPutReviewOpen] = useState(false);
+  const [profile, setProfile] = useState({});
+  const [empathyReview, setEmpathyReview] = useState(
+    review.empathyReview ?? false
+  );
+  const [empathyCount, setEmpathyCount] = useState(review.reviewEmpathyCount);
+  let location = useLocation();
+  const clickLikeHandler = () => {
+    setEmpathyReview((prev: boolean) => !prev);
+    if (empathyReview) {
+      setEmpathyCount((prev) => prev - 1);
+    } else {
+      setEmpathyCount((prev) => prev + 1);
+    }
+    likeReview(review.reviewId);
+  };
   const openReportReviewModal = () => {
     setIsReportReviewOpen(true);
   };
@@ -20,10 +39,46 @@ const Review = () => {
   const closeViewReviewModal = () => {
     setIsViewReviewOpen(false);
   };
+  const openPutReviewModal = () => {
+    setIsPutReviewOpen(true);
+  };
+  const closePutReviewModal = () => {
+    setIsPutReviewOpen(false);
+  };
+  console.log('Review', review);
+
+  const deleteButtonhHandler = () => {
+    deleteReview(review.reviewId).then((r) => {
+      if (r.status === 200) {
+        alert('삭제되었습니다.');
+        setReviewsInfo((prevState) => {
+          const newContent = prevState.content.filter(
+            (item) => item.reviewId !== review.reviewId
+          );
+          return { ...prevState, content: newContent };
+        });
+      }
+    });
+  };
+  useEffect(() => {
+    getMyProfile().then((r) => setProfile(r));
+  }, []);
+  const [isLiked, setIsLiked] = useState(review.empathReview);
+
   return (
     <>
       {isReportReviewOpen && (
-        <ReportReviewModal closeModal={closeReportReviewModal} />
+        <ReportReviewModal
+          closeModal={closeReportReviewModal}
+          reviewId={review.reviewId}
+        />
+      )}
+      {isPutReviewOpen && (
+        <PutReviewModal
+          closeModal={closePutReviewModal}
+          review={review}
+          setReviewsInfo={setReviewsInfo}
+        />
       )}
       {isViewReviewOpen && (
         <ViewReviewModal closeModal={closeViewReviewModal} />
@@ -32,35 +87,44 @@ const Review = () => {
         <div className="review__header">
           <div className="review__profile">
             <div className="profile__image">
-              <img src={infoImg} alt="" />
+              <img src={profile.memberProfilePicture} alt="" />
             </div>
             <div className="profile__info">
-              <div className="profile__name">nicknick</div>
+              <div className="profile__name">
+                {review.memberId || profile.nickName}
+              </div>
               <div className="review__stars">
-                <Star score={4} />
+                <Star score={review.reviewStarRating} />
               </div>
             </div>
           </div>
           <div className="review__buttons">
-            <button>수정</button>
-            <button>공감</button>
+            <button onClick={openPutReviewModal}>수정</button>
+            <LikeButton
+              className={`like-button ${empathyReview ? 'liked' : ''}`}
+              onClick={clickLikeHandler}
+            ></LikeButton>
+            {empathyCount}
+            {/* "reviewEmpathyCount": 0,
+                "empathyReview": false */}
             <button onClick={openReportReviewModal}>신고</button>
-            <button>삭제</button>
+            <button onClick={deleteButtonhHandler}>삭제</button>
           </div>
         </div>
         <div className="review__content">
-          <div className="review__text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-            ratione, quo, provident assumenda culpa aspernatur, esse aliquam
-            excepturi qui ipsum corporis dolorum vero commodi repudiandae quos
-            in dolores ab obcaecati adipisci eveniet porro nostrum. Beatae,
-            ipsam harum quos nobis sit molestias dolor, modi, aliquam corrupti
-            consequuntur sed! Error, odio amet.
-          </div>
+          <div className="review__text">{review.reviewContent}</div>
           <div className="review__images">
-            <img onClick={openViewReviewModal} src={infoImg} alt="" />
-            <img src={infoImg} alt="" />
-            <img src={infoImg} alt="" />
+            {review.reviewImageDtoList?.map((image) => {
+              console.log(review);
+              return (
+                <img
+                  key={image.reviewImageId}
+                  onClick={openViewReviewModal}
+                  src={image.reviewResizeUrl}
+                  alt="리뷰이미지"
+                />
+              );
+            })}
           </div>
         </div>
       </ReviewLayout>
@@ -69,6 +133,40 @@ const Review = () => {
 };
 
 export default Review;
+const LikeButton = styled.button`
+  display: inline-block;
+  position: relative;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  &::focus {
+    border: None;
+  }
+  // border: 1px solid black;
+  &::before {
+    font-size: 3em;
+    color: #000;
+    content: '♥';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &::after {
+    font-size: 3em;
+    color: #ff3252;
+    content: '♥';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.2s;
+  }
+  &.liked::after {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+`;
 
 const ReviewLayout = styled.div`
   margin: 16px;
@@ -99,6 +197,12 @@ const ReviewLayout = styled.div`
   .review__stars {
   }
   .review__buttons {
+    button {
+      width: 60px;
+      height: 30px;
+    }
+    display: flex;
+    gap: 1rem;
   }
 
   .review__content {
