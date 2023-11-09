@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@esbuild/win32-x64": "^0.19.5",
+
     "@reduxjs/toolkit": "^1.9.7",
     "@types/kakao-js-sdk": "^1.39.3",
     "@types/node": "^20.8.7",

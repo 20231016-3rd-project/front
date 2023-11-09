@@ -6,9 +6,8 @@ const star = {
   size: 30,
   color: { filled: '#ffc107', empty: '#e4e5e9' },
 };
-const StarRating: React.FC = () => {
+const StarRating: React.FC = ({ rating, setRating }) => {
   const [hover, setHover] = useState<number | null>(null);
-  const [rating, setRating] = useState<number | null>(null);
 
   return (
     <StarRatingStyle>

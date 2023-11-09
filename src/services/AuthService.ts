@@ -1,52 +1,23 @@
-import axios from 'axios';
+import { axiosInstance } from '../apis/axiosInstance/axiosInstance';
 
-const API_URL = 'http://3.38.32.91:80';
+export interface SignupRequest {
+  email: string;
+  password: string;
+  nickname: string;
+  phone: string;
+}
 
-export const signUp = async (
-  email: string,
-  password: string,
-  nickname: string,
-  phone: string
-) => {
-  const response = await axios.post(`${API_URL}/sunflowerPlate/user/signup`, {
-    email,
-    password,
-    nickname,
-    phone,
-  });
+export const signup = async (data: SignupRequest): Promise<any> => {
+  const response = await axiosInstance.post('/signup', data);
   return response.data;
 };
 
-export const checkEmailDuplication = async (email: string) => {
-  const response = await axios.post(
-    `${API_URL}/sunflowerPlate/user/emailcheck`,
-    {
-      email,
-    }
-  );
+export const checkEmailDuplication = async (email: string): Promise<any> => {
+  const response = await axiosInstance.post('/emailcheck', { email });
   return response.data;
 };
 
-export const checkNicknameDuplication = async (nickname: string) => {
-  const response = await axios.post(
-    `${API_URL}/sunflowerPlate/user/nickcheck`,
-    {
-      nickname,
-    }
-  );
-  return response.data;
-};
-
-export const refreshAccessToken = async () => {
-  const refreshToken = localStorage.getItem('refreshToken');
-  const response = await axios.post(
-    `${API_URL}/sunflowerPlate/user/reissue`,
-    {},
-    {
-      headers: {
-        Cookie: `refreshToken=${refreshToken}`,
-      },
-    }
-  );
+export const checkNicknameDuplication = async (nickname: string): Promise<any> => {
+  const response = await axiosInstance.post('/nickcheck', { nickname });
   return response.data;
 };
