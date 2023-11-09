@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 
 interface CustomAddress {
-  fullAd: string, // 전체 주소를 추가합니다.
+  fullAd: string; // 전체 주소를 추가합니다.
   restaurantAdmin: {
     city: string;
     district: string;
@@ -26,7 +26,10 @@ declare global {
   }
 }
 
-const DaumPost: React.FC<DaumPostProps> = ({ onAddressSelect, initialAddress } ) => {
+const DaumPost: React.FC<DaumPostProps> = ({
+  onAddressSelect,
+  initialAddress,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [areaAddress, setAreaAddress] = useState(''); // 지역 주소 (시, 도 등)
   const [detailAddress, setDetailAddress] = useState(''); // 상세 주소 (도로명, 건물명 등)
@@ -44,7 +47,7 @@ const DaumPost: React.FC<DaumPostProps> = ({ onAddressSelect, initialAddress } )
         setDetailAddress('');
       }
     }
-  }, [initialAddress]); 
+  }, [initialAddress]);
 
   useEffect(() => {
     if (window.kakao && window.kakao.maps) {
@@ -103,18 +106,18 @@ const DaumPost: React.FC<DaumPostProps> = ({ onAddressSelect, initialAddress } )
         map.setCenter(coords);
 
         onAddressSelect({
-
-          
           restaurantAdmin: {
             fullAd: fullAddress, // 전체 주소를 추가합니다.
-            city: data.sido, 
-            district: data.sigungu, 
-            dong: data.bname || '' 
+            city: data.sido,
+            district: data.sigungu,
+            dong: data.bname || '',
+          },
+        });
 
-//           restaurantAdministrativeDistrict: { // 잘몰라서 주석처리 해놨습니다 
-//             cityName: data.sido,
-//             districtsName: data.sigungu,
-//             dongName: data.bname || '',
+        //           restaurantAdministrativeDistrict: { // 잘몰라서 주석처리 해놨습니다
+        //             cityName: data.sido,
+        //             districtsName: data.sigungu,
+        //             dongName: data.bname || '',
 
           },
           // coords: {
@@ -142,13 +145,13 @@ const DaumPost: React.FC<DaumPostProps> = ({ onAddressSelect, initialAddress } )
       {isModalOpen && (
         <ModalContainer>
           <DaumPostcode
-          onComplete={handleComplete}
-          autoClose={true}
-          style={{
-             width: '380px', // px 단위를 문자열로 명시합니다.
-             height: '500px', // px 단위를 문자열로 명시합니다.
-             padding: '10px',
-          }}
+            onComplete={handleComplete}
+            autoClose={true}
+            style={{
+              width: '380px', // px 단위를 문자열로 명시합니다.
+              height: '500px', // px 단위를 문자열로 명시합니다.
+              padding: '10px',
+            }}
           />
           <button onClick={handleCloseModal}>닫기</button>
         </ModalContainer>

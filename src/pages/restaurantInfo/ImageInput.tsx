@@ -50,11 +50,11 @@ const ImageInput = ({ selectedFiles, setSelectedFiles }) => {
         {selectedFiles.map((file, index) => {
           return (
             <div key={index}>
-              <img
+              {/* <img
                 src={URL.createObjectURL(file)}
                 alt={`이미지 ${index}`}
                 width="100"
-              />
+              /> */}
               <li>{file?.name}</li>
             </div>
           );
@@ -72,4 +72,5 @@ const ImagePreviewStyle = styled.ul`
   gap: 1rem;
   margin: 1rem;
   width: 400px;
+  height: 100px;
 `;
