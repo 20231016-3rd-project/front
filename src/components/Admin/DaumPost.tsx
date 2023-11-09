@@ -21,7 +21,9 @@ interface DaumPostProps {
 }
 
 declare global {
-  interface Window { kakao: any; }
+  interface Window {
+    kakao: any;
+  }
 }
 
 const DaumPost: React.FC<DaumPostProps> = ({ onAddressSelect, initialAddress } ) => {
@@ -56,7 +58,7 @@ const DaumPost: React.FC<DaumPostProps> = ({ onAddressSelect, initialAddress } )
     }
   }, []);
 
-    const handleComplete = (data: Address) => {
+  const handleComplete = (data: Address) => {
     const fullAddress = data.address; // 전체 주소
     let extraAddress = ''; // 추가 주소 정보
 
@@ -66,24 +68,27 @@ const DaumPost: React.FC<DaumPostProps> = ({ onAddressSelect, initialAddress } )
         extraAddress += data.bname;
       }
       if (data.buildingName !== '') {
-        extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+        extraAddress +=
+          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
       }
     }
 
     // 지역 주소와 상세 주소 분리
     const areaAddress = `${data.sido} ${data.sigungu}`.trim(); // '시, 도' + '시, 군, 구'
     const detailAddress = fullAddress.replace(areaAddress, '').trim(); // 지역 주소를 제외한 나머지 주소
-    
 
     setAreaAddress(areaAddress);
-    setDetailAddress(detailAddress + (extraAddress !== '' ? ` (${extraAddress})` : ''));
+    setDetailAddress(
+      detailAddress + (extraAddress !== '' ? ` (${extraAddress})` : '')
+    );
 
     // 주소를 좌표로 변환하여 지도에 마커로 표시
     const geocoder = new kakao.maps.services.Geocoder();
     geocoder.addressSearch(fullAddress, function (result, status) {
+      console.log('fulladdress', fullAddress);
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
+        console.log('coords', coords);
         if (marker) {
           // 이전 마커가 있으면 제거
           marker.setMap(null);
@@ -97,25 +102,30 @@ const DaumPost: React.FC<DaumPostProps> = ({ onAddressSelect, initialAddress } )
         setMarker(newMarker);
         map.setCenter(coords);
 
-        
-
         onAddressSelect({
+
           
           restaurantAdmin: {
             fullAd: fullAddress, // 전체 주소를 추가합니다.
             city: data.sido, 
             district: data.sigungu, 
             dong: data.bname || '' 
-          },
-          // coords: { 
+
+//           restaurantAdministrativeDistrict: { // 잘몰라서 주석처리 해놨습니다 
+//             cityName: data.sido,
+//             districtsName: data.sigungu,
+//             dongName: data.bname || '',
+
+//           },
+          // coords: {
           //   lat: parseFloat(result[0].y), // 문자열을 숫자로 변환
-          //   lng: parseFloat(result[0].x)  
+          //   lng: parseFloat(result[0].x)
           // }
         });
       }
     });
 
-    setIsModalOpen(false); 
+    setIsModalOpen(false);
   };
 
   const handleOpenModal = () => {
@@ -145,30 +155,29 @@ const DaumPost: React.FC<DaumPostProps> = ({ onAddressSelect, initialAddress } )
       )}
 
       <AddressSection>
-        
-        
-      <AddressInput>
-        <input
-         type="text"
-         placeholder='지역 주소'
-         value={areaAddress}
-         onChange={(e) => setAreaAddress(e.target.value)} 
-        />
-        
-        <input
-         type="text"
-         placeholder='상세 주소'
-         value={detailAddress}
-         onChange={(e) => setDetailAddress(e.target.value)} 
-        />
-      </AddressInput>
-        <button type="button" onClick={handleOpenModal}>주소 찾기</button>
-      </AddressSection>  
+        <AddressInput>
+          <input
+            type="text"
+            placeholder="지역 주소"
+            value={areaAddress}
+            onChange={(e) => setAreaAddress(e.target.value)}
+          />
+
+          <input
+            type="text"
+            placeholder="상세 주소"
+            value={detailAddress}
+            onChange={(e) => setDetailAddress(e.target.value)}
+          />
+        </AddressInput>
+        <button type="button" onClick={handleOpenModal}>
+          주소 찾기
+        </button>
+      </AddressSection>
 
       <MapContainer>
-        <KakaoMap id="map"/>
+        <KakaoMap id="map" />
       </MapContainer>
-
     </AddressSearchMapContainer>
   );
 };
@@ -197,29 +206,25 @@ const ModalContainer = styled.div`
 `;
 
 const AddressSection = styled.div`
-    display: flex;
-    width: 100%;
-    border: 1px solid red;
+  display: flex;
+  width: 100%;
+  border: 1px solid red;
 
-    & > button{
-        width: 10%;
-    }
-    
+  & > button {
+    width: 10%;
+  }
 `;
 
 const AddressInput = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 90%;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
 
-    & > input {
-        padding: 3px;
-        width: 100%;
-    }
+  & > input {
+    padding: 3px;
+    width: 100%;
+  }
 `;
-
-
-
 
 const MapContainer = styled.div`
   width: 100%;
@@ -227,7 +232,7 @@ const MapContainer = styled.div`
   border: 1px solid red;
 `;
 
-const KakaoMap = styled.div `
+const KakaoMap = styled.div`
   width: 100%;
   height: 100%;
 `;

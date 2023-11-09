@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '/src/assets/images/sunflower.png';
 import styled from 'styled-components';
 import DropDown from './../../DropDown/DropDown';
 import { Link, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReducerType } from '../../../store/rootReducer';
+import { setKeyword, setKey } from '../../../store/slices/keywordSlice';
 const Header: React.FC = () => {
   const [auth, setAuth] = useState(false);
   const [admin, setAdmin] = useState(false);
@@ -16,6 +19,19 @@ const Header: React.FC = () => {
   };
 
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  const region = useSelector((state: ReducerType) => state.region.regionInfo);
+  const keyword = useSelector((state: ReducerType) => state.keyword.keyword);
+  const key = useSelector((state: ReducerType) => state.keyword.key);
+
+  const onChangeKey = (e) => {
+    dispatch(setKey(e.target.value));
+  };
+  const handleSubmit = () => {
+    dispatch(setKeyword(key));
+    navigate(`/detailpage`);
+  };
 
   let headerContents;
   if (location.pathname === '/signup' || location.pathname === '/login') {
@@ -44,11 +60,15 @@ const Header: React.FC = () => {
           <SearchBox>
             <SearchInput
               type="text"
-              placeholder="지역, 식당 또는 음식"
-              name=""
-              id=""
+              placeholder="식당 또는 음식"
+              name="search"
+              id="search"
+              value={key}
+              onChange={onChangeKey}
             />
-            <SearchButton>Search</SearchButton>
+            <SearchButton disabled={!key ? true : false} onClick={handleSubmit}>
+              Search
+            </SearchButton>
           </SearchBox>
         </HeaderMiddle>
         <HeaderRight>
