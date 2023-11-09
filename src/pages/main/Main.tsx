@@ -8,6 +8,7 @@ import ramen from '/src/assets/images/ramen.jpg';
 import bibimbap from '/src/assets/images/bibimbap.jpg';
 import pasta from '/src/assets/images/pasta.jpg';
 import tart from '/src/assets/images/tart.jpg';
+import background from '/src/assets/images/background.jpg';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -48,11 +49,23 @@ const Main = () => {
     { id: 6, text: '비빔밥 맛집 베스트 45곳', img: bibimbap },
   ];
 
-  //첫 화면 cover 관리
-  const [clicked, setClicked] = useState(false);
+  //첫 화면 cover 관리  
+  const [clicked, setClicked] = useState(false); // 커버에 애니메이션 주기
+  let cover = true;
+  let initial = true;
   const handleCover = () => {
     setClicked(true);
+    sessionStorage.setItem('initial', 'false');
+    setTimeout(() => {
+      sessionStorage.setItem('cover', 'false');
+    }, 500);
   };
+  if (sessionStorage.getItem('initial')) {
+    initial = false;
+  }
+  if (sessionStorage.getItem('cover')) {
+    cover = false;
+  }
 
   let city = '서울';
   let district;
@@ -79,18 +92,20 @@ const Main = () => {
 
   return (
     <main>
-      <Cover $clicked={clicked}>
-        <CoverTitle>
-          <img src={logo} alt="" />
-          <Text1>지금바로 떠나는 맛집 탐방!</Text1>
-          <Text2>해바라기 플레이트</Text2>
-        </CoverTitle>
-        <ArrowDown onClick={handleCover}>
-          <ArrowDownImg src={arrowDown} alt="" />
-        </ArrowDown>
-      </Cover>
+      {cover && (
+        <Cover $clicked={clicked}>
+          <CoverTitle>
+            <img src={logo} alt="" />
+            <Text1>지금바로 떠나는 맛집 탐방!</Text1>
+            <Text2>해바라기 플레이트</Text2>
+          </CoverTitle>
+          <ArrowDown onClick={handleCover}>
+            <ArrowDownImg src={arrowDown} alt="" />
+          </ArrowDown>
+        </Cover>
+      )}
 
-      {clicked && (
+      {(clicked || initial === false) && (
         <>
           <SelectRegion>
             <p>당신을 위한 지역별</p>
@@ -135,7 +150,7 @@ const Cover = styled.div<IsClicked>`
   width: 100%;
   height: 93.5vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url('src/assets/images/background.jpg');
+    url('${background}');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -177,7 +192,7 @@ const ArrowDownImg = styled.img`
 `;
 const SelectRegion = styled.div`
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url('src/assets/images/background.jpg');
+    url('${background}');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

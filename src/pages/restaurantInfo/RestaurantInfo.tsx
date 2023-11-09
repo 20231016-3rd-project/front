@@ -10,6 +10,10 @@ import { getRestaurantDetail } from '../../apis/getRestaurantApi/getRestaurant';
 import axios from 'axios';
 import { getMyReviews } from '../../apis/reviewApi';
 import { useParams } from 'react-router';
+
+import heart from '/src/assets/images/heart.png';
+import heartFill from '/src/assets/images/heartfill.png';
+
 import EditinfoRequestModal from '../../components/Restaurant/EditInfoRequestModal';
 const RestaurantInfo = () => {
   const { restaurantId } = useParams();
@@ -67,6 +71,24 @@ const RestaurantInfo = () => {
     document.getElementById('root').scrollIntoView();
   }, []);
 
+  const getLiked = async (id: number) => {
+    await getLike(id).then((res) =>
+      setInfo((prevState) => {
+        return {
+          ...prevState,
+          restaurantLikeCountDto: {
+            restaurantLikeCount: res.likeCount,
+            likedRestaurant: res.likeButtonClicked,
+          },
+        };
+      })
+    );
+  };
+
+  const handleLikeBtn = () => {
+    getLiked(Number(restaurantId));
+  };
+
   return (
     <>
       {isEditInfoOpen && (
@@ -116,7 +138,15 @@ const RestaurantInfo = () => {
             <div className="info__title">{info.restaurantName}</div>
             <div className="info__tags">{}</div>
             <div className="info__button-container">
-              <Button>좋아요</Button>
+              <Button onClick={handleLikeBtn}>
+                {!info.restaurantLikeCountDto.likedRestaurant && (
+                  <LikeImg src={heart} alt="" />
+                )}
+                {info.restaurantLikeCountDto.likedRestaurant && (
+                  <LikeImg src={heartFill} alt="" />
+                )}
+                좋아요({info.restaurantLikeCountDto.restaurantLikeCount})
+              </Button>
               <Button>공유</Button>
               <Button onClick={openEditInfoModal}>정보 수정 요청</Button>
             </div>
@@ -273,3 +303,14 @@ const RestaurantInfoLayout = styled.div`
     justify-content: space-between;
   }
 `;
+
+const LikeImg = styled.img`
+  width: 20px !important;
+  height: 20px;
+  box-shadow: none !important;
+  &:hover {
+    background: white !important;
+  }
+  margin-bottom: 0 !important;
+`;
+import { getLike } from './../../apis/restaurantLikeApi';
