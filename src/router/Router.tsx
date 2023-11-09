@@ -16,7 +16,6 @@ import StoreEditPage from '../pages/adminPage/admin/StoreEditPage';
 import RestaurantInfo from '../pages/restaurantInfo/RestaurantInfo';
 import MyPage from '../pages/myPage/MyPage';
 import MySettingPage from '../pages/myPage/my/MySettingPage';
-import MyWishListPage from '../pages/myPage/my/MyWishListPage';
 import MyReviewsPage from '../pages/myPage/my/MyReviewsPage';
 import UserInfoPage from '../pages/myPage/my/UserInfoPage';
 import DetialPage from '../pages/main/DetialPage';
@@ -45,7 +44,7 @@ const router = createBrowserRouter([
         element: <RestaurantInfo />,
       },
       {
-        path: '/my',
+        path: '/mypage',
         element: <MyPage />,
         children: [
           {
@@ -57,8 +56,8 @@ const router = createBrowserRouter([
             element: <UserInfoPage />,
           },
           {
-            path: 'Wishlist',
-            element: <MyWishListPage />,
+            path: 'mylike',
+            element: <MyWishPage />,
           },
           {
             path: 'Reviews',
@@ -73,10 +72,6 @@ const router = createBrowserRouter([
       {
         path: 'bestpage',
         element: <BestPage />,
-      },
-      {
-        path: 'mylike',
-        element: <MyWishPage />,
       },
       {
         path: 'admin',

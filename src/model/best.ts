@@ -32,3 +32,18 @@ export type Restaurants = {
   reviewCount: number;
   likeCount: number;
 }[];
+
+export type MyRestaurant = {
+  restaurantId: number;
+  restaurantName: string;
+  restaurantAddress: string;
+  restaurantWebSite: string;
+  resizeImgUrl: string;
+};
+export type MyRestaurants = {
+  restaurantId: number;
+  restaurantName: string;
+  restaurantAddress: string;
+  restaurantWebSite: string;
+  resizeImgUrl: string;
+}[];

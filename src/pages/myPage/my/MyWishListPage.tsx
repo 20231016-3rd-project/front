@@ -16,6 +16,7 @@ import { getSort } from '../../../store/slices/sortSlice';
 import { setIsOpen } from '../../../store/slices/modalSlice';
 import RegionSelect from '../../../components/Modal/RegionSelect';
 import { getMyRestaurants } from '../../../store/slices/myLikeSlice';
+import MyLikeCard from './../../../components/RestaurantCard/MyLikeCard';
 
 const MyWishListPage = () => {
   const dispatch = useDispatch();
@@ -50,9 +51,9 @@ const MyWishListPage = () => {
   return (
     <>
       <Section>
-
+        <SectionTitle2>나의 좋아요 리스트</SectionTitle2>
         <ul>
-          <RestaurantCard datas={myRestaurants} />
+          <MyLikeCard datas={myRestaurants} />
         </ul>
         {/* <Pagination /> */}
       </Section>
@@ -64,4 +65,10 @@ export default MyWishListPage;
 
 const Section = styled.div`
   padding: 80px 15% 20px;
+`;
+const SectionTitle2 = styled.div`
+  color: #ff792a;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 1rem;
 `;

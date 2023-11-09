@@ -34,7 +34,7 @@ const DropDown: React.FC<OwnProps> = ({ setAuth, admin, setAdmin }) => {
 
           <Menu $isopen={isOpen} ref={dropDownRef}>
             <MenuList>
-              <StyledLink to="/mypage" onClick={() => setIsOpen(!isOpen)}>
+              <StyledLink to="/admin" onClick={() => setIsOpen(!isOpen)}>
                 관리자페이지
               </StyledLink>
             </MenuList>

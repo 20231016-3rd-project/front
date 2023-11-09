@@ -24,6 +24,7 @@ const SignIn = () => {
         .then((r) => {
           console.log(r);
           const { accessToken } = r.data;
+          localStorage.setItem('nickName', r.data.memberNickName);
           localStorage.setItem('accessToken', accessToken);
         });
 
