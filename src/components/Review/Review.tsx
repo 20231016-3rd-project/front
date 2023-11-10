@@ -60,9 +60,10 @@ const Review = ({ review, setReviewsInfo }) => {
       }
     });
   };
-  useEffect(() => {
-    getMyProfile().then((r) => setProfile(r));
-  }, []);
+  // useEffect(() => {
+  //   getMyProfile().then((r) => setProfile(r));
+  // }, []);
+  console.log(localStorage.getItem('nickcname'));
   const [isLiked, setIsLiked] = useState(review.empathReview);
 
   return (
@@ -87,11 +88,11 @@ const Review = ({ review, setReviewsInfo }) => {
         <div className="review__header">
           <div className="review__profile">
             <div className="profile__image">
-              <img src={profile.memberProfilePicture} alt="" />
+              <img src={review.memberProfilePicture} alt="" />
             </div>
             <div className="profile__info">
               <div className="profile__name">
-                {review.memberId || profile.nickName}
+                {review.memberNickname || '익명의 유저'}
               </div>
               <div className="review__stars">
                 <Star score={review.reviewStarRating} />
@@ -99,7 +100,9 @@ const Review = ({ review, setReviewsInfo }) => {
             </div>
           </div>
           <div className="review__buttons">
-            <button onClick={openPutReviewModal}>수정</button>
+            {localStorage.getItem('nickName') === review.memberNickname && (
+              <button onClick={openPutReviewModal}>수정</button>
+            )}
             <LikeButton
               className={`like-button ${empathyReview ? 'liked' : ''}`}
               onClick={clickLikeHandler}
@@ -107,8 +110,12 @@ const Review = ({ review, setReviewsInfo }) => {
             {empathyCount}
             {/* "reviewEmpathyCount": 0,
                 "empathyReview": false */}
-            <button onClick={openReportReviewModal}>신고</button>
-            <button onClick={deleteButtonhHandler}>삭제</button>
+            {localStorage.getItem('nickName') !== null && (
+              <button onClick={openReportReviewModal}>신고</button>
+            )}
+            {localStorage.getItem('nickName') === review.memberNickname && (
+              <button onClick={deleteButtonhHandler}>삭제</button>
+            )}
           </div>
         </div>
         <div className="review__content">

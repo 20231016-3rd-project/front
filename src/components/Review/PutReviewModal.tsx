@@ -2,13 +2,13 @@ import React from 'react';
 import Modal from '../Modal/Modal';
 import styled from 'styled-components';
 import infoImg from '../../pages/restaurantInfo/info-image.jpg';
-import StarRating from '../Star/StarRating';
+import Star from '../Star/Star';
 import ImageInput from '../../pages/restaurantInfo/ImageInput';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { postReview, putReview } from '../../apis/reviewApi';
 import { useParams } from 'react-router';
 import PutImageInput from '../../pages/restaurantInfo/PutImageInput';
-
+import { getMyProfile } from '../../apis/profileApi';
 // {
 //   "reviewId": 14,
 //   "memberId": 3,
@@ -55,6 +55,10 @@ const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
   const [rating, setRating] = useState<number | null>(review.reviewStarRating);
   const [content, setContent] = useState(review.reviewContent);
   const [selectedFiles, setSelectedFiles] = useState(review.reviewImageDtoList);
+  const [profile, setProfile] = useState({});
+  useEffect(() => {
+    getMyProfile().then((r) => setProfile(r));
+  }, []);
   console.log('put review image:', selectedFiles);
   // const { restaurantId } = useParams();
 
@@ -70,12 +74,12 @@ const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
         <div className="modal__header">
           <div className="review__profile">
             <div className="profile__image">
-              <img src={infoImg} alt="" />
+              <img src={profile.memberProfilePicture} alt="" />
             </div>
             <div className="profile__info">
-              <div className="profile__name">nicknick</div>
+              <div className="profile__name">{profile.nickName}</div>
               <div className="review__stars">
-                <StarRating rating={rating} setRating={setRating} />
+                <Star score={rating} />
               </div>
             </div>
           </div>
