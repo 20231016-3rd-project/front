@@ -106,25 +106,25 @@ const DaumPost: React.FC<DaumPostProps> = ({
         map.setCenter(coords);
 
         onAddressSelect({
+          fullAd: fullAddress, // 전체 주소를 추가합니다.
           restaurantAdmin: {
-            fullAd: fullAddress, // 전체 주소를 추가합니다.
             city: data.sido,
             district: data.sigungu,
             dong: data.bname || '',
           },
+          // coords: {
+          //   lat: parseFloat(result[0].y), // 문자열을 숫자로 변환
+          //   lng: parseFloat(result[0].x)
+          // }
         });
 
-        //           restaurantAdministrativeDistrict: { // 잘몰라서 주석처리 해놨습니다
-        //             cityName: data.sido,
-        //             districtsName: data.sigungu,
-        //             dongName: data.bname || '',
+        // restaurantAdministrativeDistrict: { // 잘몰라서 주석처리 해놨습니다
+        // cityName: data.sido,
+        // districtsName: data.sigungu,
+        // dongName: data.bname || '',
 
-        //           },
-        // coords: {
-        //   lat: parseFloat(result[0].y), // 문자열을 숫자로 변환
-        //   lng: parseFloat(result[0].x)
-        // }
-        // });
+         // },
+        
       }
     });
 
@@ -190,7 +190,9 @@ const AddressSearchMapContainer = styled.div`
   flex-direction: column;
   width: 95%;
   margin-bottom: 15px;
-  border: 1px solid red;
+  & > label{
+    margin-bottom: 5px;
+  }
 `;
 
 const ModalContainer = styled.div`
@@ -209,9 +211,8 @@ const ModalContainer = styled.div`
 `;
 
 const AddressSection = styled.div`
-  display: flex;
-  width: 100%;
-  border: 1px solid red;
+    display: flex;
+    width: 100%;
 
   & > button {
     width: 10%;
@@ -232,7 +233,8 @@ const AddressInput = styled.div`
 const MapContainer = styled.div`
   width: 100%;
   height: 400px;
-  border: 1px solid red;
+  margin-top: 10px;
+  border: 1px solid grey;
 `;
 
 const KakaoMap = styled.div`

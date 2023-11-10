@@ -66,7 +66,7 @@ return (
      
       <MainTextBox>
        <h1>신규 식당 등록</h1>
-      ㅣ<span>당신의 식당을 등록하세요!</span>
+      <span>당신의 식당을 등록하세요!</span>
       </MainTextBox>
 
   

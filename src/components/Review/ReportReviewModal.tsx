@@ -93,18 +93,24 @@ const ReportReviewStyle = styled.div`
   height: 600px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: auto;
+  justify-content: space-around; // 컴포넌트들을 수직으로 정렬하고 간격을 일정하게 유지합니다.
+  align-items: center; // 컴포넌트들을 가로 방향으로 중앙에 배치합니다.
+  padding: 10px; // 컴포넌트와 테두리 사이의 간격을 추가합니다.
+
   .modal__header {
     border-bottom: 1px solid black;
     font-size: 2rem;
     text-align: center;
-    margin: 1rem;
+    width: 100%; // modal__header의 너비를 부모 요소의 100%로 설정합니다.
   }
   .modal__content {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1px solid black;
+    width: 100%; // modal__content의 너비를 부모 요소의 100%로 설정합니다.
+  }
+  .modal__footer {
+    display: flex;
+    justify-content: center; // modal__footer 내부의 버튼을 중앙에 배치합니다.
+    width: 100%; // modal__footer의 너비를 부모 요소의 100%로 설정합니다.
   }
 `;

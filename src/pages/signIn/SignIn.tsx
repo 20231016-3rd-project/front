@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './SignIn.styles';
 import { KAKAO_AUTH_URI } from '../../apis/kakaoAuthApi/kakaoAuthApi';
 import { handleKakaoLogin } from '../../apis/kakaoAuthApi/kakaoAuthApi';
-import kakaoLogo from '../../assets/images/kakaoLogo.png';
+import kakaoLogo from '../../assets/images/Kakao Login3.png';
+import googleLogo from "../../assets/images/Google Login.png"
+import prame from "../../assets/images/Frame 3933.png"
 import axios from 'axios';
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -59,23 +61,35 @@ const SignIn = () => {
 
   return (
     <S.Container>
-      유저 로그인입니다.
+      <S.Box>
+      <h1>Login</h1>
+      <label htmlFor="email">이메일</label>
       <S.Input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
+        placeholder="이메일을 입력해주세요"
         type="email"
       />
+
+      <label htmlFor="email">패스워드</label>
       <S.Input
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        placeholder="패스워드를 입력해주세요"
         type="password"
       />
       <S.Button onClick={() => handleLogin(email, password)}>Login</S.Button>
+
+      <img src={prame} alt="----" />
+
       <a href={KAKAO_AUTH_URI}>
         <img src={kakaoLogo} alt="카카오 로그인" />
       </a>
+
+      <a href={KAKAO_AUTH_URI}>
+        <img src={googleLogo} alt="카카오 로그인" />
+      </a>
+      </S.Box>
     </S.Container>
   );
 };
