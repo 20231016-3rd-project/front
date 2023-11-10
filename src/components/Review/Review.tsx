@@ -1,10 +1,7 @@
-// import styled from 'styled-components';
-// import infoImg from '../../pages/restaurantInfo/info-image.jpg';
 import Star from '../Star/Star';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ReportReviewModal from './ReportReviewModal';
 import ViewReviewModal from './ViewReviewModal';
-import { getMyProfile } from '../../apis/profileApi';
 import PutReviewModal from './PutReviewModal';
 import { deleteReview, likeReview } from '../../apis/reviewApi';
 import { useLocation } from 'react-router-dom';
@@ -15,7 +12,25 @@ import {
   ReviewButton,
 } from './Reviewstyle';
 
-const Review = ({ review, setReviewsInfo }) => {
+type ReviewType = {
+  reviewId: number;
+  memberId: number;
+  memberNickname: string;
+  memberProfilePicture: string;
+  reviewAt: string;
+  reviewContent: string;
+  reviewEmpathyCount: number;
+  reviewImageDtoList: any[];
+  reviewStarRating: number;
+  empathyReview: boolean;
+};
+
+type ReviewProps = {
+  review: ReviewType; // ReviewType으로 타입 지정
+  setReviewsInfo: React.Dispatch<React.SetStateAction<ReviewType[]>>; // setReviewsInfo 타입 지정
+};
+
+const Review: React.FC<ReviewProps> = ({ review, setReviewsInfo }) => {
   const [isReportReviewOpen, setIsReportReviewOpen] = useState(false);
   const [isViewReviewOpen, setIsViewReviewOpen] = useState(false);
   const [isPutReviewOpen, setIsPutReviewOpen] = useState(false);
@@ -28,9 +43,9 @@ const Review = ({ review, setReviewsInfo }) => {
   const clickLikeHandler = () => {
     setEmpathyReview((prev: boolean) => !prev);
     if (empathyReview) {
-      setEmpathyCount((prev) => prev - 1);
+      setEmpathyCount((prev: any) => prev - 1);
     } else {
-      setEmpathyCount((prev) => prev + 1);
+      setEmpathyCount((prev: any) => prev + 1);
     }
     likeReview(review.reviewId);
   };
@@ -58,9 +73,9 @@ const Review = ({ review, setReviewsInfo }) => {
     deleteReview(review.reviewId).then((r) => {
       if (r.status === 200) {
         alert('삭제되었습니다.');
-        setReviewsInfo((prevState) => {
+        setReviewsInfo((prevState: any) => {
           const newContent = prevState.content.filter(
-            (item) => item.reviewId !== review.reviewId
+            (item: any) => item.reviewId !== review.reviewId
           );
           return { ...prevState, content: newContent };
         });
@@ -71,7 +86,7 @@ const Review = ({ review, setReviewsInfo }) => {
   //   getMyProfile().then((r) => setProfile(r));
   // }, []);
   console.log(localStorage.getItem('nickcname'));
-  const [isLiked, setIsLiked] = useState(review.empathReview);
+  const [isLiked, setIsLiked] = useState(review.empathyReview);
 
   return (
     <>
@@ -133,7 +148,7 @@ const Review = ({ review, setReviewsInfo }) => {
         <div className="review__text">{review.reviewContent}</div>
 
         <div className="review__images">
-          {review.reviewImageDtoList?.map((image) => {
+          {review.reviewImageDtoList?.map((image: any) => {
             console.log(review);
             return (
               <div>
