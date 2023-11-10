@@ -1,12 +1,9 @@
 import React from 'react';
 import Modal from '../Modal/Modal';
 import styled from 'styled-components';
-import infoImg from '../../pages/restaurantInfo/info-image.jpg';
 import Star from '../Star/Star';
-import ImageInput from '../../pages/restaurantInfo/ImageInput';
 import { useState, useEffect } from 'react';
-import { postReview, putReview } from '../../apis/reviewApi';
-import { useParams } from 'react-router';
+import { putReview } from '../../apis/reviewApi';
 import PutImageInput from '../../pages/restaurantInfo/PutImageInput';
 import { getMyProfile } from '../../apis/profileApi';
 // {
@@ -51,18 +48,76 @@ import { getMyProfile } from '../../apis/profileApi';
 //   ]
 // ]
 
-const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
+type ReviewsInfo = {
+  content: ReviewType[];
+  empty: boolean;
+  first: boolean;
+  last: boolean;
+  number: number;
+  numberOfElements: number;
+  pageable: {
+    sort: {};
+    offset: number;
+    pageNumber: number;
+    pageSize: number;
+    paged: boolean;
+  };
+  size: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+    // sort 속성의 구조에 대한 타입 지정
+  };
+  totalElements: number;
+  totalPages: number;
+};
+type ReviewType = {
+  reviewId: number;
+  memberId: number;
+  memberNickname: string;
+  memberProfilePicture: string;
+  reviewAt: string;
+  reviewContent: string;
+  reviewEmpathyCount: number;
+  reviewImageDtoList: any[];
+  reviewStarRating: number;
+  empathyReview: boolean;
+};
+
+type ReviewProps = {
+  closeModal: () => void;
+  review: ReviewType; // ReviewType으로 타입 지정
+  setReviewsInfo: React.Dispatch<React.SetStateAction<ReviewType[]>>; // setReviewsInfo 타입 지정
+};
+
+type UserProfile = {
+  email: string;
+  memberProfilePicture: string;
+  nickName: string;
+  phone: string;
+};
+const PutReviewModal: React.FC<ReviewProps> = ({
+  closeModal,
+  review,
+  setReviewsInfo,
+}) => {
   const [rating, setRating] = useState<number | null>(review.reviewStarRating);
-  const [content, setContent] = useState(review.reviewContent);
-  const [selectedFiles, setSelectedFiles] = useState(review.reviewImageDtoList);
-  const [profile, setProfile] = useState({});
+  const [content, setContent] = useState<string>(review?.reviewContent);
+  const [selectedFiles, setSelectedFiles] = useState<any[]>(
+    review.reviewImageDtoList
+  );
+  const [profile, setProfile] = useState<UserProfile | null>(null);
   useEffect(() => {
-    getMyProfile().then((r) => setProfile(r));
+    getMyProfile().then((r) => {
+      console.log('ppppppp', r);
+      setProfile(r);
+    });
   }, []);
   console.log('put review image:', selectedFiles);
   // const { restaurantId } = useParams();
 
-  const contentChangeHandler = (e) => {
+  const contentChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
 
@@ -74,12 +129,12 @@ const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
         <div className="modal__header">
           <div className="review__profile">
             <div className="profile__image">
-              <img src={profile.memberProfilePicture} alt="" />
+              <img src={profile?.memberProfilePicture} alt="" />
             </div>
             <div className="profile__info">
-              <div className="profile__name">{profile.nickName}</div>
+              <div className="profile__name">{profile?.nickName}</div>
               <div className="review__stars">
-                <Star score={rating} />
+                <Star score={rating ?? 0} />
               </div>
             </div>
           </div>
@@ -93,8 +148,8 @@ const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
               className="text"
               name=""
               id=""
-              cols="100"
-              rows="10"
+              cols={100}
+              rows={10}
               value={content}
               onChange={contentChangeHandler}
             ></textarea>
@@ -116,7 +171,7 @@ const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
                   formData.append('imageFile', item.file);
                 }
               });
-              setSelectedFiles(null);
+              setSelectedFiles([]);
               const updateReviewDto = {
                 reviewContent: content,
                 imageDtoList: selectedFiles
@@ -135,7 +190,7 @@ const PutReviewModal = ({ closeModal, review, setReviewsInfo }) => {
                 console.log('put Review response', r);
                 setReviewsInfo((prevState) => {
                   const removeOldReview = prevState.content.filter(
-                    (item) => item.reviewId !== review.reviewId
+                    (item: any) => item.reviewId !== review.reviewId
                   );
                   const newContent = [r, ...removeOldReview];
                   return {
