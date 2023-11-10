@@ -13,9 +13,6 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const login = () => {
     navigate('/signin');
-    setAuth(true);
-
-    setAdmin(true);
   };
 
   const location = useLocation();
@@ -32,6 +29,14 @@ const Header: React.FC = () => {
     dispatch(setKeyword(key));
     navigate(`/detailpage`);
   };
+  useEffect(() => {
+    if (localStorage.getItem('nickName') === '관리자') {
+      setAuth(true);
+      setAdmin(true);
+    } else if (localStorage.getItem('accessToken')) {
+      setAuth(true);
+    }
+  }, [localStorage.getItem('accessToken')]);
 
   let headerContents;
   if (location.pathname === '/signup' || location.pathname === '/login') {

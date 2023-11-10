@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const StMain = styled.main`
   width: 100%;
-  border: 1px solid red;
   margin: 0 auto;
   /* gap: 100px; */
   display: flex;

@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router-dom';
-import { StMain } from '../../components/Stmain'
+import { StMain } from '../../components/Stmain';
 
 const MyPage = () => {
   return (
-    <StMain>  
+    <StMain>
       <Outlet />
     </StMain>
-  )
+  );
 };
 
 export default MyPage;
