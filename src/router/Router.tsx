@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         element: <MyPage />,
         children: [
           {
-            index: true,
+            path: 'setting',
             element: <MySettingPage />,
           },
           {

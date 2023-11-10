@@ -90,10 +90,8 @@ const SignUp = () => {
     validatePhone(newPhone);
   };
 
-  // 이메일 중복 확인 상태
   const [emailDuplicateCheck, setEmailDuplicateCheck] = useState(false);
 
-  // 이메일 중복 확인 핸들러
   const handleCheckEmail = async () => {
     setEmailDuplicateCheck(true);
     try {
@@ -105,34 +103,34 @@ const SignUp = () => {
     }
   };
 
-  // 닉네임 중복 확인 상태
   const [nicknameCheck, setNicknameCheck] = useState({
     checked: false,
     valid: false
   });
 
-  // 닉네임 필드 입력 변경 핸들러
+
   const handleNicknameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
     validateNickname(e.target.value);
     setNicknameCheck({ ...nicknameCheck, checked: false }); // 중복 확인 상태를 초기화
   };
 
-  // 닉네임 중복 확인 핸들러
-  const handleCheckNickname = async () => {
-    if (!nickname.trim()) {
-      setErrors(prev => ({ ...prev, nickname: '닉네임을 입력해주세요.' }));
-      return;
-    }
-    try {
-      const isDuplicate = await checkNicknameDuplication(nickname);
-      setNicknameCheck({ checked: true, valid: !isDuplicate });
-      setErrors(prev => ({ ...prev, nickname: isDuplicate ? '이미 사용중인 닉네임입니다.' : '' }));
-    } catch (error) {
-      console.error('닉네임 중복 확인 중 오류가 발생했습니다.', error);
-      setErrors(prev => ({ ...prev, nickname: '닉네임 중복 확인 중 오류가 발생했습니다.' }));
-    }
-  };
+// 닉네임 중복 확인 핸들러
+const handleCheckNickname = async () => {
+  if (!nickname.trim()) {
+    setErrors(prev => ({ ...prev, nickname: '닉네임을 입력해주세요.' }));
+    return;
+  }
+  try {
+    // 닉네임 중복 확인 함수 호출 시, 객체의 키를 'nickName'으로 수정합니다.
+    const isDuplicate = await checkNicknameDuplication(nickname);
+    setNicknameCheck({ checked: true, valid: !isDuplicate });
+    setErrors(prev => ({ ...prev, nickname: isDuplicate ? '이미 사용중인 닉네임입니다.' : '' }));
+  } catch (error) {
+    console.error('닉네임 중복 확인 중 오류가 발생했습니다.', error);
+    setErrors(prev => ({ ...prev, nickname: '닉네임 중복 확인 중 오류가 발생했습니다.' }));
+  }
+};;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -194,7 +192,7 @@ return (
               placeholder="닉네임을 입력하세요"
             />
           </InputField>
-          <CheckButton onClick={handleCheckEmail}>중복 확인</CheckButton>
+          <CheckButton onClick={handleCheckNickname}>중복 확인</CheckButton>
 
         </InputButtonContainer>
         {nicknameCheck.checked && errors.nickname && <ErrorMsg>{errors.nickname}</ErrorMsg>}
