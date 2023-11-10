@@ -51,7 +51,7 @@ const Pagination = () => {
     };
     getSearchedDatas();
     getMaxPage();
-  }, [page]);
+  }, [page, region]);
 
   //리스트 정렬
 

@@ -72,7 +72,8 @@ const RestaurantList = styled.li`
   margin: 0 2rem;
 `;
 const ListImgDiv = styled(Link)`
-  width: 30%;
+  min-width: 260px;
+  max-width: 260px;
   height: 260px;
   cursor: pointer;
 `;
