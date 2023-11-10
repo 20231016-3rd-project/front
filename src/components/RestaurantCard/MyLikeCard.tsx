@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import arrowRight from '/src/assets/images/arrowRight.svg';
-import heartFill from '/src/assets/images/heartfill.png';
-import star from '/src/assets/images/star.png';
-import {
-  Restaurants,
-  Restaurant,
-  MyRestaurants,
-  MyRestaurant,
-} from '../../model/best';
+
+import { MyRestaurants, MyRestaurant } from '../../model/best';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -101,30 +95,4 @@ const InfoMore = styled(Link)`
 `;
 const ArrowImg = styled.img`
   height: 1rem;
-`;
-
-const RateInfo = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const Rate = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const RateInfoImg = styled.img`
-  width: 1rem;
-  margin-right: 0.2rem;
-`;
-const Bar = styled.div`
-  border-right: 1px solid #666666;
-  margin-left: 0.5rem;
-  height: 0.8rem;
-`;
-const LikeButton = styled.button`
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;

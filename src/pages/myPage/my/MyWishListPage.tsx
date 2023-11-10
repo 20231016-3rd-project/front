@@ -1,30 +1,19 @@
-import React, { useEffect } from 'react';
-import OrderByButton from '../../../components/Buttons/OrderByButton';
+import { useEffect } from 'react';
 
-import RestaurantCard from '../../../components/RestaurantCard/RestaurantCard';
 import styled from 'styled-components';
 
-import {
-  myRestaurant,
-  searchRestaurant,
-} from '../../../apis/getRestaurantApi/getRestaurant';
+import { myRestaurant } from '../../../apis/getRestaurantApi/getRestaurant';
 import { useSelector, useDispatch } from 'react-redux';
 import { ReducerType } from '../../../store/rootReducer';
-import { getSearchRestaurants } from '../../../store/slices/restaurantSlice';
-import Pagination from '../../../components/Pagination/Pagination';
-import { getSort } from '../../../store/slices/sortSlice';
-import { setIsOpen } from '../../../store/slices/modalSlice';
-import RegionSelect from '../../../components/Modal/RegionSelect';
+
 import { getMyRestaurants } from '../../../store/slices/myLikeSlice';
 import MyLikeCard from './../../../components/RestaurantCard/MyLikeCard';
 
 const MyWishListPage = () => {
   const dispatch = useDispatch();
 
-  const sort = useSelector((state: ReducerType) => state.sort.sortInfo);
-
   const myRestaurants = useSelector(
-    (state: ReducerType) => state.mylike.myLikeInfo
+    (state: ReducerType) => state.myLike.myLikeInfo
   );
 
   // const [datas, setDatas] = useState<Restaurants>([]);
@@ -45,7 +34,10 @@ const MyWishListPage = () => {
   }, []);
 
   useEffect(() => {
-    document.getElementById('root').scrollIntoView();
+    const rootElement = document.getElementById('root');
+    if (rootElement) {
+      rootElement.scrollIntoView();
+    }
   }, []);
 
   return (

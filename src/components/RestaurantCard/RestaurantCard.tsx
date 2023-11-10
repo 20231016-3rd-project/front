@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import arrowRight from '/src/assets/images/arrowRight.svg';
 import heartFill from '/src/assets/images/heartfill.png';
 import star from '/src/assets/images/star.png';
@@ -11,21 +11,6 @@ interface OwnProps {
 }
 
 const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
-  // let likeInfo;
-  // let userLikeInfo = [];
-  // const [userLike, setUserLike] = useState();
-
-  // const handleLike = async (id: number) => {
-  //   likeInfo = await getLike(id);
-  // };
-  // const idDatas = datas.map((data) => {
-  //   return data.restaurantId;
-  // });
-  // console.log(idDatas);
-
-  // idDatas.map(async (id) => {
-  //   setUserLike(await getUserLike(id));
-  // });
 
   const renderCard = (data: Restaurant) => {
     return (

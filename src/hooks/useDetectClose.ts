@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 
-const useDetectClose = (elem, initialState) => {
+const useDetectClose = (elem: React.RefObject<HTMLElement>, initialState: boolean) => {
   // 일단 버튼을 클릭했을때 나오는 드롭다운 메뉴 요소를 특정할 수 있도록 ref값과 초기값을 인자로 받게 설정을 해줬다.
   const [isOpen, setIsOpen] = useState(initialState);
 
   useEffect(() => {
     console.log(isOpen);
-    const onClick = (e) => {
-      if (elem.current !== null && !elem.current.contains(e.target)) {
-        setIsOpen(true); // 원래는 setIsOpen(!isOpen) 이 맞는 것 같은데 작동하지 않고 true를 넣어야 작동한다. 왜일까
+    const onClick = (e: MouseEvent) => {
+      if (elem.current !== null && !elem.current.contains(e.target as Node)) {
+        setIsOpen(true);
       }
     };
 
