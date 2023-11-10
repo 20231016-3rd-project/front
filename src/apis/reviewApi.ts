@@ -31,7 +31,7 @@ export const postReview = async (restaurantId: string, formdata: object) => {
 // "reportContent":"닉네임이 부적절합니다"
 // }
 
-export const reportReview = async (body) => {
+export const reportReview = async (body:any) => {
   const response = await axiosInstance.post(
     `/sunflowerPlate/user/report`,
     body
@@ -39,7 +39,7 @@ export const reportReview = async (body) => {
   return response;
 };
 
-export const putReview = async (reviewId, formdata) => {
+export const putReview = async (reviewId:number, formdata:FormData) => {
   const response = await axiosImgInstance.put(
     `/sunflowerPlate/mypage/myreview?reviewId=${reviewId}`,
     formdata
@@ -47,7 +47,7 @@ export const putReview = async (reviewId, formdata) => {
   return response.data;
 };
 
-export const likeReview = async (reviewId) => {
+export const likeReview = async (reviewId:number) => {
   const response = await axiosInstance.post(
     `/sunflowerPlate/user/${reviewId}/like`
   );
@@ -59,7 +59,7 @@ export const likeReview = async (reviewId) => {
 //   "좋아요 개수": 1
 // }
 
-export const deleteReview = async (reviewId) => {
+export const deleteReview = async (reviewId:number) => {
   const response = await axiosInstance.delete(
     `/sunflowerPlate/mypage/myreview?reviewId=${reviewId}`
   );

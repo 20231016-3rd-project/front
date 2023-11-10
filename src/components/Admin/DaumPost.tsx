@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 
 interface CustomAddress {
-  fullAd: string; // 전체 주소를 추가합니다.
+   // 전체 주소를 추가합니다.
   restaurantAdmin: {
+    fullAd: string;
     city: string;
     district: string;
     dong: string;
@@ -86,18 +87,18 @@ const DaumPost: React.FC<DaumPostProps> = ({
     );
 
     // 주소를 좌표로 변환하여 지도에 마커로 표시
-    const geocoder = new kakao.maps.services.Geocoder();
-    geocoder.addressSearch(fullAddress, function (result, status) {
+    const geocoder = new window.kakao.maps.services.Geocoder();
+    geocoder.addressSearch(fullAddress, function (result:any, status:any) {
       console.log('fulladdress', fullAddress);
-      if (status === kakao.maps.services.Status.OK) {
-        const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+      if (status === window.kakao.maps.services.Status.OK) {
+        const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
         console.log('coords', coords);
         if (marker) {
           // 이전 마커가 있으면 제거
           marker.setMap(null);
         }
 
-        const newMarker = new kakao.maps.Marker({
+        const newMarker = new window.kakao.maps.Marker({
           position: coords,
           map: map,
         });
