@@ -8,7 +8,12 @@ import { getMyProfile } from '../../apis/profileApi';
 import PutReviewModal from './PutReviewModal';
 import { deleteReview, likeReview } from '../../apis/reviewApi';
 import { useLocation } from 'react-router-dom';
-import {LikeButton, ReviewLayout, LikeButtonBox, ReviewButton} from "./Reviewstyle";
+import {
+  LikeButton,
+  ReviewLayout,
+  LikeButtonBox,
+  ReviewButton,
+} from './Reviewstyle';
 
 const Review = ({ review, setReviewsInfo }) => {
   const [isReportReviewOpen, setIsReportReviewOpen] = useState(false);
@@ -62,9 +67,10 @@ const Review = ({ review, setReviewsInfo }) => {
       }
     });
   };
-  useEffect(() => {
-    getMyProfile().then((r) => setProfile(r));
-  }, []);
+  // useEffect(() => {
+  //   getMyProfile().then((r) => setProfile(r));
+  // }, []);
+  console.log(localStorage.getItem('nickcname'));
   const [isLiked, setIsLiked] = useState(review.empathReview);
 
   return (
@@ -89,53 +95,57 @@ const Review = ({ review, setReviewsInfo }) => {
         <div className="review__header">
           <div className="review__profile">
             <div className="profile__image">
-              <img src={profile.memberProfilePicture} alt="" />
+              <img src={review.memberProfilePicture} alt="" />
             </div>
             <div className="profile__info">
               <div className="profile__name">
-                {review.memberId || profile.nickName} 회원님
+                {review.memberNickname || '익명의 유저'}
               </div>
               <div className="review__stars">
                 <Star score={review.reviewStarRating} />
               </div>
             </div>
           </div>
-          
+
           <div className="review__buttons">
             <LikeButtonBox>
-            <LikeButton className={`like-button ${empathyReview ? 'liked' : ''}`}
-              onClick={clickLikeHandler}/>
+              <LikeButton
+                className={`like-button ${empathyReview ? 'liked' : ''}`}
+                onClick={clickLikeHandler}
+              />
               {empathyCount}
             </LikeButtonBox>
-            
+
             {/* "reviewEmpathyCount": 0,
                 "empathyReview": false */}
-            <ReviewButton onClick={openPutReviewModal}>수정</ReviewButton>
-            <ReviewButton onClick={openReportReviewModal}>신고</ReviewButton>
-            <ReviewButton onClick={deleteButtonhHandler}>삭제</ReviewButton>
+            {localStorage.getItem('nickName') === review.memberNickname && (
+              <ReviewButton onClick={openPutReviewModal}>수정</ReviewButton>
+            )}
+            {localStorage.getItem('nickName') !== null && (
+              <ReviewButton onClick={openReportReviewModal}>신고</ReviewButton>
+            )}
+            {localStorage.getItem('nickName') === review.memberNickname && (
+              <ReviewButton onClick={deleteButtonhHandler}>삭제</ReviewButton>
+            )}
           </div>
         </div>
 
+        <div className="review__text">{review.reviewContent}</div>
 
-          <div className="review__text">
-            {review.reviewContent}
-          </div>
-
-          <div className="review__images">
-            {review.reviewImageDtoList?.map((image) => {
-              console.log(review);
-              return (
-                <div>
+        <div className="review__images">
+          {review.reviewImageDtoList?.map((image) => {
+            console.log(review);
+            return (
+              <div>
                 <img
                   key={image.reviewImageId}
                   onClick={openViewReviewModal}
                   src={image.reviewResizeUrl}
                   alt="리뷰이미지"
                 />
-                </div>
-              );
-            })}
-
+              </div>
+            );
+          })}
         </div>
       </ReviewLayout>
     </>
@@ -143,4 +153,3 @@ const Review = ({ review, setReviewsInfo }) => {
 };
 
 export default Review;
-
