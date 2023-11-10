@@ -215,6 +215,8 @@ const RestaurantInfo = () => {
               })}
             </ReviewList>
           </ReviewContainer>
+
+          
           </RestaurantWrapper>
         </RestaurantInfoLayout>
       )}

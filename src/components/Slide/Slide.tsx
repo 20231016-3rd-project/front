@@ -124,10 +124,12 @@ const Contents = styled(Link)`
 `;
 const ImgDiv = styled.div`
   width: 100%;
+  border-radius: 10px;
   height: 18.75rem;
 `;
 const DataImg = styled.img`
   object-fit: cover;
+  border-radius: 10px;
 `;
 const DataText = styled.p`
   width: 90%;

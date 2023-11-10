@@ -28,7 +28,7 @@ const WriteReviewModal = ({ closeModal, setReviewsInfo }) => {
               <img src={infoImg} alt="" />
             </div>
             <div className="profile__info">
-              <div className="profile__name">nicknick</div>
+              <div className="profile__name">Nickname 님</div>
               <div className="review__stars">
                 <StarRating rating={rating} setRating={setRating} />
               </div>
@@ -51,7 +51,9 @@ const WriteReviewModal = ({ closeModal, setReviewsInfo }) => {
             ></textarea>
           </div>
         </div>
-        <div className="modal__footer">
+
+
+        <ModalFooter>
           <div>
             <ImageInput
               selectedFiles={selectedFiles}
@@ -90,7 +92,7 @@ const WriteReviewModal = ({ closeModal, setReviewsInfo }) => {
           >
             등록하기
           </button>
-        </div>
+        </ModalFooter>
       </WriteReviewStyle>
     </Modal>
   );
@@ -98,13 +100,28 @@ const WriteReviewModal = ({ closeModal, setReviewsInfo }) => {
 
 export default WriteReviewModal;
 
+const ModalFooter = styled.div`
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  div{
+    
+  }
+  button{
+    height: 30px;
+  }
+`;
+
 const WriteReviewStyle = styled.div`
   display: flex;
+  width: 1000px ;
+  height: 600px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   .modal__header {
-    width: 1200px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     margin: 1rem;
@@ -112,7 +129,7 @@ const WriteReviewStyle = styled.div`
   .review__profile {
     display: flex;
     justify-content: flex-start;
-    gap: 1.5rem;
+    gap: 0.8rem;
   }
   .profile__image img {
     width: 100px;
@@ -126,12 +143,17 @@ const WriteReviewStyle = styled.div`
     align-items: center;
     gap: 0.5rem;
   }
+
+  .profile__name {
+    align-self: flex-start;
+  }
   .modal__close-button {
     cursor: pointer;
+    margin-right: 10px;
   }
   .text {
+    width: 100%;
     font-size: 20px;
-    margin: 1rem;
     border: 1px solid black;
   }
   .review__images {
@@ -148,8 +170,10 @@ const WriteReviewStyle = styled.div`
     img:hover {
     }
   }
-  .modal__footer {
-    display: flex;
-    justify-content: space-around;
+
+  .ImageInput {
+
   }
 `;
+
+

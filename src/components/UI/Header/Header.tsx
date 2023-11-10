@@ -146,7 +146,7 @@ const SearchBox = styled.div`
 const SearchInput = styled.input`
   width: 540px;
   font-size: 1.2rem;
-  height: 37px;
+  height: 30px;
   border: none;
   line-height: 50px;
   &:focus {
@@ -154,7 +154,7 @@ const SearchInput = styled.input`
   }
 `;
 const SearchButton = styled.button`
-  width: 142px;
+  width: 150px;
   height: 37px;
   border: none;
   border-radius: 4px;
@@ -172,16 +172,15 @@ const HeaderRight = styled.div`
 const LoginButton = styled.button`
   border: none;
   min-width: 92px;
-  background-color: white;
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
+  background-color: white;
   margin-right: 3rem;
 `;
 const SignUpButton = styled(Link)`
   border: none;
   min-width: 92px;
-  background-color: white;
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
