@@ -38,6 +38,6 @@ const Map = ({ address }) => {
 export default Map;
 
 const MapBox = styled.div`
-  width: 1200px;
+  width: 1080px;
   height: 400px;
 `;

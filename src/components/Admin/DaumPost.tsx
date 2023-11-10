@@ -106,25 +106,25 @@ const DaumPost: React.FC<DaumPostProps> = ({
         map.setCenter(coords);
 
         onAddressSelect({
+          fullAd: fullAddress, // 전체 주소를 추가합니다.
           restaurantAdmin: {
-            fullAd: fullAddress, // 전체 주소를 추가합니다.
             city: data.sido,
             district: data.sigungu,
             dong: data.bname || '',
-          },
-        });
-
-        //           restaurantAdministrativeDistrict: { // 잘몰라서 주석처리 해놨습니다
-        //             cityName: data.sido,
-        //             districtsName: data.sigungu,
-        //             dongName: data.bname || '',
-
           },
           // coords: {
           //   lat: parseFloat(result[0].y), // 문자열을 숫자로 변환
           //   lng: parseFloat(result[0].x)
           // }
         });
+
+        // restaurantAdministrativeDistrict: { // 잘몰라서 주석처리 해놨습니다
+        // cityName: data.sido,
+        // districtsName: data.sigungu,
+        // dongName: data.bname || '',
+
+         // },
+        
       }
     });
 
@@ -213,7 +213,6 @@ const ModalContainer = styled.div`
 const AddressSection = styled.div`
     display: flex;
     width: 100%;
-    border: 1px solid red;
 
   & > button {
     width: 10%;

@@ -1,18 +1,21 @@
-import infoImg from './info-image.jpg';
-import styled from 'styled-components';
+// import infoImg from './info-image.jpg';
+// import StarRating from '../../components/Star/StarRating';
+// import axios from 'axios';
+// import { getMyReviews } from '../../apis/reviewApi';
+import {RestaurantWrapper, RestaurantInfoLayout, LikeImg, 
+       ImageSection, InfoSection, InfoMenuBox, ButtonBox,
+       InfoAddressBox,InfoHoursBox, ReviewContainer,ReviewsHeader,
+       ReviewList, } from "./Resaurantstyle.ts";
 import { useEffect, useState } from 'react';
 import Map from './Map';
 import Review from '../../components/Review/Review';
-import StarRating from '../../components/Star/StarRating';
 import WriteReviewModal from '../../components/Review/WriteReviewModal';
-import { Button } from './Button';
+import { Button, InfoButton, RegistButton } from './Button';
 import { getRestaurantDetail } from '../../apis/getRestaurantApi/getRestaurant';
-import axios from 'axios';
-import { getMyReviews } from '../../apis/reviewApi';
 import { useParams } from 'react-router';
-
 import heart from '/src/assets/images/heart.png';
 import heartFill from '/src/assets/images/heartfill.png';
+import { getLike } from './../../apis/restaurantLikeApi';
 
 import EditinfoRequestModal from '../../components/Restaurant/EditInfoRequestModal';
 const RestaurantInfo = () => {
@@ -105,7 +108,8 @@ const RestaurantInfo = () => {
       )}
       {isLoading && (
         <RestaurantInfoLayout className="restaurant-info">
-          <div className="info__images">
+          <RestaurantWrapper>
+          <ImageSection>
             <div className="images__column">
               <img
                 src={info.restaurantImageDtoList[0]?.restaurantOriginUrl}
@@ -133,12 +137,14 @@ const RestaurantInfo = () => {
                 alt=""
               />
             </div>
-          </div>
-          <div className="info__container">
+          </ImageSection>
+
+          <InfoSection>
             <div className="info__title">{info.restaurantName}</div>
             <div className="info__tags">{}</div>
-            <div className="info__button-container">
-              <Button onClick={handleLikeBtn}>
+
+            <ButtonBox>
+              <InfoButton onClick={handleLikeBtn}>
                 {!info.restaurantLikeCountDto.likedRestaurant && (
                   <LikeImg src={heart} alt="" />
                 )}
@@ -146,46 +152,58 @@ const RestaurantInfo = () => {
                   <LikeImg src={heartFill} alt="" />
                 )}
                 좋아요({info.restaurantLikeCountDto.restaurantLikeCount})
-              </Button>
-              <Button>공유</Button>
-              <Button onClick={openEditInfoModal}>정보 수정 요청</Button>
-            </div>
-            <div className="info__address">
+              </InfoButton>
+              <InfoButton>공유</InfoButton>
+              <InfoButton onClick={openEditInfoModal}>정보 수정 요청</InfoButton>
+            </ButtonBox>
+
+            <InfoAddressBox>
               <div className="info__local-address">
                 주소: {info.restaurantAddress}
               </div>
               <div className="info__online-address">
-                인스타그램: {info.restaurantWebSite}
+                웹사이트: <a href="{info.restaurantWebSite}">{info.restaurantWebSite}</a>
               </div>
               <div className="info__online-address">
                 전화번호: {info.restaurantTelNum}
               </div>
-            </div>
-            <div className="info__business-hours">
-              운영시간 {info.restaurantOpenTime}
-            </div>
-            <div className="info__menu">
-              메뉴 정보
-              <div>
+            </InfoAddressBox>
+
+            <InfoHoursBox>
+              <h1>영업시간</h1>
+               <p>평일: {info.restaurantOpenTime}</p>
+               <p>주말: {info.restaurantOpenTime}</p>
+            </InfoHoursBox>
+
+            <InfoMenuBox>
+              <h1>메뉴 정보</h1>
+
+              <div className="menu_map">
                 {info.restaurantMenuDtoList.map((menu, index) => {
                   return (
                     <div key={index}>
-                      {menu.restaurantMenuName} {menu.restaurantMenuPrice}원
+                      <span className="menu_name">{menu.restaurantMenuName} ----- </span>
+                      <span className="menu_price">{menu.restaurantMenuPrice}원</span>
                     </div>
                   );
                 })}
               </div>
-            </div>
+
+            </InfoMenuBox>
+
             <Map address={info.restaurantAddress} />
-          </div>
-          <div className="info__reviews">
-            <div className="reviews__header">
-              <div>방문자 리뷰</div>
+
+          </InfoSection>
+
+          <ReviewContainer>
+            <ReviewsHeader>
+              <h1>방문자 리뷰</h1>
               <div>
-                <Button onClick={openWriteReviewModal}>리뷰작성</Button>
+                <RegistButton onClick={openWriteReviewModal}>리뷰작성</RegistButton>
               </div>
-            </div>
-            <div className="reviews__list">
+            </ReviewsHeader>
+
+            <ReviewList>
               {reviewsInfo?.content?.map((review) => {
                 return (
                   <Review
@@ -195,8 +213,9 @@ const RestaurantInfo = () => {
                   />
                 );
               })}
-            </div>
-          </div>
+            </ReviewList>
+          </ReviewContainer>
+          </RestaurantWrapper>
         </RestaurantInfoLayout>
       )}
     </>
@@ -204,113 +223,3 @@ const RestaurantInfo = () => {
 };
 
 export default RestaurantInfo;
-
-// const Button = styled.button`
-//   width: 300px;
-//   height: 100px;
-//   border-radius: 30px;
-//   margin: auto;
-// `;
-
-const RestaurantInfoLayout = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-bottom: 8rem;
-  font-size: 1.5rem;
-
-  .info__images {
-    display: flex;
-    flex: 2 1 1;
-    gap: 10px;
-    width: 1080px;
-    max-width: 100%;
-  }
-
-  img {
-    display: block;
-    width: 270px;
-    max-width: 100%;
-    margin-bottom: 10px;
-    aspect-ratio: 10 / 12;
-  }
-
-  .images__column {
-    margin: auto;
-    padding: auto;
-  }
-  .images__main {
-    width: 540px;
-    aspect-ratio: 10 / 12;
-  }
-
-  .info__container {
-    display: flex;
-    flex-direction: column;
-    width: 1200px;
-    height: auto;
-    margin: 1rem;
-    gap: 1rem;
-  }
-
-  .info__title {
-    font-size: 40px;
-    font-weight: 800;
-  }
-  .info_tags {
-    font-size: 1rem;
-    color: grey;
-  }
-  .info__address {
-    gap: 1rem;
-  }
-
-  .info__local-address {
-  }
-  .info__online-address {
-  }
-  .info__business-hours {
-    width: 1200px;
-    height: 100px;
-    border: 2px solid black;
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-    box-sizing: border-box;
-  }
-  .info__menu {
-    box-sizing: border-box;
-    display: block;
-    width: 1200px;
-    border: 2px solid black;
-    margin-bottom: 10px;
-    gap: 1rem;
-    padding: 1rem;
-    div {
-      margin-top: 1rem;
-    }
-  }
-
-  .info__reviews {
-    border: 2px solid black;
-    width: 1200px;
-    padding: 20px;
-  }
-  .reviews__header {
-    width: 1200px;
-    display: flex;
-    justify-content: space-between;
-  }
-`;
-
-const LikeImg = styled.img`
-  width: 20px !important;
-  height: 20px;
-  box-shadow: none !important;
-  &:hover {
-    background: white !important;
-  }
-  margin-bottom: 0 !important;
-`;
-import { getLike } from './../../apis/restaurantLikeApi';
