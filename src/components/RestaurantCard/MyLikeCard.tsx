@@ -52,7 +52,7 @@ const RestaurantList = styled.li`
   margin: 0 2rem;
 `;
 const ListImgDiv = styled(Link)`
-  width: 30%;
+  width: 260px;
   height: 260px;
   cursor: pointer;
 `;
