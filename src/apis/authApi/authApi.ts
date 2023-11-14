@@ -1,27 +1,23 @@
+import { axiosInstance } from '../axiosInstance/axiosInstance';
 
-// import {
-//   axiosImgInstance,
-//   axiosInstance,
-// } from '../axiosInstance/axiosInstance.js';
+export interface SignupRequest {
+  email: string;
+  password: string;
+  nickname: string;
+  phone: string;
+}
 
-// export const signUp = async (signupData) => {
-//   const response = await axiosImgInstance.post('auth/signup', signupData);
+export const signup = async (data: SignupRequest): Promise<any> => {
+  const response = await axiosInstance.post('/sunflowerPlate/user/signup', data);
+  return response.data;
+};
 
-//   return response;
-// };
-
-// export const login = async (loginData) => {
-//   const response = await axiosInstance.post(
-//     'sunflowerPlate/user/login',
-//     loginData
-//   );
-//   if (response.status === 200) {
-//     localStorage.setItem('isLoggedIn', 'true');
-//   }
-// };
-
-// export const checkEmail = async (checkEmailData) => {
-//   const response = await axiosInstance.post('auth/idcheck', checkEmailData);
-//   return response;
-// };
-
+export const checkEmailDuplication = async (email: string): Promise<any> => {
+    const response = await axiosInstance.post('/sunflowerPlate/user/emailcheck', { email });
+    return response.data;
+  };
+  
+export const checkNicknameDuplication = async (nickname: string): Promise<any> => {
+  const response = await axiosInstance.post('/sunflowerPlate/user/nickcheck', { nickname });
+  return response.data;
+};

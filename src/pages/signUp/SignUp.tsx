@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { checkEmailDuplication, checkNicknameDuplication } from '../../services/AuthService';
+import { checkEmailDuplication, checkNicknameDuplication } from '../../apis/authApi/authApi';
 import { Container, Input, Button, ErrorMsg, FieldContainer, Label, InputButtonContainer, InputField, PhoneFieldContainer, PhoneInputContainer, PhoneInput, SignUpButton, CheckButton } from './SignUp.styles';
 
 interface PhoneState {
@@ -32,6 +32,14 @@ const SignUp = () => {
     }
   };
 
+  const validateNickname = (nickname: string) => {
+    if (nickname.trim() === '') {
+      setErrors(prev => ({ ...prev, nickname: '닉네임을 입력해주세요.' }));
+    } else {
+      setErrors(prev => ({ ...prev, nickname: '' }));
+    }
+  };
+
   const validatePassword = (password: string) => {
     if (password.length < 8) {
       setErrors(prev => ({ ...prev, password: '비밀번호는 8자 이상이어야 합니다.' }));
@@ -45,14 +53,6 @@ const SignUp = () => {
       setErrors(prev => ({ ...prev, confirmPassword: '비밀번호가 일치하지 않습니다.' }));
     } else {
       setErrors(prev => ({ ...prev, confirmPassword: '' }));
-    }
-  };
-
-  const validateNickname = (nickname: string) => {
-    if (nickname.trim() === '') {
-      setErrors(prev => ({ ...prev, nickname: '닉네임을 입력해주세요.' }));
-    } else {
-      setErrors(prev => ({ ...prev, nickname: '' }));
     }
   };
 
@@ -98,13 +98,13 @@ const SignUp = () => {
     setEmailDuplicateCheck(true);
     try {
       const isDuplicate = await checkEmailDuplication(email);
-      setErrors(prev => ({ ...prev, email: isDuplicate ? '이미 사용중인 이메일입니다.' : '' }));
+      console.log(isDuplicate);
+      setErrors(prev => ({ ...prev, email: isDuplicate ? '' : '이미 사용중인 이메일입니다.' }));
     } catch (error) {
       console.error('이메일 중복 확인 중 오류가 발생했습니다.', error);
       setErrors(prev => ({ ...prev, email: '이메일 중복 확인 중 오류가 발생했습니다.' }));
     }
   };
-
   // 닉네임 중복 확인 상태
   const [nicknameCheck, setNicknameCheck] = useState({
     checked: false,
@@ -117,8 +117,7 @@ const SignUp = () => {
     validateNickname(e.target.value);
     setNicknameCheck({ ...nicknameCheck, checked: false }); // 중복 확인 상태를 초기화
   };
-
-  // 닉네임 중복 확인 핸들러
+//닉네임 중복확인핸들러
   const handleCheckNickname = async () => {
     if (!nickname.trim()) {
       setErrors(prev => ({ ...prev, nickname: '닉네임을 입력해주세요.' }));
@@ -127,7 +126,7 @@ const SignUp = () => {
     try {
       const isDuplicate = await checkNicknameDuplication(nickname);
       setNicknameCheck({ checked: true, valid: !isDuplicate });
-      setErrors(prev => ({ ...prev, nickname: isDuplicate ? '이미 사용중인 닉네임입니다.' : '' }));
+      setErrors(prev => ({ ...prev, nickname: isDuplicate ? '' : '이미 사용중인 닉네임입니다.' }));
     } catch (error) {
       console.error('닉네임 중복 확인 중 오류가 발생했습니다.', error);
       setErrors(prev => ({ ...prev, nickname: '닉네임 중복 확인 중 오류가 발생했습니다.' }));
@@ -192,9 +191,10 @@ return (
               value={nickname}
               onChange={handleNicknameInputChange}
               placeholder="닉네임을 입력하세요"
+              autoComplete="username"
             />
           </InputField>
-          <CheckButton onClick={handleCheckEmail}>중복 확인</CheckButton>
+          <CheckButton onClick={handleCheckNickname}>중복 확인</CheckButton>
 
         </InputButtonContainer>
         {nicknameCheck.checked && errors.nickname && <ErrorMsg>{errors.nickname}</ErrorMsg>}
@@ -206,6 +206,8 @@ return (
       value={password}
       onChange={handlePasswordChange}
       placeholder="8자리 이상 15자리 이하로 작성해주세요"
+      autoComplete="new-password"
+      
     />
     {errors.password && <p className="error">{errors.password}</p>}
     </FieldContainer>
@@ -214,6 +216,7 @@ return (
       value={confirmPassword}
       onChange={handleConfirmPasswordChange}
       placeholder="비밀번호를 다시 입력해주세요"
+      autoComplete="new-password"
     />
     {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
   {/* 핸드폰 번호 필드 */}
