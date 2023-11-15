@@ -1,11 +1,11 @@
 import styled, { css, keyframes } from 'styled-components';
-import review from '../../../assets/images/review.svg';
-import chat from '../../../assets/images/🦆 illustration _conversation chat bubble bubbles_.svg';
-import list from '../../../assets/images/🦆 icon _wish list_.svg';
-import regist from '../../../assets/images/🦆 icon _domain registration_.svg';
-import closure from '../../../assets/images/closure.svg';
-import admin from '../../../assets/images/パソコンを打つビジネスウーマンのイラスト.jpg';
-import adminbg from '../../../assets/images/adminbg.png';
+import review from '@images/review.svg';
+import chat from '@images/🦆 illustration _conversation chat bubble bubbles_.svg';
+import list from '@images/🦆 icon _wish list_.svg';
+import regist from '@images/🦆 icon _domain registration_.svg';
+import closure from '@images/closure.svg';
+import admin from '@images/パソコンを打つビジネスウーマンのイラスト.jpg';
+import adminbg from '@images/adminbg.png';
 import { Link } from 'react-router-dom';
 
 const AdminSettingPage: React.FC = () => {
