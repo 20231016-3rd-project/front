@@ -6,7 +6,11 @@ const star = {
   size: 30,
   color: { filled: '#ffc107', empty: '#e4e5e9' },
 };
-const StarRating: React.FC = ({ rating, setRating }) => {
+interface StarRatingProps {
+  rating: number;
+  setRating: React.Dispatch<React.SetStateAction<number | null>>;
+}
+const StarRating: React.FC<StarRatingProps> = ({ rating, setRating }) => {
   const [hover, setHover] = useState<number | null>(null);
 
   return (

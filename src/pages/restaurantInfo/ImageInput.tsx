@@ -9,7 +9,7 @@ const ImageInput = ({ selectedFiles, setSelectedFiles }) => {
     console.log(files);
     let allFilesValid = true;
 
-    if (files.length > 3) {
+    if (files?.length > 3) {
       alert('파일을 3개까지 선택할 수 있습니다.');
       allFilesValid = false;
     } else {

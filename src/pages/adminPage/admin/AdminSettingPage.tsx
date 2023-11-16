@@ -1,3 +1,4 @@
+
 import styled, {css} from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -64,10 +65,9 @@ const AdminSettingPage: React.FC = () => {
     </GridContainer>
    
   );
-  
-}
+};
 
-export default AdminSettingPage
+export default AdminSettingPage;
 
 const SetPosition = css`
   position: absolute;
@@ -75,6 +75,7 @@ const SetPosition = css`
   left: 50%;
   transform: translateX(-50%);
 `;
+
 
 const GridContainer = styled.div`
   display: grid;
@@ -109,7 +110,7 @@ const LogoSection = styled.div`
   h1{
     font-size: 1rem;
   }
-`;
+
 
 const LinkSection = styled.div`
   width: auto;
@@ -128,20 +129,8 @@ img{
 `;
 
 const LinkBox = styled.div`
-  display: flex;
-  gap: 10px;
-  margin-left: 5px;
 
-  div {
-    display: flex;
-    width: 25px;
-    height: 25px;
-    background-color: white;
-    align-items: center;
-    justify-content: center;
-  }
-
-  p{
+p{
     display: flex;
     align-items: center;
   }
@@ -153,3 +142,4 @@ const AdminMain = styled.div`
   text-align: center;
   
 `;
+

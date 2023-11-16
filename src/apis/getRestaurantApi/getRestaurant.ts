@@ -52,3 +52,17 @@ export const searchRestaurant = async (
   }
   return response.data;
 };
+
+export const bestRestaurant = async (menu:string) => {
+  const response = await axiosInstance.get(`/sunflowerPlate/restaurant/best?menu=${menu}`);
+  return response.data;
+};
+export const bestRestaurantAddr = async (address:string) => {
+  const response = await axiosInstance.get(`/sunflowerPlate/restaurant/best?address=${address}`);
+  return response.data;
+};
+
+export const myRestaurant = async () => {
+  const response = await axiosInstance.get(`/sunflowerPlate/mypage/myplace`);
+  return response.data;
+};

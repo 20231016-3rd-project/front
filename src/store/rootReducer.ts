@@ -1,10 +1,22 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import restaurantReducer from './slices/restaurantSlice';
-import regionReducer from './slices/regionSlice';
+import restaurant from './slices/restaurantSlice';
+import region from './slices/regionSlice';
+import sort from './slices/sortSlice';
+import modal from './slices/modalSlice';
+import keyword from './slices/keywordSlice';
+import best from './slices/bestSlice';
+import myLike from './slices/myLikeSlice';
+import signup from '../pages/signUp/signupSlice';
 
 const reducer = combineReducers({
-  restaurantReducer,
-  regionReducer,
+  restaurant,
+  region,
+  sort,
+  modal,
+  keyword,
+  best,
+  myLike,
+  signup,
 });
 
 export type ReducerType = ReturnType<typeof reducer>;

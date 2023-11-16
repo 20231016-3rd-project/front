@@ -24,17 +24,17 @@ const Slide: React.FC<OwnProps> = ({ datas }) => {
     slidesToShow: 3,
     slidesToScroll: 3,
   };
-  const slickRef = useRef(null);
+  const slickRef = useRef<Slider | null>(null);
 
-  const previous = useCallback(() => slickRef.current.slickPrev(), []);
-  const next = useCallback(() => slickRef.current.slickNext(), []);
+  const previous = useCallback(() => slickRef.current?.slickPrev(), []);
+  const next = useCallback(() => slickRef.current?.slickNext(), []);
 
   const data = datas;
 
   const renderData = (data: Best) => {
     return (
       <DataList key={Math.random()}>
-        <Contents to="/detailpage">
+        <Contents to="/bestpage" state={{key:data.key}}>
           <ImgDiv>
             <DataImg src={data.img} alt="" />
           </ImgDiv>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import first from '/src/assets/images/first.gif';
 import prev from '/src/assets/images/prev.gif';
@@ -51,16 +51,16 @@ const Pagination = () => {
     };
     getSearchedDatas();
     getMaxPage();
-  }, [page]);
+  }, [page, region]);
 
   //리스트 정렬
 
-  const changePage = (e) => {
-    setPage(Number(e.target.value));
+  const changePage: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    setPage(Number(e.currentTarget.value));
   };
 
-  const changePagination = (e) => {
-    switch (e.target.value) {
+  const changePagination: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    switch (e.currentTarget.value) {
       case 'first':
         setPage(1);
         break;
@@ -76,7 +76,7 @@ const Pagination = () => {
     }
   };
 
-  const renderPagination = () => {
+  const renderPagination = (): JSX.Element[] => {
     const result = [];
     for (let i = 0; i < maxPage; i++) {
       if (i === 0) {

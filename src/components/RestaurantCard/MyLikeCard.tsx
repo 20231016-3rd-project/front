@@ -1,38 +1,27 @@
 import React from 'react';
 import arrowRight from '/src/assets/images/arrowRight.svg';
-import heartFill from '/src/assets/images/heartfill.png';
-import star from '/src/assets/images/star.png';
-import { Restaurants, Restaurant } from '../../model/best';
+
+import { MyRestaurants, MyRestaurant } from '../../model/best';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 interface OwnProps {
-  datas: Restaurants;
+  datas: MyRestaurants;
 }
 
-const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
-
-  const renderCard = (data: Restaurant) => {
+const MyLikeCard: React.FC<OwnProps> = ({ datas }) => {
+  const renderCard = (data: MyRestaurant) => {
     return (
       <RestaurantList key={data.restaurantId}>
         <ListImgDiv to={`/restaurant/${data.restaurantId}`}>
-          <ListImg src={data.resizedImageUrl} alt="" />
+          <ListImg src={data.resizeImgUrl} alt="" />
         </ListImgDiv>
         <RestaurantInfo>
           <InfoTitle to={`/restaurant/${data.restaurantId}`}>
             {data.restaurantName}
           </InfoTitle>
-          <RateInfo>
-            <Rate>
-              <RateInfoImg src={star} alt="" /> {data.avgStarRate} (
-              {data.reviewCount})
-            </Rate>
-            <Bar />
-            <LikeButton>
-              <RateInfoImg src={heartFill} alt="" />
-              {data.likeCount}
-            </LikeButton>
-          </RateInfo>
+          <br />
+          <br />
           <br />
           <InfoAddr>{data.restaurantAddress}</InfoAddr>
           <InfoAddr>{data.restaurantWebSite}</InfoAddr>
@@ -48,7 +37,7 @@ const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
   return <>{datas.map(renderCard)}</>;
 };
 
-export default RestaurantCard;
+export default MyLikeCard;
 
 const RestaurantList = styled.li`
   display: flex;
@@ -57,8 +46,7 @@ const RestaurantList = styled.li`
   margin: 0 2rem;
 `;
 const ListImgDiv = styled(Link)`
-  min-width: 260px;
-  max-width: 260px;
+  width: 260px;
   height: 260px;
   cursor: pointer;
 `;
@@ -107,30 +95,4 @@ const InfoMore = styled(Link)`
 `;
 const ArrowImg = styled.img`
   height: 1rem;
-`;
-
-const RateInfo = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const Rate = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const RateInfoImg = styled.img`
-  width: 1rem;
-  margin-right: 0.2rem;
-`;
-const Bar = styled.div`
-  border-right: 1px solid #666666;
-  margin-left: 0.5rem;
-  height: 0.8rem;
-`;
-const LikeButton = styled.button`
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;

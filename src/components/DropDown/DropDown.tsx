@@ -16,7 +16,7 @@ interface IsOpenProps {
 
 const DropDown: React.FC<OwnProps> = ({ setAuth, admin, setAdmin }) => {
   const dropDownRef = useRef(null);
-  const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
+  const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false) as [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 
   const logout = () => {
     setIsOpen(!isOpen);
@@ -34,7 +34,7 @@ const DropDown: React.FC<OwnProps> = ({ setAuth, admin, setAdmin }) => {
 
           <Menu $isopen={isOpen} ref={dropDownRef}>
             <MenuList>
-              <StyledLink to="/mypage" onClick={() => setIsOpen(!isOpen)}>
+              <StyledLink to="/admin" onClick={() => setIsOpen(!isOpen)}>
                 관리자페이지
               </StyledLink>
             </MenuList>

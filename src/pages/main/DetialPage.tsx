@@ -21,7 +21,7 @@ const DetialPage = () => {
   );
   const region = useSelector((state: ReducerType) => state.region.regionInfo);
   const sort = useSelector((state: ReducerType) => state.sort.sortInfo);
-  const isOpen = useSelector((state: ReducerType) => state.isOpen.isOpen);
+  const isOpen = useSelector((state: ReducerType) => state.modal.openInfo);
   const keyword = useSelector((state: ReducerType) => state.keyword.keyword);
 
   // const [datas, setDatas] = useState<Restaurants>([]);
@@ -47,13 +47,16 @@ const DetialPage = () => {
     getSearchedDatas();
   }, [region, keyword, sort]);
 
-  const handleOrder = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(getSort(e.target.value));
+  const handleOrder = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    dispatch(getSort(e.currentTarget.value));
   };
 
-  useEffect(() => {
-    document.getElementById('root').scrollIntoView();
-  }, []);
+useEffect(() => {
+  const rootElement = document.getElementById('root');
+  if (rootElement) {
+    rootElement.scrollIntoView();
+  }
+}, []);
 
   const openModalHandler = () => {
     dispatch(setIsOpen(true));

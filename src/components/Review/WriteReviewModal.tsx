@@ -1,22 +1,52 @@
-import React from 'react';
 import Modal from '../Modal/Modal';
 import styled from 'styled-components';
-import infoImg from '../../pages/restaurantInfo/info-image.jpg';
 import StarRating from '../Star/StarRating';
 import ImageInput from '../../pages/restaurantInfo/ImageInput';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { postReview } from '../../apis/reviewApi';
 import { useParams } from 'react-router';
-const WriteReviewModal = ({ closeModal, setReviewsInfo }) => {
+import { getMyProfile } from '../../apis/profileApi';
+import { postReviewMutation } from '../../hooks/reviewQuery';
+
+type ReviewType = {
+  reviewId: number;
+  memberId: number;
+  memberNickname: string;
+  memberProfilePicture: string;
+  reviewAt: string;
+  reviewContent: string;
+  reviewEmpathyCount: number;
+  reviewImageDtoList: any[];
+  reviewStarRating: number;
+  empathyReview: boolean;
+};
+
+type ReviewProps = {
+  closeModal: () => void;
+  setReviewsInfo: React.Dispatch<React.SetStateAction<ReviewType[]>>; // setReviewsInfo 타입 지정
+};
+
+type UserProfile = {
+  email: string;
+  memberProfilePicture: string;
+  nickName: string;
+  phone: string;
+};
+const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
   const [rating, setRating] = useState<number | null>(null);
   const [content, setContent] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const { mutate, isError, isLoading } = postReviewMutation();
   const { restaurantId } = useParams();
 
-  const contentChangeHandler = (e) => {
+  const contentChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
-
+  useEffect(() => {
+    getMyProfile().then((r) => setProfile(r));
+  }, []);
+  console.log(profile);
   const formData = new FormData();
 
   return (
@@ -25,12 +55,14 @@ const WriteReviewModal = ({ closeModal, setReviewsInfo }) => {
         <div className="modal__header">
           <div className="review__profile">
             <div className="profile__image">
-              <img src={infoImg} alt="" />
+              <img src={profile?.memberProfilePicture} alt="" />
             </div>
             <div className="profile__info">
-              <div className="profile__name">Nickname 님</div>
+
+              <div className="profile__name">{profile?.nickName}</div>
+
               <div className="review__stars">
-                <StarRating rating={rating} setRating={setRating} />
+                <StarRating rating={rating ?? 0} setRating={setRating} />
               </div>
             </div>
           </div>
@@ -44,8 +76,8 @@ const WriteReviewModal = ({ closeModal, setReviewsInfo }) => {
               className="text"
               name=""
               id=""
-              cols="100"
-              rows="10"
+              cols={100}
+              rows={10}
               value={content}
               onChange={contentChangeHandler}
             ></textarea>
@@ -64,30 +96,33 @@ const WriteReviewModal = ({ closeModal, setReviewsInfo }) => {
             onClick={() => {
               //별점 유효성 검사
               //post
-              selectedFiles.forEach((file) => {
-                if (file) {
-                  formData.append('imageFile', file);
-                }
-              });
-              const reviewSaveDto = {
-                reviewContent: content,
-                reviewStarRating: rating,
-              };
-              const json = JSON.stringify(reviewSaveDto);
-              const dataBlob = new Blob([json], {
-                type: 'application/json',
-              });
-              formData.append('reviewSaveDto', dataBlob);
-              postReview(restaurantId, formData).then((r) => {
-                console.log('postReview response', r);
-                setReviewsInfo((prevState) => {
-                  return {
-                    ...prevState,
-                    content: [r, ...prevState.content],
-                  };
+              let isAllValid = true;
+              if (rating === null) {
+                alert('별점을 입력해주세요');
+                isAllValid = false;
+              }
+              if (content.length < 5) {
+                alert('너무 짧은 리뷰입니다.');
+                isAllValid = false;
+              }
+              if (isAllValid) {
+                selectedFiles.forEach((file) => {
+                  if (file) {
+                    formData.append('imageFile', file);
+                  }
                 });
-              });
-              closeModal();
+                const reviewSaveDto = {
+                  reviewContent: content,
+                  reviewStarRating: rating,
+                };
+                const json = JSON.stringify(reviewSaveDto);
+                const dataBlob = new Blob([json], {
+                  type: 'application/json',
+                });
+                formData.append('reviewSaveDto', dataBlob);
+                mutate({ restaurantId, formData });
+                closeModal();
+              }
             }}
           >
             등록하기

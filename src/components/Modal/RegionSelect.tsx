@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import close from '/src/assets/images/close.svg';
 import DistrictSelectButton from '../Buttons/DistrictSelectButton';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { ReducerType } from '../../store/rootReducer';
+import { useDispatch } from 'react-redux';
+
 import { getRegion } from '../../store/slices/regionSlice';
 import { setIsOpen } from '../../store/slices/modalSlice';
 
@@ -14,8 +14,6 @@ const RegionSelect: React.FC = () => {
 
   
   const dispatch = useDispatch();
-  const region = useSelector((state: ReducerType) => state.region.regionInfo);
-  const isOpen = useSelector((state: ReducerType) => state.isOpen.isOpen);
 
   const [first, setFirst] = useState<string>('서울특별시');
   const [second, setSecond] = useState<string>('전체');
@@ -25,17 +23,17 @@ const RegionSelect: React.FC = () => {
     dispatch(setIsOpen(false))
   };
 
-  const handleFirst = (e) => {
-    setFirst(e.target.value);
+  const handleFirst = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setFirst(e.currentTarget.value);
     setSecond('전체');
     setThird('전체');
   };
-  const handleSecond = (e) => {
-    setSecond(e.target.value);
+  const handleSecond = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setSecond(e.currentTarget.value);
     setThird('전체');
   };
-  const handleThird = (e) => {
-    setThird(e.target.value);
+  const handleThird = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setThird(e.currentTarget.value);
   };
 
   const handleSubmit = () => {

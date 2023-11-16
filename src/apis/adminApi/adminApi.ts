@@ -11,7 +11,7 @@ export const API = axios.create({
   },
 });
 
-export const registerRestaurant = async ( formData ) => {
+export const registerRestaurant = async ( formData:FormData) => {
   try {
     const response = await axiosImgInstance.post('/sunflowerPlate/admin/restaurant/registration', formData, {
     });
@@ -24,7 +24,7 @@ export const registerRestaurant = async ( formData ) => {
 };
 
 // 가게수정부분
-export const getRestaurantData = async ( restaurantId ) => {
+export const getRestaurantData = async ( restaurantId:number) => {
   const response = await axiosInstance.get(`/sunflowerPlate/admin/restaurant/${restaurantId}`, {
   });
   return response.data;

@@ -1,10 +1,10 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import signupReducer from '../pages/signUp/signupSlice';
+// import { configureStore, combineReducers } from '@reduxjs/toolkit';
+// import signupReducer from '../pages/signUp/signupSlice';
 
-const rootReducer = combineReducers({
-  signup: signupReducer,
-});
+// const rootReducer = combineReducers({
+//   signup: signupReducer,
+// });
 
-export const store = configureStore({
-  reducer: rootReducer,
-});
+// export const store = configureStore({
+//   reducer: rootReducer,
+// });

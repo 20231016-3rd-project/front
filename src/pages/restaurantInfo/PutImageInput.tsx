@@ -1,5 +1,3 @@
-import { before } from 'node:test';
-import React, { useState } from 'react';
 import styled from 'styled-components';
 
 // [
@@ -21,49 +19,69 @@ import styled from 'styled-components';
 //   }
 // ]
 
-const PutImageInput = ({ selectedFiles, setSelectedFiles }) => {
+interface SelectedFile {
+  reviewImageId?: string; // reviewImageId의 실제 타입으로 string을 대체하세요
+  // 필요한 경우 다른 속성을 추가하세요
+  reviewResizeUrl: string;
+  reviewOriginName: string;
+}
+
+interface PutImageInputProps {
+  selectedFiles: SelectedFile[];
+  setSelectedFiles: React.Dispatch<React.SetStateAction<SelectedFile[]>>;
+}
+
+const PutImageInput: React.FC<PutImageInputProps> = ({
+  selectedFiles,
+  setSelectedFiles,
+}) => {
   console.log(selectedFiles);
-  const extractServerFile = (selectedFiles) => {
-    return selectedFiles.filter((item) => item.reviewImageId !== undefined);
+  const extractServerFile = (selectedFiles: any): SelectedFile[] => {
+    return selectedFiles.filter(
+      (item: any) => item.reviewImageId !== undefined
+    );
   };
-  const handleFileChange = (e) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    const filesArray = Array.from(files).map((file) => {
-      return {
-        reviewOriginName: file?.name,
-        reviewResizeUrl: URL.createObjectURL(
-          new Blob([file], { type: 'image/*' })
-        ),
-        file: file,
-      };
-    });
-    const testArray = [...selectedFiles, ...filesArray];
-    let allFilesValid = true;
+    if (files) {
+      const filesArray = Array.from(files).map((file) => {
+        return {
+          reviewOriginName: file?.name,
+          reviewResizeUrl: URL.createObjectURL(
+            new Blob([file], { type: 'image/*' })
+          ),
+          file: file,
+        };
+      });
 
-    if (testArray.length > 3) {
-      alert('파일을 3개까지 선택할 수 있습니다.');
-      allFilesValid = false;
-    }
+      const testArray = [...selectedFiles, ...filesArray];
+      let allFilesValid = true;
 
-    let totalSize = 0;
-    const maxSize = 10 * 1024 * 1024; // 10MB
-
-    for (const file of files) {
-      totalSize += file.size;
-
-      if (file.size > maxSize) {
-        alert('파일 크기는 10MB를 초과할 수 없습니다.');
+      if (testArray.length > 3) {
+        alert('파일을 3개까지 선택할 수 있습니다.');
         allFilesValid = false;
-        break;
       }
-    }
 
-    if (allFilesValid) {
-      setSelectedFiles(testArray);
-      console.log('e.target.files:', files);
-    } else {
-      e.target.files = null;
-      setSelectedFiles(extractServerFile(testArray)); // 파일 선택 취소
+      let totalSize = 0;
+      const maxSize = 10 * 1024 * 1024; // 10MB
+
+      for (const file of files) {
+        totalSize += file.size;
+
+        if (file.size > maxSize) {
+          alert('파일 크기는 10MB를 초과할 수 없습니다.');
+          allFilesValid = false;
+          break;
+        }
+      }
+
+      if (allFilesValid) {
+        setSelectedFiles(testArray);
+        console.log('e.target.files:', files);
+      } else {
+        e.target.files = null;
+        setSelectedFiles(extractServerFile(testArray)); // 파일 선택 취소
+      }
     }
   };
 
