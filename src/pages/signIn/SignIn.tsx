@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './SignIn.styles';
 import { KAKAO_AUTH_URI } from '../../apis/kakaoAuthApi/kakaoAuthApi';
@@ -7,6 +7,9 @@ import kakaoLogo from '../../assets/images/Kakao Login3.png';
 import googleLogo from "../../assets/images/Google Login.png"
 import prame from "../../assets/images/Frame 3933.png"
 import axios from 'axios';
+
+
+
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -71,13 +74,14 @@ const SignIn = () => {
       />
 
       <label htmlFor="email">패스워드</label>
+
       <S.Input
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="패스워드를 입력해주세요"
         type="password"
       />
-      <S.Button onClick={() => handleLogin(email, password)}>Login</S.Button>
+      <S.Button onClick={() => handleLogin(email, password)}> Login </S.Button>
 
       <img src={prame} alt="----" />
 
