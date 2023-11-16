@@ -13,7 +13,7 @@ const store = configureStore({
     restaurant: restaurantReducer, // state의 최상위 객체
     region: regionReducer,
     sort: sortReducer,
-    isOpen: modalReducer,
+    modal: modalReducer,
     keyword: keywordReducer,
     best: bestReducer,
     mylike: myLikeReducer,

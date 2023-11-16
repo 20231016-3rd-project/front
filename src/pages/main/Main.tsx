@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import logo from '/src/assets/images/sunflower.png';
 import arrowDown from '/src/assets/images/arrowDown.svg';
 
-import korean from '/src/assets/images/korean.jpg';
-import noodle from '/src/assets/images/noodle.jpg';
 import ramen from '/src/assets/images/ramen.jpg';
 import bibimbap from '/src/assets/images/bibimbap.jpg';
 import pasta from '/src/assets/images/pasta.jpg';
@@ -23,7 +21,6 @@ import DetialPage from './DetialPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../store/rootReducer';
 import { setIsOpen } from '../../store/slices/modalSlice';
-import { useLocation } from 'react-router-dom';
 import { setKey, setKeyword } from '../../store/slices/keywordSlice';
 
 interface IsClicked {
@@ -31,12 +28,9 @@ interface IsClicked {
 }
 
 const Main = () => {
-  const location = useLocation();
   const dispatch = useDispatch();
 
   const region = useSelector((state: ReducerType) => state.region.regionInfo);
-  const isOpen = useSelector((state: ReducerType) => state.isOpen.isOpen);
-  const keyword = useSelector((state: ReducerType) => state.keyword.keyword);
 
   const openModalHandler = () => {
     dispatch(setIsOpen(true));
@@ -51,9 +45,7 @@ const Main = () => {
     { id: 6, text: '신촌이대 맛집 베스트 10', img: bibimbap, key: '신촌이대' },
   ];
 
-
-
-  //첫 화면 cover 관리  
+  //첫 화면 cover 관리
   const [clicked, setClicked] = useState(false); // 커버에 애니메이션 주기
   let cover = true;
   let initial = true;

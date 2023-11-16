@@ -4,7 +4,7 @@ import styled from 'styled-components';
 interface OwnProps {
   orderBy: string;
   standard: string;
-  handleOrder?: (e) => void;
+  handleOrder?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 interface OrderProps {
   $orderBy: string;

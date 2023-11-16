@@ -26,8 +26,6 @@ const Modal: React.FC<ModalProps> = ({ closeModal, children }) => {
 
 export default Modal;
 
-const ModalStyle = styled.div``;
-
 const BackdropStyle = styled.div`
   position: fixed;
   top: 0;

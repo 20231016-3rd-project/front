@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const createInstance = (contentType) => {
+const createInstance = (contentType:string) => {
   const config = {
     baseURL: import.meta.env.VITE_APP_SERVER_API,
     timeout: 3000,

@@ -18,11 +18,9 @@ const Header: React.FC = () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const region = useSelector((state: ReducerType) => state.region.regionInfo);
-  const keyword = useSelector((state: ReducerType) => state.keyword.keyword);
   const key = useSelector((state: ReducerType) => state.keyword.key);
 
-  const onChangeKey = (e) => {
+  const onChangeKey = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setKey(e.target.value));
   };
   const handleSubmit = () => {
@@ -71,7 +69,7 @@ const Header: React.FC = () => {
               value={key}
               onChange={onChangeKey}
             />
-            <SearchButton disabled={!key ? true : false} onClick={handleSubmit}>
+            <SearchButton disabled={!key} onClick={handleSubmit}>
               Search
             </SearchButton>
           </SearchBox>
