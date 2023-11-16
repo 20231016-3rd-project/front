@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { postReview } from '../../apis/reviewApi';
 import { useParams } from 'react-router';
 import { getMyProfile } from '../../apis/profileApi';
+import { postReviewMutation } from '../../hooks/reviewQuery';
 
 type ReviewType = {
   reviewId: number;
@@ -31,15 +32,12 @@ type UserProfile = {
   nickName: string;
   phone: string;
 };
-const WriteReviewModal: React.FC<ReviewProps> = ({
-  closeModal,
-  setReviewsInfo,
-}) => {
+const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
   const [rating, setRating] = useState<number | null>(null);
   const [content, setContent] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [profile, setProfile] = useState<UserProfile | null>(null);
-
+  const { mutate, isError, isLoading } = postReviewMutation();
   const { restaurantId } = useParams();
 
   const contentChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -118,15 +116,7 @@ const WriteReviewModal: React.FC<ReviewProps> = ({
                   type: 'application/json',
                 });
                 formData.append('reviewSaveDto', dataBlob);
-                postReview(restaurantId ?? '', formData).then((r) => {
-                  console.log('postReview response', r);
-                  setReviewsInfo((prevState) => {
-                    return {
-                      ...prevState,
-                      content: [r, ...prevState.content],
-                    };
-                  });
-                });
+                mutate({ restaurantId, formData });
                 closeModal();
               }
             }}

@@ -18,6 +18,7 @@ export const getMyReviews = async () => {
 };
 
 export const postReview = async (restaurantId: string, formdata: object) => {
+  console.log('포스트', restaurantId, formdata);
   const response = await axiosImgInstance.post(
     `/sunflowerPlate/user/review/new?restaurantId=${restaurantId}`,
     formdata

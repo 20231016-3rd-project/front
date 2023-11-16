@@ -11,6 +11,7 @@ import {
   LikeButtonBox,
   ReviewButton,
 } from './Reviewstyle';
+import { deleteReviewMutation } from '../../hooks/reviewQuery';
 
 type ReviewType = {
   reviewId: number;
@@ -69,18 +70,9 @@ const Review: React.FC<ReviewProps> = ({ review, setReviewsInfo }) => {
   };
   console.log('Review', review);
 
+  const { mutate } = deleteReviewMutation();
   const deleteButtonhHandler = () => {
-    deleteReview(review.reviewId).then((r) => {
-      if (r.status === 200) {
-        alert('삭제되었습니다.');
-        setReviewsInfo((prevState: any) => {
-          const newContent = prevState.content.filter(
-            (item: any) => item.reviewId !== review.reviewId
-          );
-          return { ...prevState, content: newContent };
-        });
-      }
-    });
+    mutate(review.reviewId);
   };
   // useEffect(() => {
   //   getMyProfile().then((r) => setProfile(r));
