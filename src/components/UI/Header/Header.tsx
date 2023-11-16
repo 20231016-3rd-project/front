@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/rootReducer';
 import { setKeyword, setKey } from '../../../store/slices/keywordSlice';
-import search from "../../../assets/images/🦆 icon _search_.svg";
+import search from '@images/🦆 icon _search_.svg';
 const Header: React.FC = () => {
   const [auth, setAuth] = useState(false);
   const [admin, setAdmin] = useState(false);
@@ -45,7 +45,6 @@ const Header: React.FC = () => {
           <Logo src={logo} alt="" />
           <LogoText>
             <P>suflower plate</P>
-            
           </LogoText>
         </HeaderLeft>
       </SectionCenter>
@@ -56,8 +55,7 @@ const Header: React.FC = () => {
         <HeaderLeft to="/">
           <Logo src={logo} alt="" />
           <LogoText>
-          <P>suflower plate</P>
-
+            <P>suflower plate</P>
           </LogoText>
         </HeaderLeft>
         <HeaderMiddle>
@@ -134,7 +132,7 @@ const Logo = styled.img`
 const LogoText = styled.div`
   cursor: pointer;
 `;
-const HeaderMiddle = styled.div` 
+const HeaderMiddle = styled.div`
   width: 40%;
   border: 1px solid blue;
   display: flex;
@@ -160,7 +158,7 @@ const SearchInput = styled.input`
   /* line-height: 50px; */
   &:focus {
     outline: none;
-  } 
+  }
 `;
 const SearchButton = styled.button`
   width: 40px;
@@ -174,7 +172,7 @@ const SearchButton = styled.button`
   background-color: #f9b916;
   cursor: pointer;
 
-  img{
+  img {
     margin-top: 3px;
     width: 20px;
     height: 20px;

@@ -1,69 +1,63 @@
-
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import logo from "../../../assets/images/sunflower.png"
-import closure from "../../../assets/images/closure.svg"
-import registli from "../../../assets/images/registli.svg"
-import chat from "../../../assets/images/chat.svg"
-import home from "../../../assets/images/home.svg"
-import report from "../../../assets/images/report.svg"
-const AdminSettingPage: React.FC = () => { 
+import logo from '../../../assets/images/sunflower.png';
+import closure from '../../../assets/images/closure.svg';
+import registli from '../../../assets/images/registli.svg';
+import chat from '../../../assets/images/chat.svg';
+import home from '../../../assets/images/home.svg';
+import report from '../../../assets/images/report.svg';
+const AdminSettingPage: React.FC = () => {
   return (
     <GridContainer>
       <AdminNav>
         <LogoSection>
           <div>
-          <img src={logo} alt="" />
-          <h1>Sunflower Plate</h1>
+            <img src={logo} alt="" />
+            <h1>Sunflower Plate</h1>
           </div>
         </LogoSection>
 
         <LinkSection>
+          <LinkBox>
+            <div>
+              <img src={home} alt="" />
+            </div>
+            <p>Home</p>
+          </LinkBox>
 
-        <LinkBox>
-          <div>
-          <img src={home} alt="" />
-          </div>
-         <p>Home</p>
-         </LinkBox>
+          <LinkBox>
+            <div>
+              <img src={registli} alt="" />
+            </div>
+            <p>Store Registration</p>
+          </LinkBox>
 
-         <LinkBox>
-         <div>
-         <img src={registli} alt="" />
-         </div>
-         <p>Store Registration</p>
-         </LinkBox>
+          <LinkBox>
+            <div>
+              <img src={closure} alt="" />
+            </div>
+            <p>Closure Record</p>
+          </LinkBox>
 
-         <LinkBox>
-         <div>
-         <img src={closure} alt="" />
-         </div>
-         <p>Closure Record</p>
-         </LinkBox>
+          <LinkBox>
+            <div>
+              <img src={report} alt="" />
+            </div>
+            <p>Report</p>
+          </LinkBox>
 
-         <LinkBox>
-         <div>
-         <img src={report} alt="" />
-         </div>
-         <p>Report</p>
-         </LinkBox>
-
-
-         <LinkBox>
-         <div>
-         <img src={chat} alt="" />
-         </div>
-         <p>message</p>
-         </LinkBox>
+          <LinkBox>
+            <div>
+              <img src={chat} alt="" />
+            </div>
+            <p>message</p>
+          </LinkBox>
         </LinkSection>
       </AdminNav>
 
-      <AdminMain>
-
-      </AdminMain>
+      <AdminMain></AdminMain>
     </GridContainer>
-   
   );
 };
 
@@ -75,7 +69,6 @@ const SetPosition = css`
   left: 50%;
   transform: translateX(-50%);
 `;
-
 
 const GridContainer = styled.div`
   display: grid;
@@ -110,7 +103,7 @@ const LogoSection = styled.div`
   h1{
     font-size: 1rem;
   }
-
+`;
 
 const LinkSection = styled.div`
   width: auto;
@@ -121,16 +114,14 @@ const LinkSection = styled.div`
   justify-content: flex-start;
   gap: 30px;
 
-img{
+  img {
     width: 20px;
     height: 20px;
   }
-  
 `;
 
 const LinkBox = styled.div`
-
-p{
+  p {
     display: flex;
     align-items: center;
   }
@@ -140,6 +131,4 @@ const AdminMain = styled.div`
   border: 1px solid black;
   padding: 20px;
   text-align: center;
-  
 `;
-

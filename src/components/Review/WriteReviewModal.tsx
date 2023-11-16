@@ -23,7 +23,6 @@ type ReviewType = {
 
 type ReviewProps = {
   closeModal: () => void;
-  setReviewsInfo: React.Dispatch<React.SetStateAction<ReviewType[]>>; // setReviewsInfo 타입 지정
 };
 
 type UserProfile = {
@@ -58,7 +57,6 @@ const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
               <img src={profile?.memberProfilePicture} alt="" />
             </div>
             <div className="profile__info">
-
               <div className="profile__name">{profile?.nickName}</div>
 
               <div className="review__stars">
@@ -83,7 +81,6 @@ const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
             ></textarea>
           </div>
         </div>
-
 
         <ModalFooter>
           <div>
@@ -136,21 +133,20 @@ const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
 export default WriteReviewModal;
 
 const ModalFooter = styled.div`
-    margin-top: 20px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  div{
-    
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  div {
   }
-  button{
+  button {
     height: 30px;
   }
 `;
 
 const WriteReviewStyle = styled.div`
   display: flex;
-  width: 1000px ;
+  width: 1000px;
   height: 600px;
   flex-direction: column;
   justify-content: center;
@@ -207,8 +203,5 @@ const WriteReviewStyle = styled.div`
   }
 
   .ImageInput {
-
   }
 `;
-
-
