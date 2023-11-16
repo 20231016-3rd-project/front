@@ -22,7 +22,7 @@ export default ({ mode }) => {
       alias: [
         {
           find: '@images',
-          replacement: path.resolve(__dirname, 'src/components/assets/images'),
+          replacement: path.resolve(__dirname, 'src/assets/images'),
         },
       ],
     },
