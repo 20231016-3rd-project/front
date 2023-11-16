@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const ImageInput = ({ selectedFiles, setSelectedFiles }) => {
+  
   console.log(selectedFiles);
   const handleFileChange = (e) => {
     const files = e.target.files;
@@ -50,12 +51,12 @@ const ImageInput = ({ selectedFiles, setSelectedFiles }) => {
         {selectedFiles.map((file, index) => {
           return (
             <div key={index}>
-              {/* <img
+               <img
                 src={URL.createObjectURL(file)}
                 alt={`이미지 ${index}`}
                 width="100"
-              /> */}
-              <li>{file?.name}</li>
+              /> 
+              {/* <li>{file?.name}</li> 형석 지움*/} 
             </div>
           );
           //todo :img미리보기

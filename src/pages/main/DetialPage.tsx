@@ -99,8 +99,7 @@ useEffect(() => {
 export default DetialPage;
 
 const Section = styled.div`
-  padding: 80px 15% 20px;
-  border: 1px solid red;
+   padding: 40px 4% 20px; 
 `;
 const ButtonsDiv = styled.div`
   margin: 0 2rem;

@@ -110,13 +110,16 @@ const Main = () => {
               지역선택
             </SelectRegionButton>
           </SelectRegion>
+
           <Section>
-            <SectionTitle>믿고 보는 맛집 리스트</SectionTitle>
+            <SectionTitle># 믿고 보는 맛집 리스트</SectionTitle>
             <Slide datas={datas} />
           </Section>
+
           <SectionTitle2>
-            {city} {district} {dong} 맛집
+            # 믿고 보는 {city} {district} {dong} 맛집
           </SectionTitle2>
+
           <DetialPage />
         </>
       )}
@@ -215,15 +218,17 @@ const SelectRegion = styled.div`
 const SelectRegionButton = styled.button`
   background-color: #da9d00;
   color: white;
-  font-size: 32px;
+  font-size: 20px;
   font-weight: 600;
   border: none;
   border-radius: 68px;
-  padding: 1.1rem 5rem;
+  padding: 1rem 3rem;
   margin: 2rem 0 4rem 0;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  &:active {
+    transform: scale(0.95); // 버튼이 눌렸을 때 약간 축소
+  }
 `;
 const Text2 = styled.p`
   letter-spacing: 5px;
@@ -237,12 +242,12 @@ const SectionTitle = styled.div`
   color: #ff792a;
   font-size: 32px;
   font-weight: 600;
-  margin: 0 100px;
+  margin: 0 105px;
   padding: 0 0 40px 0;
 `;
 const SectionTitle2 = styled.div`
   color: #ff792a;
   font-size: 32px;
   font-weight: 600;
-  margin: 0 15%;
+  margin: 0 6%;
 `;

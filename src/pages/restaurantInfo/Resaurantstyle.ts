@@ -114,7 +114,6 @@ export const ImageSection = styled.div`
 `;
 
 export const RestaurantWrapper =styled.div`
-  border: 1px solid blue;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -122,8 +121,7 @@ export const RestaurantWrapper =styled.div`
 `;
 
 export const RestaurantInfoLayout = styled.div`
-  width: 100%;
-  border: 1px solid red;
+  width:100%;
   display: flex;
   justify-content: center;
   align-items: center;

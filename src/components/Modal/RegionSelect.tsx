@@ -1575,7 +1575,7 @@ const ModalBox = styled.div`
   align-items: center;
   padding: 25px 29px;
   width: 604px;
-  height: 90vh;
+  height: 60vh;
   max-height: 843px;
 
   ::-webkit-scrollbar {
@@ -1673,6 +1673,10 @@ const SubmitButton = styled.button`
 
   color: #ffc20e;
   font-weight: 600;
+
+  &:active {
+    transform: scale(0.95); // 버튼이 눌렸을 때 약간 축소
+  }
 `;
 const CloseButton = styled.button`
   position: absolute;
