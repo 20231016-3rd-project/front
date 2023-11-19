@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/rootReducer';
 import { setKeyword, setKey } from '../../../store/slices/keywordSlice';
-import search from '@images/🦆 icon _search_.svg';
+import search from '@images/icon _search_.svg';
 const Header: React.FC = () => {
   const [auth, setAuth] = useState(false);
   const [admin, setAdmin] = useState(false);
