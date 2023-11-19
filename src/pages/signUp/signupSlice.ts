@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { signup, checkEmailDuplication, checkNicknameDuplication, SignupRequest } from '../../apis/authApi/authApi';
+import { signup, checkEmailDuplication, checkNicknameDuplication, SignupRequest } from '../../apis/userApi/userApi';
 
 interface SignupState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -25,12 +25,11 @@ export const submitSignup = createAsyncThunk(
         return rejectWithValue('이메일이 중복됩니다.');
       }
 
-      // 닉네임 중복 확인 추가
+      // 닉네임 중복 확인 
       const isNicknameDuplicate = await checkNicknameDuplication(userData.nickname);
       if (isNicknameDuplicate) {
         return rejectWithValue('닉네임이 중복됩니다.');
       }
-
 
       const response = await signup(userData);
       return response.data;
@@ -47,7 +46,7 @@ const signupSlice = createSlice({
   name: 'signup',
   initialState,
   reducers: {
-    // 여기에 필요한 다른 리듀서들을 추가할 수 있습니다.
+    // 필요한 다른 리듀서들을 추가
   },
   extraReducers: (builder) => {
     builder
