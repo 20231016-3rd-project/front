@@ -4,7 +4,7 @@ import styled from 'styled-components';
 interface OwnProps {
   column: string;
   region: string;
-  onClick?: (e) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   name: string;
 }
 interface StyledProps {

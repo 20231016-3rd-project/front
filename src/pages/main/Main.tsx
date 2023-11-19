@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import logo from '/src/assets/images/sunflower.png';
 import arrowDown from '/src/assets/images/arrowDown.svg';
 
-import korean from '/src/assets/images/korean.jpg';
-import noodle from '/src/assets/images/noodle.jpg';
 import ramen from '/src/assets/images/ramen.jpg';
 import bibimbap from '/src/assets/images/bibimbap.jpg';
 import pasta from '/src/assets/images/pasta.jpg';
@@ -23,7 +21,6 @@ import DetialPage from './DetialPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../store/rootReducer';
 import { setIsOpen } from '../../store/slices/modalSlice';
-import { useLocation } from 'react-router-dom';
 import { setKey, setKeyword } from '../../store/slices/keywordSlice';
 
 interface IsClicked {
@@ -31,12 +28,9 @@ interface IsClicked {
 }
 
 const Main = () => {
-  const location = useLocation();
   const dispatch = useDispatch();
 
   const region = useSelector((state: ReducerType) => state.region.regionInfo);
-  const isOpen = useSelector((state: ReducerType) => state.isOpen.isOpen);
-  const keyword = useSelector((state: ReducerType) => state.keyword.keyword);
 
   const openModalHandler = () => {
     dispatch(setIsOpen(true));
@@ -51,9 +45,7 @@ const Main = () => {
     { id: 6, text: '신촌이대 맛집 베스트 10', img: bibimbap, key: '신촌이대' },
   ];
 
-
-
-  //첫 화면 cover 관리  
+  //첫 화면 cover 관리
   const [clicked, setClicked] = useState(false); // 커버에 애니메이션 주기
   let cover = true;
   let initial = true;
@@ -118,13 +110,16 @@ const Main = () => {
               지역선택
             </SelectRegionButton>
           </SelectRegion>
+
           <Section>
-            <SectionTitle>믿고 보는 맛집 리스트</SectionTitle>
+            <SectionTitle># 믿고 보는 맛집 리스트</SectionTitle>
             <Slide datas={datas} />
           </Section>
+
           <SectionTitle2>
-            {city} {district} {dong} 맛집
+            # 믿고 보는 {city} {district} {dong} 맛집
           </SectionTitle2>
+
           <DetialPage />
         </>
       )}
@@ -223,15 +218,17 @@ const SelectRegion = styled.div`
 const SelectRegionButton = styled.button`
   background-color: #da9d00;
   color: white;
-  font-size: 32px;
+  font-size: 20px;
   font-weight: 600;
   border: none;
   border-radius: 68px;
-  padding: 1.1rem 5rem;
+  padding: 1rem 3rem;
   margin: 2rem 0 4rem 0;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  &:active {
+    transform: scale(0.95); // 버튼이 눌렸을 때 약간 축소
+  }
 `;
 const Text2 = styled.p`
   letter-spacing: 5px;
@@ -245,12 +242,12 @@ const SectionTitle = styled.div`
   color: #ff792a;
   font-size: 32px;
   font-weight: 600;
-  margin: 0 100px;
+  margin: 0 105px;
   padding: 0 0 40px 0;
 `;
 const SectionTitle2 = styled.div`
   color: #ff792a;
   font-size: 32px;
   font-weight: 600;
-  margin: 0 15%;
+  margin: 0 6%;
 `;

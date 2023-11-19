@@ -16,7 +16,7 @@ const store = configureStore({
     auth: authReducer, 
     region: regionReducer,
     sort: sortReducer,
-    isOpen: modalReducer,
+    modal: modalReducer,
     keyword: keywordReducer,
     best: bestReducer,
     mylike: myLikeReducer,

@@ -33,7 +33,7 @@ const ClosurePage = () => {
       }
     }, []);
 
-    const goToEditPage = (restaurantId) => {
+    const goToEditPage = (restaurantId:number) => {
       // navigate(`/store-regist/${restaurantId}`);
       navigate(`edit/${restaurantId}`);
     };

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const LikeButtonBox = styled.div`
     display: flex;
+    margin-right: 10px;
 `;
 
 export const LikeButton = styled.button`
@@ -40,7 +41,8 @@ export const LikeButton = styled.button`
 `;
 
 export const ReviewLayout = styled.div`
-  border: 1px solid red;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
   .review__header {
     display: flex;
     justify-content: space-between;
@@ -102,4 +104,5 @@ export const ReviewLayout = styled.div`
 export const ReviewButton = styled.button`
       border: none;
       border-radius: 10px;
+      margin-right: 10px;
 `;

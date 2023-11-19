@@ -62,11 +62,11 @@ const EditinfoRequestModal = ({ closeModal, restaurantId }) => {
         <div className="modal__header">정보 수정 요청</div>
 
         <div className="modal__content">
-          정보 수정 카테고리를 골라주세요.
+         <h1>※ 정보 수정 카테고리를 골라주세요.</h1> 
           <br />
           {radios}
           <br />
-          상세 변경 내역을 알려주세요
+          <p>상세 변경 내역을 알려주세요</p>
           <textarea
             name=""
             id=""
@@ -78,7 +78,7 @@ const EditinfoRequestModal = ({ closeModal, restaurantId }) => {
           ></textarea>
         </div>
         <div className="modal__footer">
-          <button onClick={onClickhandler}>등록하기</button>
+          <Button onClick={onClickhandler}>등록하기</Button>
         </div>
       </ReportReviewStyle>
     </Modal>
@@ -89,8 +89,9 @@ export default EditinfoRequestModal;
 
 const ReportReviewStyle = styled.div`
   background-color: white;
-  width: 400px;
-  height: 600px;
+  width: 350px;
+  height: 500px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -107,4 +108,36 @@ const ReportReviewStyle = styled.div`
     flex-direction: column;
     margin-bottom: 1px solid black;
   }
+`;
+
+const Button = styled.button`
+  align-items: center;
+  background-color: #fff;
+  margin-top: 10px;
+  border-radius: 10px;
+  border-style: none;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 14px;
+  height: 30px;
+  width: 260px;
+  justify-content: center;
+  padding: 1px 20px;
+
+  &:hover {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(45deg, #f9b916, #f96216);
+    transition: opacity 0.3s ease; // 그라데이션 효과를 부드럽게 만듭니다.
+    color: white;
+    
+  }
+
+  &:active {
+    transform: scale(0.95); // 버튼이 눌렸을 때 약간 축소
+  }
+
 `;

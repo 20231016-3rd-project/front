@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const createInstance = (contentType) => {
+const createInstance = (contentType:string) => {
   const config = {
     baseURL: 'http://3.38.32.91',
     timeout: 3000,

@@ -24,10 +24,10 @@ const Slide: React.FC<OwnProps> = ({ datas }) => {
     slidesToShow: 3,
     slidesToScroll: 3,
   };
-  const slickRef = useRef(null);
+  const slickRef = useRef<Slider | null>(null);
 
-  const previous = useCallback(() => slickRef.current.slickPrev(), []);
-  const next = useCallback(() => slickRef.current.slickNext(), []);
+  const previous = useCallback(() => slickRef.current?.slickPrev(), []);
+  const next = useCallback(() => slickRef.current?.slickNext(), []);
 
   const data = datas;
 
@@ -124,10 +124,12 @@ const Contents = styled(Link)`
 `;
 const ImgDiv = styled.div`
   width: 100%;
+  border-radius: 10px;
   height: 18.75rem;
 `;
 const DataImg = styled.img`
   object-fit: cover;
+  border-radius: 10px;
 `;
 const DataText = styled.p`
   width: 90%;

@@ -10,7 +10,7 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ closeModal, children }) => {
   console.log(children);
   return (
-    <>
+    <ModalStyle>
       {ReactDOM.createPortal(
         <BackdropStyle className="modal__backdrop" onClick={closeModal} />,
         document.getElementById('backdrop-root') as HTMLElement
@@ -20,13 +20,16 @@ const Modal: React.FC<ModalProps> = ({ closeModal, children }) => {
         <OverlayContentStyle>{children}</OverlayContentStyle>,
         document.getElementById('overlay-root') as HTMLElement
       )}
-    </>
+    </ModalStyle>
   );
 };
 
 export default Modal;
 
-const ModalStyle = styled.div``;
+
+const ModalStyle = styled.div`
+`;
+
 
 const BackdropStyle = styled.div`
   position: fixed;

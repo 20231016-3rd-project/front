@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import OrderByButton from '../../components/Buttons/OrderByButton';
+import { useEffect } from 'react';
+
 
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 import styled from 'styled-components';
@@ -10,11 +10,6 @@ import {
 } from '../../apis/getRestaurantApi/getRestaurant';
 import { useSelector, useDispatch } from 'react-redux';
 import { ReducerType } from '../../store/rootReducer';
-import { getSearchRestaurants } from '../../store/slices/restaurantSlice';
-import Pagination from './../../components/Pagination/Pagination';
-import { getSort } from '../../store/slices/sortSlice';
-import { setIsOpen } from '../../store/slices/modalSlice';
-import RegionSelect from '../../components/Modal/RegionSelect';
 import { getBestRestaurants } from '../../store/slices/bestSlice';
 import { useLocation } from 'react-router-dom';
 
@@ -56,7 +51,10 @@ const BestPage = () => {
   }, []);
 
   useEffect(() => {
-    document.getElementById('root').scrollIntoView();
+    const rootElement = document.getElementById('root');
+    if (rootElement) {
+      rootElement.scrollIntoView();
+    }
   }, []);
 
   let contents;

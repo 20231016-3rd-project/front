@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './SignIn.styles';
 import { KAKAO_AUTH_URI } from '../../apis/kakaoAuthApi/kakaoAuthApi';

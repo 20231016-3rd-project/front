@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { postReview } from '../../apis/reviewApi';
 import { useParams } from 'react-router';
 import { getMyProfile } from '../../apis/profileApi';
+import { postReviewMutation } from '../../hooks/reviewQuery';
 
 type ReviewType = {
   reviewId: number;
@@ -22,7 +23,6 @@ type ReviewType = {
 
 type ReviewProps = {
   closeModal: () => void;
-  setReviewsInfo: React.Dispatch<React.SetStateAction<ReviewType[]>>; // setReviewsInfo 타입 지정
 };
 
 type UserProfile = {
@@ -31,15 +31,12 @@ type UserProfile = {
   nickName: string;
   phone: string;
 };
-const WriteReviewModal: React.FC<ReviewProps> = ({
-  closeModal,
-  setReviewsInfo,
-}) => {
+const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
   const [rating, setRating] = useState<number | null>(null);
   const [content, setContent] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [profile, setProfile] = useState<UserProfile | null>(null);
-
+  const { mutate, isError, isLoading } = postReviewMutation();
   const { restaurantId } = useParams();
 
   const contentChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -61,6 +58,7 @@ const WriteReviewModal: React.FC<ReviewProps> = ({
             </div>
             <div className="profile__info">
               <div className="profile__name">{profile?.nickName}</div>
+
               <div className="review__stars">
                 <StarRating rating={rating ?? 0} setRating={setRating} />
               </div>
@@ -83,7 +81,8 @@ const WriteReviewModal: React.FC<ReviewProps> = ({
             ></textarea>
           </div>
         </div>
-        <div className="modal__footer">
+
+        <ModalFooter>
           <div>
             <ImageInput
               selectedFiles={selectedFiles}
@@ -118,22 +117,14 @@ const WriteReviewModal: React.FC<ReviewProps> = ({
                   type: 'application/json',
                 });
                 formData.append('reviewSaveDto', dataBlob);
-                postReview(restaurantId ?? '', formData).then((r) => {
-                  console.log('postReview response', r);
-                  setReviewsInfo((prevState) => {
-                    return {
-                      ...prevState,
-                      content: [r, ...prevState.content],
-                    };
-                  });
-                });
+                mutate({ restaurantId, formData });
                 closeModal();
               }
             }}
           >
             등록하기
           </button>
-        </div>
+        </ModalFooter>
       </WriteReviewStyle>
     </Modal>
   );
@@ -141,13 +132,27 @@ const WriteReviewModal: React.FC<ReviewProps> = ({
 
 export default WriteReviewModal;
 
+const ModalFooter = styled.div`
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  div {
+  }
+  button {
+    height: 30px;
+  }
+`;
+
 const WriteReviewStyle = styled.div`
   display: flex;
+  width: 1000px;
+  height: 600px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   .modal__header {
-    width: 1200px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     margin: 1rem;
@@ -155,7 +160,7 @@ const WriteReviewStyle = styled.div`
   .review__profile {
     display: flex;
     justify-content: flex-start;
-    gap: 1.5rem;
+    gap: 0.8rem;
   }
   .profile__image img {
     width: 100px;
@@ -169,12 +174,17 @@ const WriteReviewStyle = styled.div`
     align-items: center;
     gap: 0.5rem;
   }
+
+  .profile__name {
+    align-self: flex-start;
+  }
   .modal__close-button {
     cursor: pointer;
+    margin-right: 10px;
   }
   .text {
+    width: 100%;
     font-size: 20px;
-    margin: 1rem;
     border: 1px solid black;
   }
   .review__images {
@@ -191,8 +201,7 @@ const WriteReviewStyle = styled.div`
     img:hover {
     }
   }
-  .modal__footer {
-    display: flex;
-    justify-content: space-around;
+
+  .ImageInput {
   }
 `;

@@ -16,7 +16,7 @@ interface IsOpenProps {
 
 const DropDown: React.FC<OwnProps> = ({ setAuth, admin, setAdmin }) => {
   const dropDownRef = useRef(null);
-  const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
+  const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false) as [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 
   const logout = () => {
     setIsOpen(!isOpen);
