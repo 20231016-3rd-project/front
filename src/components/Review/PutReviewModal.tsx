@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { putReview } from '../../apis/reviewApi';
 import PutImageInput from '../../pages/restaurantInfo/PutImageInput';
 import { getMyProfile } from '../../apis/profileApi';
+import { putReviewMutation } from '../../hooks/reviewQuery';
 // {
 //   "reviewId": 14,
 //   "memberId": 3,
@@ -108,12 +109,8 @@ const PutReviewModal: React.FC<ReviewProps> = ({
     review.reviewImageDtoList
   );
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  useEffect(() => {
-    getMyProfile().then((r) => {
-      console.log('ppppppp', r);
-      setProfile(r);
-    });
-  }, []);
+  const { mutate, isError } = putReviewMutation();
+
   console.log('put review image:', selectedFiles);
   // const { restaurantId } = useParams();
 
@@ -186,19 +183,7 @@ const PutReviewModal: React.FC<ReviewProps> = ({
                 type: 'application/json',
               });
               formData.append('updateReviewDto', dataBlob);
-              putReview(review.reviewId, formData).then((r) => {
-                console.log('put Review response', r);
-                setReviewsInfo((prevState) => {
-                  const removeOldReview = prevState.content.filter(
-                    (item: any) => item.reviewId !== review.reviewId
-                  );
-                  const newContent = [r, ...removeOldReview];
-                  return {
-                    ...prevState,
-                    content: newContent,
-                  };
-                });
-              });
+              mutate(review.reviewId, formData);
               closeModal();
             }}
           >
@@ -222,21 +207,20 @@ const PutReviewModal: React.FC<ReviewProps> = ({
 export default PutReviewModal;
 
 const ModalFooter = styled.div`
-    margin-top: 20px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  div{
-    
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  div {
   }
-  button{
+  button {
     height: 30px;
   }
 `;
 
 const WriteReviewStyle = styled.div`
   display: flex;
-  width: 1000px ;
+  width: 1000px;
   height: 600px;
   flex-direction: column;
   justify-content: center;
@@ -293,8 +277,5 @@ const WriteReviewStyle = styled.div`
   }
 
   .ImageInput {
-
   }
 `;
-
-

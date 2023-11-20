@@ -74,8 +74,8 @@ const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
               className="text"
               name=""
               id=""
-              cols={100}
-              rows={10}
+              cols={80}
+              rows={8}
               value={content}
               onChange={contentChangeHandler}
             ></textarea>
@@ -147,7 +147,7 @@ const ModalFooter = styled.div`
 const WriteReviewStyle = styled.div`
   display: flex;
   width: 1000px;
-  height: 600px;
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -186,6 +186,7 @@ const WriteReviewStyle = styled.div`
     width: 100%;
     font-size: 20px;
     border: 1px solid black;
+    resize: none;
   }
   .review__images {
     display: flex;

@@ -173,9 +173,8 @@ const RestaurantInfo: React.FC = () => {
 
               <InfoMenuBox>
                 <h1>메뉴 정보</h1>
-
                 <div className="menu_map">
-                  {data.restaurantMenuDtoList.map((menu, index) => {
+                  {data.restaurantMenuDtoList.map((menu: any, index: any) => {
                     return (
                       <div key={index}>
                         <span className="menu_name">
@@ -208,7 +207,7 @@ const RestaurantInfo: React.FC = () => {
                   return <Review key={review.reviewId} review={review} />;
                 })} */}
 
-            <Map address={data.restaurantAddress} />
+            {/* <Map address={data.restaurantAddress} /> */}
 
             <ReviewContainer>
               <ReviewsHeader>
@@ -221,7 +220,7 @@ const RestaurantInfo: React.FC = () => {
               </ReviewsHeader>
 
               <ReviewList>
-                {reviewsInfo?.content?.map((review) => {
+                {reviewsInfo?.content?.map((review: any) => {
                   return (
                     <Review
                       key={`${review.reviewId}${review.reviewAt}`}

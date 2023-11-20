@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const LikeButtonBox = styled.div`
-    display: flex;
-    margin-right: 10px;
+  display: flex;
+  margin-right: 10px;
 `;
 
 export const LikeButton = styled.button`
@@ -43,6 +43,8 @@ export const LikeButton = styled.button`
 export const ReviewLayout = styled.div`
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
   .review__header {
     display: flex;
     justify-content: space-between;
@@ -51,7 +53,7 @@ export const ReviewLayout = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 10px;
+    gap: 1rem;
   }
   .profile__image img {
     margin-top: 5px;
@@ -82,27 +84,29 @@ export const ReviewLayout = styled.div`
     gap: 1rem;
   }
 
-  
   .review__text {
     font-size: 1.25rem;
     height: 70px;
+    padding-top: 1rem;
   }
   .review__images {
-    margin
     padding: 10px;
-
+    display: flex;
+    gap: 0.5rem;
     img {
       width: 100px;
       height: 100px;
       cursor: pointer;
+      border-radius: 0.5rem;
     }
     img:hover {
+      transform: scale(1.02);
     }
   }
 `;
 
 export const ReviewButton = styled.button`
-      border: none;
-      border-radius: 10px;
-      margin-right: 10px;
+  border: none;
+  border-radius: 10px;
+  margin-right: 10px;
 `;

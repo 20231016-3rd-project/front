@@ -26,10 +26,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, children }) => {
 
 export default Modal;
 
-
-const ModalStyle = styled.div`
-`;
-
+const ModalStyle = styled.div``;
 
 const BackdropStyle = styled.div`
   position: fixed;
@@ -49,4 +46,5 @@ const OverlayContentStyle = styled.div`
   background: #fff;
   padding: 20px;
   z-index: 11;
+  border-radius: 0.5rem;
 `;
