@@ -31,8 +31,8 @@ export const postReviewMutation = () => {
 
 export const deleteReviewMutation = () => {
   const queryClient = useQueryClient();
-  const { mutate, isError, isLoading } = useMutation({
-    mutationFn: async (reviewId) => {
+  const { mutateAsync, mutate, isError, isLoading } = useMutation({
+    mutationFn: async (reviewId: number) => {
       try {
         await deleteReview(reviewId);
         queryClient.invalidateQueries({ queryKey: ['review'] });
@@ -42,7 +42,7 @@ export const deleteReviewMutation = () => {
     },
     mutationKey: ['review'],
   });
-  return { mutate, isError, isLoading };
+  return { mutateAsync, mutate, isError, isLoading };
 };
 
 export const putReviewMutation = () => {

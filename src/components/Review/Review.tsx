@@ -27,7 +27,8 @@ type ReviewType = {
 };
 
 type ReviewProps = {
-  review: ReviewType; // ReviewType으로 타입 지정
+  review: ReviewType;
+  setReviewsInfo: React.Dispatch<React.SetStateAction<ReviewType[]>>;
 };
 
 const Review: React.FC<ReviewProps> = ({ review, setReviewsInfo }) => {
