@@ -134,12 +134,10 @@ const LogoText = styled.div`
 `;
 const HeaderMiddle = styled.div`
   width: 40%;
-  border: 1px solid blue;
   display: flex;
   align-items: center;
 `;
 const SearchBox = styled.div`
-  border: 1px solid blue;
   width: 100%;
   height: 45px;
   border: none;
