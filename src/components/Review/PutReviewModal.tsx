@@ -183,7 +183,7 @@ const PutReviewModal: React.FC<ReviewProps> = ({
                 type: 'application/json',
               });
               formData.append('updateReviewDto', dataBlob);
-              mutate(review.reviewId, formData);
+              mutate({ reviewId: review.reviewId, formData: formData });
               closeModal();
             }}
           >

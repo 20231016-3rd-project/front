@@ -117,7 +117,7 @@ const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
                   type: 'application/json',
                 });
                 formData.append('reviewSaveDto', dataBlob);
-                mutate({ restaurantId, formData });
+                mutate({ restaurantId: restaurantId, formData });
                 closeModal();
               }
             }}

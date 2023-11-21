@@ -1,8 +1,17 @@
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import Modal from '../Modal/Modal';
 import styled from 'styled-components';
 import { reportReview } from '../../apis/reviewApi';
-const ReportReviewModal = ({ closeModal, reviewId }) => {
+
+interface ReportReviewModalProps {
+  closeModal: () => void;
+  reviewId: number;
+}
+
+const ReportReviewModal: React.FC<ReportReviewModalProps> = ({
+  closeModal,
+  reviewId,
+}) => {
   const category = [
     { option1: '관련없는 내용' },
     { option2: '상업적 홍보' },
@@ -14,10 +23,10 @@ const ReportReviewModal = ({ closeModal, reviewId }) => {
 
   const [reportCategory, setReportCategory] = useState('');
   const [reportContent, setReportContent] = useState('');
-  const contentChangehandler = (e) => {
+  const contentChangehandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setReportContent(e.target.value);
   };
-  const categoryChangehandler = (e) => {
+  const categoryChangehandler = (e: ChangeEvent<HTMLInputElement>) => {
     setReportCategory(e.target.value);
     console.log(reportCategory);
   };
@@ -48,7 +57,7 @@ const ReportReviewModal = ({ closeModal, reviewId }) => {
       reportCategory,
       reportContent,
     });
-    const response = reportReview({
+    reportReview({
       reviewId,
       reportCategory,
       reportContent,
@@ -72,8 +81,8 @@ const ReportReviewModal = ({ closeModal, reviewId }) => {
           <textarea
             name=""
             id=""
-            cols="30"
-            rows="10"
+            cols={30}
+            rows={10}
             placeholder="비방, 욕설, 광고, 잘못된 정보 등 신고 사유를 구체적으로 작성해주세요"
             onChange={contentChangehandler}
             value={reportContent}

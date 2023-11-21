@@ -17,7 +17,6 @@ export const Button = styled.button`
   &:active {
     transform: scale(0.95); // 버튼이 눌렸을 때 약간 축소
   }
-
 `;
 
 export const InfoButton = styled.button`
@@ -38,11 +37,10 @@ export const InfoButton = styled.button`
   &:active {
     transform: scale(0.95); // 버튼이 눌렸을 때 약간 축소
   }
-
 `;
 
 export const RegistButton = styled.button`
-align-items: center;
+  align-items: center;
   background-color: #fff;
   border-radius: 5px;
   border-style: none;
@@ -56,12 +54,11 @@ align-items: center;
   padding: 1px 20px;
   font-weight: bold;
 
-   &:hover {
+  &:hover {
     background-color: #f9b916; // hover 시 노란색으로 변경
   }
 
   &:active {
     transform: scale(0.95); // 버튼이 눌렸을 때 약간 축소
   }
-
 `;

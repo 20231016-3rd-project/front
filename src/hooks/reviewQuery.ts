@@ -16,9 +16,12 @@ export const getRestaurantDetailQuery = (id: string) => {
 export const postReviewMutation = () => {
   const queryClient = useQueryClient();
   const { mutate, isError, isLoading } = useMutation({
-    mutationFn: async ({ restaurantId, formData }) => {
+    mutationFn: async (data: {
+      restaurantId: string | undefined;
+      formData: FormData;
+    }) => {
       try {
-        await postReview(restaurantId, formData);
+        await postReview(data.restaurantId, data.formData);
         queryClient.invalidateQueries({ queryKey: ['review'] });
       } catch (error) {
         console.log(error);
@@ -48,9 +51,9 @@ export const deleteReviewMutation = () => {
 export const putReviewMutation = () => {
   const queryClient = useQueryClient();
   const { mutate, isError, isLoading } = useMutation({
-    mutationFn: async ({ restaurantId, formData }) => {
+    mutationFn: async (data: { reviewId: number; formData: FormData }) => {
       try {
-        await putReview(restaurantId, formData);
+        await putReview(data.reviewId, data.formData);
         queryClient.invalidateQueries({ queryKey: ['review'] });
       } catch (error) {
         console.log(error);

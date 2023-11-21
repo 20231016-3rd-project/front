@@ -1,8 +1,16 @@
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import Modal from '../Modal/Modal';
 import styled from 'styled-components';
 import { postEditInfoRequest } from '../../apis/restaurantApi';
-const EditinfoRequestModal = ({ closeModal, restaurantId }) => {
+
+interface EditinfoModalProps {
+  closeModal: () => void;
+  restaurantId: string;
+}
+const EditinfoRequestModal: React.FC<EditinfoModalProps> = ({
+  closeModal,
+  restaurantId,
+}) => {
   const category = [
     { option1: '매장 이전' },
     { option2: '메장 폐업' },
@@ -14,18 +22,14 @@ const EditinfoRequestModal = ({ closeModal, restaurantId }) => {
 
   const [reportCategory, setReportCategory] = useState('');
   const [requestContent, setRequestContent] = useState('');
-  const contentChangehandler = (e) => {
+  const contentChangehandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setRequestContent(e.target.value);
   };
-  const categoryChangehandler = (e) => {
+  const categoryChangehandler = (e: ChangeEvent<HTMLInputElement>) => {
     setReportCategory(e.target.value);
     console.log(reportCategory);
   };
-  console.log({
-    restaurantId,
-    reportCategory,
-    requestContent,
-  });
+
   const radios = category.map((option) => {
     return (
       <label htmlFor="">
@@ -48,7 +52,7 @@ const EditinfoRequestModal = ({ closeModal, restaurantId }) => {
       reportCategory,
       requestContent,
     });
-    const response = postEditInfoRequest({
+    postEditInfoRequest({
       reportCategory,
       restaurantId,
       requestContent,
@@ -62,7 +66,7 @@ const EditinfoRequestModal = ({ closeModal, restaurantId }) => {
         <div className="modal__header">정보 수정 요청</div>
 
         <div className="modal__content">
-         <h1>※ 정보 수정 카테고리를 골라주세요.</h1> 
+          <h1>※ 정보 수정 카테고리를 골라주세요.</h1>
           <br />
           {radios}
           <br />
@@ -70,8 +74,8 @@ const EditinfoRequestModal = ({ closeModal, restaurantId }) => {
           <textarea
             name=""
             id=""
-            cols="30"
-            rows="10"
+            cols={30}
+            rows={10}
             placeholder="폐업, 휴업, 이전, 잘못된 정보 등 수정 사유를 구체적으로 작성해주세요"
             onChange={contentChangehandler}
             value={requestContent}
@@ -133,11 +137,9 @@ const Button = styled.button`
     background: linear-gradient(45deg, #f9b916, #f96216);
     transition: opacity 0.3s ease; // 그라데이션 효과를 부드럽게 만듭니다.
     color: white;
-    
   }
 
   &:active {
     transform: scale(0.95); // 버튼이 눌렸을 때 약간 축소
   }
-
 `;
