@@ -8,7 +8,7 @@ import googleLogo from "../../assets/images/Google Login.png";
 import prame from "../../assets/images/Frame 3933.png";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
-import { submitLogin, submitLogout, refreshAccessToken, setAuthenticated } from './signinSlice'; // import signinSlice from './signinSlice';
+import { submitLogin, submitLogout, refreshAccessToken, setAuthenticated, setAdmin } from './signinSlice'; // import signinSlice from './signinSlice';
 
 const SignIn = () => {
     const dispatch: AppDispatch = useDispatch(); // AppDispatch 타입을 사용합니다.
@@ -18,45 +18,41 @@ const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoginFailed, setIsLoginFailed] = useState(false);
-    
-    const handleLogin = async () => {
-      try {
-        // 이메일과 비밀번호가 비어있는지 체크
-        if (!email || !password) {
-          alert('이메일과 비밀번호를 입력해주세요.');
-          return; // 입력값이 비어있다면 로그인 시도를 중단
+
+       const handleLogin = async () => {
+        try {
+          if (!email || !password) {
+            alert('이메일과 비밀번호를 입력해주세요.');
+            return;
+          }
+      
+          // 일반 사용자 로그인 처리
+          const response = await dispatch(submitLogin({ email, password }));
+      
+          if (response.payload) {
+            dispatch(setAuthenticated(true));
+            navigate('/'); // 로그인 성공 시 메인 페이지로 이동
+          } else {
+            console.log('Login failed:', response);
+            setIsLoginFailed(true); // 로그인 실패 시 실패 상태 설정
+          }
+        } catch (error) {
+          console.error('Error during login', error);
+          alert('로그인 중 오류가 발생했습니다.');
         }
-    
-        const response = await dispatch(submitLogin({ email, password }));
-        console.log('Response:', response);
-    
-        if (response.payload) {
-          dispatch(setAuthenticated(true));
-          navigate('/'); // 로그인 성공 시 메인 페이지로 이동
-        } else {
-          console.log('Login failed:', response);
-          setIsLoginFailed(true); // 로그인 실패 시 실패 상태 설정
-          // alert('로그인에 실패했습니다.'); // 사용자에게 실패 알림 (선택적)
-          // 여기서 추가적인 처리 (예: 페이지 이동 없음)
-        }
-      } catch (error) {
-        console.error('Error during login', error);
-        alert('로그인 중 오류가 발생했습니다.'); // 오류 발생 알림
-      }
-    };
-    
+      };
     // 페이지 이동 조건부 처리
     useEffect(() => {
       if (isLoginFailed) {
         setIsLoginFailed(false); // 실패 상태 초기화
-        navigate('/login'); // 로그인 실패 시 로그인 페이지로 이동
+        navigate('/signin'); // 로그인 실패 시 로그인 페이지로 이동
       }
     }, [isLoginFailed]);
     const handleLogout = async () => {
         try {
             await dispatch(submitLogout());
             dispatch(setAuthenticated(false));
-            navigate('/login');
+            navigate('/signin');
         } catch (error) {
             console.error('Error during logout', error);
         }

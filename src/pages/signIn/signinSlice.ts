@@ -16,6 +16,7 @@ interface UserData {
 
 interface AuthState {
   isAuthenticated: boolean;
+  isAdmin: boolean;
   isRefreshingToken: boolean;
   error: string | null;
   userData: UserData | null;
@@ -24,6 +25,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   isAuthenticated: false,
+  isAdmin: false,
   isRefreshingToken: false,
   error: null,
   userData: null,
@@ -38,16 +40,17 @@ export const submitLogin = createAsyncThunk(
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await login(email, password);
+      console.log('submitLogin response:', response);  // submitLogin의 응답 로그 추가
       return response.data;
     } catch (error: any) {
       if (!error.response) throw error;
+      console.log('submitLogin error:', error.response.data);  // 오류 로그 추가
       return rejectWithValue(error.response.data);
     }
   }
 );
-
 // 비동기 로그아웃 액션 생성
-export const submitLogout = createAsyncThunk(
+export const submitLogout = createAsyncThunk<void, void>(
   'auth/submitLogout',
   async (_, { rejectWithValue }) => {
     try {
@@ -79,6 +82,9 @@ const authSlice = createSlice({
   reducers: {
     setAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
+    },
+    setAdmin: (state, action) => {
+      state.isAdmin = action.payload;
     },
     // 필요한 다른 리듀서들을 추가
   },
@@ -132,5 +138,5 @@ const authSlice = createSlice({
     },
   });
   
-export const { setAuthenticated } = authSlice.actions;
-export default authSlice.reducer;
+  export const { setAuthenticated, setAdmin } = authSlice.actions;
+  export default authSlice.reducer;
