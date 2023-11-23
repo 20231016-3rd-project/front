@@ -13,7 +13,6 @@ export const handleKakaoLogin = async (code: string) => {
     const response = await axios.post(`${BACKEND_API}/kakao/login`, {
       code,
     });
-    // 백엔드에서 쿠키로 로그인 정보를 설정할 것이므로 여기서는 별도의 처리가 필요하지 않습니다.
     return response.data; // 필요한 경우 응답 데이터를 반환
   } catch (error) {
     throw new Error('Failed to login with Kakao');

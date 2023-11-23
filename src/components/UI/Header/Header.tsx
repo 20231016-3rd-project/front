@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { submitLogout } from '../../../pages/signIn/signinSlice';
- // 로그아웃 액션을 가져오는 경로를 설정해야 합니다.
  import logo from '../../../assets/images/logo.png';
 
 const Header: React.FC = () => {

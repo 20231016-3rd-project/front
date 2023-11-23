@@ -1,16 +1,33 @@
 import { axiosInstance } from '../axiosInstance/axiosInstance';
 
-export const login = async (email: string, password: string): Promise<any> => {
+// 응답 데이터 타입 정의
+interface LoginResponse {
+  AccessToken: string;
+
+}
+
+// 에러 타입 정의
+interface ApiError extends Error {
+  response?: {
+    data: any;
+    status: number;
+  };
+}
+
+// login 함수
+export const login = async (email: string, password: string): Promise<LoginResponse> => {
   try {
-    const response = await axiosInstance.post('/sunflowerPlate/user/login', { email, password });
-    localStorage.setItem('accessToken', response.data.AccessToken); // 대문자 A 유지
+    const response = await axiosInstance.post<LoginResponse>('/sunflowerPlate/user/login', { email, password });
+    localStorage.setItem('accessToken', response.data.AccessToken);
     localStorage.setItem('refreshToken', response.headers.refreshToken);
-    return response.data; // 필요하다면 여기서 특정 필드만 추출하여 반환
+    return response.data;
   } catch (error) {
-    console.error('로그인 중 에러 발생', error);
+    console.error('로그인 중 에러 발생', error as ApiError);
     throw error;
   }
 };
+
+// logout 함수
 export const logout = async (): Promise<void> => {
   try {
     await axiosInstance.post('/sunflowerPlate/user/logout', {}, {
@@ -21,13 +38,15 @@ export const logout = async (): Promise<void> => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
   } catch (error) {
-    console.error('로그아웃 중 에러 발생', error);
+    console.error('로그아웃 중 에러 발생', error as ApiError);
     throw error;
   }
 };
-export const reissueAccessToken = async (): Promise<any> => {
+
+// reissueAccessToken 함수
+export const reissueAccessToken = async (): Promise<LoginResponse> => {
   try {
-    const response = await axiosInstance.post('/sunflowerPlate/user/reissue', {}, {
+    const response = await axiosInstance.post<LoginResponse>('/sunflowerPlate/user/reissue', {}, {
       headers: {
         'X-AUTH-TOKEN': localStorage.getItem('refreshToken'),
       },
@@ -35,7 +54,7 @@ export const reissueAccessToken = async (): Promise<any> => {
     localStorage.setItem('accessToken', response.data.AccessToken);
     return response.data;
   } catch (error) {
-    console.error('Error during token reissue', error);
+    console.error('Error during token reissue', error as ApiError);
     throw error;
   }
 };

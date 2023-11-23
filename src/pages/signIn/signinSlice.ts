@@ -32,8 +32,6 @@ const initialState: AuthState = {
   tokenData: null, // 초기 상태에 tokenData 추가
 };
 
-
-
 // 비동기 로그인 액션 생성
 export const submitLogin = createAsyncThunk(
   'auth/submitLogin',
