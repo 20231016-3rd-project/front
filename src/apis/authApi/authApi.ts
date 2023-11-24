@@ -1,27 +1,60 @@
+import { axiosInstance } from '../axiosInstance/axiosInstance';
 
-// import {
-//   axiosImgInstance,
-//   axiosInstance,
-// } from '../axiosInstance/axiosInstance.js';
+// 응답 데이터 타입 정의
+interface LoginResponse {
+  AccessToken: string;
 
-// export const signUp = async (signupData) => {
-//   const response = await axiosImgInstance.post('auth/signup', signupData);
+}
 
-//   return response;
-// };
+// 에러 타입 정의
+interface ApiError extends Error {
+  response?: {
+    data: any;
+    status: number;
+  };
+}
 
-// export const login = async (loginData) => {
-//   const response = await axiosInstance.post(
-//     'sunflowerPlate/user/login',
-//     loginData
-//   );
-//   if (response.status === 200) {
-//     localStorage.setItem('isLoggedIn', 'true');
-//   }
-// };
+// login 함수
+export const login = async (email: string, password: string): Promise<LoginResponse> => {
+  try {
+    const response = await axiosInstance.post<LoginResponse>('/sunflowerPlate/user/login', { email, password });
+    localStorage.setItem('accessToken', response.data.AccessToken);
+    localStorage.setItem('refreshToken', response.headers.refreshToken);
+    return response.data;
+  } catch (error) {
+    console.error('로그인 중 에러 발생', error as ApiError);
+    throw error;
+  }
+};
 
-// export const checkEmail = async (checkEmailData) => {
-//   const response = await axiosInstance.post('auth/idcheck', checkEmailData);
-//   return response;
-// };
+// logout 함수
+export const logout = async (): Promise<void> => {
+  try {
+    await axiosInstance.post('/sunflowerPlate/user/logout', {}, {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('accessToken'),
+      },
+    });
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+  } catch (error) {
+    console.error('로그아웃 중 에러 발생', error as ApiError);
+    throw error;
+  }
+};
 
+// reissueAccessToken 함수
+export const reissueAccessToken = async (): Promise<LoginResponse> => {
+  try {
+    const response = await axiosInstance.post<LoginResponse>('/sunflowerPlate/user/reissue', {}, {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('refreshToken'),
+      },
+    });
+    localStorage.setItem('accessToken', response.data.AccessToken);
+    return response.data;
+  } catch (error) {
+    console.error('Error during token reissue', error as ApiError);
+    throw error;
+  }
+};

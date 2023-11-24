@@ -18,13 +18,14 @@ export default ({ mode }) => {
         },
       }),
     ],
-    resolve: {
-      alias: [
-        {
-          find: '@images',
-          replacement: path.resolve(__dirname, 'src/assets/images'),
+    server: {
+      proxy: {
+        '/api': {
+          target: env.VITE_APP_SERVER_API, // 환경 변수에서 API 서버 주소 불러오기
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''), // '/api' 경로 제거
         },
-      ],
+      },
     },
   };
 };
