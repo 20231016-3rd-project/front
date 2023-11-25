@@ -100,7 +100,7 @@ const RestaurantInfo: React.FC = () => {
         <WriteReviewModal closeModal={closeWriteReviewModal} />
       )}
       {!isLoading && (
-        <RestaurantInfoLayout className="restaurant-info">
+        <RestaurantInfoLayout>
           <RestaurantWrapper>
             <ImageSection>
               <div className="images__column">
@@ -206,38 +206,9 @@ const RestaurantInfo: React.FC = () => {
               <ReviewList>
                 {reviewsInfo?.content?.map((review) => {
                   return <Review key={review.reviewId} review={review} />;
-                })}
-
-              </div>
-
-            </InfoMenuBox>
-
-            <Map address={info.restaurantAddress} />
-
-          </InfoSection>
-
-          <ReviewContainer>
-            <ReviewsHeader>
-              <h1>방문자 리뷰</h1>
-              <div>
-                <RegistButton onClick={openWriteReviewModal}>리뷰작성</RegistButton>
-              </div>
-            </ReviewsHeader>
-
-            <ReviewList>
-              {reviewsInfo?.content?.map((review) => {
-                return (
-                  <Review
-                    key={`${review.reviewId}${review.reviewAt}`}
-                    review={review}
-                    setReviewsInfo={setReviewsInfo}
-                  />
-                );
               })}
             </ReviewList>
           </ReviewContainer>
-
-          
           </RestaurantWrapper>
         </RestaurantInfoLayout>
       )}
