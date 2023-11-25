@@ -7,6 +7,7 @@ import keyword from './slices/keywordSlice';
 import best from './slices/bestSlice';
 import myLike from './slices/myLikeSlice';
 import signup from '../pages/signUp/signupSlice';
+import signin from '../pages/signIn/signinSlice';
 
 const reducer = combineReducers({
   restaurant,
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   best,
   myLike,
   signup,
+  signin
 });
 
 export type ReducerType = ReturnType<typeof reducer>;

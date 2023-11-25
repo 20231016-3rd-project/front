@@ -24,8 +24,8 @@ const AdminSettingPage: React.FC = () => {
       <Set.AdminNav>
         <Set.LogoSection>
           <div>
-          <img src={logo} alt="" />
-          <h1>Sunflower Plate</h1>
+            <img src={logo} alt="" />
+            <h1>Sunflower Plate</h1>
           </div>
         </Set.LogoSection>
 

@@ -193,7 +193,7 @@ const RestaurantInfo: React.FC = () => {
               <Map address={data.restaurantAddress} />
             </InfoSection>
 
-            <ReviewContainer>
+            {/* <ReviewContainer>
               <ReviewsHeader>
                 <h1>방문자 리뷰</h1>
                 <div>
@@ -206,9 +206,31 @@ const RestaurantInfo: React.FC = () => {
               <ReviewList>
                 {reviewsInfo?.content?.map((review) => {
                   return <Review key={review.reviewId} review={review} />;
-              })}
-            </ReviewList>
-          </ReviewContainer>
+                })} */}
+
+            <Map address={data.restaurantAddress} />
+
+            <ReviewContainer>
+              <ReviewsHeader>
+                <h1>방문자 리뷰</h1>
+                <div>
+                  <RegistButton onClick={openWriteReviewModal}>
+                    리뷰작성
+                  </RegistButton>
+                </div>
+              </ReviewsHeader>
+
+              <ReviewList>
+                {reviewsInfo?.content?.map((review) => {
+                  return (
+                    <Review
+                      key={`${review.reviewId}${review.reviewAt}`}
+                      review={review}
+                    />
+                  );
+                })}
+              </ReviewList>
+            </ReviewContainer>
           </RestaurantWrapper>
         </RestaurantInfoLayout>
       )}
