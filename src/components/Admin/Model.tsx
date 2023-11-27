@@ -1,18 +1,31 @@
-import React, { useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import * as THREE from 'three';
 
+type GLTF = {
+  nodes: {
+    [key: string]: THREE.Object3D;
+  };
+  materials: {
+    [key: string]: THREE.Material;
+  };
+  animations: THREE.AnimationClip[];
+};
 
-export default function Model(props) {
-  const group = useRef()
-  const { nodes, materials, animations } = useGLTF('/scene.gltf')
+
+export default function Model(props: JSX.IntrinsicElements['group']) {
+  const group = useRef<THREE.Group | null>(null);
+  const gltf = useGLTF('/scene.gltf') as unknown as GLTF;
+  const { nodes, materials, animations } = gltf as GLTF;
   const { actions } = useAnimations(animations, group);
 
   console.log("animation:", animations);
 
-  useEffect(()=>{
-    actions.twitch_char6.play();
-  })
+  useEffect(() => {
+    if (actions && actions.twitch_char6) {
+      actions.twitch_char6.play();
+    }
+  }, [actions]);
 
   return (
     <group ref={group} {...props} dispose={null}>

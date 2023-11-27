@@ -4,7 +4,6 @@ export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 5fr;
   height: 100vh;
-  gap: 10px;
   color: white;
   padding: 20px;
   background-color: black;
@@ -73,10 +72,11 @@ export const LinkBox = styled.div`
   }
 `;
 
+//중요
 export const AdminMain = styled.div`
   align-items: center;
   border: 1px solid black;
-  height: 800px;
+  height: 95%;
   padding: 20px;
   color: black;
   background-color: white;
@@ -96,7 +96,6 @@ export const TextBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 1px solid blue;
 
   h1{
     font-size: 2rem;
@@ -109,14 +108,50 @@ export const TextBox = styled.div`
 `;
 
 export const ProfileBox = styled.div`
-  border: 1px solid blue;
   border-radius: 10px;
-  width: 60px;
-  height: 60px;
-  div{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  .icon{
+    width: 45px;
+    height: 45px;
+    border: 1px solid red;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
     img{
-    width: 100%;
-    height: 100%;
+      width: 50%;
+      height: 50%;
+    }
+  }
+
+  .create{
+    width: 80px;
+    height: 45px;
+    border: 1px solid red;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: #f9b916;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    h1{
+
+    }
+  }
+
+  .profile{
+    width: 60px;
+    height: 60px;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50px;
     }
   }
   
@@ -124,15 +159,14 @@ export const ProfileBox = styled.div`
 
 export const DashBoardSection = styled.div`
   width: 100%;
-  height: 80%;
+  height: 90%;
   border: 1px solid red;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr; 
   grid-template-rows: 2fr 1fr; 
-  gap: 10px;
   grid-template-areas:
     "box1 box1 box2"
-    "box3 box4 box5";
+    "box3 box3 box4";
 
   @keyframes activeEffect {
   0%, 100% { transform: scale(1); } 
@@ -140,7 +174,6 @@ export const DashBoardSection = styled.div`
 }
   .box {
     padding: 20px;
-    text-align: center;
     position: relative; 
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   }
@@ -206,7 +239,40 @@ export const DashBoardSection = styled.div`
     align-items: center;
     grid-area: box2; 
   }
-  .box3 { grid-area: box3; }
+
+
+  .box3 { 
+    grid-area: box3; 
+
+    h1{
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 50px;
+    }
+
+    .bestmap{
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      .best3{
+      width: 30%;
+      height: 80%;
+      border: 1px solid red;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      img{
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+        margin-bottom: 10px;
+      }
+    }
+    }
+  }
   .box4 { grid-area: box4; }
   .box5 { grid-area: box5; }
   

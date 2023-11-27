@@ -1,9 +1,8 @@
 
-
 const AdminChatPage = () => {
   return (
     <div>
-      adminChat
+      
     </div>
   )
 }

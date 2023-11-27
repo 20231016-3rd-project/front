@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { checkEmailDuplication, checkNicknameDuplication } from '../../apis/userApi/userApi';
-import { Container, Input, Button, ErrorMsg, FieldContainer, Label, InputButtonContainer,  InputField,  PhoneFieldContainer,  PhoneInputContainer, PhoneInput, SignUpButton,  CheckButton } from './SignUp.styles';
+import { Container, Input, ErrorMsg, FieldContainer, Label,  InputField, PhoneInputField, PhoneInput, SignUpButton,  CheckButton, SignupForm } from './SignUp.styles';
 import { useNavigate } from 'react-router-dom';
 import { submitSignup } from './signupSlice';
 
@@ -167,11 +167,11 @@ const SignUp = () => {
 
 return (
   <Container>
-    <form onSubmit={handleSubmit}>
+    <SignupForm onSubmit={handleSubmit}>
+
       {/* 이메일 필드 */}
       <FieldContainer>
-        <Label htmlFor="email">이메일</Label>
-        <InputButtonContainer>
+          <Label htmlFor="email">이메일</Label>
           <InputField>
             <Input
               id="email"
@@ -180,44 +180,43 @@ return (
               onChange={handleEmailChange}
               placeholder="이메일을 입력하세요"
             />
+            <CheckButton type="button" onClick={handleCheckEmail}>중복 확인</CheckButton>
           </InputField>
-          <CheckButton type="button" onClick={handleCheckEmail}>중복 확인</CheckButton>
 
-        </InputButtonContainer>
         {emailDuplicateCheck && errors.email && <ErrorMsg>{errors.email}</ErrorMsg>}
       </FieldContainer>
 
       {/* 닉네임 필드 */}
-      <FieldContainer>
-        <Label htmlFor="nickname">닉네임</Label>
-        <InputButtonContainer>
-          <InputField>
-            <Input
-              id="nickname"
-              type="text"
-              value={nickname}
-              onChange={handleNicknameInputChange}
-              placeholder="닉네임을 입력하세요"
-              autoComplete="username"
-            />
-          </InputField>
+    <FieldContainer>
+    <Label htmlFor="nickname">닉네임</Label>
+      <InputField>
+          <Input
+            id="nickname"
+            type="text"
+            value={nickname}
+            onChange={handleNicknameInputChange}
+            placeholder="닉네임을 입력하세요"
+            autoComplete="username"
+          />
           <CheckButton type="button" onClick={handleCheckNickname}>중복 확인</CheckButton>
-
-        </InputButtonContainer>
-        {nicknameCheck.checked && errors.nickname && <ErrorMsg>{errors.nickname}</ErrorMsg>}
+      </InputField>
+          {nicknameCheck.checked && errors.nickname && <ErrorMsg>{errors.nickname}</ErrorMsg>}
       </FieldContainer>
+
       <FieldContainer>
-        <Label htmlFor="password">비밀번호</Label>     
-    <Input
-      type="password"
-      value={password}
-      onChange={handlePasswordChange}
-      placeholder="8자리 이상 15자리 이하로 작성해주세요"
-      autoComplete="new-password"
-      
-    />
+        <Label htmlFor="password">비밀번호</Label>    
+        <InputField>
+        <Input
+           type="password"
+           value={password}
+           onChange={handlePasswordChange}
+           placeholder="8자리 이상 15자리 이하로 작성해주세요"
+           autoComplete="new-password"
+        />
+        </InputField>
     {errors.password && <p className="error">{errors.password}</p>}
-    </FieldContainer>
+
+    <InputField>
     <Input
       type="password"
       value={confirmPassword}
@@ -226,11 +225,13 @@ return (
       autoComplete="new-password"
     />
     {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
+    </InputField> 
+    </FieldContainer>
+
     {/* 핸드폰 번호 필드 */}
     <FieldContainer>
-  <PhoneFieldContainer>
     <Label htmlFor="phone">핸드폰 번호</Label>
-    <PhoneInputContainer>
+    <PhoneInputField>
       <PhoneInput
         id="phone1"
         type="text"
@@ -255,11 +256,12 @@ return (
         value={phone.part3}
         onChange={handlePhoneChange('part3')}
       />
-    </PhoneInputContainer>
-  </PhoneFieldContainer>
+      </PhoneInputField>
 </FieldContainer>
+
 <SignUpButton type="submit">가입하기</SignUpButton>
-</form>
+
+</SignupForm>
 </Container>
 );
 };

@@ -10,10 +10,6 @@ interface CustomAddress {
     district: string;
     dong: string;
   };
-  // coords: {
-  //   lat: number;
-  //   lng: number;
-  // };
 }
 
 interface DaumPostProps {
@@ -31,11 +27,11 @@ const DaumPost: React.FC<DaumPostProps> = ({
   onAddressSelect,
   initialAddress,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [areaAddress, setAreaAddress] = useState(''); // 지역 주소 (시, 도 등)
-  const [detailAddress, setDetailAddress] = useState(''); // 상세 주소 (도로명, 건물명 등)
-  const [map, setMap] = useState<any>(null); // 지도 객체 상태
-  const [marker, setMarker] = useState<any>(null); // 마커 객체 상태
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [areaAddress, setAreaAddress] = useState<string>(''); 
+  const [detailAddress, setDetailAddress] = useState<string>('');
+  const [map, setMap] = useState<any>(null); 
+  const [marker, setMarker] = useState<any>(null); 
 
   useEffect(() => {
     if (initialAddress) {
@@ -107,24 +103,14 @@ const DaumPost: React.FC<DaumPostProps> = ({
         map.setCenter(coords);
 
         onAddressSelect({
-          fullAd: fullAddress, // 전체 주소를 추가합니다.
           restaurantAdmin: {
+            fullAd: fullAddress, 
             city: data.sido,
             district: data.sigungu,
             dong: data.bname || '',
           },
-          // coords: {
-          //   lat: parseFloat(result[0].y), // 문자열을 숫자로 변환
-          //   lng: parseFloat(result[0].x)
-          // }
         });
 
-        // restaurantAdministrativeDistrict: { // 잘몰라서 주석처리 해놨습니다
-        // cityName: data.sido,
-        // districtsName: data.sigungu,
-        // dongName: data.bname || '',
-
-         // },
         
       }
     });

@@ -3,12 +3,41 @@ import { StMain } from "../../../components/Stmain";
 import styled from "styled-components";
 import axios from 'axios';
 
+interface Restaurant {
+  restaurantId: number;
+  restaurantName: string;
+  restaurantAddress: string;
+  restaurantWebSite: string;
+  likeCount: number;
+  reviewCount: number;
+  avgStarRate: number;
+  restaurantStatus: string;
+}
+
+interface RestaurantData {
+  content: Restaurant[];
+  pageable: {
+    // pageable 타입 정보 추가
+  };
+  last: boolean;
+  totalPages: number;
+  totalElements: number;
+  number: number;
+  first: boolean;
+  sort: {
+    // sort 타입 정보 추가
+  };
+  size: number;
+  numberOfElements: number;
+  empty: boolean;
+}
+
 
 const RegistListPage = () => {
   // 예제 데이터
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [restaurantData, setRestaurantData] = useState<any>({
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>('');
+  const [restaurantData, setRestaurantData] = useState<RestaurantData>({
     content: [],
     pageable: {},
     last: false,
@@ -41,7 +70,7 @@ const RegistListPage = () => {
         });
 
         setRestaurantData(response.data);
-      } catch (err) {
+      } catch (err: any) {
         setError(err.message);
       } finally {
         setLoading(false);

@@ -99,6 +99,7 @@ const Main = () => {
             <ArrowDownImg src={arrowDown} alt="" />
           </ArrowDown>
         </Cover>
+
       )}
 
       {(clicked || initial === false) && (

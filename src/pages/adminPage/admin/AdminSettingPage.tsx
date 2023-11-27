@@ -14,10 +14,22 @@ import * as Set from "./style/AdminSetStyle"
 import fruit from "../../../assets/images/fruit2png.png"
 import RE from "../../../assets/images/adminRE.png"
 import RE2 from "../../../assets/images/adminRE2.png"
+import plus from "../../../assets/images/plus.png"
+import search2 from "../../../assets/images/search.png"
+import best3 from "../../../assets/images/best3.jpeg"
 
+const best3List = [
+  {src: best3, name: '금옥당 연희점', likes: '200+'},
+  {src: best3, name: '금옥당 홍대점', likes: '300+'},
+  {src: best3, name: '금옥당 마포점', likes: '400+'},
+  {src: best3, name: '금옥당 중구점', likes: '200+'},
+  {src: best3, name: '금옥당 수원점', likes: '300+'},
+];
 
 
 const AdminSettingPage: React.FC = () => { 
+
+  const currentTime = Date.now();
 
   return (
     <Set.GridContainer>
@@ -78,9 +90,22 @@ const AdminSettingPage: React.FC = () => {
         </Set.TextBox>
 
         <Set.ProfileBox>
-          <div>
-            <img src={Admin} alt="어드민 프로필" />
-          </div>
+
+        <div className="create">
+          <h1>Create</h1>
+        </div>
+
+        <div className="icon">
+          <img src={search2} alt="" />
+        </div>
+
+        <div className="icon">
+           <img src={plus} alt="" />
+        </div>
+
+        <div className="profile">
+          <img src={Admin} alt="어드민 프로필" />
+        </div>
         </Set.ProfileBox>
       </Set.AdminHeader>
 
@@ -91,6 +116,7 @@ const AdminSettingPage: React.FC = () => {
         <img src={RE2} alt="" className="AdminRE2-image"/>
         <button>Store Registration</button>
        </div>
+
        <div className="box box2">
        <Canvas style={{ height: '400px' }}>
     <Suspense fallback={null}>
@@ -101,11 +127,25 @@ const AdminSettingPage: React.FC = () => {
       <h1>chat bot</h1>
   </Set.BoxChatButton>
       </div>
-   {/* 
-       <div className="box box3"> Box3 </div>
-       <div className="box box4"> Box4 </div>
-       <div className="box box5"> Box5 </div>
-   */}
+   
+       <div className="box box3">
+       <h1>best restaurant 5</h1>
+
+       <div className="bestmap">
+      {best3List.map((item, index) => (
+        <div key={index} className="best3">
+          <img src={item.src} alt="" />
+          <p>{item.name}</p>
+          <p>좋아요: {item.likes}</p>
+        </div>
+      ))}
+      </div>
+
+       </div>
+       <div className="box box4">
+
+       </div>
+  
       </Set.DashBoardSection>
 
       </Set.AdminMain>
