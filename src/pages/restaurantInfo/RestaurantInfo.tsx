@@ -11,6 +11,12 @@ import {
   ReviewContainer,
   ReviewsHeader,
   ReviewList,
+  LeftContainer,
+  RightContainer,
+  InfoBottomBox,
+  MenuHourBox,
+  InfoHeader,
+  Divider,
 } from './Resaurantstyle.ts';
 import { useEffect, useState } from 'react';
 import Map from './Map';
@@ -19,12 +25,15 @@ import WriteReviewModal from '../../components/Review/WriteReviewModal';
 import { Button, InfoButton, RegistButton } from './Button';
 import { getRestaurantDetail } from '../../apis/getRestaurantApi/getRestaurant';
 import { useParams } from 'react-router';
-import heart from '/src/assets/images/heart.png';
-import heartFill from '/src/assets/images/heartfill.png';
+import heart from '@images/heart.png';
+import heartFill from '@images/heartfill.png';
 import { getLike } from './../../apis/restaurantLikeApi';
+import { FaShareNodes } from 'react-icons/fa6';
 
 import EditinfoRequestModal from '../../components/Restaurant/EditInfoRequestModal';
 import { getRestaurantDetailQuery } from '../../hooks/reviewQuery.ts';
+import SharePopOver from './SharePopOver.tsx';
+import { StackDivider } from '@chakra-ui/react';
 const RestaurantInfo: React.FC = () => {
   const { restaurantId } = useParams<{ restaurantId: string }>();
   const { data, isLoading } = getRestaurantDetailQuery(restaurantId ?? '');
@@ -102,95 +111,132 @@ const RestaurantInfo: React.FC = () => {
       {!isLoading && (
         <RestaurantInfoLayout className="restaurant-info">
           <RestaurantWrapper>
-            <ImageSection>
-              <div className="images__column">
-                <img
-                  src={data.restaurantImageDtoList[0]?.restaurantOriginUrl}
-                  alt=""
-                  className="images__main"
-                />
-              </div>
-              <div className="images__column">
-                <img
-                  src={data.restaurantImageDtoList[1]?.restaurantOriginUrl}
-                  alt=""
-                />
-                <img
-                  src={data.restaurantImageDtoList[2]?.restaurantOriginUrl}
-                  alt=""
-                />
-              </div>
-              <div className="images__column">
-                <img
-                  src={data.restaurantImageDtoList[3]?.restaurantOriginUrl}
-                  alt=""
-                />
-                <img
-                  src={data.restaurantImageDtoList[4]?.restaurantOriginUrl}
-                  alt=""
-                />
-              </div>
-            </ImageSection>
-
-            <InfoSection>
-              <div className="info__title">{data.restaurantName}</div>
-              <div className="info__tags">{}</div>
-
-              <ButtonBox>
-                <InfoButton onClick={handleLikeBtn}>
-                  {!data.restaurantLikeCountDto.likedRestaurant && (
-                    <LikeImg src={heart} alt="" />
-                  )}
-                  {data.restaurantLikeCountDto.likedRestaurant && (
-                    <LikeImg src={heartFill} alt="" />
-                  )}
-                  좋아요({data.restaurantLikeCountDto.restaurantLikeCount})
-                </InfoButton>
-                <InfoButton>공유</InfoButton>
-                <InfoButton onClick={openEditInfoModal}>
-                  정보 수정 요청
-                </InfoButton>
-              </ButtonBox>
-
-              <InfoAddressBox>
-                <div className="info__local-address">
-                  주소: {data.restaurantAddress}
+            <LeftContainer>
+              <ImageSection>
+                <div className="images__column">
+                  <img
+                    src={data.restaurantImageDtoList[0]?.restaurantOriginUrl}
+                    alt=""
+                    className="images__main"
+                  />
                 </div>
-                <div className="info__online-address">
-                  웹사이트:{' '}
-                  <a href={data.restaurantWebSite}>{data.restaurantWebSite}</a>
+                <div className="images__column">
+                  <img
+                    src={data.restaurantImageDtoList[1]?.restaurantOriginUrl}
+                    alt=""
+                  />
+                  <img
+                    src={data.restaurantImageDtoList[2]?.restaurantOriginUrl}
+                    alt=""
+                  />
                 </div>
-                <div className="info__online-address">
-                  전화번호: {data.restaurantTelNum}
+                <div className="images__column">
+                  <img
+                    src={data.restaurantImageDtoList[3]?.restaurantOriginUrl}
+                    alt=""
+                  />
+                  <img
+                    src={data.restaurantImageDtoList[4]?.restaurantOriginUrl}
+                    alt=""
+                  />
                 </div>
-              </InfoAddressBox>
+              </ImageSection>
+              <InfoSection>
+                <InfoHeader>
+                  <div className="info__title">{data.restaurantName}</div>
+                  <div className="info__tags">{}</div>
+                  <ButtonBox>
+                    <InfoButton onClick={handleLikeBtn}>
+                      {!data.restaurantLikeCountDto.likedRestaurant && (
+                        <LikeImg src={heart} alt="" />
+                      )}
+                      {data.restaurantLikeCountDto.likedRestaurant && (
+                        <LikeImg src={heartFill} alt="" />
+                      )}
+                      ({data.restaurantLikeCountDto.restaurantLikeCount})
+                    </InfoButton>
+                    <SharePopOver>
+                      <InfoButton>
+                        <FaShareNodes size={16} />
+                      </InfoButton>
+                    </SharePopOver>
+                    <InfoButton onClick={openEditInfoModal}>
+                      정보 수정 요청
+                    </InfoButton>
+                  </ButtonBox>
+                </InfoHeader>
+                <Divider />
+                <InfoAddressBox>
+                  <div className="info__local-address">
+                    주소: {data.restaurantAddress}
+                  </div>
+                  <div className="info__online-address">
+                    웹사이트:{' '}
+                    <a href={data.restaurantWebSite}>
+                      {data.restaurantWebSite}
+                    </a>
+                  </div>
+                  <div className="info__online-address">
+                    전화번호: {data.restaurantTelNum}
+                  </div>
+                </InfoAddressBox>
+                <Divider />
 
-              <InfoHoursBox>
-                <h1>영업시간</h1>
-                <p>평일: {data.restaurantOpenTime}</p>
-                <p>주말: {data.restaurantOpenTime}</p>
-              </InfoHoursBox>
-
-              <InfoMenuBox>
-                <h1>메뉴 정보</h1>
-                <div className="menu_map">
-                  {data.restaurantMenuDtoList.map((menu: any, index: any) => {
-                    return (
-                      <div key={index}>
-                        <span className="menu_name">
-                          {menu.restaurantMenuName} -----{' '}
-                        </span>
-                        <span className="menu_price">
-                          {menu.restaurantMenuPrice}원
-                        </span>
+                <InfoBottomBox>
+                  <MenuHourBox>
+                    <InfoHoursBox>
+                      <h1>영업시간</h1>
+                      <p>평일: {data.restaurantOpenTime}</p>
+                      <p>주말: {data.restaurantOpenTime}</p>
+                    </InfoHoursBox>
+                    <Divider />
+                    <InfoMenuBox>
+                      <h1>메뉴 정보</h1>
+                      <div className="menu_map">
+                        {data.restaurantMenuDtoList.map(
+                          (menu: any, index: any) => {
+                            return (
+                              <div key={index}>
+                                <span className="menu_name">
+                                  {menu.restaurantMenuName} -----{' '}
+                                </span>
+                                <span className="menu_price">
+                                  {menu.restaurantMenuPrice}원
+                                </span>
+                              </div>
+                            );
+                          }
+                        )}
                       </div>
+                    </InfoMenuBox>
+                  </MenuHourBox>
+                  <Map address={data.restaurantAddress} />
+                </InfoBottomBox>
+              </InfoSection>
+            </LeftContainer>
+            <RightContainer>
+              <ReviewContainer>
+                <ReviewsHeader>
+                  <h1>방문자 리뷰</h1>
+                  <div>
+                    <RegistButton onClick={openWriteReviewModal}>
+                      리뷰작성
+                    </RegistButton>
+                  </div>
+                </ReviewsHeader>
+
+                <ReviewList>
+                  {reviewsInfo?.content?.map((review: any) => {
+                    return (
+                      <Review
+                        key={`${review.reviewId}${review.reviewAt}`}
+                        review={review}
+                      />
                     );
                   })}
-                </div>
-              </InfoMenuBox>
-
-              <Map address={data.restaurantAddress} />
-            </InfoSection>
+                </ReviewList>
+              </ReviewContainer>
+            </RightContainer>
 
             {/* <ReviewContainer>
               <ReviewsHeader>
@@ -208,28 +254,6 @@ const RestaurantInfo: React.FC = () => {
                 })} */}
 
             {/* <Map address={data.restaurantAddress} /> */}
-
-            <ReviewContainer>
-              <ReviewsHeader>
-                <h1>방문자 리뷰</h1>
-                <div>
-                  <RegistButton onClick={openWriteReviewModal}>
-                    리뷰작성
-                  </RegistButton>
-                </div>
-              </ReviewsHeader>
-
-              <ReviewList>
-                {reviewsInfo?.content?.map((review: any) => {
-                  return (
-                    <Review
-                      key={`${review.reviewId}${review.reviewAt}`}
-                      review={review}
-                    />
-                  );
-                })}
-              </ReviewList>
-            </ReviewContainer>
           </RestaurantWrapper>
         </RestaurantInfoLayout>
       )}
