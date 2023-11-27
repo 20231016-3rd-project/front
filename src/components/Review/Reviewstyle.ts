@@ -2,7 +2,40 @@ import styled from 'styled-components';
 
 export const LikeButtonBox = styled.div`
   display: flex;
+  align-items: center;
+  gap: 0.125rem;
   margin-right: 10px;
+  cursor: pointer;
+  &:hover {
+    color: #f91880;
+    .icon-box {
+      background-color: rgba(249, 24, 136, 0.3);
+    }
+  }
+  .icon-box {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.5s ease;
+  }
+
+  .count-box {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+    transition: all 0.5s ease;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 `;
 
 export const LikeButton = styled.button`
@@ -12,6 +45,14 @@ export const LikeButton = styled.button`
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0);
   border: none;
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  &:hover {
+    background-color: #ff3252;
+    color: #ff3252;
+  }
+
   &:focus {
     border: None;
   }
@@ -109,4 +150,10 @@ export const ReviewButton = styled.button`
   border: none;
   border-radius: 10px;
   margin-right: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: grey;
+    color: white;
+  }
 `;

@@ -12,7 +12,7 @@ import {
   ReviewButton,
 } from './Reviewstyle';
 import { deleteReviewMutation } from '../../hooks/reviewQuery';
-
+import { FaHeart } from 'react-icons/fa';
 type ReviewType = {
   reviewId: number;
   memberId: number;
@@ -115,12 +115,18 @@ const Review: React.FC<ReviewProps> = ({ review, setReviewsInfo }) => {
           </div>
 
           <div className="review__buttons">
-            <LikeButtonBox>
-              <LikeButton
+            <LikeButtonBox onClick={clickLikeHandler}>
+              <div className="icon-box">
+                <FaHeart
+                  className="like-icon"
+                  color={empathyReview ? '#f91880' : '#e0e0e0'}
+                />
+              </div>
+
+              {/* <LikeButton
                 className={`like-button ${empathyReview ? 'liked' : ''}`}
-                onClick={clickLikeHandler}
-              />
-              {empathyCount}
+              /> */}
+              <div className="count-box">{empathyCount}</div>
             </LikeButtonBox>
 
             {/* "reviewEmpathyCount": 0,

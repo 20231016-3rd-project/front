@@ -32,6 +32,8 @@ type UserProfile = {
   phone: string;
 };
 const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
+  const [index, setIndex] = useState(0);
+
   const [rating, setRating] = useState<number | null>(null);
   const [content, setContent] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -48,86 +50,95 @@ const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
   console.log(profile);
   const formData = new FormData();
 
-  return (
-    <Modal closeModal={closeModal}>
-      <WriteReviewStyle>
-        <div className="modal__header">
-          <div className="review__profile">
-            <div className="profile__image">
-              <img src={profile?.memberProfilePicture} alt="" />
-            </div>
-            <div className="profile__info">
-              <div className="profile__name">{profile?.nickName}</div>
+  return;
+  {
+    index === 0 && (
+      <Modal closeModal={closeModal}>
+        <div></div>
+      </Modal>
+    );
+  }
+  //   // <Modal closeModal={closeModal}>
+  //   {
+  //     /* <WriteReviewStyle>
+  //       <div className="modal__header">
+  //         <div className="review__profile">
+  //           <div className="profile__image">
+  //             <img src={profile?.memberProfilePicture} alt="" />
+  //           </div>
+  //           <div className="profile__info">
+  //             <div className="profile__name">{profile?.nickName}</div>
 
-              <div className="review__stars">
-                <StarRating rating={rating ?? 0} setRating={setRating} />
-              </div>
-            </div>
-          </div>
-          <div className="modal__close-button" onClick={closeModal}>
-            X
-          </div>
-        </div>
-        <div className="modal__content">
-          <div className="content__text">
-            <textarea
-              className="text"
-              name=""
-              id=""
-              cols={80}
-              rows={8}
-              value={content}
-              onChange={contentChangeHandler}
-            ></textarea>
-          </div>
-        </div>
+  //             <div className="review__stars">
+  //               <StarRating rating={rating ?? 0} setRating={setRating} />
+  //             </div>
+  //           </div>
+  //         </div>
+  //         <div className="modal__close-button" onClick={closeModal}>
+  //           X
+  //         </div>
+  //       </div>
+  //       <div className="modal__content">
+  //         <div className="content__text">
+  //           <textarea
+  //             className="text"
+  //             name=""
+  //             id=""
+  //             cols={80}
+  //             rows={8}
+  //             value={content}
+  //             onChange={contentChangeHandler}
+  //           ></textarea>
+  //         </div>
+  //       </div>
 
-        <ModalFooter>
-          <div>
-            <ImageInput
-              selectedFiles={selectedFiles}
-              setSelectedFiles={setSelectedFiles}
-            />
-          </div>
-          <button
-            onClick={() => {
-              //별점 유효성 검사
-              //post
-              let isAllValid = true;
-              if (rating === null) {
-                alert('별점을 입력해주세요');
-                isAllValid = false;
-              }
-              if (content.length < 5) {
-                alert('너무 짧은 리뷰입니다.');
-                isAllValid = false;
-              }
-              if (isAllValid) {
-                selectedFiles.forEach((file) => {
-                  if (file) {
-                    formData.append('imageFile', file);
-                  }
-                });
-                const reviewSaveDto = {
-                  reviewContent: content,
-                  reviewStarRating: rating,
-                };
-                const json = JSON.stringify(reviewSaveDto);
-                const dataBlob = new Blob([json], {
-                  type: 'application/json',
-                });
-                formData.append('reviewSaveDto', dataBlob);
-                mutate({ restaurantId: restaurantId, formData });
-                closeModal();
-              }
-            }}
-          >
-            등록하기
-          </button>
-        </ModalFooter>
-      </WriteReviewStyle>
-    </Modal>
-  );
+  //       <ModalFooter>
+  //         <div>
+  //           <ImageInput
+  //             selectedFiles={selectedFiles}
+  //             setSelectedFiles={setSelectedFiles}
+  //           />
+  //         </div>
+  //         <button
+  //           onClick={() => {
+  //             //별점 유효성 검사
+  //             //post
+  //             let isAllValid = true;
+  //             if (rating === null) {
+  //               alert('별점을 입력해주세요');
+  //               isAllValid = false;
+  //             }
+  //             if (content.length < 5) {
+  //               alert('너무 짧은 리뷰입니다.');
+  //               isAllValid = false;
+  //             }
+  //             if (isAllValid) {
+  //               selectedFiles.forEach((file) => {
+  //                 if (file) {
+  //                   formData.append('imageFile', file);
+  //                 }
+  //               });
+  //               const reviewSaveDto = {
+  //                 reviewContent: content,
+  //                 reviewStarRating: rating,
+  //               };
+  //               const json = JSON.stringify(reviewSaveDto);
+  //               const dataBlob = new Blob([json], {
+  //                 type: 'application/json',
+  //               });
+  //               formData.append('reviewSaveDto', dataBlob);
+  //               mutate({ restaurantId: restaurantId, formData });
+  //               closeModal();
+  //             }
+  //           }}
+  //         >
+  //           등록하기
+  //         </button>
+  //       </ModalFooter>
+  //     </WriteReviewStyle> */
+  //   }
+  //   // </Modal>
+  // );
 };
 
 export default WriteReviewModal;

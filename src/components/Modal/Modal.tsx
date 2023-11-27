@@ -47,4 +47,6 @@ const OverlayContentStyle = styled.div`
   padding: 20px;
   z-index: 11;
   border-radius: 0.5rem;
+  transition: all 0.3s ease-in-out;
+  opacity: 1;
 `;
