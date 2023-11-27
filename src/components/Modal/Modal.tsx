@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ReactDOM from 'react-dom';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface ModalProps {
   closeModal?: () => void;
@@ -9,6 +9,21 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ closeModal, children }) => {
   console.log(children);
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && closeModal) {
+        closeModal();
+      }
+    };
+
+    // Attach the event listener
+    window.addEventListener('keydown', handleKeyDown);
+
+    // Detach the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [closeModal]);
   return (
     <ModalStyle>
       {ReactDOM.createPortal(

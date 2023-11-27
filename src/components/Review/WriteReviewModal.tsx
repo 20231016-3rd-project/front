@@ -7,6 +7,7 @@ import { postReview } from '../../apis/reviewApi';
 import { useParams } from 'react-router';
 import { getMyProfile } from '../../apis/profileApi';
 import { postReviewMutation } from '../../hooks/reviewQuery';
+import UploadPhoto from './UploadPhoto';
 
 type ReviewType = {
   reviewId: number;
@@ -50,14 +51,16 @@ const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
   console.log(profile);
   const formData = new FormData();
 
-  return;
-  {
-    index === 0 && (
-      <Modal closeModal={closeModal}>
-        <div></div>
-      </Modal>
-    );
-  }
+  return (
+    <div>
+      {index === 0 && (
+        <Modal closeModal={closeModal}>
+          <UploadPhoto></UploadPhoto>
+        </Modal>
+      )}
+    </div>
+  );
+
   //   // <Modal closeModal={closeModal}>
   //   {
   //     /* <WriteReviewStyle>
