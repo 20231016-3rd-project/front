@@ -15,7 +15,7 @@ const Star: React.FC<StarProps> = ({ score }) => {
   const starArray = [...scoreArray, ...emptyScoreArray];
 
   //star setting
-  const starSize = 20;
+  const starSize = 12;
   const starColor = { filled: '#ffc107', empty: '#e4e5e9' };
   return (
     <StarStyle>
@@ -35,4 +35,5 @@ const Star: React.FC<StarProps> = ({ score }) => {
 
 export default Star;
 const StarStyle = styled.div`
+  display: flex;
 `;

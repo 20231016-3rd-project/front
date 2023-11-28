@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getRestaurantDetail } from '../apis/getRestaurantApi/getRestaurant';
-import { deleteReview, postReview } from '../apis/reviewApi';
+import { deleteReview, postReview, putReview } from '../apis/reviewApi';
 
 export const getRestaurantDetailQuery = (id: string) => {
   const { data, isLoading } = useQuery({
@@ -16,9 +16,12 @@ export const getRestaurantDetailQuery = (id: string) => {
 export const postReviewMutation = () => {
   const queryClient = useQueryClient();
   const { mutate, isError, isLoading } = useMutation({
-    mutationFn: async ({ restaurantId, formData }) => {
+    mutationFn: async (data: {
+      restaurantId: string | undefined;
+      formData: FormData;
+    }) => {
       try {
-        await postReview(restaurantId, formData);
+        await postReview(data.restaurantId, data.formData);
         queryClient.invalidateQueries({ queryKey: ['review'] });
       } catch (error) {
         console.log(error);
@@ -31,10 +34,26 @@ export const postReviewMutation = () => {
 
 export const deleteReviewMutation = () => {
   const queryClient = useQueryClient();
-  const { mutate, isError, isLoading } = useMutation({
-    mutationFn: async (reviewId) => {
+  const { mutateAsync, mutate, isError, isLoading } = useMutation({
+    mutationFn: async (reviewId: number) => {
       try {
         await deleteReview(reviewId);
+        queryClient.invalidateQueries({ queryKey: ['review'] });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    mutationKey: ['review'],
+  });
+  return { mutateAsync, mutate, isError, isLoading };
+};
+
+export const putReviewMutation = () => {
+  const queryClient = useQueryClient();
+  const { mutate, isError, isLoading } = useMutation({
+    mutationFn: async (data: { reviewId: number; formData: FormData }) => {
+      try {
+        await putReview(data.reviewId, data.formData);
         queryClient.invalidateQueries({ queryKey: ['review'] });
       } catch (error) {
         console.log(error);
