@@ -67,9 +67,7 @@ const EditinfoRequestModal: React.FC<EditinfoModalProps> = ({
 
         <div className="modal__content">
           <h1>※ 정보 수정 카테고리를 골라주세요.</h1>
-          <br />
           {radios}
-          <br />
           <p>상세 변경 내역을 알려주세요</p>
           <textarea
             name=""
@@ -92,25 +90,33 @@ const EditinfoRequestModal: React.FC<EditinfoModalProps> = ({
 export default EditinfoRequestModal;
 
 const ReportReviewStyle = styled.div`
+  width: 440px;
+  max-height: 600px;
   background-color: white;
-  width: 350px;
-  height: 500px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: auto;
+  padding: 1rem;
+  overflow-y: scroll;
   .modal__header {
-    border-bottom: 1px solid black;
-    font-size: 2rem;
+    border-bottom: 1px solid grey;
+
+    font-size: 1.25rem;
     text-align: center;
-    margin: 1rem;
+    margin: 0.5rem;
   }
   .modal__content {
+    textarea {
+      resize: none;
+      border: solid 1px grey;
+    }
     display: flex;
     flex-direction: column;
     margin-bottom: 1px solid black;
+    gap: 0.25rem;
+  }
+  .modal__footer {
+    display: flex;
+    justify-content: center;
   }
 `;
 

@@ -8,6 +8,8 @@ import { useParams } from 'react-router';
 import { getMyProfile } from '../../apis/profileApi';
 import { postReviewMutation } from '../../hooks/reviewQuery';
 import UploadPhoto from './UploadPhoto';
+import ViewAndUploadPhoto from './ViewAndUploadPhoto';
+import { useToast } from '@chakra-ui/react';
 
 type ReviewType = {
   reviewId: number;
@@ -33,31 +35,84 @@ type UserProfile = {
   phone: string;
 };
 const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
+  console.log('ccc writereviewModal');
+  const toast = useToast();
   const [index, setIndex] = useState(0);
 
   const [rating, setRating] = useState<number | null>(null);
   const [content, setContent] = useState('');
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const { mutate, isError, isLoading } = postReviewMutation();
   const { restaurantId } = useParams();
+  const formData = new FormData();
+  const handleSubmit = () => {
+    selectedFiles.forEach((file) => {
+      console.log('ccc', file);
+      if (file) {
+        formData.append('imageFile', file);
+      }
+    });
+    const reviewSaveDto = {
+      reviewContent: content,
+      reviewStarRating: rating,
+    };
+    const json = JSON.stringify(reviewSaveDto);
+    const dataBlob = new Blob([json], {
+      type: 'application/json',
+    });
+    formData.append('reviewSaveDto', dataBlob);
+    try {
+      mutate({ restaurantId: restaurantId, formData });
+      toast({
+        title: '리뷰 전송에 실패했습니다.',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+        position: 'top',
+      });
+      closeModal();
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: '리뷰 전송에 실패했습니다.',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+        position: 'top',
+      });
+    }
+  };
 
   const contentChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
-  useEffect(() => {
-    getMyProfile().then((r) => setProfile(r));
-  }, []);
-  console.log(profile);
-  const formData = new FormData();
 
+  console.log('ccc', setRating);
   return (
     <div>
-      {index === 0 && (
-        <Modal closeModal={closeModal}>
-          <UploadPhoto></UploadPhoto>
-        </Modal>
-      )}
+      <Modal closeModal={closeModal}>
+        {index === 0 && (
+          <UploadPhoto
+            selectedFiles={selectedFiles}
+            setSelectedFiles={setSelectedFiles}
+            setIndex={setIndex}
+          />
+        )}
+        {index >= 1 && (
+          <ViewAndUploadPhoto
+            selectedFiles={selectedFiles}
+            setSelectedFiles={setSelectedFiles}
+            setIndex={setIndex}
+            index={index}
+            content={content}
+            setContent={setContent}
+            rating={rating}
+            setRating={setRating}
+            handleSubmit={handleSubmit}
+          />
+        )}
+      </Modal>
     </div>
   );
 

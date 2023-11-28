@@ -129,7 +129,7 @@ export const RestaurantWrapper = styled.div`
   padding: 3%;
   display: flex;
   justify-content: center;
-  background-color: #d9d9d9;
+  background-color: #f1f1f1;
   gap: 2rem;
 `;
 

@@ -24,6 +24,7 @@ const ShareButton = () => {
   };
   return (
     <Button
+      borderRadius={'full'}
       onClick={() => {
         setClicked(true);
         console.log(window.location.href);

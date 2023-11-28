@@ -4,10 +4,10 @@ import styled from 'styled-components';
 
 const star = {
   size: 30,
-  color: { filled: '#ffc107', empty: '#e4e5e9' },
+  color: { filled: '#f9b916', empty: '#e4e5e9' },
 };
 interface StarRatingProps {
-  rating: number;
+  rating: number | null;
   setRating: React.Dispatch<React.SetStateAction<number | null>>;
 }
 const StarRating: React.FC<StarRatingProps> = ({ rating, setRating }) => {
@@ -24,7 +24,10 @@ const StarRating: React.FC<StarRatingProps> = ({ rating, setRating }) => {
               type="radio"
               name="rating"
               value={currentRating}
-              onClick={() => setRating(currentRating)}
+              onClick={() => {
+                setRating(currentRating);
+                console.log('starstar');
+              }}
             />
             <FaStar
               className="rating__star"
@@ -47,12 +50,14 @@ const StarRating: React.FC<StarRatingProps> = ({ rating, setRating }) => {
 export default StarRating;
 
 const StarRatingStyle = styled.div`
+  display: flex;
   .rating__radio {
     display: none;
   }
   .rating__star {
     cursor: pointer;
   }
+  z-index: 10;
 `;
 
 /*
