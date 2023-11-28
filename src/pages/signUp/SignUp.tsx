@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { checkEmailDuplication, checkNicknameDuplication } from '../../services/AuthService';
-import { Container, Input, Button, ErrorMsg, FieldContainer, Label, InputButtonContainer, InputField, PhoneFieldContainer, PhoneInputContainer, PhoneInput, SignUpButton, CheckButton } from './SignUp.styles';
+import { checkEmailDuplication, checkNicknameDuplication } from '../../apis/userApi/userApi';
+import { Container, Input, Button, ErrorMsg, FieldContainer, Label, InputButtonContainer,  InputField,  PhoneFieldContainer,  PhoneInputContainer, PhoneInput, SignUpButton,  CheckButton } from './SignUp.styles';
+import { useNavigate } from 'react-router-dom';
+import { submitSignup } from './signupSlice';
 
 interface PhoneState {
   part1: string;
@@ -22,7 +24,9 @@ const SignUp = () => {
     phone: '',
   });
 
-  // ... 유효성 검사 함수들 ...
+  const navigate = useNavigate();
+
+  //유효성 검사 함수
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -32,8 +36,18 @@ const SignUp = () => {
     }
   };
 
+  const validateNickname = (nickname: string) => {
+    if (nickname.trim() === '') {
+      setErrors(prev => ({ ...prev, nickname: '닉네임을 입력해주세요.' }));
+    } else {
+      setErrors(prev => ({ ...prev, nickname: '' }));
+    }
+  };
+
   const validatePassword = (password: string) => {
-    if (password.length < 8) {
+    if (!password) {
+      setErrors(prev => ({ ...prev, password: '비밀번호를 입력해주세요.' }));
+    } else if (password.length < 8) {
       setErrors(prev => ({ ...prev, password: '비밀번호는 8자 이상이어야 합니다.' }));
     } else {
       setErrors(prev => ({ ...prev, password: '' }));
@@ -41,18 +55,12 @@ const SignUp = () => {
   };
 
   const validateConfirmPassword = (password: string, confirmPassword: string) => {
-    if (password !== confirmPassword) {
+    if (!confirmPassword) {
+      setErrors(prev => ({ ...prev, confirmPassword: '비밀번호 확인을 입력해주세요.' }));
+    } else if (password !== confirmPassword) {
       setErrors(prev => ({ ...prev, confirmPassword: '비밀번호가 일치하지 않습니다.' }));
     } else {
       setErrors(prev => ({ ...prev, confirmPassword: '' }));
-    }
-  };
-
-  const validateNickname = (nickname: string) => {
-    if (nickname.trim() === '') {
-      setErrors(prev => ({ ...prev, nickname: '닉네임을 입력해주세요.' }));
-    } else {
-      setErrors(prev => ({ ...prev, nickname: '' }));
     }
   };
 
@@ -94,17 +102,18 @@ const SignUp = () => {
   const [emailDuplicateCheck, setEmailDuplicateCheck] = useState(false);
 
   // 이메일 중복 확인 핸들러
-  const handleCheckEmail = async () => {
+  const handleCheckEmail = async (e) => {
+    e.preventDefault(); // 이벤트 버블링 방지
     setEmailDuplicateCheck(true);
     try {
       const isDuplicate = await checkEmailDuplication(email);
-      setErrors(prev => ({ ...prev, email: isDuplicate ? '이미 사용중인 이메일입니다.' : '' }));
+      console.log(isDuplicate);
+      setErrors(prev => ({ ...prev, email: isDuplicate ? '' : '이미 사용중인 이메일입니다.' }));
     } catch (error) {
       console.error('이메일 중복 확인 중 오류가 발생했습니다.', error);
       setErrors(prev => ({ ...prev, email: '이메일 중복 확인 중 오류가 발생했습니다.' }));
     }
   };
-
   // 닉네임 중복 확인 상태
   const [nicknameCheck, setNicknameCheck] = useState({
     checked: false,
@@ -117,8 +126,7 @@ const SignUp = () => {
     validateNickname(e.target.value);
     setNicknameCheck({ ...nicknameCheck, checked: false }); // 중복 확인 상태를 초기화
   };
-
-  // 닉네임 중복 확인 핸들러
+//닉네임 중복확인핸들러
   const handleCheckNickname = async () => {
     if (!nickname.trim()) {
       setErrors(prev => ({ ...prev, nickname: '닉네임을 입력해주세요.' }));
@@ -127,12 +135,13 @@ const SignUp = () => {
     try {
       const isDuplicate = await checkNicknameDuplication(nickname);
       setNicknameCheck({ checked: true, valid: !isDuplicate });
-      setErrors(prev => ({ ...prev, nickname: isDuplicate ? '이미 사용중인 닉네임입니다.' : '' }));
+      setErrors(prev => ({ ...prev, nickname: isDuplicate ? '' : '이미 사용중인 닉네임입니다.' }));
     } catch (error) {
       console.error('닉네임 중복 확인 중 오류가 발생했습니다.', error);
       setErrors(prev => ({ ...prev, nickname: '닉네임 중복 확인 중 오류가 발생했습니다.' }));
     }
   };
+  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -142,23 +151,20 @@ const SignUp = () => {
     validateNickname(nickname);
     validatePhone(phone);
  
- const isEmailDuplicate = await checkEmailDuplication(email);
-    if (isEmailDuplicate) {
-      setErrors(prev => ({ ...prev, email: '이미 사용중인 이메일입니다.' }));
-      return;
-    }
-
-  const isNicknameDuplicate = await checkNicknameDuplication(nickname);
-    if (isNicknameDuplicate) {
-      setErrors(prev => ({ ...prev, nickname: '이미 사용중인 닉네임입니다.' }));
-      return;
-    }
-
   if (Object.values(errors).every(error => error === '')) {
+      try {
+      // 전화번호 문자열 생성
+      const phoneNumber = `${phone.part1}-${phone.part2}-${phone.part3}`;
+      // 회원가입 API 호출
+      await submitSignup({ email, password, nickname, phone: phoneNumber });
+      // 회원가입 성공 후 메인 페이지로 리디렉션
+      navigate('/');
+      } catch (error) {
+      // 오류 처리
+      }
+    }
+  };
 
-   console.log('Submitting', { email, password, nickname, phone });
-}
-};
 return (
   <Container>
     <form onSubmit={handleSubmit}>
@@ -175,7 +181,7 @@ return (
               placeholder="이메일을 입력하세요"
             />
           </InputField>
-          <CheckButton onClick={handleCheckEmail}>중복 확인</CheckButton>
+          <CheckButton type="button" onClick={handleCheckEmail}>중복 확인</CheckButton>
 
         </InputButtonContainer>
         {emailDuplicateCheck && errors.email && <ErrorMsg>{errors.email}</ErrorMsg>}
@@ -192,9 +198,10 @@ return (
               value={nickname}
               onChange={handleNicknameInputChange}
               placeholder="닉네임을 입력하세요"
+              autoComplete="username"
             />
           </InputField>
-          <CheckButton onClick={handleCheckEmail}>중복 확인</CheckButton>
+          <CheckButton type="button" onClick={handleCheckNickname}>중복 확인</CheckButton>
 
         </InputButtonContainer>
         {nicknameCheck.checked && errors.nickname && <ErrorMsg>{errors.nickname}</ErrorMsg>}
@@ -206,6 +213,8 @@ return (
       value={password}
       onChange={handlePasswordChange}
       placeholder="8자리 이상 15자리 이하로 작성해주세요"
+      autoComplete="new-password"
+      
     />
     {errors.password && <p className="error">{errors.password}</p>}
     </FieldContainer>
@@ -214,43 +223,44 @@ return (
       value={confirmPassword}
       onChange={handleConfirmPasswordChange}
       placeholder="비밀번호를 다시 입력해주세요"
+      autoComplete="new-password"
     />
     {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
-  {/* 핸드폰 번호 필드 */}
-  <FieldContainer>
-    < PhoneFieldContainer>
-        <Label htmlFor="phone">핸드폰 번호</Label>
-        <PhoneInputContainer>
-          <PhoneInput
-            id="phone1"
-            type="text"
-            maxLength={3}
-            placeholder="010"
-            value={phone.part1}
-            onChange={handlePhoneChange('part1')}
-          />
-          <PhoneInput
-            id="phone2"
-            type="text"
-            maxLength={4}
-            placeholder="1234"
-            value={phone.part2}
-            onChange={handlePhoneChange('part2')}
-          />
-          <PhoneInput
-            id="phone3"
-            type="text"
-            maxLength={4}
-            placeholder="5678"
-            value={phone.part3}
-            onChange={handlePhoneChange('part3')}
-          />
-        </PhoneInputContainer>
-     </PhoneFieldContainer>
-    </FieldContainer>
-      <SignUpButton type="submit">가입하기</SignUpButton>
-  </form>
-  </Container>
+    {/* 핸드폰 번호 필드 */}
+    <FieldContainer>
+  <PhoneFieldContainer>
+    <Label htmlFor="phone">핸드폰 번호</Label>
+    <PhoneInputContainer>
+      <PhoneInput
+        id="phone1"
+        type="text"
+        maxLength={3}
+        placeholder="010"
+        value={phone.part1}
+        onChange={handlePhoneChange('part1')}
+      />
+      <PhoneInput
+        id="phone2"
+        type="text"
+        maxLength={4}
+        placeholder="1234"
+        value={phone.part2}
+        onChange={handlePhoneChange('part2')}
+      />
+      <PhoneInput
+        id="phone3"
+        type="text"
+        maxLength={4}
+        placeholder="5678"
+        value={phone.part3}
+        onChange={handlePhoneChange('part3')}
+      />
+    </PhoneInputContainer>
+  </PhoneFieldContainer>
+</FieldContainer>
+<SignUpButton type="submit">가입하기</SignUpButton>
+</form>
+</Container>
 );
 };
 export default SignUp;

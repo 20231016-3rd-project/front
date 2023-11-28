@@ -109,7 +109,7 @@ const RestaurantInfo: React.FC = () => {
         <WriteReviewModal closeModal={closeWriteReviewModal} />
       )}
       {!isLoading && (
-        <RestaurantInfoLayout className="restaurant-info">
+        <RestaurantInfoLayout>
           <RestaurantWrapper>
             <LeftContainer>
               {data.restaurantImageDtoList.length === 5 ? (

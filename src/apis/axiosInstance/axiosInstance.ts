@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const createInstance = (contentType:string) => {
   const config = {
-    baseURL: import.meta.env.VITE_APP_SERVER_API,
+    baseURL: 'http://3.38.32.91',
     timeout: 3000,
     headers: {
       'Content-Type': contentType,
@@ -21,31 +21,7 @@ const createInstance = (contentType:string) => {
       return Promise.reject(error);
     }
   );
-
-  // instance.interceptors.response.use(
-  //   (response) => {
-  //     const { accessToken, refreshToken, accessTokenExpireDate } =
-  //       response.data;
-
-  //     if (accessToken && accessTokenExpireDate) {
-  //       const date = new Date(accessTokenExpireDate);
-  //       const expires = date.toUTCString();
-  //       setCookie('accessToken', accessToken, expires);
-  //     }
-
-  //     const expires = new Date();
-  //     expires.setDate(expires.getDate() + 7);
-  //     const expiresStr = expires.toUTCString();
-
-  //     if (refreshToken && expiresStr) {
-  //       setCookie('refreshToken', refreshToken, expiresStr);
-  //     }
-  //     return response;
-  //   },
-  //   (error) => {
-  //     return Promise.reject(error);
-  //   }
-  // );
+  
   return instance;
 };
 export const axiosInstance = createInstance('application/json');

@@ -128,8 +128,6 @@ const StoreRegistPage = () => {
     mutation.mutate(formData);
   };
 
-  //-------------------------------------------------------------------------
-
   return (
     <StMain>
       <RegistContainer onSubmit={handleSubmit}>
