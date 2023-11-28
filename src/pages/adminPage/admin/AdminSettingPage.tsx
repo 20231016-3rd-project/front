@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import Model from "../../../components/Admin/Model.tsx";
+import Toggle from "../../../components/Admin/toggle.tsx";
 
 
 import logo from "../../../assets/images/sunflower.png"
@@ -17,6 +19,7 @@ import RE2 from "../../../assets/images/adminRE2.png"
 import plus from "../../../assets/images/plus.png"
 import search2 from "../../../assets/images/search.png"
 import best3 from "../../../assets/images/best3.jpeg"
+import warning from "../../../assets/images/warning.svg"
 
 const best3List = [
   {src: best3, name: '금옥당 연희점', likes: '200+'},
@@ -28,8 +31,7 @@ const best3List = [
 
 
 const AdminSettingPage: React.FC = () => { 
-
-  const currentTime = Date.now();
+   const [isDay, setIsDay] = useState(true);
 
   return (
     <Set.GridContainer>
@@ -80,9 +82,11 @@ const AdminSettingPage: React.FC = () => {
          </Set.LinkBox>
         </Set.LinkSection>
 
+        <Toggle isDay={isDay} setIsDay={setIsDay}/>
+
       </Set.AdminNav>
 
-      <Set.AdminMain>
+      <Set.AdminMain isDay={isDay}>
       <Set.AdminHeader>
         <Set.TextBox>
           <h1>Welcome,Back Admin!</h1>
@@ -143,7 +147,11 @@ const AdminSettingPage: React.FC = () => {
 
        </div>
        <div className="box box4">
-
+        <img src={warning} alt="" />
+      <Set.Box4Text>
+        <h1>폐업/수정요청</h1>
+        <p>5건</p>
+      </Set.Box4Text>
        </div>
   
       </Set.DashBoardSection>

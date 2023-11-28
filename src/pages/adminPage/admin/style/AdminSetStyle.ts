@@ -1,18 +1,25 @@
 import styled from "styled-components";
 
+interface ToggleContainerProps {
+  isDay: boolean;
+}
+
 export const GridContainer = styled.div`
   display: grid;
+  gap: 15px;
   grid-template-columns: 1fr 5fr;
   height: 100vh;
   color: white;
-  padding: 20px;
-  background-color: black;
+  padding: 40px;
+  background-color: #ffdf6d;
 `;
 
 export const AdminNav = styled.div`
+  border-radius: 20px;
   border: 1px solid black;
   padding: 30px;
   text-align: center;
+  background-color: #f9b916;
 `;
 
 export const LogoSection = styled.div`
@@ -39,7 +46,6 @@ export const LogoSection = styled.div`
 export const LinkSection= styled.div`
   width: auto;
   height: auto;
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -55,7 +61,7 @@ img{
 export const LinkBox = styled.div`
   display: flex;
   gap: 10px;
-  margin-left: 5px;
+  /* margin-left: 5px; */
 
   div {
     display: flex;
@@ -73,13 +79,13 @@ export const LinkBox = styled.div`
 `;
 
 //중요
-export const AdminMain = styled.div`
+export const AdminMain = styled.div<ToggleContainerProps>`
   align-items: center;
   border: 1px solid black;
   height: 95%;
   padding: 20px;
-  color: black;
-  background-color: white;
+  color: ${({ isDay }) => isDay ? 'black' : 'white'};
+  background-color: ${({ isDay }) => isDay ? 'white' : '#333'};
   border-radius: 20px;
   
 `;
@@ -87,7 +93,6 @@ export const AdminMain = styled.div`
 export const AdminHeader = styled.div`
   width: 100%;
   height: 10%;
-  border: 1px solid red ;
   display: grid;
   grid-template-columns: 1fr 1fr;
 `;
@@ -113,9 +118,11 @@ export const ProfileBox = styled.div`
   align-items: center;
   justify-content: flex-end;
   .icon{
+    background-color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    color: white;
     width: 45px;
     height: 45px;
-    border: 1px solid red;
     border-radius: 50px;
     display: flex;
     justify-content: center;
@@ -124,13 +131,13 @@ export const ProfileBox = styled.div`
     img{
       width: 50%;
       height: 50%;
+      color: white;
     }
   }
 
   .create{
     width: 80px;
     height: 45px;
-    border: 1px solid red;
     border-radius: 50px;
     font-size: 1rem;
     font-weight: bold;
@@ -148,10 +155,12 @@ export const ProfileBox = styled.div`
   .profile{
     width: 60px;
     height: 60px;
+    margin-right: 10px;
     img {
       width: 100%;
       height: 100%;
       border-radius: 50px;
+      border: 4px solid #f9b916;
     }
   }
   
@@ -160,8 +169,8 @@ export const ProfileBox = styled.div`
 export const DashBoardSection = styled.div`
   width: 100%;
   height: 90%;
-  border: 1px solid red;
   display: grid;
+  gap: 10px;
   grid-template-columns: 1fr 1fr 1fr; 
   grid-template-rows: 2fr 1fr; 
   grid-template-areas:
@@ -258,7 +267,6 @@ export const DashBoardSection = styled.div`
       .best3{
       width: 30%;
       height: 80%;
-      border: 1px solid red;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -273,10 +281,38 @@ export const DashBoardSection = styled.div`
     }
     }
   }
-  .box4 { grid-area: box4; }
-  .box5 { grid-area: box5; }
+  .box4 { 
+    grid-area: box4;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    img{
+      width: 100px;
+      height: 100px;
+    }
+  }
   
 `;
+
+export const Box4Text = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1{
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+  }
+
+  p{
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  `;
+
+
 export const BoxChatButton = styled.div`
   display: flex;
   justify-content: center;
@@ -292,8 +328,4 @@ export const BoxChatButton = styled.div`
   padding: 10px;
   margin-bottom: 10px;
   cursor: pointer;
-`;
-
-export const ModeButton = styled.button`
-
 `;
