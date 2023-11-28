@@ -25,8 +25,8 @@ import WriteReviewModal from '../../components/Review/WriteReviewModal';
 import { InfoButton, RegistButton } from './Button';
 import { getRestaurantDetail } from '../../apis/getRestaurantApi/getRestaurant';
 import { useParams } from 'react-router';
-import heart from '@images/heart.png';
-import heartFill from '@images/heartfill.png';
+import heart from '../../assets/images/heart.png';
+import heartFill from '../../assets/images/heartfill.png';
 import { getLike } from './../../apis/restaurantLikeApi';
 import { FaShareNodes } from 'react-icons/fa6';
 
