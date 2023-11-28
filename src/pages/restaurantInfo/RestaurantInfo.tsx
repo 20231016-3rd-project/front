@@ -22,7 +22,7 @@ import { useEffect, useState } from 'react';
 import Map from './Map';
 import Review from '../../components/Review/Review';
 import WriteReviewModal from '../../components/Review/WriteReviewModal';
-import { Button, InfoButton, RegistButton } from './Button';
+import { InfoButton, RegistButton } from './Button';
 import { getRestaurantDetail } from '../../apis/getRestaurantApi/getRestaurant';
 import { useParams } from 'react-router';
 import heart from '@images/heart.png';
@@ -32,8 +32,8 @@ import { FaShareNodes } from 'react-icons/fa6';
 
 import EditinfoRequestModal from '../../components/Restaurant/EditInfoRequestModal';
 import { getRestaurantDetailQuery } from '../../hooks/reviewQuery.ts';
-import SharePopOver from './SharePopOver.tsx';
-import { StackDivider } from '@chakra-ui/react';
+import { StackDivider, Button } from '@chakra-ui/react';
+import ShareButton from './ShareButton.tsx';
 const RestaurantInfo: React.FC = () => {
   const { restaurantId } = useParams<{ restaurantId: string }>();
   const { data, isLoading } = getRestaurantDetailQuery(restaurantId ?? '');
@@ -112,41 +112,50 @@ const RestaurantInfo: React.FC = () => {
         <RestaurantInfoLayout className="restaurant-info">
           <RestaurantWrapper>
             <LeftContainer>
-              <ImageSection>
-                <div className="images__column">
-                  <img
-                    src={data.restaurantImageDtoList[0]?.restaurantOriginUrl}
-                    alt=""
-                    className="images__main"
-                  />
-                </div>
-                <div className="images__column">
-                  <img
-                    src={data.restaurantImageDtoList[1]?.restaurantOriginUrl}
-                    alt=""
-                  />
-                  <img
-                    src={data.restaurantImageDtoList[2]?.restaurantOriginUrl}
-                    alt=""
-                  />
-                </div>
-                <div className="images__column">
-                  <img
-                    src={data.restaurantImageDtoList[3]?.restaurantOriginUrl}
-                    alt=""
-                  />
-                  <img
-                    src={data.restaurantImageDtoList[4]?.restaurantOriginUrl}
-                    alt=""
-                  />
-                </div>
-              </ImageSection>
+              {data.restaurantImageDtoList.length === 5 ? (
+                <ImageSection>
+                  <div className="images__column">
+                    <img
+                      src={data.restaurantImageDtoList[0]?.restaurantOriginUrl}
+                      alt=""
+                      className="images__main"
+                    />
+                  </div>
+                  <div className="images__column">
+                    <img
+                      src={data.restaurantImageDtoList[1]?.restaurantOriginUrl}
+                      alt=""
+                    />
+                    <img
+                      src={data.restaurantImageDtoList[2]?.restaurantOriginUrl}
+                      alt=""
+                    />
+                  </div>
+                  <div className="images__column">
+                    <img
+                      src={data.restaurantImageDtoList[3]?.restaurantOriginUrl}
+                      alt=""
+                    />
+                    <img
+                      src={data.restaurantImageDtoList[4]?.restaurantOriginUrl}
+                      alt=""
+                    />
+                  </div>
+                </ImageSection>
+              ) : (
+                <ImageSection>
+                  <div className="images__view">
+                    {data.restaurantImageDtoList.map((image: any) => (
+                      <img src={image.restaurantOriginUrl} />
+                    ))}
+                  </div>
+                </ImageSection>
+              )}
               <InfoSection>
                 <InfoHeader>
                   <div className="info__title">{data.restaurantName}</div>
-                  <div className="info__tags">{}</div>
                   <ButtonBox>
-                    <InfoButton onClick={handleLikeBtn}>
+                    <Button color={'black'} onClick={handleLikeBtn}>
                       {!data.restaurantLikeCountDto.likedRestaurant && (
                         <LikeImg src={heart} alt="" />
                       )}
@@ -154,15 +163,11 @@ const RestaurantInfo: React.FC = () => {
                         <LikeImg src={heartFill} alt="" />
                       )}
                       ({data.restaurantLikeCountDto.restaurantLikeCount})
-                    </InfoButton>
-                    <SharePopOver>
-                      <InfoButton>
-                        <FaShareNodes size={16} />
-                      </InfoButton>
-                    </SharePopOver>
-                    <InfoButton onClick={openEditInfoModal}>
-                      정보 수정 요청
-                    </InfoButton>
+                    </Button>
+
+                    <ShareButton />
+
+                    <Button onClick={openEditInfoModal}>정보 수정 요청</Button>
                   </ButtonBox>
                 </InfoHeader>
                 <Divider />
@@ -219,9 +224,13 @@ const RestaurantInfo: React.FC = () => {
                 <ReviewsHeader>
                   <h1>방문자 리뷰</h1>
                   <div>
-                    <RegistButton onClick={openWriteReviewModal}>
+                    <Button
+                      variant={'solid'}
+                      colorScheme={'yellow'}
+                      onClick={openWriteReviewModal}
+                    >
                       리뷰작성
-                    </RegistButton>
+                    </Button>
                   </div>
                 </ReviewsHeader>
 

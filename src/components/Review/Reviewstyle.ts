@@ -29,7 +29,7 @@ export const LikeButtonBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.25rem;
+    font-size: 1rem;
     transition: all 0.5s ease;
   }
 
@@ -92,14 +92,12 @@ export const ReviewLayout = styled.div`
   }
   .review__profile {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 1rem;
+    gap: 0.5rem;
   }
   .profile__image img {
     margin-top: 5px;
-    width: 60px;
-    height: 60px;
+    width: 3rem;
+    height: 3rem;
     border-radius: 50%;
   }
   .profile__info {
@@ -110,10 +108,12 @@ export const ReviewLayout = styled.div`
   }
   .profile__name {
     margin-top: 5px;
-    font-size: large;
+    font-size: 1rem;
   }
 
   .review__stars {
+    display: flex;
+    flex-direction: column;
   }
   .review__buttons {
     align-items: center;
@@ -126,7 +126,7 @@ export const ReviewLayout = styled.div`
   }
 
   .review__text {
-    font-size: 1.25rem;
+    font-size: 0.75rem;
     height: 70px;
     padding-top: 1rem;
   }

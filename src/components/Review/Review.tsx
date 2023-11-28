@@ -13,6 +13,7 @@ import {
 } from './Reviewstyle';
 import { deleteReviewMutation } from '../../hooks/reviewQuery';
 import { FaHeart } from 'react-icons/fa';
+import { Button } from '@chakra-ui/react';
 type ReviewType = {
   reviewId: number;
   memberId: number;
@@ -135,7 +136,7 @@ const Review: React.FC<ReviewProps> = ({ review, setReviewsInfo }) => {
               <ReviewButton onClick={openPutReviewModal}>수정</ReviewButton>
             )}
             {localStorage.getItem('nickName') !== null && (
-              <ReviewButton onClick={openReportReviewModal}>신고</ReviewButton>
+              <Button onClick={openReportReviewModal}>신고</Button>
             )}
             {localStorage.getItem('nickName') === review.memberNickname && (
               <ReviewButton onClick={deleteButtonhHandler}>삭제</ReviewButton>

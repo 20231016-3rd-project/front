@@ -29,10 +29,10 @@ export const InfoButton = styled.button`
   cursor: pointer;
   display: inline-flex;
   font-size: 14px;
-  height: 40px;
+  height: 2rem;
   width: auto;
   justify-content: center;
-  padding: 1px 20px;
+  padding: 1px 0.5rem;
 
   &:active {
     transform: scale(0.95); // 버튼이 눌렸을 때 약간 축소

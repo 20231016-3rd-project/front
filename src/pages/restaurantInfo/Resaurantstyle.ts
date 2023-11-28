@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 export const ReviewContainer = styled.div`
   box-sizing: border-box;
-  width: 80%;
+  width: 95%;
   display: block;
   padding: 1rem;
 `;
@@ -52,11 +52,11 @@ export const InfoHoursBox = styled.div`
   }
 `;
 export const InfoHeader = styled.div`
-  width: 95%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0 1rem;
+  padding-bottom: 0.75rem;
 `;
 export const InfoAddressBox = styled.div`
   display: flex;
@@ -69,8 +69,10 @@ export const InfoAddressBox = styled.div`
 `;
 export const ButtonBox = styled.div`
   display: flex;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  gap: 0.25rem;
+  /* margin-top: 20px;
+  margin-bottom: 10px; */
 `;
 export const InfoBottomBox = styled.div`
   display: flex;
@@ -92,8 +94,8 @@ export const InfoMenuBox = styled.div`
   display: block;
   width: 300px;
   margin-bottom: 10px;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 0.5rem;
+  padding: 0.5rem;
   overflow-y: auto;
 
   h1 {
@@ -170,7 +172,11 @@ export const RestaurantInfoLayout = styled.div`
     margin-bottom: 10px;
     aspect-ratio: 6 / 5;
   }
-
+  .images__view {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
   .images__column {
     margin: auto;
     padding: auto;
@@ -197,9 +203,6 @@ export const RestaurantInfoLayout = styled.div`
   .info__online-address {
   }
   .info__business-hours {
-    width: 1200px;
-    height: 100px;
-    border: 2px solid black;
     margin-bottom: 10px;
     font-size: 1rem;
     box-sizing: border-box;
@@ -207,7 +210,7 @@ export const RestaurantInfoLayout = styled.div`
 
   .info__reviews {
     border: 2px solid black;
-    width: 200px;
+    width: 100%;
     padding: 20px;
   }
 `;
