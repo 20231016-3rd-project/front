@@ -1,23 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { submitLogout } from '../../../pages/signIn/signinSlice';
- import logo from '../../../assets/images/logo.png';
+import logo from '../../../assets/images/logo.png';
+import { setKeyword } from '../../../store/slices/keywordSlice';
+
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated, isAdmin, userData } = useSelector((state: ReducerType) => state.auth);
 
+  
+
   const handleLogout = async () => {
     try {
-      // 로그아웃 작업이 완료되었으므로 이동 등의 추가 작업 수행
+      dispatch(submitLogout());
       navigate('/signin');
     } catch (error) {
       console.error('Error during logout', error);
     }
   };
+
   const handleAdminPage = () => {
     navigate('/mypage');
   };
@@ -25,6 +30,30 @@ const Header: React.FC = () => {
   const handleUserSettings = () => {
     navigate('/mypage');
   };
+
+  // 검색 기능 관련 상태 및 핸들러 추가
+  const [searchKey, setSearchKey] = React.useState('');
+
+  const handleSearchChange = (e) => {
+    setSearchKey(e.target.value);
+  };
+
+  const handleSearchSubmit = () => {
+    // 검색 관련 로직 구현
+      dispatch(setKeyword(searchKey));
+      navigate(`/detailpage`);
+  
+    console.log('Search for:', searchKey);
+    // navigate('/searchResult', { state: { searchKey } });
+  };
+
+    // 드롭다운 메뉴 상태 관리
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    const toggleDropdown = () => {
+      setShowDropdown(!showDropdown);
+    };
+  
 
   return (
     <Section>
@@ -40,9 +69,10 @@ const Header: React.FC = () => {
           <SearchInput
             type="text"
             placeholder="식당 또는 음식"
-            // 여기서 검색 관련 로직을 구현합니다.
+            value={searchKey}
+            onChange={handleSearchChange}
           />
-          <SearchButton>Search</SearchButton>
+          <SearchButton onClick={handleSearchSubmit}>Search</SearchButton>
         </SearchBox>
       </HeaderMiddle>
       <HeaderRight>
@@ -60,9 +90,15 @@ const Header: React.FC = () => {
               </>
             ) : (
               <>
-                <span>{userData?.nickname}님</span>
-                <Button onClick={handleUserSettings}>회원정보 수정</Button>
-                <Button onClick={handleLogout}>로그아웃</Button>
+                <NicknameButton onClick={toggleDropdown}>
+                  {userData?.nickname}님
+                </NicknameButton>
+                {showDropdown && (
+                  <DropdownMenu>
+                    <DropdownItem onClick={handleUserSettings}>회원정보 수정</DropdownItem>
+                    <DropdownItem onClick={handleLogout}>로그아웃</DropdownItem>
+                  </DropdownMenu>
+                )}
               </>
             )}
           </>
@@ -146,4 +182,30 @@ const Button = styled.button`
   background-color: white;
   cursor: pointer;
   margin-right: 1rem;
+`;
+
+
+const NicknameButton = styled.button`
+  background-color: white;
+  cursor: pointer;
+  // 추가적인 스타일링
+`;
+
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 100%; // 헤더 바로 아래에 위치하도록 설정
+  right: 0;
+  background-color: white;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  // 추가적인 스타일링
+`;
+
+const DropdownItem = styled.div`
+  padding: 12px 16px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f1f1f1;
+  }
+  // 추가적인 스타일링
 `;
