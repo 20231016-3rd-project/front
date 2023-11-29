@@ -9,10 +9,11 @@ import prame from "../../assets/images/Frame 3933.png";
 import Video from "../../assets/images/yellowflower.mp4"
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
-import { submitLogin, submitLogout, refreshAccessToken, setAuthenticated, setAdmin } from './signinSlice'; // import signinSlice from './signinSlice';
+import { submitLogin, submitLogout, refreshAccessToken, setAuthenticated, setAdmin } from './signinSlice';
 
+// 로그인 컴포넌트
 const SignIn = () => {
-    const dispatch: AppDispatch = useDispatch(); // AppDispatch 타입을 사용합니다.
+    const dispatch: AppDispatch = useDispatch();
     const navigate = useNavigate();
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const isRefreshingToken = useSelector((state: RootState) => state.auth.isRefreshingToken);
@@ -20,35 +21,45 @@ const SignIn = () => {
     const [password, setPassword] = useState('');
     const [isLoginFailed, setIsLoginFailed] = useState(false);
 
-       const handleLogin = async () => {
+    // 로그인 처리 함수
+    const handleLogin = async () => {
         try {
           if (!email || !password) {
             alert('이메일과 비밀번호를 입력해주세요.');
             return;
           }
-      
-          // 일반 사용자 로그인 처리
+    
           const response = await dispatch(submitLogin({ email, password }));
-      
-          if (response.payload) {
-            dispatch(setAuthenticated(true));
-            navigate('/'); // 로그인 성공 시 메인 페이지로 이동
+    
+          if (response.payload && !response.error) {
+            if (response.payload.isAdmin) {
+              
+              navigate('/admin-dashboard'); // 관리자 대시보드?
+            } else {
+             
+              navigate('/'); 
+            }
           } else {
-            console.log('Login failed:', response);
-            setIsLoginFailed(true); // 로그인 실패 시 실패 상태 설정
+            // 로그인 실패 처리
+            console.log('Login failed:', response.error);
+            setIsLoginFailed(true);
+            alert('로그인 실패: ' + response.error.message);
           }
         } catch (error) {
           console.error('Error during login', error);
-          alert('로그인 중 오류가 발생했습니다.');
+          alert('로그인 중 오류가 발생했습니다: ' + error.message);
         }
-      };
-    // 페이지 이동 조건부 처리
+    };
+
+    // 로그인 실패 시 로그인 페이지로 이동
     useEffect(() => {
       if (isLoginFailed) {
         setIsLoginFailed(false); // 실패 상태 초기화
         navigate('/signin'); // 로그인 실패 시 로그인 페이지로 이동
       }
     }, [isLoginFailed]);
+
+    // 로그아웃 처리 함수
     const handleLogout = async () => {
         try {
             await dispatch(submitLogout());
@@ -59,6 +70,7 @@ const SignIn = () => {
         }
     };
 
+    // 액세스 토큰 재발급 처리 함수
     const handleReissueAccessToken = async () => {
         try {
             await dispatch(refreshAccessToken()); // 액세스 토큰 재발급 액션 디스패치
@@ -69,6 +81,7 @@ const SignIn = () => {
         }
     };
 
+    // 카카오 로그인 리다이렉트 처리 함수
     const handleKakaoRedirect = async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
@@ -82,11 +95,13 @@ const SignIn = () => {
             }
         }
     };
-    
+
+    // 카카오 로그인 리다이렉트 처리
     useEffect(() => {
         handleKakaoRedirect();
     }, []);
 
+    // 렌더링
     return (
         <S.MainContainer>
             <S.GridContainer>

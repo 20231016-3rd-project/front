@@ -17,9 +17,9 @@ export const submitSignup = createAsyncThunk(
   'signup/submitSignup',
   async (userData: SignupRequest, { rejectWithValue }) => {
     try {
-      console.log("Checking email duplication for:", userData.email); // 함수 호출 전 로그 추가
+      console.log("Checking email duplication for:", userData.email); 
       const isEmailDuplicate = await checkEmailDuplication(userData.email);
-      console.log("Email duplication check result:", isEmailDuplicate); // 함수 호출 후 로그 추가
+      console.log("Email duplication check result:", isEmailDuplicate); 
 
       if (isEmailDuplicate) {
         return rejectWithValue('이메일이 중복됩니다.');
@@ -46,7 +46,7 @@ const signupSlice = createSlice({
   name: 'signup',
   initialState,
   reducers: {
-    // 필요한 다른 리듀서들을 추가
+    
   },
   extraReducers: (builder) => {
     builder
@@ -55,7 +55,7 @@ const signupSlice = createSlice({
       })
       .addCase(submitSignup.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.userData = action.payload; // 성공 데이터를 상태에 저장
+        state.userData = action.payload; 
       })
       .addCase(submitSignup.rejected, (state, action) => {
         state.status = 'failed';
