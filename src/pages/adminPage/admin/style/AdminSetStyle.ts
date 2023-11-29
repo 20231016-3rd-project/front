@@ -4,19 +4,24 @@ interface ToggleContainerProps {
   isDay: boolean;
 }
 
-export const GridContainer = styled.div`
-  display: grid;
-  gap: 15px;
-  grid-template-columns: 1fr 5fr;
-  height: 100vh;
-  color: white;
-  padding: 40px;
-  background-color: #ffdf6d;
+export const MainContainer = styled.div`
+   background-color: #ffdf6d;
+   display: grid;
+   width: 100vw;
+   height: 100%;
+   padding: 30px;
 `;
 
-export const AdminNav = styled.div`
+export const GridContainer = styled.div`
+  display: grid;
+  max-height: 100vh;
+  gap: 15px;
+  grid-template-columns: 1fr 5fr;
+  color: white;
+`;
+
+export const AdminNavbar = styled.div`
   border-radius: 20px;
-  border: 1px solid black;
   padding: 30px;
   text-align: center;
   background-color: #f9b916;
@@ -61,7 +66,7 @@ img{
 export const LinkBox = styled.div`
   display: flex;
   gap: 10px;
-  /* margin-left: 5px; */
+  margin-left: 5px;
 
   div {
     display: flex;
@@ -81,8 +86,6 @@ export const LinkBox = styled.div`
 //중요
 export const AdminMain = styled.div<ToggleContainerProps>`
   align-items: center;
-  border: 1px solid black;
-  height: 95%;
   padding: 20px;
   color: ${({ isDay }) => isDay ? 'black' : 'white'};
   background-color: ${({ isDay }) => isDay ? 'white' : '#333'};
@@ -105,10 +108,10 @@ export const TextBox = styled.div`
   h1{
     font-size: 2rem;
     font-weight: 500;
-    margin-bottom: 10px; 
   }
   p{
     font-size: 1.2rem;
+    margin-bottom: 20px;
   }
 `;
 
@@ -167,6 +170,10 @@ export const ProfileBox = styled.div`
 `;
 
 export const DashBoardSection = styled.div`
+    /* border: 1px solid red; */
+`;
+
+export const DashBoardContainer = styled.div`
   width: 100%;
   height: 90%;
   display: grid;
@@ -181,19 +188,15 @@ export const DashBoardSection = styled.div`
   0%, 100% { transform: scale(1); } 
   50% { transform: scale(0.95); } 
 }
-  .box {
-    padding: 20px;
-    position: relative; 
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-  }
+`;
 
-  .box1 { 
+export const Box1 = styled.div`
     grid-area: box1;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-
+    border: 1px solid #ccc;
+    position: relative; 
     .fruit-image{
         width: 800px;
         height: 500px;
@@ -240,18 +243,20 @@ export const DashBoardSection = styled.div`
          transform: scale(0.97); 
         }
     }
-}
-  .box2 { 
+`; 
+export const Box2 = styled.div` 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     grid-area: box2; 
-  }
+    border: 1px solid #ccc;
+  `;
 
 
-  .box3 { 
+export const Box3 = styled.div`
     grid-area: box3; 
+    border: 1px solid #ccc;
 
     h1{
       font-size: 1.2rem;
@@ -280,8 +285,10 @@ export const DashBoardSection = styled.div`
       }
     }
     }
-  }
-  .box4 { 
+  `;
+  
+  export const Box4 = styled.div`
+    border: 1px solid #ccc;
     grid-area: box4;
     display: flex;
     gap: 10px;
@@ -291,8 +298,6 @@ export const DashBoardSection = styled.div`
       width: 100px;
       height: 100px;
     }
-  }
-  
 `;
 
 export const Box4Text = styled.div`

@@ -32,7 +32,9 @@ interface ToggleButtonProps {
     isDay: boolean;
   }
 
-
+interface ToggleFeatureProps {
+    isDay: boolean;
+  }
 
 const starryStar = keyframes`
   50% {
@@ -77,8 +79,8 @@ const ToggleButton = styled.label<ToggleButtonProps>`
   position: relative;
   display: block;
   margin: 0 auto;
-  height: 60px;
-  width: 200px;
+  height: 70px;
+  width: 205px;
   border-radius: 70px;
   font-size: 1.4em;
   transition: all 350ms ease-in;
@@ -91,7 +93,7 @@ const ToggleButton = styled.label<ToggleButtonProps>`
     content: '';
     position: absolute;
     top: 2px;
-    left: 10px;
+    left: 4px;
     width: 45px;
     height: 45px;
     border-radius: 50%;
@@ -134,7 +136,7 @@ const ToggleButton = styled.label<ToggleButtonProps>`
   }
 `;
 
-const ToggleFeature = styled.span<ToggleButtonProps>`
+const ToggleFeature = styled.span<ToggleFeatureProps>`
   display: block;
   position: absolute;
   top: 9px;

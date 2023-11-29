@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './SignIn.styles';
 import { KAKAO_AUTH_URI } from '../../apis/kakaoAuthApi/kakaoAuthApi';
 import { handleKakaoLogin } from '../../apis/kakaoAuthApi/kakaoAuthApi';
-import kakaoLogo from '../../assets/images/Kakao Login3.png';
+import kakaoLogo from '../../assets/images/Kakao Login6.png';
 import googleLogo from "../../assets/images/Google Login.png";
 import prame from "../../assets/images/Frame 3933.png";
+import Video from "../../assets/images/yellowflower.mp4"
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { submitLogin, submitLogout, refreshAccessToken, setAuthenticated, setAdmin } from './signinSlice'; // import signinSlice from './signinSlice';
@@ -87,9 +88,22 @@ const SignIn = () => {
     }, []);
 
     return (
-        <S.Container>
-            <S.Box>
-                <h1>Login</h1>
+        <S.MainContainer>
+            <S.GridContainer>
+            <S.VideoSection>
+              <video autoPlay loop muted>
+                 <source src={Video} type="video/mp4" />
+              </video>
+
+              <S.OverlayText>
+              <h1>지금바로 떠나는 맛집 탐방!</h1>
+               <p>해바라기 플레이트</p>
+              </S.OverlayText>
+            </S.VideoSection>
+
+            <S.LoginSection>
+              <S.Box>
+                <h1>로그인</h1>
                 <label htmlFor="email">이메일</label>
                 <S.Input
                     value={email}
@@ -98,7 +112,7 @@ const SignIn = () => {
                     type="email"
                     disabled={isRefreshingToken} // 토큰 재발급 중 비활성화
                 />
-
+                <label htmlFor="password">비밀번호</label>
                 <S.Input
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -107,7 +121,16 @@ const SignIn = () => {
                     disabled={isRefreshingToken} // 토큰 재발급 중 비활성화
                 />
 
-                <S.Button onClick={handleLogin} disabled={isRefreshingToken}>Login</S.Button>
+                <S.AutoLoginBox>
+                <S.CheckboxLabel>
+                 <S.Checkbox />
+                   자동로그인
+                </S.CheckboxLabel>
+                <S.PasswordRecoveryLink>아이디가 없으신가요?</S.PasswordRecoveryLink>
+
+                </S.AutoLoginBox>
+
+                <S.Button onClick={handleLogin} disabled={isRefreshingToken}>로그인</S.Button>
 
                 <img src={prame} alt="----" />
 
@@ -119,7 +142,10 @@ const SignIn = () => {
                     <img src={googleLogo} alt="구글 로그인" />
                 </a>
             </S.Box>
-        </S.Container>
+            </S.LoginSection>
+            
+            </S.GridContainer>
+        </S.MainContainer>
     );
 };
 

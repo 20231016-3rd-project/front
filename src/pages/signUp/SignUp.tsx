@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { checkEmailDuplication, checkNicknameDuplication } from '../../apis/userApi/userApi';
-import { Container, Input, ErrorMsg, FieldContainer, Label,  InputField, PhoneInputField, PhoneInput, SignUpButton,  CheckButton, SignupForm } from './SignUp.styles';
+import Video from "../../assets/images/yellowflower.mp4"
+import * as SU from './SignUp.styles';
 import { useNavigate } from 'react-router-dom';
 import { submitSignup } from './signupSlice';
 
@@ -166,31 +167,42 @@ const SignUp = () => {
   };
 
 return (
-  <Container>
-    <SignupForm onSubmit={handleSubmit}>
+  <SU.MainContainer>
+      <SU.GridContainer>
+     <SU.VideoSection>
+              <video autoPlay loop muted>
+                 <source src={Video} type="video/mp4" />
+              </video>
+
+              <SU.OverlayText>
+              <h1>지금바로 떠나는 맛집 탐방!</h1>
+               <p>해바라기 플레이트</p>
+              </SU.OverlayText>
+     </SU.VideoSection>
+
+    <SU.SignupForm onSubmit={handleSubmit}>
 
       {/* 이메일 필드 */}
-      <FieldContainer>
-          <Label htmlFor="email">이메일</Label>
-          <InputField>
-            <Input
+         <SU.FieldContainer>
+          <h1>회원가입</h1>
+          <label htmlFor="email">이메일</label>
+          <SU.InputField>
+            <SU.Input
               id="email"
               type="email"
               value={email}
               onChange={handleEmailChange}
               placeholder="이메일을 입력하세요"
             />
-            <CheckButton type="button" onClick={handleCheckEmail}>중복 확인</CheckButton>
-          </InputField>
+            <SU.CheckButton type="button" onClick={handleCheckEmail}>중복 확인</SU.CheckButton>
+            </SU.InputField>
 
-        {emailDuplicateCheck && errors.email && <ErrorMsg>{errors.email}</ErrorMsg>}
-      </FieldContainer>
+        {emailDuplicateCheck && errors.email && <SU.ErrorMsg>{errors.email}</SU.ErrorMsg>}
 
       {/* 닉네임 필드 */}
-    <FieldContainer>
-    <Label htmlFor="nickname">닉네임</Label>
-      <InputField>
-          <Input
+    <label htmlFor="nickname">닉네임</label>
+    <SU.InputField>
+          <SU.Input
             id="nickname"
             type="text"
             value={nickname}
@@ -198,26 +210,22 @@ return (
             placeholder="닉네임을 입력하세요"
             autoComplete="username"
           />
-          <CheckButton type="button" onClick={handleCheckNickname}>중복 확인</CheckButton>
-      </InputField>
-          {nicknameCheck.checked && errors.nickname && <ErrorMsg>{errors.nickname}</ErrorMsg>}
-      </FieldContainer>
+          <SU.CheckButton type="button" onClick={handleCheckNickname}>중복 확인</SU.CheckButton>
+          </SU.InputField>
+          {nicknameCheck.checked && errors.nickname && <SU.ErrorMsg>{errors.nickname}</SU.ErrorMsg>}
 
-      <FieldContainer>
-        <Label htmlFor="password">비밀번호</Label>    
-        <InputField>
-        <Input
+      <label htmlFor="password">비밀번호</label>  
+       <SU.InputPassword
            type="password"
            value={password}
            onChange={handlePasswordChange}
            placeholder="8자리 이상 15자리 이하로 작성해주세요"
            autoComplete="new-password"
         />
-        </InputField>
+
     {errors.password && <p className="error">{errors.password}</p>}
 
-    <InputField>
-    <Input
+    <SU.InputPassword
       type="password"
       value={confirmPassword}
       onChange={handleConfirmPasswordChange}
@@ -225,14 +233,12 @@ return (
       autoComplete="new-password"
     />
     {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
-    </InputField> 
-    </FieldContainer>
+
 
     {/* 핸드폰 번호 필드 */}
-    <FieldContainer>
-    <Label htmlFor="phone">핸드폰 번호</Label>
-    <PhoneInputField>
-      <PhoneInput
+    <SU.Label htmlFor="phone">핸드폰 번호</SU.Label>
+    <SU.PhoneInputField>
+      <SU.PhoneInput
         id="phone1"
         type="text"
         maxLength={3}
@@ -240,7 +246,7 @@ return (
         value={phone.part1}
         onChange={handlePhoneChange('part1')}
       />
-      <PhoneInput
+      <SU.PhoneInput
         id="phone2"
         type="text"
         maxLength={4}
@@ -248,7 +254,7 @@ return (
         value={phone.part2}
         onChange={handlePhoneChange('part2')}
       />
-      <PhoneInput
+      <SU.PhoneInput
         id="phone3"
         type="text"
         maxLength={4}
@@ -256,13 +262,13 @@ return (
         value={phone.part3}
         onChange={handlePhoneChange('part3')}
       />
-      </PhoneInputField>
-</FieldContainer>
+      </SU.PhoneInputField>
+<SU.SignUpButton type="submit">가입하기</SU.SignUpButton>
+</SU.FieldContainer>
+</SU.SignupForm>
 
-<SignUpButton type="submit">가입하기</SignUpButton>
-
-</SignupForm>
-</Container>
+</SU.GridContainer>
+</SU.MainContainer>
 );
 };
 export default SignUp;

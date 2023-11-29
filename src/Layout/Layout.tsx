@@ -6,12 +6,13 @@ import Footer from '../components/UI/Footer/Footer';
 const Layout = () => {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
+  const isAuthRoute = location.pathname === '/signin' || location.pathname === '/signup';
 
   return (
     <>
-      {!isAdminRoute && <Header />}
+      {!isAdminRoute && !isAuthRoute && <Header />}
       <Outlet />
-      {!isAdminRoute && <Footer />}
+      {!isAdminRoute && !isAuthRoute && <Footer />}
     </>
   );
 };

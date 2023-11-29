@@ -145,6 +145,10 @@ const SearchButton = styled.button`
   &:active {
          transform: scale(0.97); 
         }
+  img{
+    width: 25px;
+    height: 25px;
+  }
 `;
 const HeaderRight = styled.div`
   display: flex;
