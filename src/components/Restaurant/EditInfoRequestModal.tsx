@@ -5,7 +5,7 @@ import { postEditInfoRequest } from '../../apis/restaurantApi';
 
 interface EditinfoModalProps {
   closeModal: () => void;
-  restaurantId: string;
+  restaurantId: string | undefined;
 }
 const EditinfoRequestModal: React.FC<EditinfoModalProps> = ({
   closeModal,

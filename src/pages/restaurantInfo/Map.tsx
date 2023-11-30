@@ -2,17 +2,18 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 
 const { kakao } = window;
-console.log(kakao);
-console.dir(kakao);
 
-const Map = ({ address }) => {
+interface MapProps {
+  address: string;
+}
+const Map: React.FC<MapProps> = ({ address }) => {
   const geocoder = new kakao.maps.services.Geocoder();
   console.log('map안에', address);
   useEffect(() => {
     geocoder.addressSearch(address, function (result, status) {
-      console.log('map address', address);
-      console.log('Mapresult:', result);
-      console.log('map satus', status, kakao.maps.services.Status.OK);
+      // console.log('map address', address);
+      // console.log('Mapresult:', result);
+      // console.log('map satus', status, kakao.maps.services.Status.OK);
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
         const newMarker = new kakao.maps.Marker({

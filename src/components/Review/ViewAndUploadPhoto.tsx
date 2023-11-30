@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { Collapse, Image, useDisclosure } from '@chakra-ui/react';
+import {
+  Collapse,
+  Image,
+  VisuallyHiddenInput,
+  useDisclosure,
+} from '@chakra-ui/react';
 
 import {
   AddIcon,
@@ -10,6 +15,7 @@ import {
 } from '@chakra-ui/icons';
 import { Box, IconButton } from '@chakra-ui/react';
 import WriteReviewText from './WriteReviewText';
+import AddImageButton from './AddImageButton';
 interface UploadPhotoProps {
   selectedFiles: File[];
   setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
@@ -40,6 +46,14 @@ const ViewAndUploadPhoto: React.FC<UploadPhotoProps> = ({
   }, [selectedFiles]);
   const { isOpen, onToggle } = useDisclosure();
   console.log('ccc', setRating);
+
+  const deleteImageHandler = (indexToRemove: number) => {
+    setSelectedFiles((prevArray) =>
+      prevArray.filter((_, index) => {
+        return index !== indexToRemove;
+      })
+    );
+  };
   return (
     <ViewAndUploadPhotoStyle>
       {index === 1 && <div className="header">사진을 확인해주세요</div>}
@@ -89,6 +103,9 @@ const ViewAndUploadPhoto: React.FC<UploadPhotoProps> = ({
                   right={'2'}
                   top={'1'}
                   borderRadius={'xl'}
+                  onClick={() => {
+                    deleteImageHandler(index);
+                  }}
                 />
                 <Image
                   key={index}
@@ -98,12 +115,7 @@ const ViewAndUploadPhoto: React.FC<UploadPhotoProps> = ({
               </Box>
             );
           })}
-          {selectedFiles.length < 3 && (
-            <IconButton
-              aria-label="add more image"
-              icon={<AddIcon boxSize={'80px'} />}
-            />
-          )}
+          {selectedFiles.length < 3 && <AddImageButton />}
           {index === 1 && (
             <IconButton
               aria-label="next"
