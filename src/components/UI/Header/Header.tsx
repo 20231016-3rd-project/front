@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import DropDown from './../../DropDown/DropDown';
+import DropDown from '../../DropDown/DropDown';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/rootReducer';
 import { setKeyword, setKey } from '../../../store/slices/keywordSlice';
