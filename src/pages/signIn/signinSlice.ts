@@ -1,6 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { login, logout, reissueAccessToken } from '../../apis/authApi/authApi';
 
+// 토큰 만료 여부를 판단하는 함수
+function isTokenExpired(expireDate) {
+  const expireTime = new Date(expireDate).getTime();
+  const currentTime = Date.now();
+  return currentTime >= expireTime;
+}
+
+// 토큰의 만료 시간을 계산하는 함수
+function calculateExpiresIn(expireDate) {
+  const expireTime = new Date(expireDate).getTime();
+  const currentTime = Date.now();
+  return Math.max(0, (expireTime - currentTime) / 1000);
+}
+
+
 // 토큰 데이터 타입 정의
 interface TokenData {
   AccessToken: string;
@@ -118,6 +133,12 @@ const authSlice = createSlice({
         state.isRefreshingToken = true;
       })
       .addCase(submitLogin.fulfilled, (state, action) => {
+        if (isTokenExpired(action.payload.tokenData.accessTokenExpireDate)) {
+          store.dispatch(refreshAccessToken());
+        }
+    
+    
+    
         state.isAuthenticated = true;
         state.isAdmin = action.payload.isAdmin; 
         state.isRefreshingToken = false;
@@ -128,11 +149,16 @@ const authSlice = createSlice({
         }; 
         state.tokenData = {
           AccessToken: action.payload.tokenData.AccessToken,
-          expiresIn: 0,
+          expiresIn: calculateExpiresIn(action.payload.tokenData.accessTokenExpireDate), // 만료 시간 계산
           accessTokenExpireDate: action.payload.tokenData.accessTokenExpireDate,
+      
+
           issuedAt: action.payload.tokenData.issuedAt,
+      
         };
+      
         state.error = null; // 에러 초기화
+      
       })
       
 

@@ -5,12 +5,14 @@ interface SignupState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
   userData: SignupRequest | null; // 회원가입 성공 시 사용자 데이터 저장
+  signupSuccess: boolean;
 }
 
 const initialState: SignupState = {
   status: 'idle',
   error: null,
   userData: null,
+  signupSuccess: false,
 };
 
 export const submitSignup = createAsyncThunk(
@@ -46,7 +48,12 @@ const signupSlice = createSlice({
   name: 'signup',
   initialState,
   reducers: {
-    
+    resetSignupState: (state) => {
+      state.signupSuccess = false;
+      state.status = 'idle';
+      state.error = null;
+      state.userData = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -55,13 +62,16 @@ const signupSlice = createSlice({
       })
       .addCase(submitSignup.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.userData = action.payload; 
+        state.userData = action.payload;
+        state.signupSuccess = true; 
       })
       .addCase(submitSignup.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
+        state.signupSuccess = false; 
       });
   },
 });
 
+export const { resetSignupState } = signupSlice.actions;
 export default signupSlice.reducer;
