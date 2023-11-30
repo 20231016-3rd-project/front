@@ -8,7 +8,7 @@ import keywordReducer from './slices/keywordSlice';
 import bestReducer from './slices/bestSlice';
 import myLikeReducer from './slices/myLikeSlice';
 import signupReducer from '../pages/signUp/signupSlice';
-import signinReducer from '../pages/signUp/signupSlice';
+import signinReducer from '../pages/signIn/signinSlice';
 
 const store = configureStore({
   reducer: {
