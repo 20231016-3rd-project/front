@@ -5,16 +5,19 @@ import styled from 'styled-components';
 import { submitLogout } from '../../../pages/signIn/signinSlice';
 import logo from '../../../assets/images/logo.png';
 import { setKeyword } from '../../../store/slices/keywordSlice';
+import { RootState } from '../../../store/store';
 
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isAuthenticated, isAdmin, userData } = useSelector((state: ReducerType) => state.auth);
+  const authState = useSelector((state: RootState) => state.signin);
 
+  // authState가 정의되어 있지 않은 경우를 대비한 기본값 설정
+  const { isAuthenticated = false, isAdmin = false, userData = null } = authState ?? {};
   
 
-  const handleLogout = async () => {
+   const handleLogout = async () => {
     try {
       dispatch(submitLogout());
       navigate('/signin');

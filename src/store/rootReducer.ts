@@ -18,7 +18,7 @@ const reducer = combineReducers({
   best,
   myLike,
   signup,
-  signin
+  signin,
 });
 
 export type ReducerType = ReturnType<typeof reducer>;

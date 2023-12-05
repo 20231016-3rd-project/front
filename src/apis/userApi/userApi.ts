@@ -77,19 +77,3 @@ export const fetchUserProfile = async (): Promise<any> => {
   }
 };
 
-
-// 회원탈퇴 함수
-export const withdrawUser = async (): Promise<any> => {
-  try {
-    const response = await axiosInstance.post('/sunflowerPlate/user/withdraw', {}, {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('accessToken'), // 액세스 토큰 포함
-      },
-    });
-    return response.data; // 탈퇴 성공 메시지 반환
-
-  } catch (error) {
-    console.error('회원탈퇴 중 에러 발생', error);
-    throw error;
-  }
-};
