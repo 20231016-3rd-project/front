@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { submitLogout } from '../../../pages/signIn/signinSlice';
+import { submitLogout } from '../../../store/slices/authSlice';
 import logo from '../../../assets/images/logo.png';
 import { setKeyword } from '../../../store/slices/keywordSlice';
 import { RootState } from '../../../store/store';
@@ -11,8 +11,9 @@ import { RootState } from '../../../store/store';
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const authState = useSelector((state: RootState) => state.signin);
+  const authState = useSelector((state: RootState) => state.auth);
 
+  
   // authState가 정의되어 있지 않은 경우를 대비한 기본값 설정
   const { isAuthenticated = false, isAdmin = false, userData = null } = authState ?? {};
   
@@ -25,6 +26,7 @@ const Header: React.FC = () => {
       console.error('Error during logout', error);
     }
   };
+``
 
   const handleAdminPage = () => {
     navigate('/mypage');

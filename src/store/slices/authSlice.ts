@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { login, logout, reissueAccessToken } from '../../apis/authApi/authApi';
-import { RootState } from '../../store/store';
+import { RootState } from '../store';
 
 
 // 토큰 만료 여부를 판단하는 함수
@@ -50,50 +50,27 @@ const initialState: AuthState = {
   tokenData: null,
 }
 
-
-
-// 관리자 권한 확인을 위한 API 호출 함수
-// const checkAdminPrivilege = async () => {
-//   try {
-//     // 관리자 전용 API 호출 (실제 API 경로로 변경 필요)
-//     await axiosInstance.get('/sunflowerPlate/sunflowerPlate/admin');
-//     return true; // 관리자 권한이 있다고 간주
-//   } catch (error) {
-//     return false; // 관리자 권한이 없다고 간주
-//   }
-// };
-
 export const submitLogin = createAsyncThunk(
   'auth/submitLogin',
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await login(email, password);
-      
-      return {
-        nickname: response.data.memberNickName,
-        tokenData: {
-          accessToken: response.data.accessToken,
-          expiresIn: calculateExpiresIn(response.data.accessTokenExpireDate),
-          accessTokenExpireDate: response.data.accessTokenExpireDate,
-          issuedAt: response.data.issuedAt,
-        },
-      };
-    } catch (error: any) {
-      if (!error.response) throw error;
-      return rejectWithValue(error.response.data);
+      return response; 
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
-)
+);
 
-export const submitLogout = createAsyncThunk<void, void, { state: RootState }>(
+export const submitLogout = createAsyncThunk(
   'auth/submitLogout',
   async (_, { rejectWithValue }) => {
     try {
       await logout();
-      localStorage.clear();
+      localStorage.removeItem('accessToken'); 
     } catch (error: any) {
-      if (!error.response) throw error;
-      return rejectWithValue(error.response.data);
+      console.error('로그아웃 중 에러 발생', error);
+      return rejectWithValue(error.response?.data ?? '로그아웃 실패');
     }
   }
 );
@@ -102,7 +79,7 @@ export const refreshAccessToken = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await reissueAccessToken();
-      const { accessToken, accessTokenExpireDate, issuedAt } = response.data;
+      const { accessToken, accessTokenExpireDate, issuedAt } = response;
       if (accessToken) {
         return {
           accessToken,
@@ -138,11 +115,17 @@ const authSlice = createSlice({
       state.isRefreshingToken = false;
       state.userData = { 
         email: '', 
-        nickname: action.payload.nickname, // 닉네임 저장
+        nickname: action.payload.memberNickName, 
         phone: '' 
       }; 
-      state.tokenData = action.payload.tokenData;
-      state.error = null; // 에러 초기화
+      state.tokenData = {
+        accessToken: action.payload.accessToken,
+        expiresIn: calculateExpiresIn(action.payload.accessTokenExpireDate), 
+        accessTokenExpireDate: action.payload.accessTokenExpireDate,
+        issuedAt: action.payload.issuedAt 
+      };
+      state.error = null; 
+      localStorage.setItem('accessToken', action.payload.accessToken); // 토큰저장주석처리
     })
     .addCase(submitLogin.rejected, (state, action) => {
       state.isAuthenticated = false; // 로그인 실패
@@ -153,10 +136,11 @@ const authSlice = createSlice({
         state.isRefreshingToken = true; // 로그아웃 시도 중
       })
       .addCase(submitLogout.fulfilled, (state) => {
-        state.isAuthenticated = false; // 로그아웃 성공
+        state.isAuthenticated = false;
         state.isRefreshingToken = false;
-        state.userData = null; 
-        state.error = null; // 에러 초기화
+        state.userData = initialState.userData;
+        state.error = null;
+        localStorage.removeItem('accessToken'); // 토큰 제거
       })
       .addCase(submitLogout.rejected, (state, action) => {
         state.isRefreshingToken = false;

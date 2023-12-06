@@ -1,5 +1,4 @@
 import { axiosInstance } from '../axiosInstance/axiosInstance';
-import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // 응답 데이터 타입 정의
 interface LoginResponse {
@@ -38,7 +37,6 @@ export const login = async (email: string, password: string): Promise<LoginRespo
   }
 };
 
-// logout 함수
 export const logout = async (): Promise<void> => {
   try {
     await axiosInstance.post('/sunflowerPlate/user/logout', {}, {
@@ -46,7 +44,7 @@ export const logout = async (): Promise<void> => {
         'X-AUTH-TOKEN': localStorage.getItem('accessToken'),
       },
     });
-    localStorage.clear();
+    localStorage.removeItem('accessToken'); 
   } catch (error) {
     console.error('로그아웃 중 에러 발생', error as ApiError);
     throw error;
