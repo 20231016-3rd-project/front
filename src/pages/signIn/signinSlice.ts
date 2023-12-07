@@ -18,7 +18,7 @@ function calculateExpiresIn(expireDate) {
 
 // 토큰 데이터 타입 정의
 interface TokenData {
-  AccessToken: string;
+  accessToken: string;
   expiresIn: number; //만료시간 설정
   accessTokenExpireDate: string; 
   issuedAt: string;
@@ -69,7 +69,7 @@ export const submitLogin = createAsyncThunk(
       return {
         nickname: response.memberNickName,
         tokenData: {
-          AccessToken: response.AccessToken,
+          accessToken: response.accessToken,
           accessTokenExpireDate: response.accessTokenExpireDate,
           issuedAt: response.issuedAt,
         },
@@ -148,7 +148,7 @@ const authSlice = createSlice({
           phone: '' 
         }; 
         state.tokenData = {
-          AccessToken: action.payload.tokenData.AccessToken,
+          accessToken: action.payload.tokenData.accessToken,
           expiresIn: calculateExpiresIn(action.payload.tokenData.accessTokenExpireDate), // 만료 시간 계산
           accessTokenExpireDate: action.payload.tokenData.accessTokenExpireDate,
       

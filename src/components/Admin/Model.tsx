@@ -31,7 +31,7 @@ export default function Model(props: JSX.IntrinsicElements['group']) {
     <group ref={group} {...props} dispose={null}>
       <ambientLight intensity={0.5} />
       <group name="Sketchfab_Scene">
-        <group name="Sketchfab_model" position={[0.002, 0, 0]} rotation={[Math.PI / 2, 0, 0.5]} scale={0.06}>
+        <group name="Sketchfab_model" position={[0.002, 0, 0]} rotation={[Math.PI / 2, 0, -0.4]} scale={0.06}>
           <group name="71befc7a795942eda13c8625345d5dbbfbx" rotation={[-Math.PI, 0, 0]}>
             <group name="Object_2">
               <group name="RootNode">

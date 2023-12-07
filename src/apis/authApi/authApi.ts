@@ -2,7 +2,7 @@ import { axiosInstance } from '../axiosInstance/axiosInstance';
 
 // 응답 데이터 타입 정의
 interface LoginResponse {
-  AccessToken: string;
+  accessToken: string;
 
 }
 
@@ -18,7 +18,7 @@ interface ApiError extends Error {
 export const login = async (email: string, password: string): Promise<LoginResponse> => {
   try {
     const response = await axiosInstance.post<LoginResponse>('/sunflowerPlate/user/login', { email, password });
-    localStorage.setItem('accessToken', response.data.AccessToken);
+    localStorage.setItem('accessToken', response.data.accessToken);
     localStorage.setItem('refreshToken', response.headers.refreshToken);
     return response.data;
   } catch (error) {
@@ -51,7 +51,7 @@ export const reissueAccessToken = async (): Promise<LoginResponse> => {
         'X-AUTH-TOKEN': localStorage.getItem('refreshToken'),
       },
     });
-    localStorage.setItem('accessToken', response.data.AccessToken);
+    localStorage.setItem('accessToken', response.data.accessToken);
     return response.data;
   } catch (error) {
     console.error('Error during token reissue', error as ApiError);
