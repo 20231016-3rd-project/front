@@ -2,9 +2,22 @@ import { axiosInstance } from '../axiosInstance/axiosInstance';
 
 // 응답 데이터 타입 정의
 interface LoginResponse {
+  memberNickName: string;
   accessToken: string;
-
+  accessTokenExpireDate: string; 
+  issuedAt: string; 
 }
+
+// 에러 타입 정의
+interface ApiError extends Error {
+  response?: {
+    data: any;
+    status: number;
+  };
+}
+
+
+
 
 // 에러 타입 정의
 interface ApiError extends Error {
@@ -35,8 +48,7 @@ export const logout = async (): Promise<void> => {
         'X-AUTH-TOKEN': localStorage.getItem('accessToken'),
       },
     });
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('accessToken'); 
   } catch (error) {
     console.error('로그아웃 중 에러 발생', error as ApiError);
     throw error;
@@ -52,6 +64,7 @@ export const reissueAccessToken = async (): Promise<LoginResponse> => {
       },
     });
     localStorage.setItem('accessToken', response.data.accessToken);
+
     return response.data;
   } catch (error) {
     console.error('Error during token reissue', error as ApiError);

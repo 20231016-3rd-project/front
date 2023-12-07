@@ -8,15 +8,20 @@ import { setKeyword, setKey } from '../../../store/slices/keywordSlice';
 import { submitLogout } from '../../../pages/signIn/signinSlice';
 import logo from '../../../assets/images/logo.png';
 import search from '../../../assets/images/ icon _search_.svg';
+import { setKeyword } from '../../../store/slices/keywordSlice';
+
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isAuthenticated, isAdmin, userData } = useSelector((state: ReducerType) => state.auth);
+  const authState = useSelector((state: RootState) => state.auth);
 
   
+  // authState가 정의되어 있지 않은 경우를 대비한 기본값 설정
+  const { isAuthenticated = false, isAdmin = false, userData = null } = authState ?? {};
+  
 
-  const handleLogout = async () => {
+   const handleLogout = async () => {
     try {
       dispatch(submitLogout());
       navigate('/signin');
@@ -24,6 +29,7 @@ const Header: React.FC = () => {
       console.error('Error during logout', error);
     }
   };
+``
 
   const handleAdminPage = () => {
     navigate('/mypage');
