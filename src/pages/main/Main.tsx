@@ -99,6 +99,7 @@ const Main = () => {
             <ArrowDownImg src={arrowDown} alt="" />
           </ArrowDown>
         </Cover>
+
       )}
 
       {(clicked || initial === false) && (
@@ -168,11 +169,15 @@ const Cover = styled.div<IsClicked>`
       : ''};
 `;
 const CoverTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   color: white;
   font-weight: 700;
   font-size: 40px;
   text-align: center;
   line-height: 60px;
+  align-items: center;
 `;
 const Text1 = styled.p`
   letter-spacing: 2px;
@@ -210,7 +215,7 @@ const SelectRegion = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 48px;
+  font-size: 43px;
   font-weight: 600;
   padding-top: 5rem;
   line-height: 60px;
@@ -218,12 +223,12 @@ const SelectRegion = styled.div`
 const SelectRegionButton = styled.button`
   background-color: #da9d00;
   color: white;
-  font-size: 20px;
+  font-size: 1.2rem;
   font-weight: 600;
   border: none;
   border-radius: 68px;
-  padding: 1rem 3rem;
   margin: 2rem 0 4rem 0;
+  width: 10%;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   &:active {

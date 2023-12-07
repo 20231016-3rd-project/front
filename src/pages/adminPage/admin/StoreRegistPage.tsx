@@ -2,18 +2,7 @@ import { StMain } from '../../../components/Stmain';
 import DaumPost from '../../../components/Admin/DaumPost';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { IMenu, IAddressData } from '../admin/types/storeregist';
-import {
-  RegistContainer,
-  MainTextBox,
-  ImageRegistSection,
-  TellSection,
-  BusinessNameSection,
-  InstagramSection,
-  HoursSection,
-  MenuSection,
-  MenuScrollBox,
-  SubmitButton,
-} from '../admin/style/StoreRegistStyle';
+import * as Set from '../admin/style/StoreRegistStyle';
 import { registerRestaurant } from '../../../apis/adminApi/adminApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -32,10 +21,8 @@ const StoreRegistPage = () => {
     (newRestaurantData: FormData) => registerRestaurant(newRestaurantData),
     {
       onSuccess: () => {
-        // Success callback
         alert('Restaurant registered successfully!');
-        // Here you could navigate to another page or invalidate queries to refetch data
-        queryClient.invalidateQueries('restaurants');
+        queryClient.invalidateQueries(['restaurants']);
       },
       onError: (error: any) => {
         // Error callback
@@ -45,7 +32,7 @@ const StoreRegistPage = () => {
   );
 
   // 주소 데이터를 선택했을 때 해당 데이터를 상태에 설정하는 함수
-  const handleAddressSelect = (adrdata: IAddressData) => {
+  const handleAddressSelect = (adrdata: IAddressData | null) => {
     setAddressData(adrdata);
     console.log('Selected address data:', adrdata);
   };
@@ -94,19 +81,21 @@ const StoreRegistPage = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const formData = new FormData();
-    const { city, district, dong, fullAd } = addressData.restaurantAdmin;
+    // const { city, district, dong, fullAd } = addressData.restaurantAdmin;
+    const address = addressData ? addressData.restaurantAdmin : null;
+    const { city, district, dong, fullAd } = address || {};
 
     const data = {
       restaurantName: businessName, //식당이름
       restaurantTelNum: tell, //전화번호
-      restaurantAddress: fullAd, //주소
+      restaurantAddress: fullAd || '', //주소
       restaurantOpenTime: businessHours, //영업시간
       restaurantBreakTime: breakTime, //브레이크타임
       restaurantWebSite: instagram, //웹사이트
       restaurantAdministrativeDistrict: {
-        cityName: city, //시 이름
-        districtsName: district, //구 이름
-        dongName: dong, //동 이름
+        cityName: city || '', //시 이름
+        districtsName: district || '', //구 이름
+        dongName: dong || '', //동 이름
       },
       restaurantMenuDtoList: menus.map((menu) => ({
         restaurantMenuName: menu.name,
@@ -128,17 +117,15 @@ const StoreRegistPage = () => {
     mutation.mutate(formData);
   };
 
-  //-------------------------------------------------------------------------
-
   return (
     <StMain>
-      <RegistContainer onSubmit={handleSubmit}>
-        <MainTextBox>
+      <Set.RegistContainer onSubmit={handleSubmit}>
+        <Set.MainTextBox>
           <h1>식당 등록/수정</h1>
           <span>ㅣ당신의 식당을 등록하세요!</span>
-        </MainTextBox>
+        </Set.MainTextBox>
 
-        <ImageRegistSection>
+        <Set.ImageRegistSection>
           <h1>이미지등록</h1>
           {files.map((file, index) => (
             <div key={index}>
@@ -161,56 +148,56 @@ const StoreRegistPage = () => {
               </button>
             </div>
           ))}
-        </ImageRegistSection>
+        </Set.ImageRegistSection>
 
-        <BusinessNameSection>
+        <Set.BusinessNameSection>
           <label>상호명</label>
           <input
             type="text"
             value={businessName}
             onChange={(e) => setBusinessName(e.target.value)}
           />
-        </BusinessNameSection>
+        </Set.BusinessNameSection>
 
-        <TellSection>
+        <Set.TellSection>
           <label>전화번호</label>
           <input
             type="text"
             value={tell}
             onChange={(e) => setTell(e.target.value)}
           />
-        </TellSection>
+        </Set.TellSection>
 
-        <DaumPost onAddressSelect={handleAddressSelect} />
+        <DaumPost onAddressSelect={handleAddressSelect} initialAddress="기본 주소"  />
 
-        <InstagramSection>
+        <Set.InstagramSection>
           <label>인스타그램</label>
           <input
             type="text"
             value={instagram}
             onChange={(e) => setInstagram(e.target.value)}
           />
-        </InstagramSection>
+        </Set.InstagramSection>
 
-        <HoursSection>
+        <Set.HoursSection>
           <label>영업시간</label>
           <textarea
             value={businessHours}
             onChange={(e) => setBusinessHours(e.target.value)}
           />
-        </HoursSection>
+        </Set.HoursSection>
 
-        <HoursSection>
+        <Set.HoursSection>
           <label>브레이크타임</label>
           <textarea
             value={breakTime}
             onChange={(e) => setbreakTime(e.target.value)}
           />
-        </HoursSection>
+        </Set.HoursSection>
 
-        <MenuSection>
+        <Set.MenuSection>
           <label>대표메뉴</label>
-          <MenuScrollBox>
+          <Set.MenuScrollBox>
             {menus.map((menu, index) => (
               <div key={index}>
                 <input
@@ -229,14 +216,14 @@ const StoreRegistPage = () => {
                 />
               </div>
             ))}
-          </MenuScrollBox>
+          </Set.MenuScrollBox>
           <button type="button" onClick={addMenu}>
             +
           </button>
-        </MenuSection>
+        </Set.MenuSection>
 
-        <SubmitButton type="submit">최종완료</SubmitButton>
-      </RegistContainer>
+        <Set.SubmitButton type="submit">최종완료</Set.SubmitButton>
+      </Set.RegistContainer>
     </StMain>
   );
 };

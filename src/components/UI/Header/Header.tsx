@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import DropDown from '../../DropDown/DropDown';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReducerType } from '../../../store/rootReducer';
+import { setKey } from '../../../store/slices/keywordSlice';
 import { submitLogout } from '../../../store/slices/authSlice';
 import logo from '../../../assets/images/logo.png';
+import search from '../../../assets/images/ icon _search_.svg';
 import { setKeyword } from '../../../store/slices/keywordSlice';
 import { RootState } from '../../../store/store';
 
@@ -65,10 +69,11 @@ const Header: React.FC = () => {
       <HeaderLeft to="/">
         <Logo src={logo} alt="Logo" />
         <LogoText>
-          <P>해바라기</P>
-          <P>플레이트</P>
+          <P>해바라기 플레이트</P>
+          {/* <P>P l a t e</P> */}
         </LogoText>
       </HeaderLeft>
+
       <HeaderMiddle>
         <SearchBox>
           <SearchInput
@@ -77,9 +82,12 @@ const Header: React.FC = () => {
             value={searchKey}
             onChange={handleSearchChange}
           />
-          <SearchButton onClick={handleSearchSubmit}>Search</SearchButton>
+          <SearchButton onClick={handleSearchSubmit}>
+            <img src={search} alt="" />
+          </SearchButton>
         </SearchBox>
       </HeaderMiddle>
+      
       <HeaderRight>
         {!isAuthenticated ? (
           <>
@@ -129,8 +137,8 @@ const HeaderLeft = styled(Link)`
   color: black;
 `;
 const Logo = styled.img`
-  height: 45px;
-  width: 45px;
+  height: 60px;
+  width: 60px;
   cursor: pointer;
 `;
 const LogoText = styled.div`
@@ -147,44 +155,64 @@ const HeaderMiddle = styled.div`
   align-items: center;
 `;
 const SearchBox = styled.div`
+  width: 500px;
+  padding: 5px;
+  border-radius: 30px;
   display: flex;
   align-items: center;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `;
 const SearchInput = styled.input`
-  height: 37px;
+  margin-left: 10px;
+  height: 35px;
+  width: 500px;
   border: none;
   &:focus {
     outline: none;
   }
 `;
 const SearchButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
   height: 37px;
   border: none;
+  border-radius: 50px;
   background-color: #f9b916;
   color: white;
   cursor: pointer;
+
+  &:active {
+         transform: scale(0.97); 
+        }
+  img{
+    width: 25px;
+    height: 25px;
+  }
 `;
 const HeaderRight = styled.div`
   display: flex;
   align-items: center;
 `;
 const LoginButton = styled.button`
-  background-color: white;
-  font-size: 20px;
+  background: none;
+  border: none;
+  font-size: 1rem;
   cursor: pointer;
-  margin-right: 3rem;
+  margin-right: 2rem;
+  text-decoration: none;
+  color: black;
 `;
 const SignUpButton = styled(Link)`
-  background-color: white;
-  font-size: 20px;
+  border: none;
+  font-size: 1rem;
   cursor: pointer;
   margin-right: 2rem;
   text-decoration: none;
   color: black;
 `;
 const Button = styled.button`
-  background-color: white;
   cursor: pointer;
   margin-right: 1rem;
 `;

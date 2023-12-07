@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
     <Section>
       <FirstRow>
         <Span>데이터 제휴 문의</Span>
-        <Span>계인정보처리방침</Span>
+        <Span>개인정보처리방침</Span>
         <Span>이용약관</Span>
         <Span>위치기반 서비스 이용약관</Span>
         <Span>관리자모드</Span>
@@ -31,22 +31,21 @@ const Footer: React.FC = () => {
 export default Footer;
 
 const Section = styled.div`
-height: 8rem;
-padding: 2rem 3rem;
-/* margin: 2rem 3rem; */
-font-size: 14px;
-`
+  height: 8rem;
+  padding: 2rem 3rem;
+  /* margin: 2rem 3rem; */
+  font-size: 14px;
+`;
 const FirstRow = styled.div`
-margin-bottom: 2rem;
-`
+  margin-bottom: 2rem;
+`;
 const Span = styled.span`
-margin-right: 1.5rem;
-`
+  margin-right: 1.5rem;
+`;
 const MiddleRow = styled.div`
-margin-bottom: 1rem;
-`
+  margin-bottom: 1rem;
+`;
 const LastRow = styled.div`
-display: flex;
-justify-content: space-between;
-`
-
+  display: flex;
+  justify-content: space-between;
+`;

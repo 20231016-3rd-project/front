@@ -17,4 +17,4 @@ export const handleKakaoLogin = async (code: string) => {
   } catch (error) {
     throw new Error('Failed to login with Kakao');
   }
-};3
+};

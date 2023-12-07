@@ -4,7 +4,11 @@ import styled from 'styled-components';
 import infoImg from '../../pages/restaurantInfo/info-image.jpg';
 import Star from '../Star/Star';
 
-const ViewReviewModal = ({ closeModal }) => {
+interface ViewReviewModalProps {
+  closeModal: () => void;
+}
+
+const ViewReviewModal: React.FC<ViewReviewModalProps> = ({ closeModal }) => {
   return (
     <Modal closeModal={closeModal}>
       <ViewReviewStyle>

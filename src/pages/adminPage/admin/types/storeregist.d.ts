@@ -4,7 +4,7 @@ export interface IMenu {
   }
 
   
-  interface IAddressData {
+export interface IAddressData {
     zonecode: string; // 우편번호
     address: string; // 전체 주소
     addressEnglish: string; // 전체 영문 주소
@@ -33,6 +33,14 @@ export interface IMenu {
     bname2: string; // 법정동의 읍/면 이름
     hname: string; // 행정동명
     query: string; // 검색어
+    restaurantAdmin: {
+      city: string;
+      district: string;
+      dong: string;
+      fullAd: string;
+      // 다른 속성들
+      // ...
+    };
   }
   
   

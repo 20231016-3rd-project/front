@@ -1,9 +1,9 @@
-
+import React from 'react'
 
 const AdminChatPage = () => {
   return (
     <div>
-      adminChat
+
     </div>
   )
 }

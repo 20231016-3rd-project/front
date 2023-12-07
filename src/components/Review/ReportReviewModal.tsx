@@ -1,8 +1,17 @@
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import Modal from '../Modal/Modal';
 import styled from 'styled-components';
 import { reportReview } from '../../apis/reviewApi';
-const ReportReviewModal = ({ closeModal, reviewId }) => {
+
+interface ReportReviewModalProps {
+  closeModal: () => void;
+  reviewId: number;
+}
+
+const ReportReviewModal: React.FC<ReportReviewModalProps> = ({
+  closeModal,
+  reviewId,
+}) => {
   const category = [
     { option1: '관련없는 내용' },
     { option2: '상업적 홍보' },
@@ -14,10 +23,10 @@ const ReportReviewModal = ({ closeModal, reviewId }) => {
 
   const [reportCategory, setReportCategory] = useState('');
   const [reportContent, setReportContent] = useState('');
-  const contentChangehandler = (e) => {
+  const contentChangehandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setReportContent(e.target.value);
   };
-  const categoryChangehandler = (e) => {
+  const categoryChangehandler = (e: ChangeEvent<HTMLInputElement>) => {
     setReportCategory(e.target.value);
     console.log(reportCategory);
   };
@@ -29,7 +38,7 @@ const ReportReviewModal = ({ closeModal, reviewId }) => {
   const radios = category.map((option) => {
     return (
       <label htmlFor="">
-        <input
+        <RadioInput
           checked={Object.values(option)[0] === reportCategory}
           onChange={categoryChangehandler}
           type="radio"
@@ -48,7 +57,7 @@ const ReportReviewModal = ({ closeModal, reviewId }) => {
       reportCategory,
       reportContent,
     });
-    const response = reportReview({
+    reportReview({
       reviewId,
       reportCategory,
       reportContent,
@@ -59,7 +68,9 @@ const ReportReviewModal = ({ closeModal, reviewId }) => {
   return (
     <Modal closeModal={closeModal}>
       <ReportReviewStyle>
-        <div className="modal__header">신고하기</div>
+        <div className="modal__header">
+          <div className="header__text">신고하기</div>
+        </div>
 
         <div className="modal__content">
           신고하시는 사유를 선택해주세요.
@@ -70,15 +81,15 @@ const ReportReviewModal = ({ closeModal, reviewId }) => {
           <textarea
             name=""
             id=""
-            cols="30"
-            rows="10"
+            cols={30}
+            rows={10}
             placeholder="비방, 욕설, 광고, 잘못된 정보 등 신고 사유를 구체적으로 작성해주세요"
             onChange={contentChangehandler}
             value={reportContent}
           ></textarea>
         </div>
         <div className="modal__footer">
-          <button onClick={onClickhandler}>등록하기</button>
+          <button onClick={onClickhandler}>신고하기</button>
         </div>
       </ReportReviewStyle>
     </Modal>
@@ -90,27 +101,61 @@ export default ReportReviewModal;
 const ReportReviewStyle = styled.div`
   background-color: white;
   width: 400px;
-  height: 600px;
+  min-height: 500px;
+
   display: flex;
   flex-direction: column;
-  justify-content: space-around; // 컴포넌트들을 수직으로 정렬하고 간격을 일정하게 유지합니다.
+  gap: 1rem; // 컴포넌트들을 수직으로 정렬하고 간격을 일정하게 유지합니다.
   align-items: center; // 컴포넌트들을 가로 방향으로 중앙에 배치합니다.
-  padding: 10px; // 컴포넌트와 테두리 사이의 간격을 추가합니다.
-
   .modal__header {
-    border-bottom: 1px solid black;
-    font-size: 2rem;
-    text-align: center;
     width: 100%; // modal__header의 너비를 부모 요소의 100%로 설정합니다.
+    height: 3rem;
+    padding: 0.5rem 1rem 0 1rem;
+  }
+  .header__text {
+    border-bottom: 1px solid #794a39;
+
+    text-align: start;
+    font-size: 1.5rem;
+    padding-bottom: 1rem;
   }
   .modal__content {
     display: flex;
     flex-direction: column;
     width: 100%; // modal__content의 너비를 부모 요소의 100%로 설정합니다.
+    padding-left: 0.5rem;
+    gap: 0.5rem;
+
+    textarea {
+      border: solid 1px #794a39;
+
+      resize: none;
+      border-radius: 8px;
+      padding: 4px;
+    }
   }
   .modal__footer {
     display: flex;
     justify-content: center; // modal__footer 내부의 버튼을 중앙에 배치합니다.
     width: 100%; // modal__footer의 너비를 부모 요소의 100%로 설정합니다.
+  }
+
+  button {
+    cursor: pointer;
+    width: 100%;
+    padding: 0.5rem;
+    background-color: white;
+    border-radius: 8px;
+    border: solid 1px #794a39;
+    &:hover {
+      background-color: #f9b916; // hover 시 노란색으로 변경
+    }
+  }
+`;
+
+const RadioInput = styled.input`
+  border: 1px solid black;
+  &:checked {
+    background-color: #e74c3c; /* 체크된 상태일 때의 배경색 */
   }
 `;

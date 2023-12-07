@@ -4,37 +4,38 @@ import { StMain } from '../../../components/Stmain';
 import styled from 'styled-components';
 import axios from 'axios';
 
+interface Request {
+  requestId: number;
+  requestContent: string;
+  requestAt: string;
+  restaurantId: number;
+}
 
-const ClosurePage = () => {
-    const [requests, setRequests] = useState([]);
+  const ClosurePage: React.FC = () => {
+    const [requests, setRequests] = useState<Request[]>([]);
     const navigate = useNavigate();
   
     useEffect(() => {
-      // 로컬 스토리지에서 토큰을 가져옵니다.
       const accessToken = localStorage.getItem('accessToken');
   
       if (accessToken) {
-        axios.get('http://3.38.32.91/sunflowerPlate/admin/restaurant/edit/', { // 실제 API 엔드포인트 URL로 교체하세요.
+        axios.get<Request[]>('http://3.38.32.91/sunflowerPlate/admin/restaurant/edit/', {
           headers: {
-            "X-AUTH-TOKEN": accessToken,// 헤더에 토큰 추가
+            "X-AUTH-TOKEN": accessToken,
           }
         })
         .then(response => {
-          console.log(response.data); //지워야함
-          setRequests(response.data); // axios는 자동으로 JSON을 파싱합니다.
+          setRequests(response.data);
         })
         .catch(error => {
           console.error('Error fetching data:', error);
-          // 오류 처리 로직을 추가할 수 있습니다.
         });
       } else {
         console.error('Access token is not available in local storage.');
-        // 토큰이 없을 경우의 처리 로직을 추가할 수 있습니다.
       }
     }, []);
 
-    const goToEditPage = (restaurantId:number) => {
-      // navigate(`/store-regist/${restaurantId}`);
+    const goToEditPage = (restaurantId: number) => {
       navigate(`edit/${restaurantId}`);
     };
   

@@ -19,6 +19,16 @@ interface ApiError extends Error {
 }
 
 
+
+
+// 에러 타입 정의
+interface ApiError extends Error {
+  response?: {
+    data: any;
+    status: number;
+  };
+}
+
 // login 함수 정의
 export const login = async (email: string, password: string): Promise<LoginResponse> => {
   try {
@@ -47,6 +57,7 @@ export const login = async (email: string, password: string): Promise<LoginRespo
 };
 
 
+// logout 함수
 export const logout = async (): Promise<void> => {
   try {
     await axiosInstance.post('/sunflowerPlate/user/logout', {}, {

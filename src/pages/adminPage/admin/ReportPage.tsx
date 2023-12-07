@@ -3,7 +3,18 @@ import styled from 'styled-components';
 import { StMain } from '../../../components/Stmain';
 import axios from 'axios';
 
-const ReportPage = () => {
+// report 객체의 타입 정의
+interface Report {
+  reviewId: number;
+  memberProfilePicture: string;
+  nickName: string;
+  reportAt: string;
+  reportContent: string;
+  reviewProfilePicture: string;
+  reviewAuthor: string;
+}
+
+const ReportPage: React.FC = () => {
   const [reportData, setReportData] = useState<any>([]);
 
   useEffect(() => {
@@ -41,7 +52,7 @@ const ReportPage = () => {
   fetchReports();
 }, []);
 
-const handleDelete = async (reviewId) => {
+const handleDelete = async (reviewId: number) => {
   try {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
@@ -54,7 +65,7 @@ const handleDelete = async (reviewId) => {
 
     await axios.delete(`http://3.38.32.91/sunflowerPlate/admin/review/delete?reviewId=${reviewId}`, { headers });
 
-    const filteredReports = reportData.filter(report => report.reviewId !== reviewId);
+    const filteredReports = reportData.filter((report: Report) => report.reviewId !== reviewId);
     setReportData(filteredReports);
 
     alert('리뷰가 삭제되었습니다');
@@ -70,7 +81,7 @@ const handleDelete = async (reviewId) => {
       <Title>신고내역조회</Title>
 
       <ReportDataContainer>
-      {reportData.map((report) => (
+      {reportData.map((report: Report) => (
         <ReportItem key={report.reviewId}>
           <ProfileSection>
             <ProfileImage src={report.memberProfilePicture} alt="신고한 사람 프로필" />

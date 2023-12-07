@@ -12,7 +12,8 @@ import {
   ReviewButton,
 } from './Reviewstyle';
 import { deleteReviewMutation } from '../../hooks/reviewQuery';
-
+import { FaHeart } from 'react-icons/fa';
+import { Button } from '@chakra-ui/react';
 type ReviewType = {
   reviewId: number;
   memberId: number;
@@ -27,8 +28,8 @@ type ReviewType = {
 };
 
 type ReviewProps = {
-  review: ReviewType; // ReviewType으로 타입 지정
-  setReviewsInfo: React.Dispatch<React.SetStateAction<ReviewType[]>>; // setReviewsInfo 타입 지정
+  review: ReviewType;
+  setReviewsInfo: React.Dispatch<React.SetStateAction<ReviewType[]>>;
 };
 
 const Review: React.FC<ReviewProps> = ({ review, setReviewsInfo }) => {
@@ -115,12 +116,18 @@ const Review: React.FC<ReviewProps> = ({ review, setReviewsInfo }) => {
           </div>
 
           <div className="review__buttons">
-            <LikeButtonBox>
-              <LikeButton
+            <LikeButtonBox onClick={clickLikeHandler}>
+              <div className="icon-box">
+                <FaHeart
+                  className="like-icon"
+                  color={empathyReview ? '#f91880' : '#e0e0e0'}
+                />
+              </div>
+
+              {/* <LikeButton
                 className={`like-button ${empathyReview ? 'liked' : ''}`}
-                onClick={clickLikeHandler}
-              />
-              {empathyCount}
+              /> */}
+              <div className="count-box">{empathyCount}</div>
             </LikeButtonBox>
 
             {/* "reviewEmpathyCount": 0,
@@ -129,7 +136,7 @@ const Review: React.FC<ReviewProps> = ({ review, setReviewsInfo }) => {
               <ReviewButton onClick={openPutReviewModal}>수정</ReviewButton>
             )}
             {localStorage.getItem('nickName') !== null && (
-              <ReviewButton onClick={openReportReviewModal}>신고</ReviewButton>
+              <Button onClick={openReportReviewModal}>신고</Button>
             )}
             {localStorage.getItem('nickName') === review.memberNickname && (
               <ReviewButton onClick={deleteButtonhHandler}>삭제</ReviewButton>
