@@ -20,8 +20,8 @@ const AdminSettingPage: React.FC = () => {
           </Set.DashBoardSection>
         </Set.AdminMain>
 
-    </Set.GridContainer>
-      </Set.MainContainer>
+      </Set.GridContainer>
+    </Set.MainContainer>
    
   );
 };

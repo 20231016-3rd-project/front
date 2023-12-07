@@ -7,7 +7,7 @@ import report from "../../assets/images/report.svg"
 import closure from "../../assets/images/closure.svg"
 import { Link } from 'react-router-dom';
 
-import Toggle from "./toggle";
+import Toggle from "./Toggle";
 
 
 const AdminNav: React.FC<{ isDay: boolean; setIsDay: (isDay: boolean) => void }>
