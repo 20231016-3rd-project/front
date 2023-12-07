@@ -31,11 +31,19 @@ export const login = async (email: string, password: string): Promise<LoginRespo
       localStorage.setItem('accessToken', accessToken);
     }
 
+ 
     return response.data;
   } catch (error) {
-    throw error;
+    if (axios.isAxiosError(error)) {
+      // AxiosError에서 필요한 정보만 추출하여 throw
+      throw { message: error.message, status: error.response?.status };
+    } else {
+      // 그 외 예외 처리
+      throw { message: '알 수 없는 오류 발생', status: null };
+    }
   }
 };
+
 
 export const logout = async (): Promise<void> => {
   try {

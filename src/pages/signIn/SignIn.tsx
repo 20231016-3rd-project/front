@@ -59,12 +59,13 @@ const SignIn = () => {
       dispatch(submitLogout())
         .unwrap()
         .then(() => {
-          
           navigate('/');
         })
         .catch((error) => {
-          // 로그아웃 실패 시
-          console.error('Error during logout', error);
+  
+          alert('로그아웃 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    
+          console.error('Error during logout:', error);
         });
     };
 

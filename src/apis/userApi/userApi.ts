@@ -44,36 +44,36 @@ export const checkNicknameDuplication = async (nickname: string): Promise<any> =
   }
 };
 
-// 사용자 프로필 업데이트 함수
-export const updateUserProfile = async (data: UserProfileUpdateRequest): Promise<any> => {
-  try {
-    const response = await axiosInstance.put('/sunflowerPlate/user/userprofile', data, {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('accessToken'),
-      },
-    });
-    return response.data;
+// // 사용자 프로필 업데이트 함수
+// export const updateUserProfile = async (data: UserProfileUpdateRequest): Promise<any> => {
+//   try {
+//     const response = await axiosInstance.put('/sunflowerPlate/user/userprofile', data, {
+//       headers: {
+//         'X-AUTH-TOKEN': localStorage.getItem('accessToken'),
+//       },
+//     });
+//     return response.data;
 
-  } catch (error) {
-    console.error('회원정보 수정 중 에러 발생', error);
-    throw error;
-  }
-};
+//   } catch (error) {
+//     console.error('회원정보 수정 중 에러 발생', error);
+//     throw error;
+//   }
+// };
 
-// 회원정보 요청 함수
-export const fetchUserProfile = async (): Promise<any> => {
-  try {
-    const response = await axiosInstance.get('/sunflowerPlate/user/userprofile', {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('accessToken'), // 액세스 토큰 포함
-      },
-    });
+// // 회원정보 요청 함수
+// export const fetchUserProfile = async (): Promise<any> => {
+//   try {
+//     const response = await axiosInstance.get('/sunflowerPlate/user/userprofile', {
+//       headers: {
+//         'X-AUTH-TOKEN': localStorage.getItem('accessToken'), // 액세스 토큰 포함
+//       },
+//     });
 
-    return response.data; // 회원 정보 데이터 반환
+//     return response.data; // 회원 정보 데이터 반환
 
-  } catch (error) {
-    console.error('회원정보 요청 중 에러 발생', error);
-    throw error;
-  }
-};
+//   } catch (error) {
+//     console.error('회원정보 요청 중 에러 발생', error);
+//     throw error;
+//   }
+// };
 

@@ -55,12 +55,14 @@ export const submitLogin = createAsyncThunk(
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await login(email, password);
+      localStorage.setItem('accessToken', response.accessToken); // 여기에서만 토큰 저장
       return response; 
     } catch (error) {
       return rejectWithValue(error);
     }
   }
 );
+
 
 export const submitLogout = createAsyncThunk(
   'auth/submitLogout',
@@ -69,11 +71,14 @@ export const submitLogout = createAsyncThunk(
       await logout();
       localStorage.removeItem('accessToken'); 
     } catch (error: any) {
-      console.error('로그아웃 중 에러 발생', error);
-      return rejectWithValue(error.response?.data ?? '로그아웃 실패');
+      console.error('로그아웃 중 에러 발생:', error);
+
+      const errorMessage = '로그아웃 실패. 잠시 후 다시 시도해 주세요.';
+      return rejectWithValue(errorMessage);
     }
   }
 );
+
 export const refreshAccessToken = createAsyncThunk(
   'auth/refreshAccessToken',
   async (_, { rejectWithValue }) => {
@@ -128,25 +133,24 @@ const authSlice = createSlice({
       localStorage.setItem('accessToken', action.payload.accessToken); // 토큰저장주석처리
     })
     .addCase(submitLogin.rejected, (state, action) => {
-      state.isAuthenticated = false; // 로그인 실패
+      state.isAuthenticated = false;
       state.isRefreshingToken = false;
-      state.error = action.error.message ?? '알 수 없는 오류 발생';
+      state.error = action.error.message ?? '알 수 없는 오류 발생'; 
     })
-      .addCase(submitLogout.pending, (state) => {
-        state.isRefreshingToken = true; // 로그아웃 시도 중
-      })
-      .addCase(submitLogout.fulfilled, (state) => {
-        state.isAuthenticated = false;
-        state.isRefreshingToken = false;
-        state.userData = initialState.userData;
-        state.error = null;
-        localStorage.removeItem('accessToken'); // 토큰 제거
-      })
-      .addCase(submitLogout.rejected, (state, action) => {
-        state.isRefreshingToken = false;
-        
-        state.error = action.error.message ?? '로그아웃 중 오류 발생';
-      })
+    .addCase(submitLogout.pending, (state) => {
+      state.isRefreshingToken = true;
+    })
+    .addCase(submitLogout.fulfilled, (state) => {
+      state.isAuthenticated = false;
+      state.isRefreshingToken = false;
+      state.userData = initialState.userData;
+      state.error = null;
+      localStorage.removeItem('accessToken');
+    })
+    .addCase(submitLogout.rejected, (state, action) => {
+      state.isRefreshingToken = false;
+      state.error = action.error.message ?? '로그아웃 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.';
+    }) 
       .addCase(refreshAccessToken.pending, (state) => {
         state.isRefreshingToken = true; 
       })

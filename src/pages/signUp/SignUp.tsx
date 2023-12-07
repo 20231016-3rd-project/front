@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { checkEmailDuplication, checkNicknameDuplication } from '../../apis/userApi/userApi';
 import { Container, Input, Button, ErrorMsg, FieldContainer, Label, InputButtonContainer,  InputField,  PhoneFieldContainer,  PhoneInputContainer, PhoneInput, SignUpButton,  CheckButton } from './SignUp.styles';
 import { useNavigate } from 'react-router-dom';
-import { submitSignup } from './signupSlice';
+import { submitSignup } from '../../store/slices/signupSlice';
 
 interface PhoneState {
   part1: string;

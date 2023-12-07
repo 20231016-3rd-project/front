@@ -7,7 +7,7 @@ import modalReducer from './slices/modalSlice';
 import keywordReducer from './slices/keywordSlice';
 import bestReducer from './slices/bestSlice';
 import myLikeReducer from './slices/myLikeSlice';
-import signupReducer from '../pages/signUp/signupSlice';
+import signupReducer from './slices/signupSlice';
 
 const store = configureStore({
   reducer: {
