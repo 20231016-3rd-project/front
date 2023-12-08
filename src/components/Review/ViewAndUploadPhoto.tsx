@@ -91,9 +91,9 @@ const ViewAndUploadPhoto: React.FC<UploadPhotoProps> = ({
                 display={'flex'}
                 justifyContent={'center'}
                 alignItems={'center'}
+                key={index}
               >
                 <IconButton
-                  key={index}
                   aria-label="delete image"
                   icon={<CloseIcon />}
                   color={'white'}
