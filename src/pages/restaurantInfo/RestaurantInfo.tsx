@@ -22,8 +22,7 @@ import { useEffect, useState } from 'react';
 import Map from './Map';
 import Review from '../../components/Review/Review';
 import WriteReviewModal from '../../components/Review/WriteReviewModal';
-import { InfoButton, RegistButton } from './Button';
-import { getRestaurantDetail } from '../../apis/getRestaurantApi/getRestaurant';
+// import { getRestaurantDetail } from '../../apis/getRestaurantApi/getRestaurant';
 import { useParams } from 'react-router';
 import heart from '../../assets/images/heart.png';
 import heartFill from '../../assets/images/heartfill.png';
@@ -34,6 +33,7 @@ import EditinfoRequestModal from '../../components/Restaurant/EditInfoRequestMod
 import { getRestaurantDetailQuery } from '../../hooks/reviewQuery.ts';
 import { StackDivider, Button } from '@chakra-ui/react';
 import ShareButton from './ShareButton.tsx';
+import { darken } from 'polished';
 const RestaurantInfo: React.FC = () => {
   const { restaurantId } = useParams<{ restaurantId: string }>();
   const { data, isLoading } = getRestaurantDetailQuery(restaurantId ?? '');
@@ -155,7 +155,11 @@ const RestaurantInfo: React.FC = () => {
                 <InfoHeader>
                   <div className="info__title">{data.restaurantName}</div>
                   <ButtonBox>
-                    <Button color={'black'} onClick={handleLikeBtn}>
+                    <Button
+                      color={'black'}
+                      onClick={handleLikeBtn}
+                      borderRadius={'full'}
+                    >
                       {!data.restaurantLikeCountDto.likedRestaurant && (
                         <LikeImg src={heart} alt="" />
                       )}
@@ -226,8 +230,8 @@ const RestaurantInfo: React.FC = () => {
                   <div>
                     <Button
                       variant={'solid'}
-                      colorScheme={'yellow'}
                       onClick={openWriteReviewModal}
+                      colorScheme="#f9b916;"
                     >
                       리뷰작성
                     </Button>

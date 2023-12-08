@@ -29,19 +29,18 @@ type ReviewType = {
 
 type ReviewProps = {
   review: ReviewType;
-  setReviewsInfo: React.Dispatch<React.SetStateAction<ReviewType[]>>;
+  // setReviewsInfo: React.Dispatch<React.SetStateAction<ReviewType[]>>;
 };
 
-const Review: React.FC<ReviewProps> = ({ review, setReviewsInfo }) => {
+const Review: React.FC<ReviewProps> = ({ review }) => {
   const [isReportReviewOpen, setIsReportReviewOpen] = useState(false);
   const [isViewReviewOpen, setIsViewReviewOpen] = useState(false);
   const [isPutReviewOpen, setIsPutReviewOpen] = useState(false);
-  const [profile, setProfile] = useState({});
   const [empathyReview, setEmpathyReview] = useState(
     review.empathyReview ?? false
   );
   const [empathyCount, setEmpathyCount] = useState(review.reviewEmpathyCount);
-  let location = useLocation();
+  // let location = useLocation();
   const clickLikeHandler = () => {
     setEmpathyReview((prev: boolean) => !prev);
     if (empathyReview) {
@@ -79,7 +78,7 @@ const Review: React.FC<ReviewProps> = ({ review, setReviewsInfo }) => {
   //   getMyProfile().then((r) => setProfile(r));
   // }, []);
   console.log(localStorage.getItem('nickcname'));
-  const [isLiked, setIsLiked] = useState(review.empathyReview);
+  // const [isLiked, setIsLiked] = useState(review.empathyReview);
 
   return (
     <>
@@ -89,13 +88,13 @@ const Review: React.FC<ReviewProps> = ({ review, setReviewsInfo }) => {
           reviewId={review.reviewId}
         />
       )}
-      {isPutReviewOpen && (
-        <PutReviewModal
-          closeModal={closePutReviewModal}
-          review={review}
-          setReviewsInfo={setReviewsInfo}
-        />
-      )}
+      {/* {isPutReviewOpen && (
+        // <PutReviewModal
+        //   closeModal={closePutReviewModal}
+        //   review={review}
+        //   // setReviewsInfo={setReviewsInfo}
+        // />
+      )} */}
       {isViewReviewOpen && (
         <ViewReviewModal closeModal={closeViewReviewModal} />
       )}
