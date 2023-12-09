@@ -101,7 +101,7 @@ const Header: React.FC = () => {
                 </NicknameButton>
                 {showDropdown && (
                   <DropdownMenu>
-                    <DropdownItem onClick={handleUserSettings}>회원정보 수정</DropdownItem>
+                    <DropdownItem onClick={handleUserSettings}>회원정보</DropdownItem>
                     <DropdownItem onClick={handleLogout}>로그아웃</DropdownItem>
                   </DropdownMenu>
                 )}
@@ -214,12 +214,14 @@ const Button = styled.button`
 const NicknameButton = styled.button`
   background-color: white;
   cursor: pointer;
+  margin-right: 20px;
   // 추가적인 스타일링
 `;
 
 const DropdownMenu = styled.div`
   position: absolute;
-  top: 100%; // 헤더 바로 아래에 위치하도록 설정
+  top: 7%;
+  margin-right: 20px;
   right: 0;
   background-color: white;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);

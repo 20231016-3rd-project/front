@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   return (
@@ -9,7 +10,7 @@ const Footer: React.FC = () => {
         <Span>개인정보처리방침</Span>
         <Span>이용약관</Span>
         <Span>위치기반 서비스 이용약관</Span>
-        <Span>관리자모드</Span>
+        <Span><Link to="/admin">관리자모드</Link></Span>
       </FirstRow>
       <MiddleRow>
         <Span>(주)해바라기플레이트</Span>
@@ -41,6 +42,10 @@ const FirstRow = styled.div`
 `;
 const Span = styled.span`
   margin-right: 1.5rem;
+  cursor: pointer;
+  :hover {
+    color: blue;
+  }
 `;
 const MiddleRow = styled.div`
   margin-bottom: 1rem;
