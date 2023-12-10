@@ -114,9 +114,8 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
   // useEffect(() => {
   //   getMyProfile().then((r) => setProfile(r));
   // }, []);
-  console.log(localStorage.getItem('nickcname'));
   // const [isLiked, setIsLiked] = useState(review.empathyReview);
-
+  console.log('elm', review.memberNickname, review.memberProfilePicture);
   return (
     <>
       {isReportReviewOpen && (
@@ -148,9 +147,9 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
                 fontSize={'0.75rem'}
               >
                 <div className="profile__name">
-                  {review.memberNickname.length < 9
+                  {review.memberNickname.length < 8
                     ? review.memberNickname
-                    : `${review.memberNickname.substring(0, 7)} ...`}
+                    : `${review.memberNickname.substring(0, 6)} ...`}
                 </div>
               </Tooltip>
               <div className="review__stars">

@@ -17,6 +17,7 @@ import {
   MenuHourBox,
   InfoHeader,
   Divider,
+  ImageSectionGrid,
 } from './Resaurantstyle.ts';
 import { useEffect, useState } from 'react';
 import Map from './Map';
@@ -37,6 +38,7 @@ import { FaLocationDot } from 'react-icons/fa6';
 import { FaLink, FaPhone } from 'react-icons/fa';
 
 import { darken } from 'polished';
+import MenuCard from './MenuCard.tsx';
 const RestaurantInfo: React.FC = () => {
   const { restaurantId } = useParams<{ restaurantId: string }>();
   const { data, isLoading } = getRestaurantDetailQuery(restaurantId ?? '');
@@ -146,13 +148,14 @@ const RestaurantInfo: React.FC = () => {
                   </div>
                 </ImageSection>
               ) : (
-                <ImageSection>
-                  <div className="images__view">
-                    {data.restaurantImageDtoList.map((image: any) => (
-                      <img src={image.restaurantOriginUrl} />
-                    ))}
-                  </div>
-                </ImageSection>
+                <ImageSectionGrid>
+                  {data.restaurantImageDtoList.map((image: any) => (
+                    <img
+                      className="gird-item"
+                      src={image.restaurantOriginUrl}
+                    />
+                  ))}
+                </ImageSectionGrid>
               )}
               <InfoSection>
                 <InfoHeader>
@@ -209,14 +212,11 @@ const RestaurantInfo: React.FC = () => {
                         {data.restaurantMenuDtoList.map(
                           (menu: any, index: any) => {
                             return (
-                              <div key={index}>
-                                <span className="menu_name">
-                                  {menu.restaurantMenuName} -----{' '}
-                                </span>
-                                <span className="menu_price">
-                                  {menu.restaurantMenuPrice}원
-                                </span>
-                              </div>
+                              <MenuCard
+                                key={index}
+                                restaurantMenuName={menu.restaurantMenuName}
+                                restaurantMenuPrice={menu.restaurantMenuPrice}
+                              />
                             );
                           }
                         )}

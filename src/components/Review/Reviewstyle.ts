@@ -122,12 +122,11 @@ export const ReviewLayout = styled.div`
       height: 30px;
     }
     display: flex;
-    gap: 1rem;
+    gap: 0.625rem;
   }
 
   .review__text {
     font-size: 0.75rem;
-    height: 70px;
     padding-top: 1rem;
   }
   .review__images {
