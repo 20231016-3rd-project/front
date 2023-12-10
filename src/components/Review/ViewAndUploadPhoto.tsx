@@ -117,7 +117,12 @@ const ViewAndUploadPhoto: React.FC<UploadPhotoProps> = ({
               </Box>
             );
           })}
-          {selectedFiles.length < 3 && <AddImageButton />}
+          {selectedFiles.length < 3 && (
+            <AddImageButton
+              selectedFiles={selectedFiles}
+              setSelectedFiles={setSelectedFiles}
+            />
+          )}
           {index === 1 && (
             <IconButton
               aria-label="next"
