@@ -132,7 +132,7 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
         // />
       )} */}
       {isViewReviewOpen && (
-        <ViewReviewModal closeModal={closeViewReviewModal} />
+        <ViewReviewModal closeModal={closeViewReviewModal} review={review} />
       )}
       <ReviewLayout>
         <div className="review__header">

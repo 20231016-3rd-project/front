@@ -3,43 +3,57 @@ import Modal from '../Modal/Modal';
 import styled from 'styled-components';
 import infoImg from '../../pages/restaurantInfo/info-image.jpg';
 import Star from '../Star/Star';
+import ImageSlider from './ImageSlider';
 
+type ReviewType = {
+  reviewId: number;
+  memberId: number;
+  memberNickname: string;
+  memberProfilePicture: string;
+  reviewAt: string;
+  reviewContent: string;
+  reviewEmpathyCount: number;
+  reviewImageDtoList: any[];
+  reviewStarRating: number;
+  empathyReview: boolean;
+};
 interface ViewReviewModalProps {
   closeModal: () => void;
+  review: ReviewType;
 }
 
-const ViewReviewModal: React.FC<ViewReviewModalProps> = ({ closeModal }) => {
+const ViewReviewModal: React.FC<ViewReviewModalProps> = ({
+  closeModal,
+  review,
+}) => {
   return (
     <Modal closeModal={closeModal}>
       <ViewReviewStyle>
-        <div className="image-box">image</div>
+        <div className="image-box">
+          <ImageSlider slides={review.reviewImageDtoList} />
+        </div>
         <div className="modal__side">
           <div className="modal__header">
-            <div className="modal__title">가게 정보</div>
+            <div className="modal__title"></div>
             <div className="review__profile">
               <div className="profile__image">
-                <img src={infoImg} alt="" />
+                <img src={review.memberProfilePicture} alt="" />
               </div>
               <div className="profile__info">
-                <div className="profile__name">nicknick</div>
+                <div className="profile__name">{review.memberNickname}</div>
                 <div className="review__stars">
-                  <Star score={4} />
+                  <Star score={review.reviewStarRating} />
                 </div>
               </div>
             </div>
           </div>
           <div className="modal__content">
-            <div className="content__text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Assumenda, sapiente alias eligendi fugit, rem placeat soluta dolor
-              labore error ut aliquid vitae obcaecati explicabo nisi tempore,
-              dolores perferendis expedita facere?
-            </div>
+            <div className="content__text">{review.reviewContent}</div>
           </div>
-          <div className="modal__footer">
+          {/* <div className="modal__footer">
             <button>공감</button>
             <button>신고 </button>
-          </div>
+          </div> */}
         </div>
       </ViewReviewStyle>
     </Modal>
@@ -50,10 +64,23 @@ export default ViewReviewModal;
 
 const ViewReviewStyle = styled.div`
   display: flex;
-  width: 1200px;
+  max-width: 1200px;
   height: 600px;
+  background-color: #f1f1f1;
+  border-radius: 0.5rem;
+  gap: 1rem;
+  padding: 1rem;
+  .modal__side {
+    /* background-color: white; */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
   .image-box {
-    width: 900px;
+    width: 800px;
+    aspect-ratio: 6 / 5;
+    border: 0.5rem;
   }
   .modal__title {
     font-size: 2rem;
@@ -82,6 +109,16 @@ const ViewReviewStyle = styled.div`
   }
 
   .content__text {
-    width: 300px;
+    padding: 1rem;
+    max-width: 300px;
+    min-height: 300px;
+    background-color: white;
+    border-radius: 0.5rem;
+    overflow-y: auto;
+  }
+  .modal__footer {
+    width: 100%;
+    background-color: white;
+    border-radius: 0.5rem;
   }
 `;
