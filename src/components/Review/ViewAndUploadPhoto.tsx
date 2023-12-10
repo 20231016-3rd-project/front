@@ -111,6 +111,8 @@ const ViewAndUploadPhoto: React.FC<UploadPhotoProps> = ({
                   key={index}
                   borderRadius={'2xl'}
                   src={URL.createObjectURL(file)}
+                  h={'180px'}
+                  w={'220px'}
                 />
               </Box>
             );
