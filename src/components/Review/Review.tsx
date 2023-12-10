@@ -1,5 +1,5 @@
 import Star from '../Star/Star';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import ReportReviewModal from './ReportReviewModal';
 import ViewReviewModal from './ViewReviewModal';
 import PutReviewModal from './PutReviewModal';
@@ -13,7 +13,10 @@ import {
 } from './Reviewstyle';
 import { deleteReviewMutation } from '../../hooks/reviewQuery';
 import { FaHeart } from 'react-icons/fa';
-import { Button } from '@chakra-ui/react';
+import { AlertDialog, Button, useDisclosure, useToast } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
+import { ReducerType } from '../../store/rootReducer';
+import AlertReview from './AlertReview';
 type ReviewType = {
   reviewId: number;
   memberId: number;
@@ -40,6 +43,15 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
     review.empathyReview ?? false
   );
   const [empathyCount, setEmpathyCount] = useState(review.reviewEmpathyCount);
+  const { isAuthenticated, userData } = useSelector(
+    (state: ReducerType) => state.signin
+  );
+  const {
+    isOpen: removeReviewisOpen,
+    onOpen: removeReviewOnOpen,
+    onClose: removeReivewOnClose,
+  } = useDisclosure();
+  const removeReviewRef = useRef<HTMLButtonElement>(null);
   // let location = useLocation();
   const clickLikeHandler = () => {
     setEmpathyReview((prev: boolean) => !prev);
@@ -69,10 +81,29 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
     setIsPutReviewOpen(false);
   };
   console.log('Review', review);
-
+  const toast = useToast();
   const { mutate } = deleteReviewMutation();
   const deleteButtonhHandler = () => {
-    mutate(review.reviewId);
+    try {
+      mutate(review.reviewId);
+
+      toast({
+        title: '리뷰가 삭제되었습니다.',
+        status: 'success',
+        duration: 4000,
+        isClosable: true,
+        position: 'top',
+      });
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: '리뷰 삭제에 실패했습니다.',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+        position: 'top',
+      });
+    }
   };
   // useEffect(() => {
   //   getMyProfile().then((r) => setProfile(r));
@@ -105,9 +136,7 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
               <img src={review.memberProfilePicture} alt="" />
             </div>
             <div className="profile__info">
-              <div className="profile__name">
-                {review.memberNickname || '익명의 유저'}
-              </div>
+              <div className="profile__name">{review.memberNickname}</div>
               <div className="review__stars">
                 <Star score={review.reviewStarRating} />
               </div>
@@ -123,23 +152,36 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
                 />
               </div>
 
-              {/* <LikeButton
-                className={`like-button ${empathyReview ? 'liked' : ''}`}
-              /> */}
               <div className="count-box">{empathyCount}</div>
             </LikeButtonBox>
 
-            {/* "reviewEmpathyCount": 0,
-                "empathyReview": false */}
-            {localStorage.getItem('nickName') === review.memberNickname && (
-              <ReviewButton onClick={openPutReviewModal}>수정</ReviewButton>
-            )}
-            {localStorage.getItem('nickName') !== null && (
-              <Button onClick={openReportReviewModal}>신고</Button>
-            )}
-            {localStorage.getItem('nickName') === review.memberNickname && (
-              <ReviewButton onClick={deleteButtonhHandler}>삭제</ReviewButton>
-            )}
+            {isAuthenticated &&
+              userData?.nickname === review.memberNickname && (
+                <Button onClick={openPutReviewModal}>수정</Button>
+              )}
+            {isAuthenticated &&
+              userData?.nickname !== null &&
+              userData?.nickname !== review.memberNickname && (
+                <Button onClick={openReportReviewModal}>신고</Button>
+              )}
+            {isAuthenticated &&
+              userData?.nickname === review.memberNickname && (
+                <Button
+                  colorScheme="red"
+                  variant={'outline'}
+                  onClick={removeReviewOnOpen}
+                  // onClick={deleteButtonhHandler}
+                >
+                  삭제
+                </Button>
+              )}
+            <AlertReview
+              isOpen={removeReviewisOpen}
+              onOpen={removeReviewOnOpen}
+              onClose={removeReivewOnClose}
+              cancelRef={removeReviewRef}
+              onDelete={deleteButtonhHandler}
+            />
           </div>
         </div>
 
