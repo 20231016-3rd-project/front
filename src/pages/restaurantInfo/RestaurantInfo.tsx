@@ -33,6 +33,9 @@ import EditinfoRequestModal from '../../components/Restaurant/EditInfoRequestMod
 import { getRestaurantDetailQuery } from '../../hooks/reviewQuery.ts';
 import { StackDivider, Button } from '@chakra-ui/react';
 import ShareButton from './ShareButton.tsx';
+import { FaLocationDot } from 'react-icons/fa6';
+import { FaLink, FaPhone } from 'react-icons/fa';
+
 import { darken } from 'polished';
 const RestaurantInfo: React.FC = () => {
   const { restaurantId } = useParams<{ restaurantId: string }>();
@@ -177,16 +180,17 @@ const RestaurantInfo: React.FC = () => {
                 <Divider />
                 <InfoAddressBox>
                   <div className="info__local-address">
-                    주소: {data.restaurantAddress}
+                    <FaLocationDot />
+                    <div>{data.restaurantAddress}</div>
                   </div>
                   <div className="info__online-address">
-                    웹사이트:{' '}
+                    <FaLink />
                     <a href={data.restaurantWebSite}>
-                      {data.restaurantWebSite}
+                      <div>{data.restaurantWebSite}</div>
                     </a>
                   </div>
                   <div className="info__online-address">
-                    전화번호: {data.restaurantTelNum}
+                    <FaPhone /> <div>{data.restaurantTelNum}</div>
                   </div>
                 </InfoAddressBox>
                 <Divider />

@@ -142,6 +142,8 @@ export const LeftContainer = styled.div`
   background-color: white;
   border-radius: 16px;
   width: 55%;
+  min-width: 500px;
+
   padding: 1rem;
 `;
 export const RightContainer = styled.div`
@@ -203,8 +205,14 @@ export const RestaurantInfoLayout = styled.div`
   }
 
   .info__local-address {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
   }
   .info__online-address {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
   }
   .info__business-hours {
     margin-bottom: 10px;
