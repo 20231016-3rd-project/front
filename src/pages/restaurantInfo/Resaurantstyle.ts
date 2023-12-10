@@ -12,6 +12,8 @@ export const ReviewContainer = styled.div`
   width: 95%;
   display: block;
   padding: 1rem;
+  max-height: 100vh;
+  overflow-y: scroll;
 `;
 
 export const ReviewsHeader = styled.div`
@@ -147,11 +149,12 @@ export const RightContainer = styled.div`
   border-radius: 16px;
   display: flex;
   width: 45%;
+  height: 100%;
   display: flex;
   justify-content: center;
   padding: 1rem;
   box-sizing: border-box;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 `;
 export const RestaurantInfoLayout = styled.div`
   background-color: #f9f9f9;
