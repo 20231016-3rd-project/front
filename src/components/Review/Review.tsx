@@ -13,7 +13,13 @@ import {
 } from './Reviewstyle';
 import { deleteReviewMutation } from '../../hooks/reviewQuery';
 import { FaHeart } from 'react-icons/fa';
-import { AlertDialog, Button, useDisclosure, useToast } from '@chakra-ui/react';
+import {
+  AlertDialog,
+  Button,
+  Tooltip,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../store/rootReducer';
 import AlertReview from './AlertReview';
@@ -136,7 +142,17 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
               <img src={review.memberProfilePicture} alt="" />
             </div>
             <div className="profile__info">
-              <div className="profile__name">{review.memberNickname}</div>
+              <Tooltip
+                label={review.memberNickname}
+                placement="top"
+                fontSize={'0.75rem'}
+              >
+                <div className="profile__name">
+                  {review.memberNickname.length < 9
+                    ? review.memberNickname
+                    : `${review.memberNickname.substring(0, 7)} ...`}
+                </div>
+              </Tooltip>
               <div className="review__stars">
                 <Star score={review.reviewStarRating} />
               </div>
@@ -157,7 +173,13 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
 
             {isAuthenticated &&
               userData?.nickname === review.memberNickname && (
-                <Button onClick={openPutReviewModal}>수정</Button>
+                <Button
+                  onClick={openPutReviewModal}
+                  colorScheme="yellow"
+                  variant={'outline'}
+                >
+                  수정
+                </Button>
               )}
             {isAuthenticated &&
               userData?.nickname !== null &&

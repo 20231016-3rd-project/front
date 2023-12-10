@@ -149,6 +149,7 @@ export const RightContainer = styled.div`
   border-radius: 16px;
   display: flex;
   width: 45%;
+  min-width: 400px;
   height: 100%;
   display: flex;
   justify-content: center;
