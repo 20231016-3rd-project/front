@@ -14,9 +14,7 @@ const Header: React.FC = () => {
   const dispatch = useDispatch();
   const { isAuthenticated, isAdmin, userData } = useSelector((state: ReducerType) => state.auth);
 
-  
-
-  const handleLogout = async () => {
+const handleLogout = async () => {
     try {
       dispatch(submitLogout());
       navigate('/signin');
