@@ -10,7 +10,7 @@ const Map: React.FC<MapProps> = ({ address }) => {
   const geocoder = new kakao.maps.services.Geocoder();
   console.log('map안에', address);
   useEffect(() => {
-    geocoder.addressSearch(address, function (result, status) {
+    geocoder.addressSearch(address, function (result: any, status: any) {
       // console.log('map address', address);
       // console.log('Mapresult:', result);
       // console.log('map satus', status, kakao.maps.services.Status.OK);
