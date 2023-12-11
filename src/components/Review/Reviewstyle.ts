@@ -86,6 +86,7 @@ export const ReviewLayout = styled.div`
   margin-bottom: 20px;
   padding: 0.5rem;
   border-radius: 0.5rem;
+  min-width: 350px;
   .review__header {
     display: flex;
     justify-content: space-between;

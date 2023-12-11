@@ -1,22 +1,25 @@
-import Review from '../../../components/Review/Review';
 import { useEffect, useState } from 'react';
 import { getMyReviews } from '../../../apis/reviewApi';
 import styled from 'styled-components';
+import MyReview from './MyReview';
 const MyReviewsPage = () => {
   const [reviewArray, setReviewArray] = useState([]);
+  const [reviewChangeTrigger, setReviewChangeTrigger] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isReviewEmpty, setIsReviewEmpty] = useState(null);
   useEffect(() => {
     getMyReviews().then((data) => setReviewArray(data));
-  }, []);
+  }, [reviewChangeTrigger]);
   return (
     <MyReviewStyle>
       {reviewArray.map((review, index) => {
         return (
           <div>
-            <div>{review.restaurantName}</div>
-            <div>{review.reviewAt}</div>
-            <Review key={index} review={review} />
+            <MyReview
+              key={index}
+              review={review}
+              reviewRefresh={setReviewChangeTrigger}
+            />
           </div>
         );
       })}
