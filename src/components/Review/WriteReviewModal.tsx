@@ -1,7 +1,7 @@
 import Modal from '../Modal/Modal';
 import styled from 'styled-components';
 import StarRating from '../Star/StarRating';
-import ImageInput from '../../pages/restaurantInfo/ImageInput';
+// import ImageInput from '../../pages/restaurantInfo/ImageInput';
 import { useState, useEffect } from 'react';
 import { postReview } from '../../apis/reviewApi';
 import { useParams } from 'react-router';

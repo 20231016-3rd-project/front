@@ -23,6 +23,7 @@ import {
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../store/rootReducer';
 import AlertReview from './AlertReview';
+
 type ReviewType = {
   reviewId: number;
   memberId: number;
@@ -124,13 +125,13 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
           reviewId={review.reviewId}
         />
       )}
-      {/* {isPutReviewOpen && (
-        // <PutReviewModal
-        //   closeModal={closePutReviewModal}
-        //   review={review}
-        //   // setReviewsInfo={setReviewsInfo}
-        // />
-      )} */}
+      {isPutReviewOpen && (
+        <PutReviewModal
+          closeModal={closePutReviewModal}
+          review={review}
+          // setReviewsInfo={setReviewsInfo}
+        />
+      )}
       {isViewReviewOpen && (
         <ViewReviewModal closeModal={closeViewReviewModal} review={review} />
       )}
