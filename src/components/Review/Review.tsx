@@ -115,7 +115,7 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
   //   getMyProfile().then((r) => setProfile(r));
   // }, []);
   // const [isLiked, setIsLiked] = useState(review.empathyReview);
-  console.log('elm', review.memberNickname, review.memberProfilePicture);
+  console.log('elm', review);
   return (
     <>
       {isReportReviewOpen && (
@@ -134,96 +134,98 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
       {isViewReviewOpen && (
         <ViewReviewModal closeModal={closeViewReviewModal} review={review} />
       )}
-      <ReviewLayout>
-        <div className="review__header">
-          <div className="review__profile">
-            <div className="profile__image">
-              <img src={review.memberProfilePicture} alt="" />
-            </div>
-            <div className="profile__info">
-              <Tooltip
-                label={review.memberNickname}
-                placement="top"
-                fontSize={'0.75rem'}
-              >
-                <div className="profile__name">
-                  {review.memberNickname.length < 8
-                    ? review.memberNickname
-                    : `${review.memberNickname.substring(0, 6)} ...`}
+      {review && (
+        <ReviewLayout>
+          <div className="review__header">
+            <div className="review__profile">
+              <div className="profile__image">
+                <img src={review.memberProfilePicture} alt="" />
+              </div>
+              <div className="profile__info">
+                <Tooltip
+                  label={review.memberNickname}
+                  placement="top"
+                  fontSize={'0.75rem'}
+                >
+                  <div className="profile__name">
+                    {review.memberNickname?.length < 8
+                      ? review.memberNickname
+                      : `${review.memberNickname?.substring(0, 6)} ...`}
+                  </div>
+                </Tooltip>
+                <div className="review__stars">
+                  <Star score={review.reviewStarRating} />
                 </div>
-              </Tooltip>
-              <div className="review__stars">
-                <Star score={review.reviewStarRating} />
               </div>
+            </div>
+
+            <div className="review__buttons">
+              <LikeButtonBox onClick={clickLikeHandler}>
+                <div className="icon-box">
+                  <FaHeart
+                    className="like-icon"
+                    color={empathyReview ? '#f91880' : '#e0e0e0'}
+                  />
+                </div>
+
+                <div className="count-box">{empathyCount}</div>
+              </LikeButtonBox>
+
+              {isAuthenticated &&
+                userData?.nickname === review.memberNickname && (
+                  <Button
+                    onClick={openPutReviewModal}
+                    colorScheme="yellow"
+                    variant={'outline'}
+                  >
+                    수정
+                  </Button>
+                )}
+              {isAuthenticated &&
+                userData?.nickname !== null &&
+                userData?.nickname !== review.memberNickname && (
+                  <Button onClick={openReportReviewModal}>신고</Button>
+                )}
+              {isAuthenticated &&
+                userData?.nickname === review.memberNickname && (
+                  <Button
+                    colorScheme="red"
+                    variant={'outline'}
+                    onClick={removeReviewOnOpen}
+                    // onClick={deleteButtonhHandler}
+                  >
+                    삭제
+                  </Button>
+                )}
+              <AlertReview
+                isOpen={removeReviewisOpen}
+                onOpen={removeReviewOnOpen}
+                onClose={removeReivewOnClose}
+                cancelRef={removeReviewRef}
+                onDelete={deleteButtonhHandler}
+              />
             </div>
           </div>
 
-          <div className="review__buttons">
-            <LikeButtonBox onClick={clickLikeHandler}>
-              <div className="icon-box">
-                <FaHeart
-                  className="like-icon"
-                  color={empathyReview ? '#f91880' : '#e0e0e0'}
-                />
-              </div>
+          <div className="review__text">{review.reviewContent}</div>
 
-              <div className="count-box">{empathyCount}</div>
-            </LikeButtonBox>
-
-            {isAuthenticated &&
-              userData?.nickname === review.memberNickname && (
-                <Button
-                  onClick={openPutReviewModal}
-                  colorScheme="yellow"
-                  variant={'outline'}
-                >
-                  수정
-                </Button>
-              )}
-            {isAuthenticated &&
-              userData?.nickname !== null &&
-              userData?.nickname !== review.memberNickname && (
-                <Button onClick={openReportReviewModal}>신고</Button>
-              )}
-            {isAuthenticated &&
-              userData?.nickname === review.memberNickname && (
-                <Button
-                  colorScheme="red"
-                  variant={'outline'}
-                  onClick={removeReviewOnOpen}
-                  // onClick={deleteButtonhHandler}
-                >
-                  삭제
-                </Button>
-              )}
-            <AlertReview
-              isOpen={removeReviewisOpen}
-              onOpen={removeReviewOnOpen}
-              onClose={removeReivewOnClose}
-              cancelRef={removeReviewRef}
-              onDelete={deleteButtonhHandler}
-            />
+          <div className="review__images">
+            {review.reviewImageDtoList?.map((image: any) => {
+              console.log(review);
+              return (
+                <div>
+                  <img
+                    key={image.reviewImageId}
+                    onClick={openViewReviewModal}
+                    src={image.reviewResizeUrl}
+                    alt="리뷰이미지"
+                  />
+                </div>
+              );
+            })}
           </div>
-        </div>
-
-        <div className="review__text">{review.reviewContent}</div>
-
-        <div className="review__images">
-          {review.reviewImageDtoList?.map((image: any) => {
-            console.log(review);
-            return (
-              <div>
-                <img
-                  key={image.reviewImageId}
-                  onClick={openViewReviewModal}
-                  src={image.reviewResizeUrl}
-                  alt="리뷰이미지"
-                />
-              </div>
-            );
-          })}
-        </div>
-      </ReviewLayout>
+        </ReviewLayout>
+      )}
     </>
   );
 };

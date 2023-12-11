@@ -127,7 +127,7 @@ export const ImageSection = styled.div`
 `;
 
 export const RestaurantWrapper = styled.div`
-  width: 80%;
+  width: 95%;
   height: 100%;
   padding: 3%;
   display: flex;
@@ -142,18 +142,18 @@ export const LeftContainer = styled.div`
   justify-content: center;
   background-color: white;
   border-radius: 16px;
-  width: 55%;
-  min-width: 500px;
-
+  width: 70%;
+  min-width: 800px;
   padding: 1rem;
 `;
 export const RightContainer = styled.div`
   background-color: white;
   border-radius: 16px;
   display: flex;
-  width: 45%;
+  width: 35%;
   min-width: 400px;
-  height: 100%;
+  max-height: 100vh;
+
   display: flex;
   justify-content: center;
   padding: 1rem;
