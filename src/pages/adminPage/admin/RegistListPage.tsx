@@ -37,9 +37,8 @@ const RegistListPage = () => {
   // 예제 데이터
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
-  const [restaurantData, setRestaurantData] = useState<RestaurantData>({
+  const [restaurantData, setRestaurantData] = useState({
     content: [],
-    pageable: {},
     last: false,
     totalPages: 0,
     totalElements: 0,
@@ -49,6 +48,20 @@ const RegistListPage = () => {
     size: 0,
     numberOfElements: 0,
     empty: true,
+  });
+
+// pageable 상태 추가
+  const [pageable, setPageable] = useState({
+    sort: {
+      empty: true,
+      unsorted: true,
+      sorted: false
+    },
+    offset: 0,
+    pageNumber: 0,
+    pageSize: 10,
+    paged: true,
+    unpaged: false
   });
 
   useEffect(() => {
@@ -70,6 +83,7 @@ const RegistListPage = () => {
         });
 
         setRestaurantData(response.data);
+        setPageable(response.data.pageable); 
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -79,6 +93,46 @@ const RegistListPage = () => {
 
     fetchRestaurants();
   }, []);
+
+  // 페이지 변경 핸들러
+  const handlePageChange = async (pageNumber) => {
+    try {
+      setLoading(true);
+
+      const accessToken = localStorage.getItem('accessToken');
+      if (!accessToken) {
+        throw new Error('Access token not found');
+      }
+
+      const headers = {
+        "X-AUTH-TOKEN": accessToken,
+      };
+
+      const response = await axios.get(`http://3.38.32.91/sunflowerPlate/admin/restaurant?page=${pageNumber}`, {
+        headers
+      });
+
+      setRestaurantData(response.data);
+      setPageable(response.data.pageable);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+   // 페이지네이션 UI 렌더링
+   const renderPagination = () => {
+    let pages = [];
+    for (let i = 0; i < restaurantData.totalPages; i++) {
+      pages.push(
+        <button key={i} onClick={() => handlePageChange(i)}>
+          {i + 1}
+        </button>
+      );
+    }
+    return pages;
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -116,8 +170,12 @@ const RegistListPage = () => {
             </tr>
           ))}
         </tbody>
+        {renderPagination()}
       </StyledTable>
       </DataSection>
+      {/* <Pagination>
+          {renderPagination()}
+        </Pagination> */}
       </Container>
     </StMain>
   );
@@ -129,8 +187,9 @@ export default RegistListPage;
 
 const Container = styled.div`
   padding: 20px;
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
+  border: 1px solid #e0e0e0;
 `;
 
 const Title = styled.div`

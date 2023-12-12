@@ -121,8 +121,9 @@ export default ReportPage;
 
 const Container = styled.div`
   padding: 20px;
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
+  border: 1px solid #e0e0e0;
 `;
 
 const Title = styled.div`
@@ -142,14 +143,12 @@ const ReportItem = styled.div`
   border: 1px solid #e0e0e0;
   padding: 15px;
   margin-bottom: 20px;
-  border-radius: 5px;
 `;
 
 const ProfileSection = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  border:1px solid red;
 `;
 
 const ProfileImage = styled.img`
@@ -157,6 +156,7 @@ const ProfileImage = styled.img`
   height: 50px;
   border-radius: 50%;
   margin-right: 15px;
+  border: 1px solid #e0e0e0;
 `;
 
 const ProfileInfo = styled.div`
@@ -168,7 +168,7 @@ const DateAndActions = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin-left: auto; /* 왼쪽 여백을 최대로 확보하여 오른쪽 끝으로 이동 */
+  margin-left: auto; 
   margin-right: 10px;
 `;
 
@@ -198,11 +198,13 @@ const ButtonBox = styled.div`
 `;
 
 const ReportContent = styled.div`
-  border: 1px solid blue;
   width: 100%;
   height: 50px;
-  margin: 0 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   display: flex;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
 `;
 
 const ReportDataContainer = styled.div`

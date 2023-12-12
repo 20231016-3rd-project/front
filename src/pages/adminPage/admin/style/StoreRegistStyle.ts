@@ -1,19 +1,20 @@
 import styled from 'styled-components';
 
 export const RegistContainer = styled.form`
-  width: 50%;
   padding: 20px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); //여기에 그림자를 추가했습니다.
+  border: 1px solid #e0e0e0;
 `;
 
 export const MainTextBox = styled.div`
   display: flex;
   margin-bottom: 20px;
-  width: 95%;
+  width: 100%;
   & > h1{
     font-size: 20px;
   }
@@ -24,45 +25,38 @@ export const MainTextBox = styled.div`
 `;
 
 export const ImageRegistSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 95%;
-  margin-bottom: 5px;
 
-  & > h1{
-    margin-bottom: 5px;
-  }
-
-  & > div {  
     display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 5px;
+
+  label{
+    margin-bottom: 10px;
+  }
+   div {  
+    border: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
     gap:3px;
 
       input{
         width: 100%;
-        margin-bottom: 10px;
         height: 24px;
       }
       input[type="file"] {
         display: none;
         height: 20px;
-        margin-bottom: 10px;
-      }
-
-      label {
-        width: 90%;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        gap: 10px; 
-        cursor: pointer; 
-        margin-bottom: 10px;
       }
       
       button {
+        border: 1px solid #eee;
         width: 10%;
         height: 30px;
-        margin-bottom: 10px;
         cursor: pointer;
+        background-color: #e0e0e0;
       }
     
 }
@@ -72,10 +66,11 @@ export const TellSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 95%;
+  width: 100%;
   margin-bottom: 15px;
   & > input{
-    height: 24px;
+    height: 30px;
+    border: 1px solid #eee;
   }
   
 `;
@@ -85,17 +80,18 @@ export const BusinessNameSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 95%;
+  width: 100%;
   margin-bottom: 15px;
 
   & > input{
-    height: 24px;
+    height: 30px;
+    border: 1px solid #eee;
   }
   
 `;
 
 export const AdressSection = styled.div `
-  width: 95%;
+  width: 100%;
   margin-bottom: 15px;
    & > div { 
       margin-top: 10px;
@@ -105,13 +101,14 @@ export const AdressSection = styled.div `
 `;
 
 export const InstagramSection = styled.div`
-width: 95%;
+width: 100%;
 display: flex;
 flex-direction: column;
-margin-bottom: 15px;
+margin-bottom: 20px;
 gap: 10px;
 & > input{
-    height: 24px;
+    height: 30px;
+    border: 1px solid #eee;
   }
   
 `;
@@ -119,7 +116,7 @@ gap: 10px;
 export const HoursSection = styled.div`
 display: flex;
 flex-direction: column;
-width: 95%;
+width: 100%;
 height: 200px;
 gap: 10px;
 margin-bottom: 15px;
@@ -128,36 +125,44 @@ margin-bottom: 15px;
 textarea{
   height: 100%;
   overflow-y: auto;
+  border: 1px solid #eee;
 }
   
 `;
 
 export const MenuSection = styled.div`
-width: 95%;
-margin-bottom: 15px;
+width: 100%;
+
 
 input{
   width: 49.1%;
+  text-align: center;
+  border: 1px solid #eee;
 }
 
 button{
   width: 100%;
   cursor: pointer;
+  background-color: #e0e0e0;
+  background-color: #e0e0e0;
 }
 `;
 
 export const MenuScrollBox = styled.div`
-  margin-top: 5px;
+  margin-top: 20px;
   height: 100px; /* 원하는 높이로 조정 */
   overflow-y: auto; /* 세로 스크롤 */
-  border: 1px solid grey;
+  border: 1px solid #e0e0e0;
 
 `;
 
 export const SubmitButton = styled.button`
-width: 95%;
+border: 1px solid #e0e0e0;
+width: 100%;
+margin-top: 20px;
 padding: 10px;
 cursor: pointer;
+background-color: #e0e0e0;
 `;
 
 

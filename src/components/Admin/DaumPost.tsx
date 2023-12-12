@@ -175,7 +175,7 @@ const DaumPost: React.FC<DaumPostProps> = ({
 const AddressSearchMapContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 95%;
+  width: 100%;
   margin-bottom: 15px;
   & > label{
     margin-bottom: 5px;
@@ -202,7 +202,9 @@ const AddressSection = styled.div`
     width: 100%;
 
   & > button {
+    border: 1px solid #ccc;
     width: 10%;
+    background-color: #e0e0e0;
   }
 `;
 
@@ -212,6 +214,7 @@ const AddressInput = styled.div`
   width: 90%;
 
   & > input {
+    border: 1px solid #ccc;
     padding: 3px;
     width: 100%;
   }

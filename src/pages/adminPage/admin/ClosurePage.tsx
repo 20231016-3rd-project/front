@@ -78,8 +78,9 @@ export default ClosurePage;
 
 const Container = styled.div`
   padding: 20px;
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
+  border: 1px solid #e0e0e0;
 `;
 
 const Title = styled.div`

@@ -126,7 +126,7 @@ const StoreRegistPage = () => {
         </Set.MainTextBox>
 
         <Set.ImageRegistSection>
-          <h1>이미지등록</h1>
+          <label>이미지등록</label>
           {files.map((file, index) => (
             <div key={index}>
               <input
@@ -136,6 +136,7 @@ const StoreRegistPage = () => {
                 onChange={(e) => handleFileChange(e, index)}
               />
               <input
+                placeholder='이미지를 선택하세요'
                 type="text"
                 readOnly
                 value={file ? file.name : ''} // 선택된 파일의 이름을 표시합니다.
@@ -153,6 +154,7 @@ const StoreRegistPage = () => {
         <Set.BusinessNameSection>
           <label>상호명</label>
           <input
+            placeholder='상호명을 입력하세요'
             type="text"
             value={businessName}
             onChange={(e) => setBusinessName(e.target.value)}
@@ -162,6 +164,7 @@ const StoreRegistPage = () => {
         <Set.TellSection>
           <label>전화번호</label>
           <input
+            placeholder='전화번호를 입력하세요'
             type="text"
             value={tell}
             onChange={(e) => setTell(e.target.value)}
@@ -174,6 +177,7 @@ const StoreRegistPage = () => {
           <label>인스타그램</label>
           <input
             type="text"
+            placeholder='웹사이트 url 또는 인스타그램을 입력하세요.'
             value={instagram}
             onChange={(e) => setInstagram(e.target.value)}
           />

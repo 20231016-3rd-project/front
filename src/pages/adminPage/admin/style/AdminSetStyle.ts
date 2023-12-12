@@ -8,19 +8,22 @@ export const MainContainer = styled.div`
    background-color: #ffdf6d;
    display: grid;
    width: 100vw;
-   height: 100%;
+   height: 100vh;
    padding: 30px;
 `;
 
 export const GridContainer = styled.div`
   display: grid;
-  max-height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
   gap: 15px;
   grid-template-columns: 1fr 5fr;
   color: white;
 `;
 
 export const AdminNavbar = styled.div`
+  width: 100%;
+  height: 95vh;
   border-radius: 20px;
   padding: 30px;
   text-align: center;
@@ -85,6 +88,8 @@ export const LinkBox = styled.div`
 
 //중요
 export const AdminMain = styled.div<ToggleContainerProps>`
+  width: 100%;
+  height: 95vh;
   align-items: center;
   padding: 20px;
   color: ${({ isDay }) => isDay ? 'black' : 'white'};
@@ -168,9 +173,13 @@ export const ProfileBox = styled.div`
   }
   
 `;
-
+   
 export const DashBoardSection = styled.div`
-    /* border: 1px solid red; */
+    margin-top: 20px;
+    width: 100%;
+    height: 85%;
+    max-height: 90%; // 최대 높이를 85%로 제한
+    overflow-y: auto; // 세로 스크롤 추가
 `;
 
 export const DashBoardContainer = styled.div`
