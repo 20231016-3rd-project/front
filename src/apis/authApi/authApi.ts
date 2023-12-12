@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import { axiosInstance } from '../axiosInstance/axiosInstance';
 import axios from 'axios';
 
@@ -46,7 +45,7 @@ export const login = async (email: string, password: string): Promise<LoginRespo
  
     return response.data;
   } catch (error) {
-    if (Axios.isAxiosError(error)) {
+    if (axios.isAxiosError(error)) {
       // AxiosError에서 필요한 정보만 추출하여 throw
       throw { message: error.message, status: error.response?.status };
     } else {
