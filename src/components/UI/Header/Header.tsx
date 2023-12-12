@@ -4,15 +4,18 @@ import styled from 'styled-components';
 import DropDown from '../../DropDown/DropDown';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/rootReducer';
-import { setKeyword, setKey } from '../../../store/slices/keywordSlice';
-import { submitLogout } from '../../../pages/signIn/signinSlice';
+import { setKey } from '../../../store/slices/keywordSlice';
+import { submitLogout } from '../../../store/slices/authSlice';
 import logo from '../../../assets/images/logo.png';
 import search from '../../../assets/images/ icon _search_.svg';
+import { setKeyword } from '../../../store/slices/keywordSlice';
+import { RootState } from '../../../store/store';
+
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isAuthenticated, isAdmin, userData } = useSelector((state: ReducerType) => state.auth);
+  const authState = useSelector((state: RootState) => state.auth);
 
 const handleLogout = async () => {
     try {
@@ -22,6 +25,7 @@ const handleLogout = async () => {
       console.error('Error during logout', error);
     }
   };
+``
 
   const handleAdminPage = () => {
     navigate('/mypage');

@@ -136,6 +136,8 @@ export const ProfileBox = styled.div`
     justify-content: center;
     align-items: center;
     margin-right: 20px;
+    cursor: pointer;
+
     img{
       width: 50%;
       height: 50%;
@@ -155,6 +157,7 @@ export const ProfileBox = styled.div`
     justify-content: center;
     align-items: center;
     margin-right: 20px;
+    cursor: pointer;
     h1{
 
     }

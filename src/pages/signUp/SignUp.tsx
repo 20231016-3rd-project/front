@@ -3,7 +3,7 @@ import { checkEmailDuplication, checkNicknameDuplication } from '../../apis/user
 import Video from "../../assets/images/yellowflower.mp4"
 import * as SU from './SignUp.styles';
 import { useNavigate } from 'react-router-dom';
-import { submitSignup } from './signupSlice';
+import { submitSignup } from '../../store/slices/signupSlice';
 
 interface PhoneState {
   part1: string;
