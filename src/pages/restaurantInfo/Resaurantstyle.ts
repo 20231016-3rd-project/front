@@ -12,6 +12,8 @@ export const ReviewContainer = styled.div`
   width: 95%;
   display: block;
   padding: 1rem;
+  max-height: 100vh;
+  overflow-y: scroll;
 `;
 
 export const ReviewsHeader = styled.div`
@@ -38,6 +40,7 @@ export const InfoHoursBox = styled.div`
   height: 100px;
   gap: 1rem;
   padding: 0.5rem;
+  overflow-y: auto;
 
   h1 {
     font-size: 1rem;
@@ -92,7 +95,7 @@ export const InfoSection = styled.div`
 export const InfoMenuBox = styled.div`
   box-sizing: border-box;
   display: block;
-  width: 300px;
+  max-width: 100%;
   margin-bottom: 10px;
   gap: 0.5rem;
   padding: 0.5rem;
@@ -124,7 +127,7 @@ export const ImageSection = styled.div`
 `;
 
 export const RestaurantWrapper = styled.div`
-  width: 80%;
+  width: 95%;
   height: 100%;
   padding: 3%;
   display: flex;
@@ -139,19 +142,23 @@ export const LeftContainer = styled.div`
   justify-content: center;
   background-color: white;
   border-radius: 16px;
-  width: 55%;
+  width: 70%;
+  min-width: 800px;
   padding: 1rem;
 `;
 export const RightContainer = styled.div`
   background-color: white;
   border-radius: 16px;
   display: flex;
-  width: 45%;
+  width: 35%;
+  min-width: 400px;
+  max-height: 100vh;
+
   display: flex;
   justify-content: center;
   padding: 1rem;
   box-sizing: border-box;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 `;
 export const RestaurantInfoLayout = styled.div`
   background-color: #f9f9f9;
@@ -167,15 +174,15 @@ export const RestaurantInfoLayout = styled.div`
   img {
     border-radius: 16px;
     display: block;
-    width: 270px;
-    max-width: 100%;
     margin-bottom: 10px;
     aspect-ratio: 6 / 5;
+    width: 270px;
   }
   .images__view {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    justify-content: center;
   }
   .images__column {
     margin: auto;
@@ -199,8 +206,14 @@ export const RestaurantInfoLayout = styled.div`
   }
 
   .info__local-address {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
   }
   .info__online-address {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
   }
   .info__business-hours {
     margin-bottom: 10px;
@@ -227,4 +240,22 @@ export const LikeImg = styled.img`
 
 export const Divider = styled.div`
   border: 1px solid #d9d9d9;
+`;
+
+export const ImageSectionGrid = styled.div`
+  /* display: grid; */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+
+  .grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* 4개의 아이템일 때 2x2 레이아웃 */
+  .grid-item:nth-child(4n) {
+    grid-column: span 2;
+  }
 `;

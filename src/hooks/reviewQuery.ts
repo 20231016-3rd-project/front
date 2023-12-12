@@ -21,8 +21,9 @@ export const postReviewMutation = () => {
       formData: FormData;
     }) => {
       try {
-        await postReview(data.restaurantId, data.formData);
+        const r = await postReview(data.restaurantId, data.formData);
         queryClient.invalidateQueries({ queryKey: ['review'] });
+        return r;
       } catch (error) {
         console.log(error);
       }
@@ -37,8 +38,9 @@ export const deleteReviewMutation = () => {
   const { mutateAsync, mutate, isError, isLoading } = useMutation({
     mutationFn: async (reviewId: number) => {
       try {
-        await deleteReview(reviewId);
+        const r = await deleteReview(reviewId);
         queryClient.invalidateQueries({ queryKey: ['review'] });
+        return r;
       } catch (error) {
         console.log(error);
       }

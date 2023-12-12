@@ -86,6 +86,7 @@ export const ReviewLayout = styled.div`
   margin-bottom: 20px;
   padding: 0.5rem;
   border-radius: 0.5rem;
+  min-width: 350px;
   .review__header {
     display: flex;
     justify-content: space-between;
@@ -122,12 +123,11 @@ export const ReviewLayout = styled.div`
       height: 30px;
     }
     display: flex;
-    gap: 1rem;
+    gap: 0.625rem;
   }
 
   .review__text {
     font-size: 0.75rem;
-    height: 70px;
     padding-top: 1rem;
   }
   .review__images {

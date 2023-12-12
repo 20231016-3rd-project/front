@@ -2,6 +2,7 @@ import { useState, ChangeEvent } from 'react';
 import Modal from '../Modal/Modal';
 import styled from 'styled-components';
 import { reportReview } from '../../apis/reviewApi';
+import { useToast } from '@chakra-ui/react';
 
 interface ReportReviewModalProps {
   closeModal: () => void;
@@ -12,6 +13,8 @@ const ReportReviewModal: React.FC<ReportReviewModalProps> = ({
   closeModal,
   reviewId,
 }) => {
+  const toast = useToast();
+
   const category = [
     { option1: '관련없는 내용' },
     { option2: '상업적 홍보' },
@@ -57,13 +60,30 @@ const ReportReviewModal: React.FC<ReportReviewModalProps> = ({
       reportCategory,
       reportContent,
     });
-    reportReview({
-      reviewId,
-      reportCategory,
-      reportContent,
-    }).then((r) => console.log(r));
-
-    closeModal();
+    try {
+      reportReview({
+        reviewId,
+        reportCategory,
+        reportContent,
+      }).then((r) => console.log(r));
+      toast({
+        title: '신고가 완료되었습니다.',
+        status: 'success',
+        duration: 4000,
+        isClosable: true,
+        position: 'top',
+      });
+    } catch (error) {
+      toast({
+        title: '전송에 실패했습니다.',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+        position: 'top',
+      });
+    } finally {
+      closeModal();
+    }
   };
   return (
     <Modal closeModal={closeModal}>

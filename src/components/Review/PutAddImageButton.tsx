@@ -3,13 +3,17 @@ import { IconButton, VisuallyHiddenInput, useToast } from '@chakra-ui/react';
 import React, { ChangeEvent, useRef, useState } from 'react';
 
 interface AddImageButtonProps {
-  selectedFiles: File[];
-  setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  newFiles: File[];
+  setNewFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  selectedFiles: any[];
+  setSelectedFiles: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
-const AddImageButton: React.FC<AddImageButtonProps> = ({
+const PutAddImageButton: React.FC<AddImageButtonProps> = ({
   selectedFiles,
   setSelectedFiles,
+  newFiles,
+  setNewFiles,
 }) => {
   const isImageFile = (file: File): boolean => {
     const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
@@ -76,7 +80,7 @@ const AddImageButton: React.FC<AddImageButtonProps> = ({
     }
 
     if (allFilesValid) {
-      setSelectedFiles((state: any) => [...state, ...Array.from(files)]);
+      setNewFiles((state: any) => [...state, ...Array.from(files)]);
       // setIndex(1);
       console.log('e.target.files: 업로드', files);
     } else {
@@ -109,4 +113,4 @@ const AddImageButton: React.FC<AddImageButtonProps> = ({
   );
 };
 
-export default AddImageButton;
+export default PutAddImageButton;

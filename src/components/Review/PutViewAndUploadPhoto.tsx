@@ -16,9 +16,19 @@ import {
 import { Box, IconButton } from '@chakra-ui/react';
 import WriteReviewText from './WriteReviewText';
 import AddImageButton from './AddImageButton';
+import PutAddImageButton from './PutAddImageButton';
+type ImageObjType = {
+  reviewImageId: number;
+  reviewOriginName: string;
+  reviewStoredName: string;
+  reviewResizeStoredName: string;
+  reviewOriginUrl: string;
+  reviewResizeUrl: string;
+};
+
 interface UploadPhotoProps {
-  selectedFiles: File[];
-  setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  selectedFiles: ImageObjType[];
+  setSelectedFiles: React.Dispatch<React.SetStateAction<any[]>>;
   setIndex: React.Dispatch<React.SetStateAction<number>>;
   index: number;
   content: string;
@@ -26,9 +36,12 @@ interface UploadPhotoProps {
   rating: number | null;
   setRating: React.Dispatch<React.SetStateAction<number | null>>;
   handleSubmit: () => void;
+  newFiles: File[];
+  setNewFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  setDeletedFiles: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
-const ViewAndUploadPhoto: React.FC<UploadPhotoProps> = ({
+const PutViewAndUploadPhoto: React.FC<UploadPhotoProps> = ({
   selectedFiles,
   setSelectedFiles,
   setIndex,
@@ -38,17 +51,29 @@ const ViewAndUploadPhoto: React.FC<UploadPhotoProps> = ({
   rating,
   setRating,
   handleSubmit,
+  newFiles,
+  setNewFiles,
+  setDeletedFiles,
 }) => {
-  useEffect(() => {
-    if (selectedFiles.length === 0) {
-      setIndex(0);
-    }
-  }, [selectedFiles]);
+  // useEffect(() => {
+  //   if (selectedFiles.length === 0) {
+  //     setIndex(1);
+  //   }
+  // }, [selectedFiles]);
   const { isOpen, onToggle } = useDisclosure();
   console.log('ccc', setRating);
 
   const deleteImageHandler = (indexToRemove: number) => {
     setSelectedFiles((prevArray) =>
+      prevArray.filter((file, index) => {
+        if (index === indexToRemove)
+          setDeletedFiles((state) => [...state, file]);
+        return index !== indexToRemove;
+      })
+    );
+  };
+  const deleteNewImageHandler = (indexToRemove: number) => {
+    setNewFiles((prevArray) =>
       prevArray.filter((_, index) => {
         return index !== indexToRemove;
       })
@@ -110,15 +135,51 @@ const ViewAndUploadPhoto: React.FC<UploadPhotoProps> = ({
                 <Image
                   key={index}
                   borderRadius={'2xl'}
-                  src={URL.createObjectURL(file)}
+                  src={file.reviewResizeUrl}
                   h={'180px'}
                   w={'220px'}
                 />
               </Box>
             );
           })}
-          {selectedFiles.length < 3 && (
-            <AddImageButton
+          {newFiles.length > 0 &&
+            newFiles.map((file, index) => {
+              return (
+                <Box
+                  pos={'relative'}
+                  display={'flex'}
+                  justifyContent={'center'}
+                  alignItems={'center'}
+                  key={index}
+                >
+                  <IconButton
+                    aria-label="delete image"
+                    icon={<CloseIcon />}
+                    color={'white'}
+                    bgColor={'black'}
+                    size={'sm'}
+                    pos={'absolute'}
+                    right={'2'}
+                    top={'1'}
+                    borderRadius={'xl'}
+                    onClick={() => {
+                      deleteNewImageHandler(index);
+                    }}
+                  />
+                  <Image
+                    key={index}
+                    borderRadius={'2xl'}
+                    src={URL.createObjectURL(file)}
+                    h={'180px'}
+                    w={'220px'}
+                  />
+                </Box>
+              );
+            })}
+          {selectedFiles.length + newFiles.length < 3 && (
+            <PutAddImageButton
+              newFiles={newFiles}
+              setNewFiles={setNewFiles}
               selectedFiles={selectedFiles}
               setSelectedFiles={setSelectedFiles}
             />
@@ -163,7 +224,7 @@ const ViewAndUploadPhoto: React.FC<UploadPhotoProps> = ({
   );
 };
 
-export default ViewAndUploadPhoto;
+export default PutViewAndUploadPhoto;
 
 const ViewAndUploadPhotoStyle = styled.div`
   width: 450px;

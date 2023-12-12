@@ -17,6 +17,7 @@ import {
   MenuHourBox,
   InfoHeader,
   Divider,
+  ImageSectionGrid,
 } from './Resaurantstyle.ts';
 import { useEffect, useState } from 'react';
 import Map from './Map';
@@ -33,7 +34,11 @@ import EditinfoRequestModal from '../../components/Restaurant/EditInfoRequestMod
 import { getRestaurantDetailQuery } from '../../hooks/reviewQuery.ts';
 import { StackDivider, Button } from '@chakra-ui/react';
 import ShareButton from './ShareButton.tsx';
+import { FaLocationDot } from 'react-icons/fa6';
+import { FaLink, FaPhone } from 'react-icons/fa';
+
 import { darken } from 'polished';
+import MenuCard from './MenuCard.tsx';
 const RestaurantInfo: React.FC = () => {
   const { restaurantId } = useParams<{ restaurantId: string }>();
   const { data, isLoading } = getRestaurantDetailQuery(restaurantId ?? '');
@@ -143,13 +148,14 @@ const RestaurantInfo: React.FC = () => {
                   </div>
                 </ImageSection>
               ) : (
-                <ImageSection>
-                  <div className="images__view">
-                    {data.restaurantImageDtoList.map((image: any) => (
-                      <img src={image.restaurantOriginUrl} />
-                    ))}
-                  </div>
-                </ImageSection>
+                <ImageSectionGrid>
+                  {data.restaurantImageDtoList.map((image: any) => (
+                    <img
+                      className="gird-item"
+                      src={image.restaurantOriginUrl}
+                    />
+                  ))}
+                </ImageSectionGrid>
               )}
               <InfoSection>
                 <InfoHeader>
@@ -177,16 +183,17 @@ const RestaurantInfo: React.FC = () => {
                 <Divider />
                 <InfoAddressBox>
                   <div className="info__local-address">
-                    주소: {data.restaurantAddress}
+                    <FaLocationDot />
+                    <div>{data.restaurantAddress}</div>
                   </div>
                   <div className="info__online-address">
-                    웹사이트:{' '}
+                    <FaLink />
                     <a href={data.restaurantWebSite}>
-                      {data.restaurantWebSite}
+                      <div>{data.restaurantWebSite}</div>
                     </a>
                   </div>
                   <div className="info__online-address">
-                    전화번호: {data.restaurantTelNum}
+                    <FaPhone /> <div>{data.restaurantTelNum}</div>
                   </div>
                 </InfoAddressBox>
                 <Divider />
@@ -205,14 +212,11 @@ const RestaurantInfo: React.FC = () => {
                         {data.restaurantMenuDtoList.map(
                           (menu: any, index: any) => {
                             return (
-                              <div key={index}>
-                                <span className="menu_name">
-                                  {menu.restaurantMenuName} -----{' '}
-                                </span>
-                                <span className="menu_price">
-                                  {menu.restaurantMenuPrice}원
-                                </span>
-                              </div>
+                              <MenuCard
+                                key={index}
+                                restaurantMenuName={menu.restaurantMenuName}
+                                restaurantMenuPrice={menu.restaurantMenuPrice}
+                              />
                             );
                           }
                         )}

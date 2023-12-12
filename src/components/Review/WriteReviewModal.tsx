@@ -1,7 +1,7 @@
 import Modal from '../Modal/Modal';
 import styled from 'styled-components';
 import StarRating from '../Star/StarRating';
-import ImageInput from '../../pages/restaurantInfo/ImageInput';
+// import ImageInput from '../../pages/restaurantInfo/ImageInput';
 import { useState, useEffect } from 'react';
 import { postReview } from '../../apis/reviewApi';
 import { useParams } from 'react-router';
@@ -65,8 +65,8 @@ const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
     try {
       mutate({ restaurantId: restaurantId, formData });
       toast({
-        title: '리뷰 전송에 실패했습니다.',
-        status: 'error',
+        title: '리뷰가 작성되었습니다.',
+        status: 'success',
         duration: 4000,
         isClosable: true,
         position: 'top',

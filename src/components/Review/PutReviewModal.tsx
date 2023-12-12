@@ -7,6 +7,8 @@ import { putReview } from '../../apis/reviewApi';
 import PutImageInput from '../../pages/restaurantInfo/PutImageInput';
 import { getMyProfile } from '../../apis/profileApi';
 import { putReviewMutation } from '../../hooks/reviewQuery';
+import ViewAndUploadPhoto from './ViewAndUploadPhoto';
+import PutViewAndUploadPhoto from './PutViewAndUploadPhoto';
 // {
 //   "reviewId": 14,
 //   "memberId": 3,
@@ -89,7 +91,7 @@ type ReviewType = {
 type ReviewProps = {
   closeModal: () => void;
   review: ReviewType; // ReviewType으로 타입 지정
-  setReviewsInfo: React.Dispatch<React.SetStateAction<ReviewType[]>>; // setReviewsInfo 타입 지정
+  // setReviewsInfo: React.Dispatch<React.SetStateAction<ReviewType[]>>; // setReviewsInfo 타입 지정
 };
 
 type UserProfile = {
@@ -98,31 +100,74 @@ type UserProfile = {
   nickName: string;
   phone: string;
 };
-const PutReviewModal: React.FC<ReviewProps> = ({
-  closeModal,
-  review,
-  setReviewsInfo,
-}) => {
+const PutReviewModal: React.FC<ReviewProps> = ({ closeModal, review }) => {
   const [rating, setRating] = useState<number | null>(review.reviewStarRating);
   const [content, setContent] = useState<string>(review?.reviewContent);
   const [selectedFiles, setSelectedFiles] = useState<any[]>(
     review.reviewImageDtoList
   );
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const { mutate, isError } = putReviewMutation();
+  const [deletedFiles, setDeletedFiles] = useState<any[]>([]);
+  const [newFiles, setNewFiles] = useState<File[]>([]);
 
-  console.log('put review image:', selectedFiles);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [index, setIndex] = useState(1);
+  const { mutate, isError } = putReviewMutation();
+  // console.log('put review image:', selectedFiles);
   // const { restaurantId } = useParams();
 
+  // 사진을 추가해야만 들어감
+  //추가된 사진은 안들어감
+  //혼란함..
+  //
   const contentChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
 
   const formData = new FormData();
-
+  const handleSubmit = () => {
+    let count = 0;
+    newFiles.forEach((file) => {
+      if (file) {
+        formData.append('imageFile', file);
+        count++;
+      }
+    });
+    if (count === 0) formData.append('imageFile', '');
+    setNewFiles([]);
+    const updateReviewDto = {
+      reviewContent: content,
+      imageDtoList: deletedFiles.map((item: any) => {
+        return { imageId: item.reviewImageId };
+      }),
+    };
+    setDeletedFiles([]);
+    // console.log('updateReviewDto', updateReviewDto);
+    const json = JSON.stringify(updateReviewDto);
+    const dataBlob = new Blob([json], {
+      type: 'application/json',
+    });
+    formData.append('updateReviewDto', dataBlob);
+    console.log('updateReviewDto', formData.values());
+    mutate({ reviewId: review.reviewId, formData: formData });
+    closeModal();
+  };
   return (
     <Modal closeModal={closeModal}>
-      <WriteReviewStyle>
+      <PutViewAndUploadPhoto
+        selectedFiles={selectedFiles}
+        setSelectedFiles={setSelectedFiles}
+        setIndex={setIndex}
+        index={index}
+        content={content}
+        setContent={setContent}
+        rating={rating}
+        setRating={setRating}
+        handleSubmit={handleSubmit}
+        newFiles={newFiles}
+        setNewFiles={setNewFiles}
+        setDeletedFiles={setDeletedFiles}
+      />
+      {/* <WriteReviewStyle>
         <div className="modal__header">
           <div className="review__profile">
             <div className="profile__image">
@@ -190,7 +235,7 @@ const PutReviewModal: React.FC<ReviewProps> = ({
             등록하기
           </button>
         </ModalFooter>
-      </WriteReviewStyle>
+      </WriteReviewStyle> */}
     </Modal>
   );
 };

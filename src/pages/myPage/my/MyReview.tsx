@@ -1,55 +1,50 @@
-import Star from '../Star/Star';
+import Star from '../../../components/Star/Star';
 import { useRef, useState } from 'react';
-import ReportReviewModal from './ReportReviewModal';
-import ViewReviewModal from './ViewReviewModal';
-import PutReviewModal from './PutReviewModal';
-import { deleteReview, likeReview } from '../../apis/reviewApi';
+import ReportReviewModal from './../../../components/Review/ReportReviewModal';
+import ViewReviewModal from './../../../components/Review/ViewReviewModal';
+import PutReviewModal from './../../../components/Review//PutReviewModal';
+import { deleteReview, likeReview } from '../../../apis/reviewApi';
 import { useLocation } from 'react-router-dom';
 import {
   LikeButton,
   ReviewLayout,
   LikeButtonBox,
   ReviewButton,
-} from './Reviewstyle';
-import { deleteReviewMutation } from '../../hooks/reviewQuery';
+} from '../../../components/Review/Reviewstyle';
+import { deleteReviewMutation } from '../../../hooks/reviewQuery';
 import { FaHeart } from 'react-icons/fa';
 import {
   AlertDialog,
   Button,
+  Text,
   Tooltip,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { ReducerType } from '../../store/rootReducer';
-import AlertReview from './AlertReview';
-
+import { ReducerType } from '../../../store/rootReducer';
+import AlertReview from '../../../components/Review/AlertReview';
 type ReviewType = {
+  restaurantId: number;
+  restaurantName: string;
   reviewId: number;
-  memberId: number;
-  memberNickname: string;
-  memberProfilePicture: string;
   reviewAt: string;
   reviewContent: string;
-  reviewEmpathyCount: number;
   reviewImageDtoList: any[];
   reviewStarRating: number;
-  empathyReview: boolean;
 };
 
 type ReviewProps = {
   review: ReviewType;
+  reviewRefresh: React.Dispatch<React.SetStateAction<boolean>>;
   // setReviewsInfo: React.Dispatch<React.SetStateAction<ReviewType[]>>;
 };
 
-const Review: React.FC<ReviewProps> = ({ review }) => {
+const MyReview: React.FC<ReviewProps> = ({ review, reviewRefresh }) => {
   const [isReportReviewOpen, setIsReportReviewOpen] = useState(false);
   const [isViewReviewOpen, setIsViewReviewOpen] = useState(false);
   const [isPutReviewOpen, setIsPutReviewOpen] = useState(false);
-  const [empathyReview, setEmpathyReview] = useState(
-    review.empathyReview ?? false
-  );
-  const [empathyCount, setEmpathyCount] = useState(review.reviewEmpathyCount);
+
   const { isAuthenticated, userData } = useSelector(
     (state: ReducerType) => state.signin
   );
@@ -60,15 +55,7 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
   } = useDisclosure();
   const removeReviewRef = useRef<HTMLButtonElement>(null);
   // let location = useLocation();
-  const clickLikeHandler = () => {
-    setEmpathyReview((prev: boolean) => !prev);
-    if (empathyReview) {
-      setEmpathyCount((prev: any) => prev - 1);
-    } else {
-      setEmpathyCount((prev: any) => prev + 1);
-    }
-    likeReview(review.reviewId);
-  };
+
   const openReportReviewModal = () => {
     setIsReportReviewOpen(true);
   };
@@ -89,10 +76,12 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
   };
   console.log('Review', review);
   const toast = useToast();
-  const { mutate } = deleteReviewMutation();
+  const { mutateAsync } = deleteReviewMutation();
   const deleteButtonhHandler = () => {
     try {
-      mutate(review.reviewId);
+      mutateAsync(review.reviewId).then((r) => {
+        reviewRefresh((state) => !state);
+      });
 
       toast({
         title: '리뷰가 삭제되었습니다.',
@@ -125,35 +114,33 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
           reviewId={review.reviewId}
         />
       )}
-      {isPutReviewOpen && (
-        <PutReviewModal
-          closeModal={closePutReviewModal}
-          review={review}
-          // setReviewsInfo={setReviewsInfo}
-        />
-      )}
-      {isViewReviewOpen && (
-        <ViewReviewModal closeModal={closeViewReviewModal} review={review} />
-      )}
+      {/* {isPutReviewOpen && (
+        // <PutReviewModal
+        //   closeModal={closePutReviewModal}
+        //   review={review}
+        //   // setReviewsInfo={setReviewsInfo}
+        // />
+      )} */}
       {review && (
         <ReviewLayout>
           <div className="review__header">
             <div className="review__profile">
               <div className="profile__image">
-                <img src={review.memberProfilePicture} alt="" />
+                {/* <img src={review.memberProfilePicture} alt="" /> */}
               </div>
               <div className="profile__info">
                 <Tooltip
-                  label={review.memberNickname}
+                  label={review.restaurantName}
                   placement="top"
                   fontSize={'0.75rem'}
                 >
                   <div className="profile__name">
-                    {review.memberNickname?.length < 8
-                      ? review.memberNickname
-                      : `${review.memberNickname?.substring(0, 6)} ...`}
+                    {review.restaurantName?.length < 12
+                      ? review.restaurantName
+                      : `${review.restaurantName?.substring(0, 11)} ...`}
                   </div>
                 </Tooltip>
+                <Text color={'grey'}>{formatDateString(review.reviewAt)}</Text>
                 <div className="review__stars">
                   <Star score={review.reviewStarRating} />
                 </div>
@@ -161,7 +148,7 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
             </div>
 
             <div className="review__buttons">
-              <LikeButtonBox onClick={clickLikeHandler}>
+              {/* <LikeButtonBox onClick={clickLikeHandler}>
                 <div className="icon-box">
                   <FaHeart
                     className="like-icon"
@@ -170,34 +157,30 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
                 </div>
 
                 <div className="count-box">{empathyCount}</div>
-              </LikeButtonBox>
+              </LikeButtonBox> */}
 
-              {isAuthenticated &&
-                userData?.nickname === review.memberNickname && (
-                  <Button
-                    onClick={openPutReviewModal}
-                    colorScheme="yellow"
-                    variant={'outline'}
-                  >
-                    수정
-                  </Button>
-                )}
-              {isAuthenticated &&
-                userData?.nickname !== null &&
-                userData?.nickname !== review.memberNickname && (
-                  <Button onClick={openReportReviewModal}>신고</Button>
-                )}
-              {isAuthenticated &&
-                userData?.nickname === review.memberNickname && (
-                  <Button
-                    colorScheme="red"
-                    variant={'outline'}
-                    onClick={removeReviewOnOpen}
-                    // onClick={deleteButtonhHandler}
-                  >
-                    삭제
-                  </Button>
-                )}
+              {isAuthenticated && (
+                // userData?.nickname === review.memberNickname &&
+                <Button
+                  onClick={openPutReviewModal}
+                  colorScheme="yellow"
+                  variant={'outline'}
+                >
+                  수정
+                </Button>
+              )}
+
+              {isAuthenticated && (
+                // userData?.nickname === review.memberNickname &&
+                <Button
+                  colorScheme="red"
+                  variant={'outline'}
+                  onClick={removeReviewOnOpen}
+                  // onClick={deleteButtonhHandler}
+                >
+                  삭제
+                </Button>
+              )}
               <AlertReview
                 isOpen={removeReviewisOpen}
                 onOpen={removeReviewOnOpen}
@@ -231,4 +214,18 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
   );
 };
 
-export default Review;
+export default MyReview;
+
+function formatDateString(inputString: string) {
+  const date = new Date(inputString);
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 패딩
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+
+  const formattedString = `${year}-${month}-${day} ${hours}:${minutes}`;
+
+  return formattedString;
+}
