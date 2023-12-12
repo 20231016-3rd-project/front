@@ -12,18 +12,14 @@ import signupReducer from './slices/signupSlice';
 const store = configureStore({
   reducer: {
     restaurant: restaurantReducer, // state의 최상위 객체
-    auth: authReducer,
+    auth: authReducer, 
     region: regionReducer,
     sort: sortReducer,
     modal: modalReducer,
     keyword: keywordReducer,
     best: bestReducer,
-    myLike: myLikeReducer,
+    mylike: myLikeReducer,
     signup: signupReducer,
-<<<<<<< HEAD
-    signin: signinReducer,
-=======
->>>>>>> 437bd3860257a41735e15a515ade3adca3202acc
   },
 });
 
