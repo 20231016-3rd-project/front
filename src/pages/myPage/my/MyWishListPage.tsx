@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -6,31 +6,35 @@ import { myRestaurant } from '../../../apis/getRestaurantApi/getRestaurant';
 import { useSelector, useDispatch } from 'react-redux';
 import { ReducerType } from '../../../store/rootReducer';
 
-import { getMyRestaurants } from '../../../store/slices/myLikeSlice';
+import {
+  fetchMyRestaurants,
+  getMyRestaurants,
+} from '../../../store/slices/myLikeSlice';
 import MyLikeCard from './../../../components/RestaurantCard/MyLikeCard';
 
 const MyWishListPage = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
 
-  const myRestaurants = useSelector(
-    (state: ReducerType) => state.myLike.myLikeInfo
-  );
+  const myRestaurants = useSelector((state: ReducerType) => state.myLike);
 
   // const [datas, setDatas] = useState<Restaurants>([]);
   // const data: Restaurants = [];
 
   useEffect(() => {
-    const getMyDatas = async () => {
-      dispatch(
-        getMyRestaurants(
-          await myRestaurant().then((response) => {
-            console.log(response);
-            return response;
-          })
-        )
-      );
-    };
-    getMyDatas();
+    // const getMyDatas = async () => {
+    //   dispatch(
+    //     getMyRestaurants(
+    //       await myRestaurant().then((response) => {
+    //         console.log(response);
+    //         return response;
+    //       })
+    //     )
+    //   );
+    // };
+    // getMyDatas();
+    dispatch(fetchMyRestaurants());
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -44,9 +48,7 @@ const MyWishListPage = () => {
     <>
       <Section>
         <SectionTitle2>나의 좋아요 리스트</SectionTitle2>
-        <ul>
-          <MyLikeCard datas={myRestaurants} />
-        </ul>
+        <ul>{!isLoading && <MyLikeCard datas={myRestaurants.myLikeInfo} />}</ul>
         {/* <Pagination /> */}
       </Section>
     </>
