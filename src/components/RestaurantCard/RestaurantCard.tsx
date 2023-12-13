@@ -90,10 +90,12 @@ const InfoAddr = styled.p`
   font-weight: 500;
 `;
 const InfoMore = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 20px;
   font-weight: 500;
-  width: auto;
-  text-align: end;
+  width: 300px;
   position: absolute;
   bottom: 2rem;
   right: 0;
@@ -106,7 +108,9 @@ const InfoMore = styled(Link)`
   }
 `;
 const ArrowImg = styled.img`
-  height: 1rem;
+width: 20px;
+height: 20px;
+margin-left: 10px;
 `;
 
 const RateInfo = styled.div`

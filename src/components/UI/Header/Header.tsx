@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import DropDown from '../../DropDown/DropDown';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/rootReducer';
 import { setKeyword, setKey } from '../../../store/slices/keywordSlice';
 import { submitLogout } from '../../../pages/signIn/signinSlice';
-import logo from '../../../assets/images/logo.png';
+import logo from '../../../assets/images/sunflower.png';
 import search from '../../../assets/images/ icon _search_.svg';
 
 const Header: React.FC = () => {
@@ -128,8 +127,8 @@ const HeaderLeft = styled(Link)`
   color: black;
 `;
 const Logo = styled.img`
-  height: 60px;
-  width: 60px;
+  height: 40px;
+  width: 40px;
   cursor: pointer;
 `;
 const LogoText = styled.div`
