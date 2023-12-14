@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from '../pages/signIn/signinSlice';
+import authReducer from './slices/authSlice';
 import restaurantReducer from './slices/restaurantSlice';
 import regionReducer from './slices/regionSlice';
 import sortReducer from './slices/sortSlice';
@@ -7,8 +7,7 @@ import modalReducer from './slices/modalSlice';
 import keywordReducer from './slices/keywordSlice';
 import bestReducer from './slices/bestSlice';
 import myLikeReducer from './slices/myLikeSlice';
-import signupReducer from '../pages/signUp/signupSlice';
-import signinReducer from '../pages/signIn/signinSlice';
+//import signupReducer from './slices/signupSlice';
 
 const store = configureStore({
   reducer: {
@@ -20,8 +19,7 @@ const store = configureStore({
     keyword: keywordReducer,
     best: bestReducer,
     myLike: myLikeReducer,
-    signup: signupReducer,
-    signin: signinReducer,
+    //signup: signupReducer,
   },
 });
 

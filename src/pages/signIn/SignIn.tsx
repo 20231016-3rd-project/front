@@ -13,13 +13,10 @@ import {
   submitLogin,
   submitLogout,
   refreshAccessToken,
-  setAuthenticated,
-  setAdmin,
-} from './signinSlice';
+} from '../../store/slices/authSlice';
 
-// 로그인 컴포넌트
 const SignIn = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch(); // AppDispatch 타입을 사용합니다.
   const navigate = useNavigate();
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
@@ -31,7 +28,6 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
   const [isLoginFailed, setIsLoginFailed] = useState(false);
 
-  // 로그인 처리 함수
   const handleLogin = async () => {
     try {
       if (!email || !password) {
@@ -41,47 +37,46 @@ const SignIn = () => {
 
       const response = await dispatch(submitLogin({ email, password }));
 
-      if (response.payload && !response.error) {
-        if (response.payload.isAdmin) {
-          navigate('/admin-dashboard'); // 관리자 대시보드?
+      if (response.payload) {
+        const isAdmin =
+          email === 'admin@sunflowerplate.com' && password === 'admin1234';
+
+        if (isAdmin) {
+          navigate('/'); // 관리자 페이지로 이동
         } else {
           navigate('/');
         }
-      } else {
-        // 로그인 실패 처리
-        console.log('Login failed:', response.error);
-        setIsLoginFailed(true);
-        alert('로그인 실패: ' + response.error.message);
       }
-    } catch (error) {
-      console.error('Error during login', error);
-      alert('로그인 중 오류가 발생했습니다: ' + error.message);
+    } catch (error: any) {
+      console.log('Login failed:', error);
+      setIsLoginFailed(true);
+      alert('로그인 실패: ' + error.message);
     }
   };
 
-  // 로그인 실패 시 로그인 페이지로 이동
   useEffect(() => {
     if (isLoginFailed) {
       setIsLoginFailed(false); // 실패 상태 초기화
-      navigate('/signin'); // 로그인 실패 시 로그인 페이지로 이동
+      navigate('/signin');
     }
   }, [isLoginFailed]);
 
-  // 로그아웃 처리 함수
   const handleLogout = async () => {
-    try {
-      await dispatch(submitLogout());
-      dispatch(setAuthenticated(false));
-      navigate('/signin');
-    } catch (error) {
-      console.error('Error during logout', error);
-    }
+    dispatch(submitLogout())
+      .unwrap()
+      .then(() => {
+        navigate('/');
+      })
+      .catch((error) => {
+        alert('로그아웃 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+
+        console.error('Error during logout:', error);
+      });
   };
 
-  // 액세스 토큰 재발급 처리 함수
   const handleReissueAccessToken = async () => {
     try {
-      await dispatch(refreshAccessToken()); // 액세스 토큰 재발급 액션 디스패치
+      await dispatch(refreshAccessToken());
 
       // 액세스 토큰 재발급 후의 추가 동작 수행
     } catch (error) {
@@ -89,7 +84,6 @@ const SignIn = () => {
     }
   };
 
-  // 카카오 로그인 리다이렉트 처리 함수
   const handleKakaoRedirect = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
@@ -104,15 +98,12 @@ const SignIn = () => {
     }
   };
 
-  const keyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') handleLogin();
-  };
-  // 카카오 로그인 리다이렉트 처리
   useEffect(() => {
     handleKakaoRedirect();
   }, []);
-
-  // 렌더링
+  const keyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') handleLogin();
+  };
   return (
     <S.MainContainer>
       <S.GridContainer>
@@ -144,7 +135,7 @@ const SignIn = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="패스워드를 입력해주세요"
               type="password"
-              disabled={isRefreshingToken} // 토큰 재발급 중 비활성화
+              disabled={isRefreshingToken}
               onKeyDown={keyDownHandler}
             />
 

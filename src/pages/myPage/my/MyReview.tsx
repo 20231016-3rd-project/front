@@ -46,7 +46,7 @@ const MyReview: React.FC<ReviewProps> = ({ review, reviewRefresh }) => {
   const [isPutReviewOpen, setIsPutReviewOpen] = useState(false);
 
   const { isAuthenticated, userData } = useSelector(
-    (state: ReducerType) => state.signin
+    (state: ReducerType) => state.auth
   );
   const {
     isOpen: removeReviewisOpen,
