@@ -6,7 +6,7 @@ import modal from './slices/modalSlice';
 import keyword from './slices/keywordSlice';
 import best from './slices/bestSlice';
 import myLike from './slices/myLikeSlice';
-import signup from './slices/signupSlice';
+//import signup from './slices/signupSlice';
 import auth from './slices/authSlice';
 
 const reducer = combineReducers({
@@ -17,7 +17,7 @@ const reducer = combineReducers({
   keyword,
   best,
   myLike,
-  signup,
+  //signup,
   auth,
 });
 
