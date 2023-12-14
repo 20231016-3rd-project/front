@@ -8,7 +8,6 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ closeModal, children }) => {
-  console.log(children);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && closeModal) {
@@ -50,7 +49,7 @@ const BackdropStyle = styled.div`
   width: 100%;
   height: 100vh;
   z-index: 10;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.5);
 `;
 
 const OverlayContentStyle = styled.div`
@@ -64,4 +63,5 @@ const OverlayContentStyle = styled.div`
   border-radius: 0.5rem;
   transition: all 0.3s ease-in-out;
   opacity: 1;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 `;
