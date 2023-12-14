@@ -1,4 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import authReducer from './slices/authSlice';
 import restaurantReducer from './slices/restaurantSlice';
 import regionReducer from './slices/regionSlice';
@@ -8,6 +10,15 @@ import keywordReducer from './slices/keywordSlice';
 import bestReducer from './slices/bestSlice';
 import myLikeReducer from './slices/myLikeSlice';
 //import signupReducer from './slices/signupSlice';
+
+const authPersistConfig = {
+  key: 'auth', 
+  storage,
+  whitelist: ['auth']
+};
+
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+
 
 const store = configureStore({
   reducer: {
@@ -23,6 +34,7 @@ const store = configureStore({
   },
 });
 
+export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

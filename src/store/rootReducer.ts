@@ -8,8 +8,16 @@ import best from './slices/bestSlice';
 import myLike from './slices/myLikeSlice';
 //import signup from './slices/signupSlice';
 import auth from './slices/authSlice';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-const reducer = combineReducers({
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['auth'] 
+};
+
+const rootReducer = combineReducers({
   restaurant,
   region,
   sort,
@@ -21,5 +29,7 @@ const reducer = combineReducers({
   auth,
 });
 
-export type ReducerType = ReturnType<typeof reducer>;
-export default reducer;
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export type ReducerType = ReturnType<typeof persistedReducer>;
+export default persistedReducer;
