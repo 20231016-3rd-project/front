@@ -25,13 +25,13 @@ const MySettingPage = () => {
   useEffect(() => {
     getMyProfile().then((r) => {
       setNickName(r.nickName);
-      setProfileImage(r.memberProfileImage);
+      setProfileImage(r.memberProfilePicture);
     });
   }, []);
   return (
     <VerticalContainer>
       <FirstDiv>
-        <OverlapCircle />
+        <OverlapCircle backgroundImage={profileImage} />
         <SetText>
           <h1>{nickName}</h1>
           {/* <p>햄토리 주인</p> */}
@@ -100,8 +100,10 @@ const FirstDiv = styled.div`
   position: relative;
   border-radius: 0px 0px 20px 20px;
 `;
-
-const OverlapCircle = styled.div`
+interface OverlapCircleProps {
+  backgroundImage: string;
+}
+const OverlapCircle = styled.div<OverlapCircleProps>`
   width: 160px;
   height: 160px;
   border-radius: 50%;
@@ -109,7 +111,7 @@ const OverlapCircle = styled.div`
   bottom: -50px;
   left: 50%;
   transform: translateX(-50%);
-  background: url(${backgroundImage}) no-repeat center center;
+  background: url(${(props) => props.backgroundImage}) no-repeat center center;
   background-size: cover;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
