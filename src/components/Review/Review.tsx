@@ -51,7 +51,7 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
   );
   const [empathyCount, setEmpathyCount] = useState(review.reviewEmpathyCount);
   const { isAuthenticated, userData } = useSelector(
-    (state: ReducerType) => state.signin
+    (state: ReducerType) => state.auth
   );
   const {
     isOpen: removeReviewisOpen,
