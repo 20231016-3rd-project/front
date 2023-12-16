@@ -14,23 +14,7 @@ interface Restaurant {
   restaurantStatus: string;
 }
 
-interface RestaurantData {
-  content: Restaurant[];
-  pageable: {
-    // pageable 타입 정보 추가
-  };
-  last: boolean;
-  totalPages: number;
-  totalElements: number;
-  number: number;
-  first: boolean;
-  sort: {
-    // sort 타입 정보 추가
-  };
-  size: number;
-  numberOfElements: number;
-  empty: boolean;
-}
+
 
 
 const RegistListPage = () => {
@@ -94,46 +78,7 @@ const RegistListPage = () => {
     fetchRestaurants();
   }, []);
 
-  // 페이지 변경 핸들러
-  const handlePageChange = async (pageNumber) => {
-    try {
-      setLoading(true);
-
-      const accessToken = localStorage.getItem('accessToken');
-      if (!accessToken) {
-        throw new Error('Access token not found');
-      }
-
-      const headers = {
-        "X-AUTH-TOKEN": accessToken,
-      };
-
-      const response = await axios.get(`http://3.38.32.91/sunflowerPlate/admin/restaurant?page=${pageNumber}`, {
-        headers
-      });
-
-      setRestaurantData(response.data);
-      setPageable(response.data.pageable);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-   // 페이지네이션 UI 렌더링
-   const renderPagination = () => {
-    let pages = [];
-    for (let i = 0; i < restaurantData.totalPages; i++) {
-      pages.push(
-        <button key={i} onClick={() => handlePageChange(i)}>
-          {i + 1}
-        </button>
-      );
-    }
-    return pages;
-  };
-
+  
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -170,7 +115,6 @@ const RegistListPage = () => {
             </tr>
           ))}
         </tbody>
-        {renderPagination()}
       </StyledTable>
       </DataSection>
       {/* <Pagination>
@@ -226,4 +170,9 @@ const StyledTable = styled.table`
   tr:hover {
     background-color: #f5f5f5;
   }
+`;
+
+const Pagination = styled.div`
+  width: 100%;
+
 `;
