@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import heart from '../../../assets/images/heart.svg';
 import backgroundImage from '../../../assets/images/newuser.png'; // 가정한 배경 이미지
 import firstDivImage from '../../../assets/images/adminbg.png'; // FirstDiv 배경 이미지
 import thirdDivImage from '../../../assets/images/adminbg.png'; // ThirdDiv 배경 이미지
-import reviews from "../../../assets/images/review.svg"
-import editprofile from "../../../assets/images/editprofile.svg"
+import reviews from '../../../assets/images/review.svg';
+import editprofile from '../../../assets/images/editprofile.svg';
 import { Link } from 'react-router-dom';
 import UserInfoPage from './UserInfoPage';
+import { getMyProfile } from '../../../apis/profileApi';
 
 const MySettingPage = () => {
   const [isUserInfoVisible, setUserInfoVisible] = useState(false);
-
+  const [nickName, setNickName] = useState('');
+  const [profileImage, setProfileImage] = useState('');
   const handleUserInfoClick = () => {
     setUserInfoVisible(true);
   };
@@ -20,13 +22,19 @@ const MySettingPage = () => {
     setUserInfoVisible(false);
   };
 
+  useEffect(() => {
+    getMyProfile().then((r) => {
+      setNickName(r.nickName);
+      setProfileImage(r.memberProfileImage);
+    });
+  }, []);
   return (
     <VerticalContainer>
       <FirstDiv>
         <OverlapCircle />
         <SetText>
-          <h1>Charles Deo</h1>
-          <p>햄토리 주인</p>
+          <h1>{nickName}</h1>
+          {/* <p>햄토리 주인</p> */}
         </SetText>
       </FirstDiv>
 
@@ -75,7 +83,7 @@ const SetPosition = css`
 `;
 
 const VerticalContainer = styled.div`
-   display: flex;
+  display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
@@ -87,8 +95,8 @@ const VerticalContainer = styled.div`
 const FirstDiv = styled.div`
   width: 70%;
   height: 20%;
-  background: url(${firstDivImage}) no-repeat center center; 
-  background-size: cover; 
+  background: url(${firstDivImage}) no-repeat center center;
+  background-size: cover;
   position: relative;
   border-radius: 0px 0px 20px 20px;
 `;
@@ -101,8 +109,8 @@ const OverlapCircle = styled.div`
   bottom: -50px;
   left: 50%;
   transform: translateX(-50%);
-  background: url(${backgroundImage}) no-repeat center center; 
-  background-size: cover; 
+  background: url(${backgroundImage}) no-repeat center center;
+  background-size: cover;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
@@ -115,15 +123,15 @@ const SetText = styled.div`
   gap: 10px;
   ${SetPosition}
 
-  h1{
+  h1 {
     font-size: 1.4rem;
     font-weight: bold;
-    color: #A303A0;
+    color: #a303a0;
   }
 
-  p{
+  p {
     font-size: 1rem;
-    color: #A303A0;
+    color: #a303a0;
   }
 `;
 
@@ -150,7 +158,7 @@ const LinkSection = styled.div`
   border: 1px solid #e0e0e0;
   border-radius: 20px;
   &:active {
-    transform: scale(0.95); 
+    transform: scale(0.95);
   }
 `;
 
@@ -169,21 +177,18 @@ const SetText2 = styled.div`
 const LinkIcon = styled.img`
   height: 60px;
   width: 60px;
-  position: absolute; 
-  top: 40%; 
-  left: 50%; 
-  transform: translate(
-    -50%,
-    -50%
-  ); 
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 //마지막 맨 아래
 const ThirdDiv = styled.div`
   width: 70%;
   height: 20%;
-  background: url(${thirdDivImage}) no-repeat center center; 
-  background-size: cover; 
+  background: url(${thirdDivImage}) no-repeat center center;
+  background-size: cover;
   border-radius: 20px 20px 0px 0px;
 `;
 
@@ -194,5 +199,4 @@ const SLink = styled(Link)`
     color: black;
   }
 `;
-const Text = styled.p`
-`;
+const Text = styled.p``;

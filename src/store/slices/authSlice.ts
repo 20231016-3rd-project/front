@@ -109,7 +109,18 @@ const authSlice = createSlice({
     setAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
     },
-  },
+    setToken: (state, action) => {
+      state.tokenData = {
+        accessToken: action.payload.accessToken,
+        expiresIn: action.payload.accessTokenExpireDate
+          ? calculateExpiresIn(action.payload.accessTokenExpireDate)
+          : state.tokenData?.expiresIn || 0,
+        accessTokenExpireDate: action.payload.accessTokenExpireDate || state.tokenData?.accessTokenExpireDate,
+        issuedAt: action.payload.issuedAt || state.tokenData?.issuedAt
+      };
+      state.isAuthenticated = true;
+    },
+},
   extraReducers: (builder) => {
     builder
     .addCase(submitLogin.pending, (state) => {
@@ -155,14 +166,18 @@ const authSlice = createSlice({
         state.isRefreshingToken = true; 
       })
       .addCase(refreshAccessToken.fulfilled, (state, action) => {
-        state.tokenData = {
-          ...state.tokenData,
-          accessToken: action.payload.accessToken,
-          expiresIn: calculateExpiresIn(action.payload.accessTokenExpireDate),
-          accessTokenExpireDate: action.payload.accessTokenExpireDate,
-          issuedAt: action.payload.issuedAt
-        };
-        state.error = null;
+        if (action.payload) {
+          state.tokenData = {
+            ...state.tokenData,
+            accessToken: action.payload.accessToken || '',
+            expiresIn: action.payload.accessTokenExpireDate 
+              ? calculateExpiresIn(action.payload.accessTokenExpireDate)
+              : state.tokenData?.expiresIn || 0,
+            accessTokenExpireDate: action.payload.accessTokenExpireDate || '',
+            issuedAt: action.payload.issuedAt || '',
+          };
+          state.error = null;
+        }
       })
       .addCase(refreshAccessToken.rejected, (state, action) => {
         state.isAuthenticated = false; // 토큰 재발급 실패
@@ -173,5 +188,5 @@ const authSlice = createSlice({
     },
   });
   
-  export const { setAuthenticated, } = authSlice.actions;
+  export const { setAuthenticated, setToken } = authSlice.actions;
   export default authSlice.reducer;

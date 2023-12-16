@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { persistStore } from 'redux-persist';
+import rootReducer from './rootReducer'; 
 import authReducer from './slices/authSlice';
 import restaurantReducer from './slices/restaurantSlice';
 import regionReducer from './slices/regionSlice';
@@ -9,33 +9,16 @@ import modalReducer from './slices/modalSlice';
 import keywordReducer from './slices/keywordSlice';
 import bestReducer from './slices/bestSlice';
 import myLikeReducer from './slices/myLikeSlice';
-//import signupReducer from './slices/signupSlice';
 
-const authPersistConfig = {
-  key: 'auth', 
-  storage,
-  whitelist: ['auth']
-};
-
-const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 
 const store = configureStore({
-  reducer: {
-    restaurant: restaurantReducer, // state의 최상위 객체
-    auth: authReducer, 
-    region: regionReducer,
-    sort: sortReducer,
-    modal: modalReducer,
-    keyword: keywordReducer,
-    best: bestReducer,
-    mylike: myLikeReducer,
-    //signup: signupReducer,
-  },
+  reducer: rootReducer // 전체 리듀서로 rootReducer 사용
 });
+
 
 export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-export default store;
+export default store;  
