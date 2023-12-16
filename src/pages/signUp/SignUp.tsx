@@ -106,7 +106,12 @@ const SignUp: React.FC = () => {
         
         <SU.Label htmlFor="phone">핸드폰 번호</SU.Label>
         <SU.PhoneInputField>
-        <SU.PhoneInput type="text" id="phone" name="phone" placeholder="Phone" onChange={handleChange} value={userData.phone} />
+        <SU.PhoneInput type="text" 
+        id="phone" 
+        name="phone" 
+        placeholder="Phone" 
+        onChange={handleChange} 
+        value={userData.phone} />
         </SU.PhoneInputField>
             
          
