@@ -9,18 +9,18 @@ const AdminPage = () => {
   const [isDay, setIsDay] = useState(true);
   return (
     <StMain>
-    {/* <Set.MainContainer>
+    <Set.MainContainer>
     <Set.GridContainer>
       <AdminNav isDay={isDay} setIsDay={setIsDay}/>
        <Set.AdminMain isDay={isDay}>
         <AdminHeader/>
-        <Set.DashBoardSection> */}
+        <Set.DashBoardSection>
         <Outlet />
-        {/* </Set.DashBoardSection>
+     </Set.DashBoardSection>
       </Set.AdminMain>
 
-  </Set.GridContainer>
-    </Set.MainContainer> */}
+      </Set.GridContainer>
+     </Set.MainContainer> 
     </StMain>
   );
 };

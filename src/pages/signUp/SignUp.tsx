@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { checkEmailDuplicate, checkNickNameDuplicate, signUpApi } from '../../apis/signupApi/signupApi';
-
+import Video from "../../assets/images/yellowflower.mp4"
+import * as SU from './SignUp.styles';
 interface SignUpData {
   email: string;
   password: string;
@@ -45,28 +46,95 @@ const SignUp: React.FC = () => {
 
 
     return (
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Email" onChange={handleChange} value={userData.email} />
-          </div>
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Password" onChange={handleChange} value={userData.password} />
-          </div>
-          <div>
-            <label htmlFor="nickName">NickName:</label>
-            <input type="text" id="nickName" name="nickName" placeholder="NickName" onChange={handleChange} value={userData.nickName} />
-          </div>
-          <div>
-            <label htmlFor="phone">Phone:</label>
-            <input type="text" id="phone" name="phone" placeholder="Phone" onChange={handleChange} value={userData.phone} />
-          </div>
-          <button type="submit">Sign Up</button>
-        </form>
+      <SU.MainContainer>
+      <SU.GridContainer>
+     <SU.VideoSection>
+              <video autoPlay loop muted>
+                 <source src={Video} type="video/mp4" />
+              </video>
+
+              <SU.OverlayText>
+              <h1>지금바로 떠나는 맛집 탐방!</h1>
+               <p>해바라기 플레이트</p>
+              </SU.OverlayText>
+     </SU.VideoSection>
+     <SU.SignupForm onSubmit={handleSubmit}>
+     <SU.FieldContainer>
+     <h1>회원가입</h1>
+        <label htmlFor="email">이메일</label>
+        <SU.InputField>
+          <SU.Input
+             type="email"
+             id="email" 
+             name="email" 
+             placeholder="이메일을 입력해주세요" 
+             onChange={handleChange} 
+             value={userData.email} />
+          <SU.CheckButton type="button">중복 확인</SU.CheckButton>
+          </SU.InputField>
+          {/* {emailDuplicateCheck && errors.email && <SU.ErrorMsg>{errors.email}</SU.ErrorMsg>} */}
+      
+          <label htmlFor="nickname">닉네임</label>
+          <SU.InputField>
+          <SU.Input 
+          type="text" 
+          id="nickName" 
+          name="nickName" 
+          placeholder="닉네임을 입력해주세요" 
+          onChange={handleChange} 
+          value={userData.nickName} 
+        />
+          <SU.CheckButton type="button">중복 확인</SU.CheckButton>
+        </SU.InputField>
+        <label htmlFor="password">비밀번호</label>  
+        <SU.InputPassword 
+        type="password" 
+        id="password" 
+        name="password" 
+        placeholder="비밀번호를 입력해주세요" 
+        onChange={handleChange} 
+        value={userData.password} />
+   {/* {errors.password && <p className="error">{errors.password}</p>}  */}
+       <SU.InputPassword
+         type="password"
+        //  value={confirmPassword}
+        //  onChange={handleConfirmPasswordChange}
+         placeholder="비밀번호를 다시 입력해주세요"
+         autoComplete="new-password"
+       />
+  {/* {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>} */}
+        
+        <SU.Label htmlFor="phone">핸드폰 번호</SU.Label>
+        <SU.PhoneInputField>
+        <SU.PhoneInput type="text" 
+        id="phone" 
+        name="phone" 
+        placeholder="010" 
+        onChange={handleChange} 
+        value={userData.phone} />
+
+        <SU.PhoneInput type="text" 
+        id="phone" 
+        name="phone" 
+        placeholder="0000" 
+        onChange={handleChange} 
+        value={userData.phone} />
+
+        <SU.PhoneInput type="text" 
+        id="phone" 
+        name="phone" 
+        placeholder="0000" 
+        onChange={handleChange} 
+        value={userData.phone} />
+        </SU.PhoneInputField>
+            
+         
+        <SU.SignUpButton type="submit">가입하기</SU.SignUpButton>
+        </SU.FieldContainer>
+        </SU.SignupForm>
         {error && <p>{error}</p>}
-      </div>
+        </SU.GridContainer>
+        </SU.MainContainer>
     );
   };
   

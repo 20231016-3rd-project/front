@@ -5,7 +5,7 @@ interface ToggleContainerProps {
 }
 
 export const MainContainer = styled.div`
-   background-color: #ffdf6d;
+   background-color: #e2e2e2;
    display: grid;
    width: 100vw;
    height: 100vh;
@@ -16,9 +16,10 @@ export const GridContainer = styled.div`
   display: grid;
   max-width: 100%;
   max-height: 100%;
-  gap: 15px;
+  gap: 20px;
   grid-template-columns: 1fr 5fr;
   color: white;
+  font-weight: bold;
 `;
 
 export const AdminNavbar = styled.div`
@@ -68,8 +69,12 @@ img{
 
 export const LinkBox = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 15px;
   margin-left: 5px;
+  width: auto;
+  height: 40px;
+  align-items: center;
+  border-radius: 10px;
 
   div {
     display: flex;
@@ -85,6 +90,8 @@ export const LinkBox = styled.div`
     align-items: center;
   }
 `;
+
+
 
 //중요
 export const AdminMain = styled.div<ToggleContainerProps>`
@@ -194,7 +201,7 @@ export const DashBoardContainer = styled.div`
   grid-template-rows: 2fr 1fr; 
   grid-template-areas:
     "box1 box1 box2"
-    "box3 box3 box4";
+    "box3 box4 box5";
 
   @keyframes activeEffect {
   0%, 100% { transform: scale(1); } 
@@ -269,39 +276,21 @@ export const Box2 = styled.div`
 export const Box3 = styled.div`
     grid-area: box3; 
     border: 1px solid #ccc;
-
-    h1{
-      font-size: 1.2rem;
-      font-weight: bold;
-      margin-top: 10px;
-      margin-bottom: 50px;
-    }
-
-    .bestmap{
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      .best3{
-      width: 30%;
-      height: 80%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      img{
-        width: 100px;
-        height: 100px;
-        border-radius: 50px;
-        margin-bottom: 10px;
-      }
-    }
+    height: 140%;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+     img{
+      width: 100px;
+      height: 100px;
     }
   `;
   
   export const Box4 = styled.div`
     border: 1px solid #ccc;
     grid-area: box4;
+    height: 140%;
     display: flex;
     gap: 10px;
     justify-content: center;
@@ -312,7 +301,7 @@ export const Box3 = styled.div`
     }
 `;
 
-export const Box4Text = styled.div`
+export const TextGridBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -329,6 +318,19 @@ export const Box4Text = styled.div`
   }
   `;
 
+export const Box5 = styled.div`
+    grid-area: box5;
+    border: 1px solid #ccc;
+    height: 140%;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+     img{
+      width: 100px;
+      height: 100px;
+    }
+`;
 
 export const BoxChatButton = styled.div`
   display: flex;
