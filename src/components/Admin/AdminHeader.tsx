@@ -8,14 +8,14 @@ const AdminHeader = () => {
     <div>
        <Set.AdminHeader>
         <Set.TextBox>
-          <h1>Welcome,Back Admin!</h1>
-          <p>here's what's happening with your store today.</p>
+          <h1>환영합니다, 관리자님!</h1>
+          <p>오늘 귀하의 매장에서 무슨 일이 일어나고 있나요?</p>
         </Set.TextBox>
 
         <Set.ProfileBox>
 
         <div className="create">
-          <h1>Create</h1>
+          <h1>생성하기</h1>
         </div>
 
         <div className="icon">

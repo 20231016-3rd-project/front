@@ -17,7 +17,7 @@ const AdminNav: React.FC<{ isDay: boolean; setIsDay: (isDay: boolean) => void }>
         <Set.LogoSection>
           <div>
             <img src={logo} alt="" />
-            <h1>Sunflower Plate</h1>
+            <h1>해바라기 플레이트</h1>
           </div>
         </Set.LogoSection>
 
@@ -27,35 +27,35 @@ const AdminNav: React.FC<{ isDay: boolean; setIsDay: (isDay: boolean) => void }>
           <div>
           <img src={home} alt="" />
           </div>
-          <Link to="/admin">Dashboard</Link>
+          <Link to="/admin">대쉬보드</Link>
          </Set.LinkBox>
 
          <Set.LinkBox>
          <div>
          <img src={registli} alt="" />
          </div>
-         <Link to="/admin/regist">StoreRegistration</Link>
+         <Link to="/admin/regist">영업정 등록</Link>
          </Set.LinkBox>
 
          <Set.LinkBox>
          <div>
          <img src={registli} alt="" />
          </div>
-         <Link to="/admin/registli">Store list</Link>
+         <Link to="/admin/registli">영업점 조회</Link>
          </Set.LinkBox>
 
          <Set.LinkBox>
          <div>
          <img src={closure} alt="" />
          </div>
-         <Link to="/admin/closure">Closure</Link>
+         <Link to="/admin/closure">폐업/수정 조회</Link>
          </Set.LinkBox>
 
          <Set.LinkBox>
          <div>
          <img src={report} alt="" />
          </div>
-         <Link to="/admin/report">Report</Link>
+         <Link to="/admin/report">리뷰신고 내역</Link>
          </Set.LinkBox>
 
 

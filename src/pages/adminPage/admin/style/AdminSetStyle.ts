@@ -5,7 +5,7 @@ interface ToggleContainerProps {
 }
 
 export const MainContainer = styled.div`
-   background-color: #ffdf6d;
+   background-color: #e2e2e2;
    display: grid;
    width: 100vw;
    height: 100vh;
@@ -16,9 +16,10 @@ export const GridContainer = styled.div`
   display: grid;
   max-width: 100%;
   max-height: 100%;
-  gap: 15px;
+  gap: 20px;
   grid-template-columns: 1fr 5fr;
   color: white;
+  font-weight: bold;
 `;
 
 export const AdminNavbar = styled.div`
@@ -68,8 +69,12 @@ img{
 
 export const LinkBox = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 15px;
   margin-left: 5px;
+  width: auto;
+  height: 40px;
+  align-items: center;
+  border-radius: 10px;
 
   div {
     display: flex;
@@ -85,6 +90,8 @@ export const LinkBox = styled.div`
     align-items: center;
   }
 `;
+
+
 
 //중요
 export const AdminMain = styled.div<ToggleContainerProps>`
