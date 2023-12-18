@@ -67,10 +67,10 @@ const SignUp: React.FC = () => {
              type="email"
              id="email" 
              name="email" 
-             placeholder="Email" 
+             placeholder="이메일을 입력해주세요" 
              onChange={handleChange} 
              value={userData.email} />
-          {/* <SU.CheckButton type="button" onClick={handleCheckEmail}>중복 확인</SU.CheckButton> */}
+          <SU.CheckButton type="button">중복 확인</SU.CheckButton>
           </SU.InputField>
           {/* {emailDuplicateCheck && errors.email && <SU.ErrorMsg>{errors.email}</SU.ErrorMsg>} */}
       
@@ -80,33 +80,52 @@ const SignUp: React.FC = () => {
           type="text" 
           id="nickName" 
           name="nickName" 
-          placeholder="NickName" 
+          placeholder="닉네임을 입력해주세요" 
           onChange={handleChange} 
           value={userData.nickName} 
         />
-          {/* <SU.CheckButton type="button" onClick={handleCheckNickname}>중복 확인</SU.CheckButton> */}
+          <SU.CheckButton type="button">중복 확인</SU.CheckButton>
         </SU.InputField>
         <label htmlFor="password">비밀번호</label>  
         <SU.InputPassword 
         type="password" 
         id="password" 
         name="password" 
-        placeholder="Password" 
+        placeholder="비밀번호를 입력해주세요" 
         onChange={handleChange} 
         value={userData.password} />
-   {/* {errors.password && <p className="error">{errors.password}</p>} */}
-   {/* <SU.InputPassword
-    type="password"
-    value={confirmPassword}
-    onChange={handleConfirmPasswordChange}
-    placeholder="비밀번호를 다시 입력해주세요"
-    autoComplete="new-password"
-  />
-  {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>} */}
+   {/* {errors.password && <p className="error">{errors.password}</p>}  */}
+       <SU.InputPassword
+         type="password"
+        //  value={confirmPassword}
+        //  onChange={handleConfirmPasswordChange}
+         placeholder="비밀번호를 다시 입력해주세요"
+         autoComplete="new-password"
+       />
+  {/* {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>} */}
         
         <SU.Label htmlFor="phone">핸드폰 번호</SU.Label>
         <SU.PhoneInputField>
-        <SU.PhoneInput type="text" id="phone" name="phone" placeholder="Phone" onChange={handleChange} value={userData.phone} />
+        <SU.PhoneInput type="text" 
+        id="phone" 
+        name="phone" 
+        placeholder="010" 
+        onChange={handleChange} 
+        value={userData.phone} />
+
+        <SU.PhoneInput type="text" 
+        id="phone" 
+        name="phone" 
+        placeholder="0000" 
+        onChange={handleChange} 
+        value={userData.phone} />
+
+        <SU.PhoneInput type="text" 
+        id="phone" 
+        name="phone" 
+        placeholder="0000" 
+        onChange={handleChange} 
+        value={userData.phone} />
         </SU.PhoneInputField>
             
          
