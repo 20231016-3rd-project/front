@@ -84,7 +84,7 @@ export const Input = styled.input`
   margin: 10px 0px;
   margin-bottom: 10px;
   padding: 10px 0px; // 상하 패딩을 조정합니다.
-  width: 72%;
+  width: 75%;
   border: 1px solid #ccc;
   background-color: transparent; // 배경색을 투명하게 설정합니다.
   outline: none; // 포커스 시 테두리를 제거합니다.

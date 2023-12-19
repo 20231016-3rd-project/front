@@ -1,142 +1,39 @@
 import { useState, useEffect } from 'react';
 import { StMain } from "../../../components/Stmain";
 import styled from "styled-components";
-import axios from 'axios';
+import { axiosInstance } from '../../../apis/axiosInstance/axiosInstance';
 
-interface Restaurant {
-  restaurantId: number;
-  restaurantName: string;
-  restaurantAddress: string;
-  restaurantWebSite: string;
-  likeCount: number;
-  reviewCount: number;
-  avgStarRate: number;
-  restaurantStatus: string;
-}
-
-interface RestaurantData {
-  content: Restaurant[];
-  pageable: {
-    // pageable 타입 정보 추가
-  };
-  last: boolean;
-  totalPages: number;
-  totalElements: number;
-  number: number;
-  first: boolean;
-  sort: {
-    // sort 타입 정보 추가
-  };
-  size: number;
-  numberOfElements: number;
-  empty: boolean;
-}
 
 
 const RegistListPage = () => {
-  // 예제 데이터
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>('');
-  const [restaurantData, setRestaurantData] = useState({
-    content: [],
-    last: false,
-    totalPages: 0,
-    totalElements: 0,
-    number: 0,
-    first: false,
-    sort: {},
-    size: 0,
-    numberOfElements: 0,
-    empty: true,
-  });
-
-// pageable 상태 추가
-  const [pageable, setPageable] = useState({
-    sort: {
-      empty: true,
-      unsorted: true,
-      sorted: false
-    },
-    offset: 0,
-    pageNumber: 0,
-    pageSize: 10,
-    paged: true,
-    unpaged: false
-  });
+  const [restaurantData, setRestaurantData] = useState({ content: [], pageable: {}, totalPages: 0 });
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    const fetchRestaurants = async () => {
-      try {
-      const accessToken = localStorage.getItem('accessToken');
-      console.log(accessToken); // 'accessToken'은 저장된 토큰의 키 이름입니다.
-      if (!accessToken) {
-        throw new Error('Access token not found');
-      }
-      
+    fetchRestaurants(currentPage);
+  }, [currentPage]);
 
-        const headers = {
-          "X-AUTH-TOKEN": accessToken,
-        };
+  const fetchRestaurants = async (page) => {
+    try {
+      const response = await axiosInstance.get(`/sunflowerPlate/admin/restaurant?page=${page}`);
+      setRestaurantData(response.data);
+    } catch (error) {
+      console.error('식당 데이터를 불러오는데 실패했습니다.', error);
+    }
+  };
 
-        const response = await axios.get('http://3.38.32.91/sunflowerPlate/admin/restaurant', {
-          headers
-        });
-
-        setRestaurantData(response.data);
-        setPageable(response.data.pageable); 
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRestaurants();
+  useEffect(() => {
+    // 페이지 로드 시 첫 페이지의 데이터를 불러옵니다.
+    fetchRestaurants(1);
   }, []);
 
-  // 페이지 변경 핸들러
-  const handlePageChange = async (pageNumber) => {
-    try {
-      setLoading(true);
-
-      const accessToken = localStorage.getItem('accessToken');
-      if (!accessToken) {
-        throw new Error('Access token not found');
-      }
-
-      const headers = {
-        "X-AUTH-TOKEN": accessToken,
-      };
-
-      const response = await axios.get(`http://3.38.32.91/sunflowerPlate/admin/restaurant?page=${pageNumber}`, {
-        headers
-      });
-
-      setRestaurantData(response.data);
-      setPageable(response.data.pageable);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+  const handlePreviousClick = () => {
+    setCurrentPage(currentPage - 1);
   };
 
-   // 페이지네이션 UI 렌더링
-   const renderPagination = () => {
-    let pages = [];
-    for (let i = 0; i < restaurantData.totalPages; i++) {
-      pages.push(
-        <button key={i} onClick={() => handlePageChange(i)}>
-          {i + 1}
-        </button>
-      );
-    }
-    return pages;
+  const handleNextClick = () => {
+    setCurrentPage(currentPage + 1);
   };
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
   return (
     <StMain>
     <Container>
@@ -170,12 +67,13 @@ const RegistListPage = () => {
             </tr>
           ))}
         </tbody>
-        {renderPagination()}
       </StyledTable>
       </DataSection>
-      {/* <Pagination>
-          {renderPagination()}
-        </Pagination> */}
+      <Pagination>
+          <button onClick={handlePreviousClick} disabled={currentPage === 0}>이전</button>
+          <span>페이지 {currentPage + 1} / {restaurantData.totalPages}</span>
+          <button onClick={handleNextClick} disabled={currentPage === restaurantData.totalPages - 1}>다음</button>
+        </Pagination>
       </Container>
     </StMain>
   );
@@ -225,5 +123,23 @@ const StyledTable = styled.table`
 
   tr:hover {
     background-color: #f5f5f5;
+  }
+
+  td {
+    a{
+      color: darkblue;
+      text-decoration: underline;
+    }
+  }
+`;
+
+const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+
+  button {
+    margin: 0 10px;
   }
 `;

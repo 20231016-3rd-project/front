@@ -67,7 +67,7 @@ const bounceIn = keyframes`
 const ToggleContainer = styled.div`
   display: block;
   text-align: center;
-  margin-top: 40px;
+  margin-top: 300px;
   user-select: none;
 `;
 
