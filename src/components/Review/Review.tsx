@@ -89,28 +89,27 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
   };
   console.log('Review', review);
   const toast = useToast();
-  const { mutate } = deleteReviewMutation();
+  const { mutate, mutateAsync } = deleteReviewMutation();
   const deleteButtonhHandler = () => {
-    try {
-      mutate(review.reviewId);
-
-      toast({
-        title: '리뷰가 삭제되었습니다.',
-        status: 'success',
-        duration: 4000,
-        isClosable: true,
-        position: 'top',
-      });
-    } catch (error) {
-      console.log(error);
-      toast({
-        title: '리뷰 삭제에 실패했습니다.',
-        status: 'error',
-        duration: 4000,
-        isClosable: true,
-        position: 'top',
-      });
-    }
+    mutateAsync(review.reviewId).then((r: any) => {
+      if (r.isAxiosError) {
+        toast({
+          title: '리뷰 삭제에 실패했습니다.',
+          status: 'error',
+          duration: 4000,
+          isClosable: true,
+          position: 'top',
+        });
+      } else {
+        toast({
+          title: '리뷰가 삭제되었습니다.',
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+          position: 'top',
+        });
+      }
+    });
   };
   // useEffect(() => {
   //   getMyProfile().then((r) => setProfile(r));

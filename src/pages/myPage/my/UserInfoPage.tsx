@@ -105,7 +105,7 @@ const UserInfoPage: React.FC<Type> = ({ isVisible, onClose }) => {
     } catch (error: any) {
       if (error.message) {
         toast({
-          title: `${error.message}`,
+          title: `${error.message}` ?? '회원정보 수정 실패',
           status: 'error',
           duration: 4000,
           isClosable: true,
