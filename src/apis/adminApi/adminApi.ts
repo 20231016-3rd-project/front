@@ -1,15 +1,4 @@
 import { axiosInstance, axiosImgInstance } from "../axiosInstance/axiosInstance" // 올바른 경로로 변경해야 합니다.
-import axios from 'axios';
-
-const accessToken = localStorage.getItem('accessToken');
-
-export const API = axios.create({
-  baseURL: 'http://3.38.32.91/sunflowerPlate/admin',
-  headers: {
-    "X-AUTH-TOKEN": accessToken,
-    'Content-Type': 'multipart/form-data'
-  },
-});
 
 export const registerRestaurant = async ( formData:FormData) => {
   try {
@@ -24,10 +13,22 @@ export const registerRestaurant = async ( formData:FormData) => {
 };
 
 // 가게수정부분
-export const getRestaurantData = async ( restaurantId:number) => {
-  const response = await axiosInstance.get(`/sunflowerPlate/admin/restaurant/${restaurantId}`, {
+export const getRestaurantData = async ( restaurantId:any) => {
+  const response = await axiosImgInstance.get(`/sunflowerPlate/admin/restaurant/${restaurantId}`, {
   });
   return response.data;
 };
+
+export const putRestaurantData = async (restaurantId:any, data:any) => {
+  try {
+    const response = await axiosImgInstance.put(`/sunflowerPlate/admin/restaurant/${restaurantId}`, data, {
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Update failed:', error);
+    throw error;
+  }
+};
+
 
 

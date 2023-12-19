@@ -11,16 +11,44 @@ export const RegistContainer = styled.form`
   border: 1px solid #e0e0e0;
 `;
 
-export const MainTextBox = styled.div`
+export const MainTextBox1 = styled.div`
   display: flex;
   margin-bottom: 20px;
   width: 100%;
-  & > h1{
+  align-items: center;
+
+      & > h1{
     font-size: 20px;
+    padding-top: 2px;
+  }
+
+      & > span{
+    font-size: 15px;
+    padding-top: 2px;
   }
   
-  & > span{
+`;
+
+export const MainTextBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  width: 100%;
+
+  & > div{
+    display: flex;
+    font-size: 20px;
+    align-items: center;
+
+      & > h1{
+    font-size: 20px;
     padding-top: 2px;
+  }
+
+      & > span{
+    font-size: 15px;
+    padding-top: 2px;
+  }
   }
 `;
 

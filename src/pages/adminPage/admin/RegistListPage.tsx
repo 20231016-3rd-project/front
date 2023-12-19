@@ -3,19 +3,40 @@ import { StMain } from "../../../components/Stmain";
 import styled from "styled-components";
 import { axiosInstance } from '../../../apis/axiosInstance/axiosInstance';
 
+interface Restaurant {
+  restaurantId: number;
+  restaurantName: string;
+  restaurantAddress: string;
+  restaurantWebSite: string;
+  likeCount: number;
+  reviewCount: number;
+  avgStarRate: number;
+  restaurantStatus: string;
+}
 
+interface RestaurantData {
+  content: Restaurant[];
+  pageable: any; // Define more specifically if possible
+  totalPages: number;
+}
 
-const RegistListPage = () => {
-  const [restaurantData, setRestaurantData] = useState({ content: [], pageable: {}, totalPages: 0 });
+const RegistListPage: React.FC = () => {
+  const [restaurantData, setRestaurantData] = useState<RestaurantData>({ content: [], pageable: {}, totalPages: 0 });
   const [currentPage, setCurrentPage] = useState(0);
+  const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
     fetchRestaurants(currentPage);
   }, [currentPage]);
 
-  const fetchRestaurants = async (page) => {
+  const fetchRestaurants = async (page: number) => {
     try {
-      const response = await axiosInstance.get(`/sunflowerPlate/admin/restaurant?page=${page}`);
+      const response = await axiosInstance.get(`/sunflowerPlate/admin/restaurant?page=${page}`, {
+        params: {
+          keyword,
+          page
+        }
+      });
       setRestaurantData(response.data);
     } catch (error) {
       console.error('식당 데이터를 불러오는데 실패했습니다.', error);
@@ -34,11 +55,25 @@ const RegistListPage = () => {
   const handleNextClick = () => {
     setCurrentPage(currentPage + 1);
   };
+
+  const handleSearch = () => {
+    fetchRestaurants(1); // 검색 시작 시 첫 페이지로 이동
+  };
+
+  
   return (
     <StMain>
     <Container>
       <Title>식당등록조회</Title>
-      
+      <SearchSection>
+        <input 
+          type="text" 
+          placeholder="식당 이름 검색" 
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+        />
+        <button onClick={handleSearch}>검색</button>
+      </SearchSection>
       <DataSection>
       <StyledTable>
         <thead>
@@ -102,7 +137,7 @@ const Title = styled.div`
 
 const DataSection = styled.div`
   width: 100%;
-  height: 800px;
+    height: 600px;
   border: 1px solid #e0e0e0;
   overflow-x: auto;
 `;
@@ -141,5 +176,24 @@ const Pagination = styled.div`
 
   button {
     margin: 0 10px;
+  }
+`;
+
+const SearchSection = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 10px;
+
+  input{
+    border: 1px solid #e0e0e0;
+    margin-right: 10px;
+  }
+
+  button{
+    border: 1px solid #e0e0e0;
+    padding: 0 10px 0 10px;
+    margin-right: 10px;
+    background-color: #f2f2f2;
   }
 `;

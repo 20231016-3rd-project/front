@@ -1,19 +1,10 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import DaumPostcode, { Address } from 'react-daum-postcode';
-
-interface CustomAddress {
-   // 전체 주소를 추가합니다.
-  restaurantAdmin: {
-    fullAd: string;
-    city: string;
-    district: string;
-    dong: string;
-  };
-}
+import { IAddressData } from '../../pages/adminPage/admin/types/storeregist';
 
 interface DaumPostProps {
-  onAddressSelect: (address: CustomAddress) => void;
+  onAddressSelect: (address: IAddressData) => void;
   initialAddress: string; // 초기 주소 props를 추가합니다.
 }
 
@@ -61,62 +52,88 @@ const DaumPost: React.FC<DaumPostProps> = ({
   const handleComplete = (data: Address) => {
     const fullAddress = data.address; // 전체 주소
     let extraAddress = ''; // 추가 주소 정보
-
+  
     // 주소 유형이 도로명 주소인 경우 추가 정보를 포함합니다.
     if (data.addressType === 'R') {
       if (data.bname !== '') {
         extraAddress += data.bname;
       }
       if (data.buildingName !== '') {
-        extraAddress +=
-          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+        extraAddress += extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
       }
     }
-
+  
     // 지역 주소와 상세 주소 분리
     const areaAddress = `${data.sido} ${data.sigungu}`.trim(); // '시, 도' + '시, 군, 구'
     const detailAddress = fullAddress.replace(areaAddress, '').trim(); // 지역 주소를 제외한 나머지 주소
-
+  
     setAreaAddress(areaAddress);
     setDetailAddress(
       detailAddress + (extraAddress !== '' ? ` (${extraAddress})` : '')
     );
-
+  
     // 주소를 좌표로 변환하여 지도에 마커로 표시
     const geocoder = new window.kakao.maps.services.Geocoder();
-    geocoder.addressSearch(fullAddress, function (result:any, status:any) {
-      console.log('fulladdress', fullAddress);
+    geocoder.addressSearch(fullAddress, function (result: any, status: any) {
       if (status === window.kakao.maps.services.Status.OK) {
         const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-        console.log('coords', coords);
         if (marker) {
-          // 이전 마커가 있으면 제거
           marker.setMap(null);
         }
-
+  
         const newMarker = new window.kakao.maps.Marker({
           position: coords,
           map: map,
         });
-
+  
         setMarker(newMarker);
         map.setCenter(coords);
-
-        onAddressSelect({
+  
+        // IAddressData 형식에 맞는 객체 생성
+        const addressData: IAddressData = {
+          zonecode: data.zonecode,
+          address: data.address,
+          addressEnglish: data.addressEnglish,
+          addressType: data.addressType,
+          userSelectedType: data.userSelectedType,
+          noSelected: '',
+          userLanguageType: '',
+          roadAddress: data.roadAddress,
+          roadAddressEnglish: data.roadAddressEnglish,
+          jibunAddress: data.jibunAddress,
+          jibunAddressEnglish: data.jibunAddressEnglish,
+          autoRoadAddress: '',
+          autoJibunAddress: '',
+          autoEnglishAddress: '',
+          buildingCode: data.buildingCode,
+          buildingName: data.buildingName,
+          apartment: '',
+          sido: data.sido,
+          sigungu: data.sigungu,
+          sigunguCode: data.sigunguCode,
+          bcode: data.bcode,
+          roadnameCode: data.roadnameCode,
+          roadname: data.roadname,
+          bname: data.bname,
+          bname1: '',
+          bname2: '',
+          hname: '',
+          query: '',
           restaurantAdmin: {
-            fullAd: fullAddress, 
+            fullAd: fullAddress,
             city: data.sido,
             district: data.sigungu,
             dong: data.bname || '',
           },
-        });
-
-        
+        };
+  
+        onAddressSelect(addressData);
       }
     });
-
+  
     setIsModalOpen(false);
   };
+  
 
   const handleOpenModal = () => {
     setIsModalOpen(true);

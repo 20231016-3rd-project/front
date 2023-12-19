@@ -61,7 +61,7 @@ interface Request {
                   <td>{request.requestContent}</td>
                   <td>{request.requestAt}</td>
                   <td>
-                  <span onClick={() => goToEditPage(request.restaurantId)}>수정</span>/
+                  <span onClick={() => goToEditPage(request.restaurantId)}>수정/</span>
                     <span>삭제</span>
                   </td>
                 </tr>
@@ -108,6 +108,18 @@ const StyledTable = styled.table`
     text-align: center;
     padding: 8px;
     border-bottom: 1px solid #ddd;
+  }
+
+  tbody{
+    tr{
+      td{
+        span{
+          color: darkblue;
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
+    }
   }
 
   th {

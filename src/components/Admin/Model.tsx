@@ -4,14 +4,13 @@ import * as THREE from 'three';
 
 type GLTF = {
   nodes: {
-    [key: string]: THREE.Object3D;
+    [key: string]: any;
   };
   materials: {
     [key: string]: THREE.Material;
   };
   animations: THREE.AnimationClip[];
 };
-
 
 export default function Model(props: JSX.IntrinsicElements['group']) {
   const group = useRef<THREE.Group | null>(null);

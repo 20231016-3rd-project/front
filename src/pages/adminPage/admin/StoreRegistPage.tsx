@@ -6,7 +6,7 @@ import * as Set from '../admin/style/StoreRegistStyle';
 import { registerRestaurant } from '../../../apis/adminApi/adminApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const StoreRegistPage = () => {
+const StoreRegistPage: React.FC = () => {
   const [businessName, setBusinessName] = useState<string>(''); //식당의 이름
   const [tell, setTell] = useState<string>(''); //전화번호
   const [menus, setMenus] = useState<IMenu[]>([{ name: '', price: '' }]); //메뉴
@@ -113,17 +113,16 @@ const StoreRegistPage = () => {
       }
     });
 
-    // Use the mutation to submit the form data
     mutation.mutate(formData);
   };
 
   return (
     <StMain>
       <Set.RegistContainer onSubmit={handleSubmit}>
-        <Set.MainTextBox>
-          <h1>식당 등록/수정</h1>
+        <Set.MainTextBox1>
+          <h1>식당 등록하기</h1>
           <span>ㅣ당신의 식당을 등록하세요!</span>
-        </Set.MainTextBox>
+        </Set.MainTextBox1>
 
         <Set.ImageRegistSection>
           <label>이미지등록</label>
@@ -132,14 +131,14 @@ const StoreRegistPage = () => {
               <input
                 type="file"
                 id={`fileInput-${index}`}
-                style={{ display: 'none' }} // input을 숨깁니다.
+                style={{ display: 'none' }} 
                 onChange={(e) => handleFileChange(e, index)}
               />
               <input
                 placeholder='이미지를 선택하세요'
                 type="text"
                 readOnly
-                value={file ? file.name : ''} // 선택된 파일의 이름을 표시합니다.
+                value={file ? file.name : ''} 
               />
               <button
                 type="button"
