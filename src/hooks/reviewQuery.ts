@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getRestaurantDetail } from '../apis/getRestaurantApi/getRestaurant';
 import { deleteReview, postReview, putReview } from '../apis/reviewApi';
+import { useToast } from '@chakra-ui/react';
 
 export const getRestaurantDetailQuery = (id: string) => {
   const { data, isLoading } = useQuery({
@@ -12,25 +13,28 @@ export const getRestaurantDetailQuery = (id: string) => {
   });
   return { data, isLoading };
 };
-
 export const postReviewMutation = () => {
   const queryClient = useQueryClient();
-  const { mutate, isError, isLoading } = useMutation({
+  const { mutate, isError, isLoading, mutateAsync } = useMutation({
     mutationFn: async (data: {
       restaurantId: string | undefined;
       formData: FormData;
     }) => {
       try {
-        const r = await postReview(data.restaurantId, data.formData);
+        const r = await postReview(data.restaurantId, data.formData).then(
+          (r) => {
+            return r;
+          }
+        );
         queryClient.invalidateQueries({ queryKey: ['review'] });
         return r;
       } catch (error) {
-        console.log(error);
+        return error;
       }
     },
     mutationKey: ['review'],
   });
-  return { mutate, isError, isLoading };
+  return { mutate, isError, isLoading, mutateAsync };
 };
 
 export const deleteReviewMutation = () => {
@@ -43,6 +47,7 @@ export const deleteReviewMutation = () => {
         return r;
       } catch (error) {
         console.log(error);
+        return error;
       }
     },
     mutationKey: ['review'],
