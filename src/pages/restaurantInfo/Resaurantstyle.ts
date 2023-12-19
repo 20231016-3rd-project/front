@@ -59,6 +59,7 @@ export const InfoHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-top: 8px;
   padding-bottom: 0.75rem;
 `;
 export const InfoAddressBox = styled.div`
@@ -73,7 +74,7 @@ export const InfoAddressBox = styled.div`
 export const ButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 0.25rem;
+  gap: 1rem;
   /* margin-top: 20px;
   margin-bottom: 10px; */
 `;
