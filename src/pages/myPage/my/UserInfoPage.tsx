@@ -1,26 +1,18 @@
 import {
   Box,
   Button,
-  Circle,
-  Image,
   Input,
   VStack,
-  VisuallyHiddenInput,
-  FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
+  FormControl,
   Tabs,
   TabList,
   TabPanels,
   Tab,
   TabPanel,
   Text,
-  Avatar,
-  AvatarBadge,
   HStack,
-  InputGroup,
-  InputRightAddon,
+  useToast,
 } from '@chakra-ui/react';
 import { LegacyRef, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
@@ -28,26 +20,38 @@ import { getMyProfile, putMyProfile } from '../../../apis/profileApi';
 import Modal from '../../../components/Modal/Modal';
 import { AddIcon } from '@chakra-ui/icons';
 import { checkNickNameDuplicate } from '../../../apis/signupApi/signupApi';
-
-const UserInfoPage = ({ isVisible, onClose }) => {
+import UserInfoAvatar from './userInfoPage/UserInfoAvatar';
+import UserNickName from './userInfoPage/UserNickName';
+type ValidationObj = {
+  isNickNameValid: boolean;
+  isPhoneValid: boolean;
+  isPasswordValid: boolean;
+  isImageValid: boolean;
+  areAllValid: boolean;
+};
+type Type = {
+  isVisible: boolean;
+  onClose: () => void;
+};
+const UserInfoPage: React.FC<Type> = ({ isVisible, onClose }) => {
   if (!isVisible) return null;
-  const imageFileRef = useRef<LegacyRef<HTMLInputElement> | undefined>();
+  const imageFileRef = useRef<any>();
   const [originNickName, setOriginNickName] = useState('');
   const [nickName, setNickName] = useState('');
-  let checkedNickName = false;
 
-  const [validationObj, setvalidationObj] = useState({
+  const [validationObj, setvalidationObj] = useState<ValidationObj>({
     isNickNameValid: false,
     isPhoneValid: true,
     isPasswordValid: false,
     isImageValid: true,
     areAllValid: false,
   });
+  console.log(validationObj);
   // 초깃값 가지고 있어야함 초기값과 같으면 ok
   //다르면 중복확인 해야하고 중복확인에서 ok 나와야 ok
   const [profileImage, setProfileImage] = useState('');
   //image여야하고
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   // image파일이어야 하고 용량제한이 있어야함
   const [phones, setPhones] = useState<string[]>([]);
   const [phone, setPhone] = useState('');
@@ -67,13 +71,8 @@ const UserInfoPage = ({ isVisible, onClose }) => {
     });
   }, []);
   // profile Image file
-  const fileChangeHandler = (e) => {
-    console.log(e.target.files[0], 'test');
-    setProfileImage(URL.createObjectURL(e.target.files[0]));
-    setFile(e.target.files[0]);
-  };
 
-  const changeHandler = (e, setValue) => {
+  const changeHandler = (e: any, setValue: (arg: any) => void) => {
     setValue(e.target.value);
   };
 
@@ -83,29 +82,42 @@ const UserInfoPage = ({ isVisible, onClose }) => {
   //   "phone": String,
   //   "profileImage": Multipart/form-data
   // }
-
+  const toast = useToast();
   const putProfileHandler = () => {
     const formdata = new FormData();
     // formdata.append(file)
     formdata.append('nickName', nickName);
     formdata.append('password', password);
     formdata.append('phone', phone);
-    formdata.append('profileImage', file);
+    if (file !== null) formdata.append('profileImage', file);
 
-    putMyProfile(formdata);
+    try {
+      putMyProfile(formdata).then((r) => {
+        toast({
+          title: '회원정보가 수정되었습니다.',
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+          position: 'top',
+        });
+        return r;
+      });
+    } catch (error: any) {
+      if (error.message) {
+        toast({
+          title: `${error.message}`,
+          status: 'error',
+          duration: 4000,
+          isClosable: true,
+          position: 'top',
+        });
+      }
+    } finally {
+      onClose();
+    }
   };
 
-  //check nick name
-  useEffect(() => {
-    console.log('[CHECK NICKNAME]', nickName, originNickName);
-    if (nickName === originNickName) {
-      setvalidationObj((state) => ({ ...state, isNickNameValid: true }));
-    } else if (checkedNickName) {
-      setvalidationObj((state) => ({ ...state, isNickNameValid: true }));
-    } else {
-      setvalidationObj((state) => ({ ...state, isNickNameValid: false }));
-    }
-  }, [nickName]);
+  // check duplicate nickname
 
   //pw 조건
   const checkPassword = (pw: string) => {
@@ -124,7 +136,7 @@ const UserInfoPage = ({ isVisible, onClose }) => {
   // phone check
   useEffect(() => {
     console.log('[SET PHONE]');
-    setPhone(phones.join());
+    setPhone(phones.join('-'));
   }, [phones]);
 
   useEffect(() => {
@@ -138,8 +150,7 @@ const UserInfoPage = ({ isVisible, onClose }) => {
         state.isPhoneValid &&
         state.isImageValid,
     }));
-    console.log(validationObj);
-  }, [nickName, phones, password, confirmedPassword]);
+  }, [nickName, phones, password, confirmedPassword, setvalidationObj]);
   return (
     // <ModalOverlay>
     //   <ModalContent>
@@ -161,35 +172,12 @@ const UserInfoPage = ({ isVisible, onClose }) => {
           flexDirection={'column'}
           gap={4}
         >
-          <Box
-            display={'flex'}
-            justifyContent={'center'}
-            width={'100%'}
-            paddingRight={'20px'}
-            paddingTop={'0px'}
-          >
-            <Avatar
-              boxSize="8rem"
-              src={profileImage}
-              onClick={() => {
-                imageFileRef?.current?.click();
-              }}
-              cursor={'pointer'}
-            >
-              <AvatarBadge
-                borderColor="white"
-                bgColor={'yellow.400'}
-                boxSize="2.25em"
-              >
-                <AddIcon boxSize={'1.5em'} color={'white'} />
-              </AvatarBadge>
-            </Avatar>
-            <VisuallyHiddenInput
-              type="file"
-              ref={imageFileRef}
-              onChange={fileChangeHandler}
-            />
-          </Box>
+          <UserInfoAvatar
+            profileImage={profileImage}
+            imageFileRef={imageFileRef}
+            setProfileImage={setProfileImage}
+            setFile={setFile}
+          />
           <Box
             width={'100%'}
             margin={0}
@@ -204,19 +192,12 @@ const UserInfoPage = ({ isVisible, onClose }) => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <FormControl>
-                    <FormLabel>닉네임</FormLabel>
-                    <Input
-                      marginBottom={'1.5rem'}
-                      type="string"
-                      size="md"
-                      value={nickName}
-                      onChange={(e) => {
-                        setNickName(e.target.value);
-                        checkNickNameDuplicate(e.target.value);
-                      }}
-                    />
-                  </FormControl>
+                  <UserNickName
+                    nickName={nickName}
+                    originNickName={originNickName}
+                    setNickName={setNickName}
+                    setvalidationObj={setvalidationObj}
+                  />
                   <FormControl>
                     <FormLabel>연락처</FormLabel>
                     <HStack>
@@ -306,7 +287,7 @@ const UserInfoPage = ({ isVisible, onClose }) => {
             width={'100%'}
             onClick={putProfileHandler}
             colorScheme="yellow"
-            isDisabled={!validationObj.areAllValid}
+            // isDisabled={!validationObj.areAllValid}
           >
             수정하기
           </Button>
@@ -334,8 +315,7 @@ export default UserInfoPage;
 
 const ModalContent = styled.div`
   background-color: white;
-  min-width: 400px;
-  max-width: 30%;
+  width: 400px;
   height: 70%;
   padding: 10px;
   border-radius: 20px;
