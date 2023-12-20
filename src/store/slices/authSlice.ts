@@ -101,7 +101,6 @@ export const refreshAccessToken = createAsyncThunk(
 );
 
 
-// Auth Slice 생성
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -134,6 +133,7 @@ const authSlice = createSlice({
         nickname: action.payload.memberNickName, 
         phone: '' 
       }; 
+      
       state.tokenData = {
         accessToken: action.payload.accessToken,
         expiresIn: calculateExpiresIn(action.payload.accessTokenExpireDate), 
@@ -141,7 +141,10 @@ const authSlice = createSlice({
         issuedAt: action.payload.issuedAt 
       };
       state.error = null; 
+      
       localStorage.setItem('accessToken', action.payload.accessToken); // 토큰저장주석처리
+      
+
     })
     .addCase(submitLogin.rejected, (state, action) => {
       state.isAuthenticated = false;

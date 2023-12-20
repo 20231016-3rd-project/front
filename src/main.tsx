@@ -20,7 +20,7 @@ root.render(
       <GlobalStyle />
   
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}> {/* PersistGate 추가 */}
+        <PersistGate loading={null} persistor={persistor}> 
      
           <QueryClientProvider client={queryClient}>
             <RouterProvider router={router} />
@@ -30,4 +30,4 @@ root.render(
       </Provider>
     </ChakraProvider>
   </React.StrictMode>
-);
+); 

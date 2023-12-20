@@ -18,7 +18,7 @@ const persistConfig = {
 
 const persistedAuthReducer = persistReducer(persistConfig, auth);
 
-const rootReducer = combineReducers({
+const Reducer = combineReducers({
   restaurant,
   region,
   sort,
@@ -29,5 +29,5 @@ const rootReducer = combineReducers({
   auth: persistedAuthReducer, 
 });
 
-export type ReducerType = ReturnType<typeof rootReducer>;
-export default rootReducer;
+export type ReducerType = ReturnType<typeof Reducer>;
+export default Reducer;
