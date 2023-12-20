@@ -3,17 +3,17 @@ import styled from 'styled-components';
 export const MainContainer = styled.div`
   width: 100vw;
   height: 100vh;
-  overflow: hidden; // 스크롤 방지
+  overflow: hidden; 
 `;
 
 export const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: 1.65fr 1fr; // 50% 50% 레이아웃
+  grid-template-columns: 1.65fr 1fr; 
   height: 100%;
 `;
 
 export const VideoSection = styled.div`
- overflow: hidden; // 비디오가 컨테이너 바깥으로 나가는 것을 방지
+ overflow: hidden; 
  position: relative;
  width: 100%;
  height: 100%;
@@ -52,20 +52,16 @@ export const Box = styled.div`
    flex-direction: column;
    width: 75%;
    height: 70%;
-
-
    h1{
     font-size: 28px;
     margin-bottom: 40px;
     font-weight: bold;
   }
   a{
-
     img{
     margin-top: 20px;
     width: 100%;
   }
-
   }
  
   label{
@@ -78,14 +74,13 @@ export const Box = styled.div`
 export const Input = styled.input`
   margin: 10px 0px;
   margin-bottom: 10px;
-  padding: 10px 0px; // 상하 패딩을 조정합니다.
+  padding: 10px 0px;
   width: 100%;
   border: 1px solid #ccc;
-  background-color: transparent; // 배경색을 투명하게 설정합니다.
-  outline: none; // 포커스 시 테두리를 제거합니다.
-
+  background-color: transparent; 
+  outline: none; 
   &:focus {
-    border-bottom: 2px solid #007bff; // 포커스 시 밑줄의 색상과 두께를 변경합니다.
+    border-bottom: 2px solid #007bff; 
   }
 
 `;

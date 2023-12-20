@@ -8,22 +8,15 @@ import googleLogo from '../../assets/images/Google Login.png';
 import prame from '../../assets/images/Frame 3933.png';
 import Video from '../../assets/images/yellowflower.mp4';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../store/store';
-import {
-  submitLogin,
-  submitLogout,
-  refreshAccessToken,
-} from '../../store/slices/authSlice';
+import { AppDispatch } from '../../store/store';
+import { submitLogin, submitLogout, refreshAccessToken, setAuthenticated } from '../../store/slices/authSlice';
+import { RootState } from '../../store/rootReducer';
 
 const SignIn = () => {
-  const dispatch: AppDispatch = useDispatch(); // AppDispatch 타입을 사용합니다.
+  const dispatch: AppDispatch = useDispatch(); 
   const navigate = useNavigate();
-  const isAuthenticate = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
-  const isRefreshingToken = useSelector(
-    (state: RootState) => state.auth.isRefreshingToken
-  );
+  const isAuthenticate = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const isRefreshingToken = useSelector((state: RootState) => state.auth.isRefreshingToken);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoginFailed, setIsLoginFailed] = useState(false);
@@ -61,17 +54,16 @@ const SignIn = () => {
     }
   }, [isLoginFailed]);
 
-  const handleLogout = async () => {
-    dispatch(submitLogout())
-      .unwrap()
-      .then(() => {
-        navigate('/');
-      })
-      .catch((error) => {
-        alert('로그아웃 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
 
-        console.error('Error during logout:', error);
-      });
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(submitLogout());
+      dispatch(setAuthenticated(false));
+      navigate('/signin');
+    } catch (error) {
+      console.error('Error during logout', error);
+    }
   };
 
   const handleReissueAccessToken = async () => {
@@ -83,6 +75,8 @@ const SignIn = () => {
       console.error('Error during token reissue', error);
     }
   };
+
+  
 
   const handleKakaoRedirect = async () => {
     const urlParams = new URLSearchParams(window.location.search);
