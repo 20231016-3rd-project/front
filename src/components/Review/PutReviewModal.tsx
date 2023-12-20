@@ -1,13 +1,7 @@
 import React from 'react';
 import Modal from '../Modal/Modal';
-import styled from 'styled-components';
-import Star from '../Star/Star';
-import { useState, useEffect } from 'react';
-import { putReview } from '../../apis/reviewApi';
-import PutImageInput from '../../pages/restaurantInfo/PutImageInput';
-import { getMyProfile } from '../../apis/profileApi';
+import { useState } from 'react';
 import { putReviewMutation } from '../../hooks/reviewQuery';
-import ViewAndUploadPhoto from './ViewAndUploadPhoto';
 import PutViewAndUploadPhoto from './PutViewAndUploadPhoto';
 // {
 //   "reviewId": 14,
@@ -51,30 +45,30 @@ import PutViewAndUploadPhoto from './PutViewAndUploadPhoto';
 //   ]
 // ]
 
-type ReviewsInfo = {
-  content: ReviewType[];
-  empty: boolean;
-  first: boolean;
-  last: boolean;
-  number: number;
-  numberOfElements: number;
-  pageable: {
-    sort: {};
-    offset: number;
-    pageNumber: number;
-    pageSize: number;
-    paged: boolean;
-  };
-  size: number;
-  sort: {
-    empty: boolean;
-    sorted: boolean;
-    unsorted: boolean;
-    // sort 속성의 구조에 대한 타입 지정
-  };
-  totalElements: number;
-  totalPages: number;
-};
+// type ReviewsInfo = {
+//   content: ReviewType[];
+//   empty: boolean;
+//   first: boolean;
+//   last: boolean;
+//   number: number;
+//   numberOfElements: number;
+//   pageable: {
+//     sort: {};
+//     offset: number;
+//     pageNumber: number;
+//     pageSize: number;
+//     paged: boolean;
+//   };
+//   size: number;
+//   sort: {
+//     empty: boolean;
+//     sorted: boolean;
+//     unsorted: boolean;
+//     // sort 속성의 구조에 대한 타입 지정
+//   };
+//   totalElements: number;
+//   totalPages: number;
+// };
 type ReviewType = {
   reviewId: number;
   memberId: number;
@@ -94,12 +88,12 @@ type ReviewProps = {
   // setReviewsInfo: React.Dispatch<React.SetStateAction<ReviewType[]>>; // setReviewsInfo 타입 지정
 };
 
-type UserProfile = {
-  email: string;
-  memberProfilePicture: string;
-  nickName: string;
-  phone: string;
-};
+// type UserProfile = {
+//   email: string;
+//   memberProfilePicture: string;
+//   nickName: string;
+//   phone: string;
+// };
 const PutReviewModal: React.FC<ReviewProps> = ({ closeModal, review }) => {
   const [rating, setRating] = useState<number | null>(review.reviewStarRating);
   const [content, setContent] = useState<string>(review?.reviewContent);
@@ -109,19 +103,18 @@ const PutReviewModal: React.FC<ReviewProps> = ({ closeModal, review }) => {
   const [deletedFiles, setDeletedFiles] = useState<any[]>([]);
   const [newFiles, setNewFiles] = useState<File[]>([]);
 
-  const [profile, setProfile] = useState<UserProfile | null>(null);
   const [index, setIndex] = useState(1);
-  const { mutate, isError } = putReviewMutation();
+  const { mutate } = putReviewMutation();
   // console.log('put review image:', selectedFiles);
   // const { restaurantId } = useParams();
 
   // 사진을 추가해야만 들어감
   //추가된 사진은 안들어감
   //혼란함..
-  //
-  const contentChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-  };
+  // //
+  // const contentChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  //   setContent(e.target.value);
+  // };
 
   const formData = new FormData();
   const handleSubmit = () => {
@@ -251,76 +244,76 @@ const PutReviewModal: React.FC<ReviewProps> = ({ closeModal, review }) => {
 
 export default PutReviewModal;
 
-const ModalFooter = styled.div`
-  margin-top: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  div {
-  }
-  button {
-    height: 30px;
-  }
-`;
+// const ModalFooter = styled.div`
+//   margin-top: 20px;
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+//   div {
+//   }
+//   button {
+//     height: 30px;
+//   }
+// `;
 
-const WriteReviewStyle = styled.div`
-  display: flex;
-  width: 1000px;
-  height: 600px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  .modal__header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin: 1rem;
-  }
-  .review__profile {
-    display: flex;
-    justify-content: flex-start;
-    gap: 0.8rem;
-  }
-  .profile__image img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-  }
-  .profile__info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-  }
+// const WriteReviewStyle = styled.div`
+//   display: flex;
+//   width: 1000px;
+//   height: 600px;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   .modal__header {
+//     width: 100%;
+//     display: flex;
+//     justify-content: space-between;
+//     margin: 1rem;
+//   }
+//   .review__profile {
+//     display: flex;
+//     justify-content: flex-start;
+//     gap: 0.8rem;
+//   }
+//   .profile__image img {
+//     width: 100px;
+//     height: 100px;
+//     border-radius: 50%;
+//   }
+//   .profile__info {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//     gap: 0.5rem;
+//   }
 
-  .profile__name {
-    align-self: flex-start;
-  }
-  .modal__close-button {
-    cursor: pointer;
-    margin-right: 10px;
-  }
-  .text {
-    width: 100%;
-    font-size: 20px;
-    border: 1px solid black;
-  }
-  .review__images {
-    display: flex;
-    justify-content: flex-start;
-    margin: 1rem;
-    gap: 0.5rem;
+//   .profile__name {
+//     align-self: flex-start;
+//   }
+//   .modal__close-button {
+//     cursor: pointer;
+//     margin-right: 10px;
+//   }
+//   .text {
+//     width: 100%;
+//     font-size: 20px;
+//     border: 1px solid black;
+//   }
+//   .review__images {
+//     display: flex;
+//     justify-content: flex-start;
+//     margin: 1rem;
+//     gap: 0.5rem;
 
-    img {
-      width: 100px;
-      height: 100px;
-      cursor: pointer;
-    }
-    img:hover {
-    }
-  }
+//     img {
+//       width: 100px;
+//       height: 100px;
+//       cursor: pointer;
+//     }
+//     img:hover {
+//     }
+//   }
 
-  .ImageInput {
-  }
-`;
+//   .ImageInput {
+//   }
+// `;

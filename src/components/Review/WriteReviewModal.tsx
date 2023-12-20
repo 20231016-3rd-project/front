@@ -1,39 +1,35 @@
 import Modal from '../Modal/Modal';
-import styled from 'styled-components';
-import StarRating from '../Star/StarRating';
 // import ImageInput from '../../pages/restaurantInfo/ImageInput';
-import { useState, useEffect } from 'react';
-import { postReview } from '../../apis/reviewApi';
+import { useState } from 'react';
 import { useParams } from 'react-router';
-import { getMyProfile } from '../../apis/profileApi';
 import { postReviewMutation } from '../../hooks/reviewQuery';
 import UploadPhoto from './UploadPhoto';
 import ViewAndUploadPhoto from './ViewAndUploadPhoto';
 import { useToast } from '@chakra-ui/react';
 
-type ReviewType = {
-  reviewId: number;
-  memberId: number;
-  memberNickname: string;
-  memberProfilePicture: string;
-  reviewAt: string;
-  reviewContent: string;
-  reviewEmpathyCount: number;
-  reviewImageDtoList: any[];
-  reviewStarRating: number;
-  empathyReview: boolean;
-};
+// type ReviewType = {
+//   reviewId: number;
+//   memberId: number;
+//   memberNickname: string;
+//   memberProfilePicture: string;
+//   reviewAt: string;
+//   reviewContent: string;
+//   reviewEmpathyCount: number;
+//   reviewImageDtoList: any[];
+//   reviewStarRating: number;
+//   empathyReview: boolean;
+// };
 
 type ReviewProps = {
   closeModal: () => void;
 };
 
-type UserProfile = {
-  email: string;
-  memberProfilePicture: string;
-  nickName: string;
-  phone: string;
-};
+// type UserProfile = {
+//   email: string;
+//   memberProfilePicture: string;
+//   nickName: string;
+//   phone: string;
+// };
 const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
   console.log('ccc writereviewModal');
   const toast = useToast();
@@ -42,8 +38,7 @@ const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
   const [rating, setRating] = useState<number | null>(null);
   const [content, setContent] = useState('');
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const { mutate, isError, isLoading, mutateAsync } = postReviewMutation();
+  const { mutateAsync } = postReviewMutation();
   const { restaurantId } = useParams();
   const formData = new FormData();
   const handleSubmit = () => {
@@ -98,9 +93,9 @@ const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
     }
   };
 
-  const contentChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-  };
+  // const contentChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  //   setContent(e.target.value);
+  // };
 
   console.log('ccc', setRating);
   return (
@@ -215,77 +210,77 @@ const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
 
 export default WriteReviewModal;
 
-const ModalFooter = styled.div`
-  margin-top: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  div {
-  }
-  button {
-    height: 30px;
-  }
-`;
+// const ModalFooter = styled.div`
+//   margin-top: 20px;
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+//   div {
+//   }
+//   button {
+//     height: 30px;
+//   }
+// `;
 
-const WriteReviewStyle = styled.div`
-  display: flex;
-  width: 1000px;
+// const WriteReviewStyle = styled.div`
+//   display: flex;
+//   width: 1000px;
 
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  .modal__header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin: 1rem;
-  }
-  .review__profile {
-    display: flex;
-    justify-content: flex-start;
-    gap: 0.8rem;
-  }
-  .profile__image img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-  }
-  .profile__info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-  }
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   .modal__header {
+//     width: 100%;
+//     display: flex;
+//     justify-content: space-between;
+//     margin: 1rem;
+//   }
+//   .review__profile {
+//     display: flex;
+//     justify-content: flex-start;
+//     gap: 0.8rem;
+//   }
+//   .profile__image img {
+//     width: 100px;
+//     height: 100px;
+//     border-radius: 50%;
+//   }
+//   .profile__info {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//     gap: 0.5rem;
+//   }
 
-  .profile__name {
-    align-self: flex-start;
-  }
-  .modal__close-button {
-    cursor: pointer;
-    margin-right: 10px;
-  }
-  .text {
-    width: 100%;
-    font-size: 20px;
-    border: 1px solid black;
-    resize: none;
-  }
-  .review__images {
-    display: flex;
-    justify-content: flex-start;
-    margin: 1rem;
-    gap: 0.5rem;
+//   .profile__name {
+//     align-self: flex-start;
+//   }
+//   .modal__close-button {
+//     cursor: pointer;
+//     margin-right: 10px;
+//   }
+//   .text {
+//     width: 100%;
+//     font-size: 20px;
+//     border: 1px solid black;
+//     resize: none;
+//   }
+//   .review__images {
+//     display: flex;
+//     justify-content: flex-start;
+//     margin: 1rem;
+//     gap: 0.5rem;
 
-    img {
-      width: 100px;
-      height: 100px;
-      cursor: pointer;
-    }
-    img:hover {
-    }
-  }
+//     img {
+//       width: 100px;
+//       height: 100px;
+//       cursor: pointer;
+//     }
+//     img:hover {
+//     }
+//   }
 
-  .ImageInput {
-  }
-`;
+//   .ImageInput {
+//   }
+// `;

@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
-import { InfoButton } from './Button';
+import { useState } from 'react';
 import { FaShareNodes } from 'react-icons/fa6';
 import { FaCheck } from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
 import { useToast, Button } from '@chakra-ui/react';
 
 const ShareButton = () => {
   const toast = useToast();
   const [clicked, setClicked] = useState(false);
-  const location = useLocation();
   const copyToClipboard = () => {
     // Create a temporary textarea element
     const textarea = document.createElement('textarea');

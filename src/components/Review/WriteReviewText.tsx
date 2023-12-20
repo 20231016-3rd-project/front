@@ -1,11 +1,5 @@
-import {
-  Box,
-  Textarea,
-  Collapse,
-  useDisclosure,
-  Button,
-} from '@chakra-ui/react';
-import React, { ChangeEvent, useState } from 'react';
+import { Box, Textarea, Button } from '@chakra-ui/react';
+import React from 'react';
 import StarRating from '../Star/StarRating';
 
 interface UploadPhotoProps {

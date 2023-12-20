@@ -5,7 +5,7 @@ import {
   Box,
   VisuallyHiddenInput,
 } from '@chakra-ui/react';
-import React, { LegacyRef } from 'react';
+import React from 'react';
 
 type Props = {
   profileImage: string;

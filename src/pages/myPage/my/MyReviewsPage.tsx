@@ -5,8 +5,6 @@ import MyReview from './MyReview';
 const MyReviewsPage = () => {
   const [reviewArray, setReviewArray] = useState([]);
   const [reviewChangeTrigger, setReviewChangeTrigger] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isReviewEmpty, setIsReviewEmpty] = useState(null);
   useEffect(() => {
     getMyReviews().then((data) => setReviewArray(data));
   }, [reviewChangeTrigger]);
@@ -40,4 +38,3 @@ const SectionTitle2 = styled.div`
   font-weight: 600;
   margin: 1rem;
 `;
-

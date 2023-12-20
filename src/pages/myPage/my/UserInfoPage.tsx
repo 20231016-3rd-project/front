@@ -14,12 +14,10 @@ import {
   HStack,
   useToast,
 } from '@chakra-ui/react';
-import { LegacyRef, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { getMyProfile, putMyProfile } from '../../../apis/profileApi';
 import Modal from '../../../components/Modal/Modal';
-import { AddIcon } from '@chakra-ui/icons';
-import { checkNickNameDuplicate } from '../../../apis/signupApi/signupApi';
 import UserInfoAvatar from './userInfoPage/UserInfoAvatar';
 import UserNickName from './userInfoPage/UserNickName';
 type ValidationObj = {

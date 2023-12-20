@@ -1,4 +1,3 @@
-import { Card, CardBody, CardHeader, Text } from '@chakra-ui/react';
 import React from 'react';
 import styled from 'styled-components';
 interface MenuCardProps {

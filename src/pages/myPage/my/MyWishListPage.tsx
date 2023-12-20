@@ -2,14 +2,10 @@ import { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
-import { myRestaurant } from '../../../apis/getRestaurantApi/getRestaurant';
 import { useSelector, useDispatch } from 'react-redux';
 import { ReducerType } from '../../../store/rootReducer';
 
-import {
-  fetchMyRestaurants,
-  getMyRestaurants,
-} from '../../../store/slices/myLikeSlice';
+import { fetchMyRestaurants } from '../../../store/slices/myLikeSlice';
 import MyLikeCard from './../../../components/RestaurantCard/MyLikeCard';
 
 const MyWishListPage = () => {

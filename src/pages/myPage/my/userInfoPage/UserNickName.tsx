@@ -60,7 +60,7 @@ const UserNickName: React.FC<Props> = ({
   };
 
   const delayedCheck = useDebounce(async (nickName: string) => {
-    const response = await checkNickNameDuplicate(nickName).then((r) => {
+    await checkNickNameDuplicate(nickName).then((r) => {
       setIsUniqueNickName(r);
       console.log('debounce getnick', r);
       return r;

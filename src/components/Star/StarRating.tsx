@@ -17,6 +17,7 @@ const StarRating: React.FC<StarRatingProps> = ({ rating, setRating }) => {
     <StarRatingStyle>
       {[...Array(5)].map((element, index) => {
         const currentRating = index + 1;
+        console.log(element);
         return (
           <label key={index}>
             <input

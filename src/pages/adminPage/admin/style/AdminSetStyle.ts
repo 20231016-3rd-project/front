@@ -1,15 +1,15 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 interface ToggleContainerProps {
   isDay: boolean;
 }
 
 export const MainContainer = styled.div`
-   background-color: #e2e2e2;
-   display: grid;
-   width: 100vw;
-   height: 100vh;
-   padding: 30px;
+  background-color: #e2e2e2;
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  padding: 30px;
 `;
 
 export const GridContainer = styled.div`
@@ -52,8 +52,7 @@ export const LogoSection = styled.div`
   }
 `;
 
-
-export const LinkSection= styled.div`
+export const LinkSection = styled.div`
   width: auto;
   height: auto;
   display: flex;
@@ -61,11 +60,10 @@ export const LinkSection= styled.div`
   justify-content: flex-start;
   gap: 30px;
 
-img{
+  img {
     width: 20px;
     height: 20px;
   }
-  
 `;
 
 export const LinkBox = styled.div`
@@ -86,13 +84,11 @@ export const LinkBox = styled.div`
     justify-content: center;
   }
 
-  p{
+  p {
     display: flex;
     align-items: center;
   }
 `;
-
-
 
 //중요
 export const AdminMain = styled.div<ToggleContainerProps>`
@@ -100,10 +96,9 @@ export const AdminMain = styled.div<ToggleContainerProps>`
   height: 95vh;
   align-items: center;
   padding: 20px;
-  color: ${({ isDay }) => isDay ? 'black' : 'white'};
-  background-color: ${({ isDay }) => isDay ? 'white' : '#333'};
+  color: ${({ isDay }) => (isDay ? 'black' : 'white')};
+  background-color: ${({ isDay }) => (isDay ? 'white' : '#333')};
   border-radius: 20px;
-  
 `;
 
 export const AdminHeader = styled.div`
@@ -118,12 +113,12 @@ export const TextBox = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  h1{
+  h1 {
     font-size: 2rem;
     font-weight: 500;
     margin-bottom: 10px;
   }
-  p{
+  p {
     font-size: 1.2rem;
     margin-bottom: 20px;
   }
@@ -134,7 +129,7 @@ export const ProfileBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  .icon{
+  .icon {
     background-color: white;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     color: white;
@@ -147,14 +142,14 @@ export const ProfileBox = styled.div`
     margin-right: 20px;
     cursor: pointer;
 
-    img{
+    img {
       width: 50%;
       height: 50%;
       color: white;
     }
   }
 
-  .create{
+  .create {
     width: 80px;
     height: 45px;
     border-radius: 50px;
@@ -167,12 +162,11 @@ export const ProfileBox = styled.div`
     align-items: center;
     margin-right: 20px;
     cursor: pointer;
-    h1{
-
+    h1 {
     }
   }
 
-  .profile{
+  .profile {
     width: 60px;
     height: 60px;
     margin-right: 10px;
@@ -183,15 +177,14 @@ export const ProfileBox = styled.div`
       border: 4px solid #f9b916;
     }
   }
-  
 `;
-   
+
 export const DashBoardSection = styled.div`
-    margin-top: 20px;
-    width: 100%;
-    height: 85%;
-    max-height: 90%; // 최대 높이를 85%로 제한
-    overflow-y: auto; // 세로 스크롤 추가
+  margin-top: 20px;
+  width: 100%;
+  height: 85%;
+  max-height: 90%; // 최대 높이를 85%로 제한
+  overflow-y: auto; // 세로 스크롤 추가
 `;
 
 export const DashBoardContainer = styled.div`
@@ -199,108 +192,110 @@ export const DashBoardContainer = styled.div`
   height: 90%;
   display: grid;
   gap: 10px;
-  grid-template-columns: 1fr 1fr 1fr; 
-  grid-template-rows: 2fr 1fr; 
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 2fr 1fr;
   grid-template-areas:
-    "box1 box1 box2"
-    "box3 box4 box5";
+    'box1 box1 box2'
+    'box3 box4 box5';
 
   @keyframes activeEffect {
-  0%, 100% { transform: scale(1); } 
-  50% { transform: scale(0.95); } 
-}
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.95);
+    }
+  }
 `;
 
 export const Box1 = styled.div`
-    grid-area: box1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #ccc;
-    position: relative; 
-    .fruit-image{
-        width: 800px;
-        height: 500px;
-        margin-left: 80px;
-    }
-    .AdminRE-image{
-        position: absolute; 
-        z-index: 100; 
-        width: 350px;
-        height: 200px;
-        top: 40%; 
-        right: 10%;
-        animation: activeEffect 2s ease-in-out infinite;
-        
-    }
-    .AdminRE2-image{
-        position: absolute; 
-        z-index: 120; 
-        width: 120px;
-        height: 50px;
-        top: 40%; 
-        right: 15%;
-        animation: activeEffect 2s ease-in-out infinite;
+  grid-area: box1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  position: relative;
+  .fruit-image {
+    width: 800px;
+    height: 500px;
+    margin-left: 80px;
+  }
+  .AdminRE-image {
+    position: absolute;
+    z-index: 100;
+    width: 350px;
+    height: 200px;
+    top: 40%;
+    right: 10%;
+    animation: activeEffect 2s ease-in-out infinite;
+  }
+  .AdminRE2-image {
+    position: absolute;
+    z-index: 120;
+    width: 120px;
+    height: 50px;
+    top: 40%;
+    right: 15%;
+    animation: activeEffect 2s ease-in-out infinite;
+  }
+  button {
+    z-index: 100px;
+    position: absolute;
+    top: 65%;
+    left: 11%;
+    z-index: 100;
+    color: white;
+    font-size: 1rem;
+    background-color: #f9b916;
+    padding: 20px;
+    border: none;
+    border-radius: 30px;
+    margin: 0;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    animation: bounceZ 2s ease-in-out infinite;
 
+    &:active {
+      transform: scale(0.97);
     }
-    button{
-        z-index: 100px;
-        position: absolute; 
-        top: 65%; 
-        left: 11%;
-        z-index: 100; 
-        color: white;
-        font-size: 1rem;
-        background-color: #f9b916;
-        padding: 20px;
-        border: none;
-        border-radius: 30px;
-        margin: 0;
-        cursor: pointer;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-        animation: bounceZ 2s ease-in-out infinite; 
-
-        &:active {
-         transform: scale(0.97); 
-        }
-    }
-`; 
-export const Box2 = styled.div` 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    grid-area: box2; 
-    border: 1px solid #ccc;
-  `;
-
+  }
+`;
+export const Box2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  grid-area: box2;
+  border: 1px solid #ccc;
+`;
 
 export const Box3 = styled.div`
-    grid-area: box3; 
-    border: 1px solid #ccc;
-    height: 140%;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-     img{
-      width: 100px;
-      height: 100px;
-    }
-  `;
-  
-  export const Box4 = styled.div`
-    border: 1px solid #ccc;
-    grid-area: box4;
-    height: 140%;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    img{
-      width: 100px;
-      height: 100px;
-    }
+  grid-area: box3;
+  border: 1px solid #ccc;
+  height: 140%;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 100px;
+    height: 100px;
+  }
+`;
+
+export const Box4 = styled.div`
+  border: 1px solid #ccc;
+  grid-area: box4;
+  height: 140%;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 100px;
+    height: 100px;
+  }
 `;
 
 export const TextGridBox = styled.div`
@@ -309,29 +304,29 @@ export const TextGridBox = styled.div`
   justify-content: center;
   align-items: center;
 
-  h1{
+  h1 {
     margin-bottom: 15px;
     font-size: 1.5rem;
   }
 
-  p{
+  p {
     font-size: 2rem;
     font-weight: bold;
   }
-  `;
+`;
 
 export const Box5 = styled.div`
-    grid-area: box5;
-    border: 1px solid #ccc;
-    height: 140%;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-     img{
-      width: 100px;
-      height: 100px;
-    }
+  grid-area: box5;
+  border: 1px solid #ccc;
+  height: 140%;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 100px;
+    height: 100px;
+  }
 `;
 
 export const BoxChatButton = styled.div`

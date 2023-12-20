@@ -6,8 +6,6 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  AlertDialogCloseButton,
-  useDisclosure,
   Button,
 } from '@chakra-ui/react';
 
@@ -20,7 +18,6 @@ interface AlertReviewProps {
 }
 const AlertReview: React.FC<AlertReviewProps> = ({
   isOpen,
-  onOpen,
   onClose,
   cancelRef,
   onDelete,

@@ -8,7 +8,7 @@ export const getMyProfile = async () => {
   return response.data;
 };
 
-export const putMyProfile = async (data) => {
+export const putMyProfile = async (data: any) => {
   const response = axiosImgInstance.put('/sunflowerPlate/user/', data);
   return response;
 };

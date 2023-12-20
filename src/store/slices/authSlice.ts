@@ -1,20 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { login, logout, reissueAccessToken } from '../../apis/authApi/authApi';
-import { RootState }  from '../rootReducer';
 
-
-function isTokenExpired(expireDate: string): boolean {
-  const expireTime = new Date(expireDate).getTime();
-  const currentTime = Date.now();
-  return currentTime >= expireTime;
-}
+// function isTokenExpired(expireDate: string): boolean {
+//   const expireTime = new Date(expireDate).getTime();
+//   const currentTime = Date.now();
+//   return currentTime >= expireTime;
+// }
 
 function calculateExpiresIn(expireDate: string): number {
   const expireTime = new Date(expireDate).getTime();
   const currentTime = Date.now();
   return Math.max(0, (expireTime - currentTime) / 1000);
 }
-
 
 // 토큰 데이터 타입 정의
 interface TokenData {
@@ -38,7 +35,7 @@ interface AuthState {
   error: string | null;
   userData: UserData | null;
   tokenData: TokenData | null;
-};
+}
 
 const initialState: AuthState = {
   isAuthenticated: false,
@@ -47,28 +44,30 @@ const initialState: AuthState = {
   error: null,
   userData: null,
   tokenData: null,
-}
+};
 
 export const submitLogin = createAsyncThunk(
   'auth/submitLogin',
-  async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
+  async (
+    { email, password }: { email: string; password: string },
+    { rejectWithValue }
+  ) => {
     try {
       const response = await login(email, password);
       localStorage.setItem('accessToken', response.accessToken); // 여기에서만 토큰 저장
-      return response; 
+      return response;
     } catch (error) {
       return rejectWithValue(error);
     }
   }
 );
 
-
 export const submitLogout = createAsyncThunk(
   'auth/submitLogout',
   async (_, { rejectWithValue }) => {
     try {
       await logout();
-      localStorage.removeItem('accessToken'); 
+      localStorage.removeItem('accessToken');
     } catch (error: any) {
       console.error('로그아웃 중 에러 발생:', error);
 
@@ -89,7 +88,7 @@ export const refreshAccessToken = createAsyncThunk(
           accessToken,
           expiresIn: calculateExpiresIn(accessTokenExpireDate),
           accessTokenExpireDate,
-          issuedAt
+          issuedAt,
         };
       }
     } catch (error: any) {
@@ -98,7 +97,6 @@ export const refreshAccessToken = createAsyncThunk(
     }
   }
 );
-
 
 const authSlice = createSlice({
   name: 'auth',
@@ -113,66 +111,68 @@ const authSlice = createSlice({
         expiresIn: action.payload.accessTokenExpireDate
           ? calculateExpiresIn(action.payload.accessTokenExpireDate)
           : state.tokenData?.expiresIn || 0,
-        accessTokenExpireDate: action.payload.accessTokenExpireDate || state.tokenData?.accessTokenExpireDate,
-        issuedAt: action.payload.issuedAt || state.tokenData?.issuedAt
+        accessTokenExpireDate:
+          action.payload.accessTokenExpireDate ||
+          state.tokenData?.accessTokenExpireDate,
+        issuedAt: action.payload.issuedAt || state.tokenData?.issuedAt,
       };
       state.isAuthenticated = true;
     },
-},
+  },
   extraReducers: (builder) => {
     builder
-    .addCase(submitLogin.pending, (state) => {
-      state.isRefreshingToken = true;
-    })
-    .addCase(submitLogin.fulfilled, (state, action) => {
-      state.isAuthenticated = true;
-      state.isRefreshingToken = false;
-      state.userData = { 
-        email: '', 
-        nickname: action.payload.memberNickName, 
-        phone: '' 
-      }; 
-      
-      state.tokenData = {
-        accessToken: action.payload.accessToken,
-        expiresIn: calculateExpiresIn(action.payload.accessTokenExpireDate), 
-        accessTokenExpireDate: action.payload.accessTokenExpireDate,
-        issuedAt: action.payload.issuedAt 
-      };
-      state.error = null; 
-      
-      localStorage.setItem('accessToken', action.payload.accessToken); // 토큰저장주석처리
-      
+      .addCase(submitLogin.pending, (state) => {
+        state.isRefreshingToken = true;
+      })
+      .addCase(submitLogin.fulfilled, (state, action) => {
+        state.isAuthenticated = true;
+        state.isRefreshingToken = false;
+        state.userData = {
+          email: '',
+          nickname: action.payload.memberNickName,
+          phone: '',
+        };
 
-    })
-    .addCase(submitLogin.rejected, (state, action) => {
-      state.isAuthenticated = false;
-      state.isRefreshingToken = false;
-      state.error = action.error.message ?? '알 수 없는 오류 발생'; 
-    })
-    .addCase(submitLogout.pending, (state) => {
-      state.isRefreshingToken = true;
-    })
-    .addCase(submitLogout.fulfilled, (state) => {
-      state.isAuthenticated = false;
-      state.isRefreshingToken = false;
-      state.userData = initialState.userData;
-      state.error = null;
-      localStorage.removeItem('accessToken');
-    })
-    .addCase(submitLogout.rejected, (state, action) => {
-      state.isRefreshingToken = false;
-      state.error = action.error.message ?? '로그아웃 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.';
-    }) 
+        state.tokenData = {
+          accessToken: action.payload.accessToken,
+          expiresIn: calculateExpiresIn(action.payload.accessTokenExpireDate),
+          accessTokenExpireDate: action.payload.accessTokenExpireDate,
+          issuedAt: action.payload.issuedAt,
+        };
+        state.error = null;
+
+        localStorage.setItem('accessToken', action.payload.accessToken); // 토큰저장주석처리
+      })
+      .addCase(submitLogin.rejected, (state, action) => {
+        state.isAuthenticated = false;
+        state.isRefreshingToken = false;
+        state.error = action.error.message ?? '알 수 없는 오류 발생';
+      })
+      .addCase(submitLogout.pending, (state) => {
+        state.isRefreshingToken = true;
+      })
+      .addCase(submitLogout.fulfilled, (state) => {
+        state.isAuthenticated = false;
+        state.isRefreshingToken = false;
+        state.userData = initialState.userData;
+        state.error = null;
+        localStorage.removeItem('accessToken');
+      })
+      .addCase(submitLogout.rejected, (state, action) => {
+        state.isRefreshingToken = false;
+        state.error =
+          action.error.message ??
+          '로그아웃 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.';
+      })
       .addCase(refreshAccessToken.pending, (state) => {
-        state.isRefreshingToken = true; 
+        state.isRefreshingToken = true;
       })
       .addCase(refreshAccessToken.fulfilled, (state, action) => {
         if (action.payload) {
           state.tokenData = {
             ...state.tokenData,
             accessToken: action.payload.accessToken || '',
-            expiresIn: action.payload.accessTokenExpireDate 
+            expiresIn: action.payload.accessTokenExpireDate
               ? calculateExpiresIn(action.payload.accessTokenExpireDate)
               : state.tokenData?.expiresIn || 0,
             accessTokenExpireDate: action.payload.accessTokenExpireDate || '',
@@ -184,11 +184,11 @@ const authSlice = createSlice({
       .addCase(refreshAccessToken.rejected, (state, action) => {
         state.isAuthenticated = false; // 토큰 재발급 실패
         state.isRefreshingToken = false;
-        
+
         state.error = action.error.message ?? '토큰 재발급 중 오류 발생';
-      })
-    },
-  });
-  
-  export const { setAuthenticated, setToken } = authSlice.actions;
-  export default authSlice.reducer;
+      });
+  },
+});
+
+export const { setAuthenticated, setToken } = authSlice.actions;
+export default authSlice.reducer;

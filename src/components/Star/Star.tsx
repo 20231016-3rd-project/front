@@ -1,5 +1,4 @@
 import { FaStar } from 'react-icons/fa';
-import { useState } from 'react';
 import styled from 'styled-components';
 
 interface StarProps {

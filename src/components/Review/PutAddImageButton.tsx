@@ -1,6 +1,6 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { IconButton, VisuallyHiddenInput, useToast } from '@chakra-ui/react';
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef } from 'react';
 
 interface AddImageButtonProps {
   newFiles: File[];
@@ -11,8 +11,6 @@ interface AddImageButtonProps {
 
 const PutAddImageButton: React.FC<AddImageButtonProps> = ({
   selectedFiles,
-  setSelectedFiles,
-  newFiles,
   setNewFiles,
 }) => {
   const isImageFile = (file: File): boolean => {

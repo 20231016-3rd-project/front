@@ -1,20 +1,9 @@
 import Star from '../../../components/Star/Star';
 import { useRef, useState } from 'react';
 import ReportReviewModal from './../../../components/Review/ReportReviewModal';
-import ViewReviewModal from './../../../components/Review/ViewReviewModal';
-import PutReviewModal from './../../../components/Review//PutReviewModal';
-import { deleteReview, likeReview } from '../../../apis/reviewApi';
-import { useLocation } from 'react-router-dom';
-import {
-  LikeButton,
-  ReviewLayout,
-  LikeButtonBox,
-  ReviewButton,
-} from '../../../components/Review/Reviewstyle';
+import { ReviewLayout } from '../../../components/Review/Reviewstyle';
 import { deleteReviewMutation } from '../../../hooks/reviewQuery';
-import { FaHeart } from 'react-icons/fa';
 import {
-  AlertDialog,
   Button,
   Text,
   Tooltip,
@@ -44,10 +33,8 @@ const MyReview: React.FC<ReviewProps> = ({ review, reviewRefresh }) => {
   const [isReportReviewOpen, setIsReportReviewOpen] = useState(false);
   const [isViewReviewOpen, setIsViewReviewOpen] = useState(false);
   const [isPutReviewOpen, setIsPutReviewOpen] = useState(false);
-
-  const { isAuthenticated, userData } = useSelector(
-    (state: ReducerType) => state.auth
-  );
+  console.log(isViewReviewOpen && isPutReviewOpen);
+  const { isAuthenticated } = useSelector((state: ReducerType) => state.auth);
   const {
     isOpen: removeReviewisOpen,
     onOpen: removeReviewOnOpen,
@@ -56,24 +43,24 @@ const MyReview: React.FC<ReviewProps> = ({ review, reviewRefresh }) => {
   const removeReviewRef = useRef<HTMLButtonElement>(null);
   // let location = useLocation();
 
-  const openReportReviewModal = () => {
-    setIsReportReviewOpen(true);
-  };
+  // const openReportReviewModal = () => {
+  //   setIsReportReviewOpen(true);
+  // };
   const closeReportReviewModal = () => {
     setIsReportReviewOpen(false);
   };
   const openViewReviewModal = () => {
     setIsViewReviewOpen(true);
   };
-  const closeViewReviewModal = () => {
-    setIsViewReviewOpen(false);
-  };
+  // const closeViewReviewModal = () => {
+  //   setIsViewReviewOpen(false);
+  // };
   const openPutReviewModal = () => {
     setIsPutReviewOpen(true);
   };
-  const closePutReviewModal = () => {
-    setIsPutReviewOpen(false);
-  };
+  // const closePutReviewModal = () => {
+  //   setIsPutReviewOpen(false);
+  // };
   console.log('Review', review);
   const toast = useToast();
   const { mutateAsync } = deleteReviewMutation();
@@ -81,6 +68,7 @@ const MyReview: React.FC<ReviewProps> = ({ review, reviewRefresh }) => {
     try {
       mutateAsync(review.reviewId).then((r) => {
         reviewRefresh((state) => !state);
+        return r;
       });
 
       toast({

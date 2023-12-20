@@ -1,18 +1,8 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import {
-  Collapse,
-  Image,
-  VisuallyHiddenInput,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Collapse, Image, useDisclosure } from '@chakra-ui/react';
 
-import {
-  AddIcon,
-  ArrowDownIcon,
-  ArrowUpIcon,
-  CloseIcon,
-} from '@chakra-ui/icons';
+import { ArrowDownIcon, ArrowUpIcon, CloseIcon } from '@chakra-ui/icons';
 import { Box, IconButton } from '@chakra-ui/react';
 import WriteReviewText from './WriteReviewText';
 import AddImageButton from './AddImageButton';

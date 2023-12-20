@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getRestaurantDetail } from '../apis/getRestaurantApi/getRestaurant';
 import { deleteReview, postReview, putReview } from '../apis/reviewApi';
-import { useToast } from '@chakra-ui/react';
 
 export const getRestaurantDetailQuery = (id: string) => {
   const { data, isLoading } = useQuery({

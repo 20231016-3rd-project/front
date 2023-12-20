@@ -9,14 +9,18 @@ import prame from '../../assets/images/Frame 3933.png';
 import Video from '../../assets/images/yellowflower.mp4';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../store/store';
-import { submitLogin, submitLogout, refreshAccessToken, setAuthenticated } from '../../store/slices/authSlice';
+import { submitLogin } from '../../store/slices/authSlice';
 import { RootState } from '../../store/rootReducer';
 
 const SignIn = () => {
-  const dispatch: AppDispatch = useDispatch(); 
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuthenticate = useSelector((state: RootState) => state.auth.isAuthenticated);
-  const isRefreshingToken = useSelector((state: RootState) => state.auth.isRefreshingToken);
+  // const isAuthenticate = useSelector(
+  //   (state: RootState) => state.auth.isAuthenticated
+  // );
+  const isRefreshingToken = useSelector(
+    (state: RootState) => state.auth.isRefreshingToken
+  );
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoginFailed, setIsLoginFailed] = useState(false);
@@ -54,29 +58,25 @@ const SignIn = () => {
     }
   }, [isLoginFailed]);
 
+  // const handleLogout = async () => {
+  //   try {
+  //     await dispatch(submitLogout());
+  //     dispatch(setAuthenticated(false));
+  //     navigate('/signin');
+  //   } catch (error) {
+  //     console.error('Error during logout', error);
+  //   }
+  // };
 
+  // const handleReissueAccessToken = async () => {
+  //   try {
+  //     await dispatch(refreshAccessToken());
 
-  const handleLogout = async () => {
-    try {
-      await dispatch(submitLogout());
-      dispatch(setAuthenticated(false));
-      navigate('/signin');
-    } catch (error) {
-      console.error('Error during logout', error);
-    }
-  };
-
-  const handleReissueAccessToken = async () => {
-    try {
-      await dispatch(refreshAccessToken());
-
-      // 액세스 토큰 재발급 후의 추가 동작 수행
-    } catch (error) {
-      console.error('Error during token reissue', error);
-    }
-  };
-
-  
+  //     // 액세스 토큰 재발급 후의 추가 동작 수행
+  //   } catch (error) {
+  //     console.error('Error during token reissue', error);
+  //   }
+  // };
 
   const handleKakaoRedirect = async () => {
     const urlParams = new URLSearchParams(window.location.search);

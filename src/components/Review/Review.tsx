@@ -3,23 +3,11 @@ import { useRef, useState } from 'react';
 import ReportReviewModal from './ReportReviewModal';
 import ViewReviewModal from './ViewReviewModal';
 import PutReviewModal from './PutReviewModal';
-import { deleteReview, likeReview } from '../../apis/reviewApi';
-import { useLocation } from 'react-router-dom';
-import {
-  LikeButton,
-  ReviewLayout,
-  LikeButtonBox,
-  ReviewButton,
-} from './Reviewstyle';
+import { likeReview } from '../../apis/reviewApi';
+import { ReviewLayout, LikeButtonBox } from './Reviewstyle';
 import { deleteReviewMutation } from '../../hooks/reviewQuery';
 import { FaHeart } from 'react-icons/fa';
-import {
-  AlertDialog,
-  Button,
-  Tooltip,
-  useDisclosure,
-  useToast,
-} from '@chakra-ui/react';
+import { Button, Tooltip, useDisclosure, useToast } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../store/rootReducer';
 import AlertReview from './AlertReview';
@@ -89,7 +77,7 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
   };
   console.log('Review', review);
   const toast = useToast();
-  const { mutate, mutateAsync } = deleteReviewMutation();
+  const { mutateAsync } = deleteReviewMutation();
   const deleteButtonhHandler = () => {
     mutateAsync(review.reviewId).then((r: any) => {
       if (r.isAxiosError) {

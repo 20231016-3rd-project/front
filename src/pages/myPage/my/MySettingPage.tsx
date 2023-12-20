@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import heart from '../../../assets/images/heart.svg';
 import reviews from '../../../assets/images/review.svg';
 import editprofile from '../../../assets/images/editprofile.svg';
 import UserInfoPage from './UserInfoPage';
 import { getMyProfile } from '../../../apis/profileApi';
-import * as Set from "./styles/Userinfo";
+import * as Set from './styles/Userinfo';
 
 const MySettingPage = () => {
   const [isUserInfoVisible, setUserInfoVisible] = useState(false);

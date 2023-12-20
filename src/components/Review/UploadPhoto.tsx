@@ -1,7 +1,7 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef } from 'react';
 import styled from 'styled-components';
 import { darken } from 'polished';
-import { useToast, Button } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
 
 interface UploadPhotoProps {
   selectedFiles: File[];
@@ -10,7 +10,6 @@ interface UploadPhotoProps {
 }
 
 const UploadPhoto: React.FC<UploadPhotoProps> = ({
-  selectedFiles,
   setSelectedFiles,
   setIndex,
 }) => {

@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { AppDispatch } from '../../../store/store';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReducerType } from '../../../store/rootReducer';
 import logo from '../../../assets/images/sunflower.png';
-import { setKey } from '../../../store/slices/keywordSlice';
 import { submitLogout } from '../../../store/slices/authSlice';
 import search from '../../../assets/images/ icon _search_.svg';
 import { setKeyword } from '../../../store/slices/keywordSlice';
 import { RootState } from '../../../store/rootReducer';
-
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -18,16 +15,19 @@ const Header: React.FC = () => {
   const authState = useSelector((state: RootState) => state.auth);
 
   // authState가 정의되어 있지 않은 경우를 대비한 기본값 설정
-  const { isAuthenticated = false, isAdmin = false, userData = null } = authState ?? {};
+  const {
+    isAuthenticated = false,
+    isAdmin = false,
+    userData = null,
+  } = authState ?? {};
 
-const handleLogout = async () => {
-  try {
-    await dispatch(submitLogout()).unwrap();
-    navigate('/signin');
-  } catch (error) {
-    console.error('Error during logout', error);
-  }
-  
+  const handleLogout = async () => {
+    try {
+      await dispatch(submitLogout()).unwrap();
+      navigate('/signin');
+    } catch (error) {
+      console.error('Error during logout', error);
+    }
   };
   ``;
 

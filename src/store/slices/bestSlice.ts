@@ -1,4 +1,4 @@
-import { AnyAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { bestRestaurant } from '../../apis/getRestaurantApi/getRestaurant';
 
 export const bestSlice = createSlice({

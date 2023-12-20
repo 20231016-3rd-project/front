@@ -1,7 +1,6 @@
 import React from 'react';
 import Modal from '../Modal/Modal';
 import styled from 'styled-components';
-import infoImg from '../../pages/restaurantInfo/info-image.jpg';
 import Star from '../Star/Star';
 import ImageSlider from './ImageSlider';
 

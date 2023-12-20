@@ -28,16 +28,14 @@ import { useParams } from 'react-router';
 import heart from '../../assets/images/heart.png';
 import heartFill from '../../assets/images/heartfill.png';
 import { getLike } from './../../apis/restaurantLikeApi';
-import { FaShareNodes } from 'react-icons/fa6';
 
 import EditinfoRequestModal from '../../components/Restaurant/EditInfoRequestModal';
 import { getRestaurantDetailQuery } from '../../hooks/reviewQuery.ts';
-import { StackDivider, Button } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import ShareButton from './ShareButton.tsx';
 import { FaLocationDot } from 'react-icons/fa6';
 import { FaLink, FaPhone } from 'react-icons/fa';
 
-import { darken } from 'polished';
 import MenuCard from './MenuCard.tsx';
 const RestaurantInfo: React.FC = () => {
   const { restaurantId } = useParams<{ restaurantId: string }>();
@@ -65,7 +63,6 @@ const RestaurantInfo: React.FC = () => {
   //   restaurantImageDtoList: [{ restaurantOriginUrl: '' }],
   // });
   const reviewsInfo = data?.reviewReturnDtoPage;
-  const [image, setImages] = useState('');
   // const [isLoading, setIsLoading] = useState(true);
 
   const openWriteReviewModal = () => {

@@ -3,16 +3,9 @@ import { useEffect } from 'react';
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 import styled from 'styled-components';
 
-import {
-  bestRestaurant,
-  bestRestaurantAddr,
-} from '../../apis/getRestaurantApi/getRestaurant';
 import { useSelector, useDispatch } from 'react-redux';
 import { ReducerType } from '../../store/rootReducer';
-import {
-  fetchBestRestaurants,
-  getBestRestaurants,
-} from '../../store/slices/bestSlice';
+import { fetchBestRestaurants } from '../../store/slices/bestSlice';
 import { useLocation } from 'react-router-dom';
 
 const BestPage = () => {

@@ -5,7 +5,7 @@ import Main from '../pages/main/Main';
 import SignIn from '../pages/signIn/SignIn';
 import SignUp from '../pages/signUp/SignUp';
 
-import AdminPage from '../pages/adminPage/AdminPage';
+import AdminPage from '../pages/adminPage/adminPage';
 import AdminChatPage from '../pages/adminPage/admin/AdminChatPage';
 import AdminSettingPage from '../pages/adminPage/admin/AdminSettingPage';
 import ReportPage from '../pages/adminPage/admin/ReportPage';
@@ -17,7 +17,6 @@ import RestaurantInfo from '../pages/restaurantInfo/RestaurantInfo';
 import MyPage from '../pages/myPage/MyPage';
 import MySettingPage from '../pages/myPage/my/MySettingPage';
 import MyReviewsPage from '../pages/myPage/my/MyReviewsPage';
-import UserInfoPage from '../pages/myPage/my/UserInfoPage';
 import DetialPage from '../pages/main/DetialPage';
 import BestPage from '../pages/main/BestPage';
 import MyWishPage from '../pages/myPage/my/MyWishListPage';
@@ -51,10 +50,10 @@ const router = createBrowserRouter([
             index: true,
             element: <MySettingPage />,
           },
-          {
-            path: 'userinfo',
-            element: <UserInfoPage />,
-          },
+          // {
+          //   path: 'userinfo',
+          //   element: <UserInfoPage />,
+          // },
           {
             path: 'mylike',
             element: <MyWishPage />,
