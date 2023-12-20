@@ -42,7 +42,7 @@ const SignIn = () => {
           email === 'admin@sunflowerplate.com' && password === 'admin1234';
 
         if (isAdmin) {
-          navigate('/'); // 관리자 페이지로 이동
+          navigate('/admin'); // 관리자 페이지로 이동
         } else {
           navigate('/');
         }
