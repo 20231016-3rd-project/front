@@ -12,6 +12,7 @@ const MyReviewsPage = () => {
   }, [reviewChangeTrigger]);
   return (
     <MyReviewStyle>
+      <SectionTitle2>나의 리뷰 목록</SectionTitle2>
       {reviewArray.map((review, index) => {
         return (
           <div>
@@ -30,5 +31,13 @@ const MyReviewsPage = () => {
 export default MyReviewsPage;
 
 const MyReviewStyle = styled.div`
-  margin: 5rem;
+  padding: 80px 15% 20px;
 `;
+
+const SectionTitle2 = styled.div`
+  color: #ff792a;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 1rem;
+`;
+

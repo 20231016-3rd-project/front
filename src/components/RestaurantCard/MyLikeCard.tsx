@@ -43,7 +43,6 @@ const RestaurantList = styled.li`
   display: flex;
   border-bottom: 1px solid black;
   padding: 2rem 0;
-  margin: 0 2rem;
 `;
 const ListImgDiv = styled(Link)`
   width: 260px;
@@ -78,10 +77,12 @@ const InfoAddr = styled.p`
   font-weight: 500;
 `;
 const InfoMore = styled(Link)`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   font-size: 20px;
   font-weight: 500;
-  width: auto;
-  text-align: end;
+  width: 100%;
   position: absolute;
   bottom: 2rem;
   right: 0;
@@ -90,7 +91,7 @@ const InfoMore = styled(Link)`
   &:visited,
   &:link {
     text-decoration: none;
-    color: black;
+    color: darkblue;
   }
 `;
 const ArrowImg = styled.img`
