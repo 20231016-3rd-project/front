@@ -1,21 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { login, logout, reissueAccessToken } from '../../apis/authApi/authApi';
-import { RootState } from '../store';
+import { RootState }  from '../rootReducer';
 
 
-// 토큰 만료 여부를 판단하는 함수
-function isTokenExpired(expireDate) {
+function isTokenExpired(expireDate: string): boolean {
   const expireTime = new Date(expireDate).getTime();
   const currentTime = Date.now();
   return currentTime >= expireTime;
 }
 
-// 토큰의 만료 시간을 계산하는 함수
-function calculateExpiresIn(expireDate) {
+function calculateExpiresIn(expireDate: string): number {
   const expireTime = new Date(expireDate).getTime();
   const currentTime = Date.now();
   return Math.max(0, (expireTime - currentTime) / 1000);
 }
+
 
 // 토큰 데이터 타입 정의
 interface TokenData {

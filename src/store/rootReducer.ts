@@ -13,12 +13,10 @@ import auth from './slices/authSlice';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth'] // auth 리듀서만 영속화
+  whitelist: ['auth'] 
 };
 
-const persistedAuthReducer = persistReducer(persistConfig, auth);
-
-const Reducer = combineReducers({
+const rootReducer = combineReducers({
   restaurant,
   region,
   sort,
@@ -26,8 +24,11 @@ const Reducer = combineReducers({
   keyword,
   best,
   myLike,
-  auth: persistedAuthReducer, 
+  auth,
 });
 
-export type ReducerType = ReturnType<typeof Reducer>;
-export default Reducer;
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export type RootState = ReturnType<typeof rootReducer>;
+export type ReducerType = ReturnType<typeof rootReducer>;
+export default persistedReducer;
