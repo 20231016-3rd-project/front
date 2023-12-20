@@ -10,16 +10,19 @@ import search from '../../../assets/images/ icon _search_.svg';
 import { setKeyword } from '../../../store/slices/keywordSlice';
 import { RootState } from '../../../store/store';
 
-
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const authState = useSelector((state: RootState) => state.auth);
 
   // authState가 정의되어 있지 않은 경우를 대비한 기본값 설정
-  const { isAuthenticated = false, isAdmin = false, userData = null } = authState ?? {};
+  const {
+    isAuthenticated = false,
+    isAdmin = false,
+    userData = null,
+  } = authState ?? {};
 
-const handleLogout = async () => {
+  const handleLogout = async () => {
     try {
       dispatch(submitLogout());
       navigate('/signin');
@@ -27,7 +30,7 @@ const handleLogout = async () => {
       console.error('Error during logout', error);
     }
   };
-``
+  ``;
 
   const handleAdminPage = () => {
     navigate('/mypage');
@@ -40,26 +43,25 @@ const handleLogout = async () => {
   // 검색 기능 관련 상태 및 핸들러 추가
   const [searchKey, setSearchKey] = React.useState('');
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: any) => {
     setSearchKey(e.target.value);
   };
 
   const handleSearchSubmit = () => {
     // 검색 관련 로직 구현
-      dispatch(setKeyword(searchKey));
-      navigate(`/detailpage`);
-  
+    dispatch(setKeyword(searchKey));
+    navigate(`/detailpage`);
+
     console.log('Search for:', searchKey);
     // navigate('/searchResult', { state: { searchKey } });
   };
 
-    // 드롭다운 메뉴 상태 관리
-    const [showDropdown, setShowDropdown] = useState(false);
+  // 드롭다운 메뉴 상태 관리
+  const [showDropdown, setShowDropdown] = useState(false);
 
-    const toggleDropdown = () => {
-      setShowDropdown(!showDropdown);
-    };
-  
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
 
   return (
     <Section>
@@ -84,11 +86,13 @@ const handleLogout = async () => {
           </SearchButton>
         </SearchBox>
       </HeaderMiddle>
-      
+
       <HeaderRight>
         {!isAuthenticated ? (
           <>
-            <LoginButton onClick={() => navigate('/signin')}>로그인</LoginButton>
+            <LoginButton onClick={() => navigate('/signin')}>
+              로그인
+            </LoginButton>
             <SignUpButton to="/signup">회원가입</SignUpButton>
           </>
         ) : (
@@ -105,8 +109,22 @@ const handleLogout = async () => {
                 </NicknameButton>
                 {showDropdown && (
                   <DropdownMenu>
-                    <DropdownItem onClick={handleUserSettings}>회원정보</DropdownItem>
-                    <DropdownItem onClick={handleLogout}>로그아웃</DropdownItem>
+                    <DropdownItem
+                      onClick={() => {
+                        handleUserSettings();
+                        setShowDropdown(false);
+                      }}
+                    >
+                      회원정보
+                    </DropdownItem>
+                    <DropdownItem
+                      onClick={() => {
+                        handleLogout();
+                        setShowDropdown(false);
+                      }}
+                    >
+                      로그아웃
+                    </DropdownItem>
                   </DropdownMenu>
                 )}
               </>
@@ -181,9 +199,9 @@ const SearchButton = styled.button`
   cursor: pointer;
 
   &:active {
-         transform: scale(0.97); 
-        }
-  img{
+    transform: scale(0.97);
+  }
+  img {
     width: 25px;
     height: 25px;
   }
@@ -214,7 +232,6 @@ const Button = styled.button`
   margin-right: 1rem;
 `;
 
-
 const NicknameButton = styled.button`
   background-color: white;
   cursor: pointer;
@@ -228,7 +245,7 @@ const DropdownMenu = styled.div`
   margin-right: 20px;
   right: 0;
   background-color: white;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   // 추가적인 스타일링
 `;
