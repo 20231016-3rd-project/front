@@ -3,18 +3,18 @@ import styled from 'styled-components';
 export const MainContainer = styled.div`
   height: 100vh;
   width: 100%;
-  overflow: hidden; // 스크롤 방지
+  overflow: hidden; 
 `;
 
 export const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: 1.65fr 1fr; // 50% 50% 레이아웃
+  grid-template-columns: 1.65fr 1fr; 
   height: 100%;
 `;
 
 
 export const VideoSection = styled.div`
- overflow: hidden; // 비디오가 컨테이너 바깥으로 나가는 것을 방지
+ overflow: hidden; 
  position: relative;
  width: 100%;
  height: 100%;
@@ -40,7 +40,7 @@ export const OverlayText = styled.div`
   text-align: center; 
 `;
 
-/* 오른쪽 로그인 부분 */
+
 
 export const SignupForm = styled.form`
   width: 100%;
@@ -83,15 +83,15 @@ font-size: 14px;
 export const Input = styled.input`
   margin: 10px 0px;
   margin-bottom: 10px;
-  padding: 10px 0px; // 상하 패딩을 조정합니다.
+  padding: 10px 0px; 
   width: 75%;
   border: 1px solid #ccc;
-  background-color: transparent; // 배경색을 투명하게 설정합니다.
-  outline: none; // 포커스 시 테두리를 제거합니다.
+  background-color: transparent; 
+  outline: none; 
   margin-right: 10px;
 
   &:focus {
-    border-bottom: 2px solid #007bff; // 포커스 시 밑줄의 색상과 두께를 변경합니다.
+    border-bottom: 2px solid #007bff; 
   }
 
 `;
@@ -104,15 +104,15 @@ export const InputPassword = styled.input`
 
   margin: 10px 0px;
   margin-bottom: 10px;
-  padding: 10px 0px; // 상하 패딩을 조정합니다.
+  padding: 10px 0px; 
   width: 100%;
   border: 1px solid #ccc;
-  background-color: transparent; // 배경색을 투명하게 설정합니다.
-  outline: none; // 포커스 시 테두리를 제거합니다.
+  background-color: transparent; 
+  outline: none;
   margin-right: 10px;
 
   &:focus {
-    border-bottom: 2px solid #007bff; // 포커스 시 밑줄의 색상과 두께를 변경합니다.
+    border-bottom: 2px solid #007bff; 
   }
 
 `;
@@ -131,7 +131,7 @@ export const Button = styled.button`
   }
 `;
 
-// 중복 확인 버튼 스타일을 위한 새로운 컴포넌트
+
 export const CheckButton = styled(Button)`
 `;
 
@@ -169,19 +169,19 @@ export const PhoneInputField = styled.div`
 export const PhoneInput = styled.input`
   width: 33%;
   border: 1px solid blue;
-  padding: 10px 0px; // 상하 패딩을 조정합니다.
-  margin-top: 5px; // 레이블과의 간격을 조정
+  padding: 10px 0px; 
+  margin-top: 5px; 
   border: 1px solid #ccc;
   margin: 0;
   text-align: center;
   &:not(:last-child) {
-  margin-right: 10px; // 마지막 요소를 제외하고 오른쪽 마진 추가
+  margin-right: 10px;
   }
 `;
 
 
 export const SignUpButton = styled(Button)`
-  width: 100%; // 버튼의 너비를 100%로 설정
-  padding: 10px 0; // 상하 패딩을 10px로, 좌우 패딩을 0으로 설정
+  width: 100%; 
+  padding: 10px 0; 
   margin-top: 30px;
 `;

@@ -7,8 +7,6 @@ function isTokenExpired(): boolean {
   
   return new Date() > new Date(expireDate);
 }
-
-// 응답 데이터 타입 정의
 interface LoginResponse {
   memberNickName: string;
   accessToken: string;
@@ -16,7 +14,6 @@ interface LoginResponse {
   issuedAt: string; 
 }
 
-// 에러 타입 정의
 interface ApiError extends Error {
   response?: {
     data: any;
@@ -44,7 +41,7 @@ export const login = async (email: string, password: string): Promise<LoginRespo
     if (axios.isAxiosError(error)) {
       throw { message: error.message, status: error.response?.status };
     } else {
-      // 그 외 예외 처리
+
       throw { message: '알 수 없는 오류 발생', status: null };
     }
   }
@@ -69,8 +66,8 @@ export const logout = async (): Promise<void> => {
 // reissueAccessToken 함수
 export const reissueAccessToken = async (): Promise<LoginResponse> => {
   try {
-    // 토큰이 만료되었다면 새로운 토큰을 요청
     if (isTokenExpired()) {
+      
       const response = await axiosInstance.post<LoginResponse>(
         '/sunflowerPlate/user/reissue',
         {},
@@ -89,10 +86,16 @@ export const reissueAccessToken = async (): Promise<LoginResponse> => {
 
       return response.data;
     } else {
-      // 토큰이 만료되지 않았다면 기존의 토큰 정보를 반환
+      
+      const currentAccessToken = localStorage.getItem('accessToken');
+      if (currentAccessToken === null) {
+        throw new Error("No access token found");
+      }
       return {
-        accessToken: localStorage.getItem('accessToken'),
-        // 기타 필요한 정보를 여기에 추가하시면 됩니다.
+        accessToken: currentAccessToken,
+        memberNickName: 'DefaultNickName', 
+        accessTokenExpireDate: 'DefaultExpireDate', 
+        issuedAt: 'DefaultIssuedAt', 
       };
     }
   } catch (error) {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { AppDispatch } from '../../../store/store';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,16 +9,16 @@ import { setKey } from '../../../store/slices/keywordSlice';
 import { submitLogout } from '../../../store/slices/authSlice';
 import search from '../../../assets/images/ icon _search_.svg';
 import { setKeyword } from '../../../store/slices/keywordSlice';
-import { RootState } from '../../../store/store';
+import { RootState } from '../../../store/rootReducer';
 
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const authState = useSelector((state: RootState) => state.auth);
+
   
-  
-  // authState가 undefined인 경우, 사용자 정보 객체를 담는 기본값 세팅
+
 const defaultUserInfo = { isAuthenticated: false, isAdmin: false, userData: null };
 const { isAuthenticated, isAdmin, userData } = authState ?? defaultUserInfo;
 
@@ -29,12 +29,13 @@ const { isAuthenticated, isAdmin, userData } = authState ?? defaultUserInfo;
 
 
 const handleLogout = async () => {
-    try {
-      dispatch(submitLogout());
-      navigate('/signin');
-    } catch (error) {
-      console.error('Error during logout', error);
-    }
+  try {
+    await dispatch(submitLogout()).unwrap();
+    navigate('/signin');
+  } catch (error) {
+    console.error('Error during logout', error);
+  }
+  
   };
 ``
 
@@ -238,7 +239,7 @@ const DropdownMenu = styled.div`
   right: 0;
   background-color: white;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+  z-index: 1000;
   // 추가적인 스타일링
 `;
 
