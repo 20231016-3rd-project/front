@@ -43,7 +43,7 @@ const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
   const [content, setContent] = useState('');
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const { mutate, isError, isLoading } = postReviewMutation();
+  const { mutate, isError, isLoading, mutateAsync } = postReviewMutation();
   const { restaurantId } = useParams();
   const formData = new FormData();
   const handleSubmit = () => {
@@ -63,14 +63,27 @@ const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
     });
     formData.append('reviewSaveDto', dataBlob);
     try {
-      mutate({ restaurantId: restaurantId, formData });
-      toast({
-        title: '리뷰가 작성되었습니다.',
-        status: 'success',
-        duration: 4000,
-        isClosable: true,
-        position: 'top',
+      mutateAsync({ restaurantId: restaurantId, formData }).then((r) => {
+        console.log('response', r, r.isAxiosError);
+        if (!r.isAxiosError) {
+          toast({
+            title: '리뷰가 작성되었습니다.',
+            status: 'success',
+            duration: 4000,
+            isClosable: true,
+            position: 'top',
+          });
+        } else {
+          toast({
+            title: '리뷰 전송에 실패했습니다.',
+            status: 'error',
+            duration: 4000,
+            isClosable: true,
+            position: 'top',
+          });
+        }
       });
+
       closeModal();
     } catch (error) {
       console.log(error);
@@ -81,6 +94,7 @@ const WriteReviewModal: React.FC<ReviewProps> = ({ closeModal }) => {
         isClosable: true,
         position: 'top',
       });
+      closeModal();
     }
   };
 
