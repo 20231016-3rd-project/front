@@ -88,7 +88,7 @@ useEffect(() => {
         </ButtonsDiv>
 
         <ul>
-          <RestaurantCard data={restaurants} />
+          <RestaurantCard datas={restaurants} />
         </ul>
         <Pagination />
       </Section>
