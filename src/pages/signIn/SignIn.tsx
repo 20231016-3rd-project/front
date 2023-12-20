@@ -18,7 +18,7 @@ import {
 const SignIn = () => {
   const dispatch: AppDispatch = useDispatch(); // AppDispatch 타입을 사용합니다.
   const navigate = useNavigate();
-  const isAuthenticated = useSelector(
+  const isAuthenticate = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
   const isRefreshingToken = useSelector(

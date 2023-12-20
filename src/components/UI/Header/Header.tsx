@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,9 +16,17 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const authState = useSelector((state: RootState) => state.auth);
+  
+  
+  // authState가 undefined인 경우, 사용자 정보 객체를 담는 기본값 세팅
+const defaultUserInfo = { isAuthenticated: false, isAdmin: false, userData: null };
+const { isAuthenticated, isAdmin, userData } = authState ?? defaultUserInfo;
 
-  // authState가 정의되어 있지 않은 경우를 대비한 기본값 설정
-  const { isAuthenticated = false, isAdmin = false, userData = null } = authState ?? {};
+  useEffect(() => {
+    console.log('authState 변경됨:', authState);
+  }, [authState]);
+
+
 
 const handleLogout = async () => {
     try {
