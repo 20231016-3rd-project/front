@@ -7,10 +7,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 interface OwnProps {
-  data: Restaurants;
+  datas: Restaurants;
 }
 
-const RestaurantCard: React.FC<OwnProps> = ({ data }) => {
+const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
 
   const renderCard = (data: Restaurant) => {
     return (
@@ -45,7 +45,7 @@ const RestaurantCard: React.FC<OwnProps> = ({ data }) => {
     );
   };
 
-  return <RenderList>{data.map(renderCard)}</RenderList>;
+  return <>{datas.map(renderCard)}</>;
 };
 
 export default RestaurantCard;
@@ -140,9 +140,3 @@ const LikeButton = styled.button`
   justify-content: center;
   align-items: center;
 `;
-const RenderList = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-`;
-
