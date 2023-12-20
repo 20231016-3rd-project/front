@@ -15,10 +15,12 @@ const AdminNav: React.FC<{ isDay: boolean; setIsDay: (isDay: boolean) => void }>
   return (
          <Set.AdminNavbar>
         <Set.LogoSection>
+        <Link to="/">
           <div>
             <img src={logo} alt="" />
             <h1>해바라기 플레이트</h1>
           </div>
+          </Link>
         </Set.LogoSection>
 
         <Set.LinkSection>

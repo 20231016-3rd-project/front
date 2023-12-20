@@ -32,6 +32,7 @@ export const AdminNavbar = styled.div`
 `;
 
 export const LogoSection = styled.div`
+  display: flex;
 
   div{
     display: flex;
@@ -120,6 +121,7 @@ export const TextBox = styled.div`
   h1{
     font-size: 2rem;
     font-weight: 500;
+    margin-bottom: 10px;
   }
   p{
     font-size: 1.2rem;
