@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,11 +17,7 @@ const Header: React.FC = () => {
   const authState = useSelector((state: RootState) => state.auth);
 
   // authState가 정의되어 있지 않은 경우를 대비한 기본값 설정
-  const {
-    isAuthenticated = false,
-    isAdmin = false,
-    userData = null,
-  } = authState ?? {};
+  const { isAuthenticated = false, isAdmin = false, userData = null } = authState ?? {};
 
   const handleLogout = async () => {
     try {

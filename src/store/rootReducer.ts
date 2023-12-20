@@ -1,4 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import restaurant from './slices/restaurantSlice';
 import region from './slices/regionSlice';
 import sort from './slices/sortSlice';
@@ -6,10 +8,17 @@ import modal from './slices/modalSlice';
 import keyword from './slices/keywordSlice';
 import best from './slices/bestSlice';
 import myLike from './slices/myLikeSlice';
-//import signup from './slices/signupSlice';
 import auth from './slices/authSlice';
 
-const reducer = combineReducers({
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['auth'] // auth 리듀서만 영속화
+};
+
+const persistedAuthReducer = persistReducer(persistConfig, auth);
+
+const Reducer = combineReducers({
   restaurant,
   region,
   sort,
@@ -17,9 +26,8 @@ const reducer = combineReducers({
   keyword,
   best,
   myLike,
-  //signup,
-  auth,
+  auth: persistedAuthReducer, 
 });
 
-export type ReducerType = ReturnType<typeof reducer>;
-export default reducer;
+export type ReducerType = ReturnType<typeof Reducer>;
+export default Reducer;

@@ -101,7 +101,6 @@ export const refreshAccessToken = createAsyncThunk(
 );
 
 
-// Auth Slice 생성
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -109,7 +108,18 @@ const authSlice = createSlice({
     setAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
     },
-  },
+    setToken: (state, action) => {
+      state.tokenData = {
+        accessToken: action.payload.accessToken,
+        expiresIn: action.payload.accessTokenExpireDate
+          ? calculateExpiresIn(action.payload.accessTokenExpireDate)
+          : state.tokenData?.expiresIn || 0,
+        accessTokenExpireDate: action.payload.accessTokenExpireDate || state.tokenData?.accessTokenExpireDate,
+        issuedAt: action.payload.issuedAt || state.tokenData?.issuedAt
+      };
+      state.isAuthenticated = true;
+    },
+},
   extraReducers: (builder) => {
     builder
     .addCase(submitLogin.pending, (state) => {
@@ -123,6 +133,7 @@ const authSlice = createSlice({
         nickname: action.payload.memberNickName, 
         phone: '' 
       }; 
+      
       state.tokenData = {
         accessToken: action.payload.accessToken,
         expiresIn: calculateExpiresIn(action.payload.accessTokenExpireDate), 
@@ -130,7 +141,10 @@ const authSlice = createSlice({
         issuedAt: action.payload.issuedAt 
       };
       state.error = null; 
+      
       localStorage.setItem('accessToken', action.payload.accessToken); // 토큰저장주석처리
+      
+
     })
     .addCase(submitLogin.rejected, (state, action) => {
       state.isAuthenticated = false;
@@ -155,14 +169,18 @@ const authSlice = createSlice({
         state.isRefreshingToken = true; 
       })
       .addCase(refreshAccessToken.fulfilled, (state, action) => {
-        state.tokenData = {
-          ...state.tokenData,
-          accessToken: action.payload.accessToken,
-          expiresIn: calculateExpiresIn(action.payload.accessTokenExpireDate),
-          accessTokenExpireDate: action.payload.accessTokenExpireDate,
-          issuedAt: action.payload.issuedAt
-        };
-        state.error = null;
+        if (action.payload) {
+          state.tokenData = {
+            ...state.tokenData,
+            accessToken: action.payload.accessToken || '',
+            expiresIn: action.payload.accessTokenExpireDate 
+              ? calculateExpiresIn(action.payload.accessTokenExpireDate)
+              : state.tokenData?.expiresIn || 0,
+            accessTokenExpireDate: action.payload.accessTokenExpireDate || '',
+            issuedAt: action.payload.issuedAt || '',
+          };
+          state.error = null;
+        }
       })
       .addCase(refreshAccessToken.rejected, (state, action) => {
         state.isAuthenticated = false; // 토큰 재발급 실패
@@ -173,5 +191,5 @@ const authSlice = createSlice({
     },
   });
   
-  export const { setAuthenticated, } = authSlice.actions;
+  export const { setAuthenticated, setToken } = authSlice.actions;
   export default authSlice.reducer;

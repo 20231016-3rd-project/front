@@ -7,10 +7,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 interface OwnProps {
-  datas: Restaurants;
+  data: Restaurants;
 }
 
-const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
+const RestaurantCard: React.FC<OwnProps> = ({ data }) => {
 
   const renderCard = (data: Restaurant) => {
     return (
@@ -45,7 +45,7 @@ const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
     );
   };
 
-  return <>{datas.map(renderCard)}</>;
+  return <RenderList>{data.map(renderCard)}</RenderList>;
 };
 
 export default RestaurantCard;
@@ -91,11 +91,11 @@ const InfoAddr = styled.p`
 `;
 const InfoMore = styled(Link)`
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   font-size: 20px;
   font-weight: 500;
-  width: 300px;
+  width: 100%;
   position: absolute;
   bottom: 2rem;
   right: 0;
@@ -104,7 +104,7 @@ const InfoMore = styled(Link)`
   &:visited,
   &:link {
     text-decoration: none;
-    color: black;
+    color: darkblue;
   }
 `;
 const ArrowImg = styled.img`
@@ -127,7 +127,9 @@ const RateInfoImg = styled.img`
 `;
 const Bar = styled.div`
   border-right: 1px solid #666666;
+  margin-top: 0.5rem;
   margin-left: 0.5rem;
+  margin-right: 0.5rem;
   height: 0.8rem;
 `;
 const LikeButton = styled.button`
@@ -138,3 +140,9 @@ const LikeButton = styled.button`
   justify-content: center;
   align-items: center;
 `;
+const RenderList = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+`;
+
