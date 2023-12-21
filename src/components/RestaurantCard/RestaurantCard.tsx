@@ -45,7 +45,7 @@ const RestaurantCard: React.FC<OwnProps> = ({ datas }) => {
     );
   };
 
-  return <>{datas.map(renderCard)}</>;
+  return <RenderList>{datas.map(renderCard)}</RenderList>;
 };
 
 export default RestaurantCard;
@@ -54,7 +54,6 @@ const RestaurantList = styled.li`
   display: flex;
   border-bottom: 1px solid black;
   padding: 2rem 0;
-  margin: 0 2rem;
 `;
 const ListImgDiv = styled(Link)`
   min-width: 260px;
@@ -139,4 +138,10 @@ const LikeButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const RenderList = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 `;

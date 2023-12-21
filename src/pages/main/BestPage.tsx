@@ -68,21 +68,32 @@ const BestPage = () => {
   }
 
   return (
-    <>
-      <SectionTitle2>{key} 맛집</SectionTitle2>
+    <Best>
+      <SectionTitle2>{key} 맛집 best 10</SectionTitle2>
       <Section>{contents}</Section>
-    </>
+    </Best>
   );
 };
 
 export default BestPage;
 
+const Best = styled.div`
+  width: 100%;
+  padding: 0 2rem;
+  background-color: rgb(249, 249, 249);
+`;
 const Section = styled.div`
-  padding: 80px 15% 20px;
+  /* padding: 80px 15% 20px; */
 `;
 const SectionTitle2 = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #ff792a;
-  font-size: 32px;
+  font-size: 35px;
   font-weight: 600;
-  margin: 0 15%;
+  margin-left: 30px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+
 `;

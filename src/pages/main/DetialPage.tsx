@@ -100,6 +100,9 @@ export default DetialPage;
 
 const Section = styled.div`
    padding: 40px 4% 20px; 
+   ul{
+    margin: 0 1rem 0 1rem;
+   }
 `;
 const ButtonsDiv = styled.div`
   margin: 0 2rem;
