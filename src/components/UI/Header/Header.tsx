@@ -23,8 +23,8 @@ const Header: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      await dispatch(submitLogout()).unwrap();
-      navigate('/signin');
+      await dispatch(submitLogout());
+      navigate('/');
     } catch (error) {
       console.error('Error during logout', error);
     }
