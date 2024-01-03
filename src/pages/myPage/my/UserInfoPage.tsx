@@ -258,6 +258,7 @@ const UserInfoPage: React.FC<Type> = ({ isVisible, onClose }) => {
                     <FormLabel>새로운 비밀번호</FormLabel>
                     <Input
                       placeholder="새로운 비밀번호를 입력해주세요"
+                      type="password"
                       size="md"
                       marginBottom={'1.5rem'}
                       value={password}
@@ -270,6 +271,7 @@ const UserInfoPage: React.FC<Type> = ({ isVisible, onClose }) => {
                     <FormLabel>비밀번호 확인</FormLabel>
                     <Input
                       placeholder="비밀번호를  다시 입력해주세요"
+                      type="password"
                       size="md"
                       value={confirmedPassword}
                       onChange={(e) => {
