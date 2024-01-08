@@ -1,0 +1,61 @@
+{
+  "restaurantName": "연남물갈비 홍대본점",
+  "restaurantStarRate": 0,
+  "restaurantStatus": "OPEN",
+  "restaurantTelNum": "02-333-9211",
+  "restaurantAddress": "서울 마포구 동교로25길 37 1",
+  "restaurantOpenTime": "11:30 - 23:00",
+  "restaurantBreakTime": "15:00 - 17:00",
+  "restaurantWebSite": "https://instagram.com/yeonnam._.mulgalbi?igshid=OGQ5ZDc2ODk2ZA==",
+  "restaurantLikeCountDto": {
+    "restaurantLikeCount": 0,
+    "likedRestaurant": false
+  },
+  "restaurantMenuDtoList": [
+    {
+      "restaurantMenuName": "연남물갈비",
+      "restaurantMenuPrice": 18000
+    },
+    {
+      "restaurantMenuName": "연남소불고기",
+      "restaurantMenuPrice": 18000
+    }
+  ],
+  "restaurantImageDtoList": [
+    {
+      "restaurantOriginName": "A395BFFD-CF41-438A-B2D8-45A898132095-3620-000003C0B31BDFAA.JPG",
+      "restaurantStoredName": "bd2e600e-e8ae-4920-9e58-2aa41c1fbc97.JPG",
+      "restaurantResizedStoredName": "resized_bd2e600e-e8ae-4920-9e58-2aa41c1fbc97.JPG",
+      "restaurantOriginUrl": "https://plate-restaurant-img.s3.ap-northeast-2.amazonaws.com/restaurant1/bd2e600e-e8ae-4920-9e58-2aa41c1fbc97.JPG",
+      "restaurantResizeUrl": "https://plate-restaurant-img.s3.ap-northeast-2.amazonaws.com/restaurant1/resized_bd2e600e-e8ae-4920-9e58-2aa41c1fbc97.JPG"
+    }
+  ],
+  "reviewReturnDtoPage": {
+    "content": [],
+    "pageable": {
+      "sort": {
+        "empty": true,
+        "sorted": false,
+        "unsorted": true
+      },
+      "offset": 0,
+      "pageNumber": 0,
+      "pageSize": 10,
+      "paged": true,
+      "unpaged": false
+    },
+    "totalPages": 0,
+    "totalElements": 0,
+    "last": true,
+    "size": 10,
+    "number": 0,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "numberOfElements": 0,
+    "first": true,
+    "empty": true
+  }
+}
